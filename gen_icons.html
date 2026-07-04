@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>icon generator</title></head>
+<body>
+<p>アイコンを生成して保存してください</p>
+<canvas id="c192" width="192" height="192" style="display:none"></canvas>
+<canvas id="c512" width="512" height="512" style="display:none"></canvas>
+<br>
+<a id="dl192" download="icon-192.png">📥 icon-192.png をダウンロード</a><br><br>
+<a id="dl512" download="icon-512.png">📥 icon-512.png をダウンロード</a>
+<br><br>
+<img id="prev192" style="border:1px solid #ccc"><br>
+<img id="prev512" style="border:1px solid #ccc">
+<script>
+const SVG_SRC = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a237e"/>
+      <stop offset="100%" stop-color="#0d1040"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#fdd835" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#fdd835" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="110" fill="url(#bg)"/>
+  <rect width="512" height="512" rx="110" fill="url(#glow)"/>
+  <g transform="translate(106,121) scale(3)">
+    <polygon points="52,-20 44,0 53,-3 45,14" fill="#ffd600" stroke="#ff8f00" stroke-width="1.5"/>
+    <circle cx="28" cy="-5" r="2.5" fill="#fff176"/>
+    <circle cx="72" cy="-5" r="2.5" fill="#fff176"/>
+    <line x1="20" y1="-8" x2="30" y2="0" stroke="#ffd600" stroke-width="2.5"/>
+    <line x1="80" y1="-8" x2="70" y2="0" stroke="#ffd600" stroke-width="2.5"/>
+    <ellipse cx="50" cy="48" rx="46" ry="32" fill="#fdd835" stroke="#f9a825" stroke-width="2.5"/>
+    <ellipse cx="50" cy="53" rx="40" ry="22" fill="#0d1117"/>
+    <polygon points="10,37 17,55 24,37 31,55 38,37 45,55 52,37 59,55 66,37 73,55 80,37 87,55 91,37" fill="ivory"/>
+    <polygon points="13,68 20,51 27,68 34,51 41,68 48,51 55,68 62,51 69,68 76,51 83,68 88,68" fill="ivory"/>
+    <ellipse cx="50" cy="48" rx="46" ry="32" fill="none" stroke="#f9a825" stroke-width="2.5"/>
+  </g>
+</svg>`;
+
+function drawToCanvas(canvas, size) {
+  const ctx = canvas.getContext('2d');
+  const blob = new Blob([SVG_SRC], {type:'image/svg+xml'});
+  const url = URL.createObjectURL(blob);
+  const img = new Image();
+  img.onload = () => {
+    ctx.clearRect(0,0,size,size);
+    ctx.drawImage(img, 0, 0, size, size);
+    URL.revokeObjectURL(url);
+    const dataUrl = canvas.toDataURL('image/png');
+    document.getElementById('dl'+size).href = dataUrl;
+    document.getElementById('prev'+size).src = dataUrl;
+    document.getElementById('prev'+size).width = size === 192 ? 96 : 128;
+  };
+  img.src = url;
+}
+
+drawToCanvas(document.getElementById('c192'), 192);
+drawToCanvas(document.getElementById('c512'), 512);
+</script>
+</body></html>

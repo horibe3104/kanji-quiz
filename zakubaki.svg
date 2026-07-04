@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 300" width="240" height="300">
+  <defs>
+    <radialGradient id="bodyGrad" cx="38%" cy="30%" r="70%">
+      <stop offset="0%"   stop-color="#fffde7"/>
+      <stop offset="60%"  stop-color="#fdd835"/>
+      <stop offset="100%" stop-color="#f9a825"/>
+    </radialGradient>
+    <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#fff176" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#fdd835" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- 発光エフェクト -->
+  <circle cx="120" cy="110" r="100" fill="url(#glowGrad)"/>
+
+  <!-- 本体 (まるい体) -->
+  <circle cx="120" cy="110" r="88" fill="url(#bodyGrad)" stroke="#1a1a1a" stroke-width="3.5"/>
+
+  <!-- 体の上のかみなりもよう (6本) -->
+  <!-- 上・左 -->
+  <polyline points="82,34  73,54  88,51  79,72"
+            fill="none" stroke="#e65100" stroke-width="3"
+            stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 上・右 -->
+  <polyline points="145,32 138,52 152,49 145,70"
+            fill="none" stroke="#e65100" stroke-width="3"
+            stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 左 -->
+  <polyline points="42,108 57,98  51,112 66,103"
+            fill="none" stroke="#e65100" stroke-width="3"
+            stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 右 -->
+  <polyline points="198,103 183,113 189,99  174,109"
+            fill="none" stroke="#e65100" stroke-width="3"
+            stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 下・左 -->
+  <polyline points="87,156 79,174 93,171 85,188"
+            fill="none" stroke="#e65100" stroke-width="3"
+            stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- 下・右 -->
+  <polyline points="148,152 140,170 154,167 146,184"
+            fill="none" stroke="#e65100" stroke-width="3"
+            stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- 目 -->
+  <circle cx="100" cy="100" r="6.5" fill="#1a1a1a"/>
+  <circle cx="140" cy="100" r="6.5" fill="#1a1a1a"/>
+  <!-- 目のハイライト -->
+  <circle cx="103" cy="97"  r="2.5" fill="white"/>
+  <circle cx="143" cy="97"  r="2.5" fill="white"/>
+
+  <!-- 口 (にっこり) -->
+  <path d="M 96 123 Q 120 142 144 123"
+        fill="none" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round"/>
+
+  <!-- 左うで (ギザ：体近くで上に折れる) -->
+  <polyline points="33,120 22,108 8,122"
+            fill="none" stroke="#1a1a1a" stroke-width="7"
+            stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="33,120 22,108 8,122"
+            fill="none" stroke="#fdd835" stroke-width="4"
+            stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- 右うで (ギザ：先端近くで下に折れる) -->
+  <polyline points="207,120 222,130 232,116"
+            fill="none" stroke="#1a1a1a" stroke-width="7"
+            stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="207,120 222,130 232,116"
+            fill="none" stroke="#fdd835" stroke-width="4"
+            stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- 左あし (ギザ：上のほうで外に折れる) -->
+  <polyline points="108,196 92,215 102,262"
+            fill="none" stroke="#1a1a1a" stroke-width="7"
+            stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="108,196 92,215 102,262"
+            fill="none" stroke="#fdd835" stroke-width="4"
+            stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- 右あし (ギザ：下のほうで外に折れる) -->
+  <polyline points="132,196 136,242 148,262"
+            fill="none" stroke="#1a1a1a" stroke-width="7"
+            stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="132,196 136,242 148,262"
+            fill="none" stroke="#fdd835" stroke-width="4"
+            stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- 名前 -->
+  <text x="120" y="290"
+        text-anchor="middle"
+        font-family="'Hiragino Maru Gothic Pro','BIZ UDPGothic',sans-serif"
+        font-size="15" font-weight="900"
+        fill="white" stroke="#1a1a1a" stroke-width="4" paint-order="stroke">
+    ザクバキくん
+  </text>
+</svg>

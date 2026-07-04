@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ガチャ演出 クオリティ比較</title>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { background:#111; color:white; font-family:'Hiragino Maru Gothic Pro',sans-serif; padding:16px; }
+h1 { text-align:center; font-size:18px; margin-bottom:4px; color:#ffd600; }
+.sub { text-align:center; font-size:12px; color:#888; margin-bottom:16px; }
+.cols { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.col { flex:1; min-width:300px; max-width:420px; }
+.col-title {
+  text-align:center; font-size:14px; font-weight:900; padding:8px;
+  border-radius:10px 10px 0 0; letter-spacing:.5px;
+}
+.css-title   { background:#37474f; color:#b0bec5; }
+.canvas-title{ background:#4527a0; color:#ede7f6; }
+.stage {
+  width:100%; aspect-ratio:1/1; position:relative;
+  overflow:hidden; border-radius:0 0 10px 10px;
+}
+.css-stage   { background:radial-gradient(ellipse at center,#0d1b5e 0%,#050810 100%); }
+canvas { display:block; width:100%; height:100%; }
+.btn-row { display:flex; gap:8px; justify-content:center; margin-top:16px; flex-wrap:wrap; }
+button {
+  padding:10px 22px; border:none; border-radius:10px;
+  font-size:14px; font-weight:900; cursor:pointer;
+  font-family:inherit;
+}
+.btn-css    { background:#546e7a; color:white; }
+.btn-canvas { background:#7c4dff; color:white; }
+.btn-both   { background:#f57f17; color:white; }
+
+/* ===== CSS DEMO ELEMENTS ===== */
+.css-stars {
+  position:absolute; inset:0;
+  background:
+    radial-gradient(1.5px 1.5px at 10% 15%,rgba(255,255,255,.8),transparent),
+    radial-gradient(1px   1px   at 25% 40%,rgba(255,255,255,.5),transparent),
+    radial-gradient(2px   2px   at 40% 10%,rgba(255,255,255,.7),transparent),
+    radial-gradient(1px   1px   at 60% 60%,rgba(255,255,255,.4),transparent),
+    radial-gradient(1.5px 1.5px at 75% 25%,rgba(255,255,255,.6),transparent),
+    radial-gradient(1px   1px   at 85% 75%,rgba(255,255,255,.5),transparent),
+    radial-gradient(2px   2px   at 90% 45%,rgba(255,255,255,.7),transparent),
+    radial-gradient(1px   1px   at 15% 80%,rgba(255,255,255,.4),transparent),
+    radial-gradient(1.5px 1.5px at 50% 90%,rgba(255,255,255,.5),transparent),
+    radial-gradient(1px   1px   at 70% 5% ,rgba(255,255,255,.3),transparent);
+}
+.css-egg {
+  position:absolute; left:50%; top:-60px;
+  width:44px; height:54px; margin-left:-22px;
+  background:radial-gradient(ellipse at 35% 30%,#fff9c4,#ff8f00 60%,#e65100);
+  border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+  box-shadow:0 0 18px 6px rgba(255,200,0,.5);
+}
+.css-egg.fall {
+  animation: cssFall 1.8s cubic-bezier(.3,.0,.7,1) forwards;
+}
+@keyframes cssFall {
+  from { top:-60px; }
+  to   { top:55%; }
+}
+.css-trail {
+  position:absolute; left:50%; top:-60px; width:4px;
+  background:linear-gradient(to bottom,transparent,rgba(255,200,0,.6));
+  margin-left:-2px; transform-origin:top center;
+}
+.css-trail.fall { animation: cssTrail 1.8s cubic-bezier(.3,0,.7,1) forwards; }
+@keyframes cssTrail {
+  from { top:-60px; height:0; }
+  to   { top:10%;   height:46%; }
+}
+.css-flash {
+  position:absolute; inset:0; background:white; opacity:0; pointer-events:none;
+}
+.css-flash.go { animation: cssFlash .4s ease-out forwards; }
+@keyframes cssFlash { 0%{opacity:.9} 100%{opacity:0} }
+</style>
+</head>
+<body>
+
+<h1>🎰 ガチャ演出 クオリティ比較</h1>
+<p class="sub">同じ「隕石が落ちてくる」シーン ／ 左=現在のCSS方式　右=Canvas方式</p>
+
+<div class="cols">
+
+  <!-- CSS SIDE -->
+  <div class="col">
+    <div class="css-title">現在の CSS アニメーション</div>
+    <div class="stage css-stage" id="css-stage">
+      <div class="css-stars"></div>
+      <div class="css-trail"  id="css-trail"></div>
+      <div class="css-egg"    id="css-egg"></div>
+      <div class="css-flash"  id="css-flash"></div>
+    </div>
+  </div>
+
+  <!-- CANVAS SIDE -->
+  <div class="col">
+    <div class="canvas-title">Canvas アニメーション（新）</div>
+    <div class="stage">
+      <canvas id="cvs"></canvas>
+    </div>
+  </div>
+
+</div>
+
+<div class="btn-row">
+  <button class="btn-css"    onclick="runCSS()">▶ CSS を再生</button>
+  <button class="btn-canvas" onclick="runCanvas()">▶ Canvas を再生</button>
+  <button class="btn-both"   onclick="runBoth()">▶ 同時再生</button>
+</div>
+
+<script>
+// =============================================
+// CSS DEMO
+// =============================================
+function runCSS() {
+  const egg   = document.getElementById('css-egg');
+  const trail = document.getElementById('css-trail');
+  const flash = document.getElementById('css-flash');
+  egg.className   = 'css-egg';
+  trail.className = 'css-trail';
+  flash.className = 'css-flash';
+  void egg.offsetWidth;
+  egg.classList.add('fall');
+  trail.classList.add('fall');
+  setTimeout(()=>{ flash.classList.add('go'); }, 1800);
+}
+
+// =============================================
+// CANVAS DEMO
+// =============================================
+const cvs = document.getElementById('cvs');
+const ctx = cvs.getContext('2d');
+let W, H, animId = null;
+
+function resize() {
+  const rect = cvs.parentElement.getBoundingClientRect();
+  W = cvs.width  = rect.width  * devicePixelRatio;
+  H = cvs.height = rect.height * devicePixelRatio;
+  ctx.scale(devicePixelRatio, devicePixelRatio);
+  W /= devicePixelRatio;
+  H /= devicePixelRatio;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// --- Stars ---
+const STARS = Array.from({length:220}, () => ({
+  x: Math.random(),
+  y: Math.random(),
+  r: Math.random() * 1.6 + 0.3,
+  phase: Math.random() * Math.PI * 2,
+  speed: Math.random() * 0.04 + 0.01,
+  depth: Math.random(),   // parallax depth
+}));
+
+// --- Particles ---
+let particles = [];
+function spawnTrailParticle(x, y, vx, vy) {
+  const angle = Math.random() * Math.PI * 2;
+  const spd   = Math.random() * 2 + 0.5;
+  particles.push({
+    x, y,
+    vx: Math.cos(angle)*spd + vx*0.3,
+    vy: Math.sin(angle)*spd + vy*0.3,
+    life: 1, decay: Math.random()*0.04+0.02,
+    r: Math.random()*3+1,
+    hue: Math.random()*40+30,  // orange-yellow
+  });
+}
+
+function spawnBurstParticles(x, y, n) {
+  for (let i=0; i<n; i++) {
+    const angle = (i/n)*Math.PI*2 + Math.random()*0.5;
+    const spd   = Math.random()*6+2;
+    particles.push({
+      x, y,
+      vx: Math.cos(angle)*spd,
+      vy: Math.sin(angle)*spd,
+      life: 1, decay: Math.random()*0.025+0.01,
+      r: Math.random()*5+2,
+      hue: Math.random()*80+20,
+    });
+  }
+  // White shockwave ring
+  rings.push({ x, y, r:0, maxR: Math.min(W,H)*0.5, life:1 });
+}
+
+let rings = [];
+
+// --- Animation state ---
+let phase = 'idle';
+let t = 0;
+let eggX, eggY, prevEgX, prevEgY;
+let trailPoints = [];
+let shakeX=0, shakeY=0;
+
+function drawStars(time) {
+  STARS.forEach(s => {
+    const twinkle = 0.5 + 0.5 * Math.sin(time * s.speed + s.phase);
+    const alpha   = 0.3 + 0.65 * twinkle * s.depth;
+    const glow    = s.r * (1 + twinkle * 0.8);
+    // outer glow
+    const grad = ctx.createRadialGradient(
+      s.x*W, s.y*H, 0,
+      s.x*W, s.y*H, glow*4
+    );
+    grad.addColorStop(0, `rgba(255,255,255,${alpha})`);
+    grad.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.beginPath();
+    ctx.arc(s.x*W, s.y*H, glow*4, 0, Math.PI*2);
+    ctx.fillStyle = grad;
+    ctx.fill();
+    // core
+    ctx.beginPath();
+    ctx.arc(s.x*W, s.y*H, glow, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(255,255,255,${Math.min(1,alpha*1.5)})`;
+    ctx.fill();
+  });
+}
+
+function drawSpaceBackground(time) {
+  // Deep space gradient
+  const bg = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W,H));
+  bg.addColorStop(0,   '#0d1b5e');
+  bg.addColorStop(0.5, '#0a1230');
+  bg.addColorStop(1,   '#050810');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Nebula wisps
+  ctx.save();
+  ctx.globalAlpha = 0.07;
+  ctx.globalCompositeOperation = 'screen';
+  for (let i=0; i<3; i++) {
+    const ng = ctx.createRadialGradient(
+      W*(0.2+i*0.3), H*(0.3+i*0.2), 0,
+      W*(0.2+i*0.3), H*(0.3+i*0.2), W*0.4
+    );
+    const colors = ['#4040ff','#ff4080','#40ffff'];
+    ng.addColorStop(0, colors[i]);
+    ng.addColorStop(1, 'transparent');
+    ctx.beginPath();
+    ctx.arc(W*(0.2+i*0.3), H*(0.3+i*0.2), W*0.4, 0, Math.PI*2);
+    ctx.fillStyle = ng;
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+function drawEgg(x, y, scale=1, glow=1) {
+  ctx.save();
+  ctx.translate(x + shakeX, y + shakeY);
+
+  // outer glow — additive blending
+  ctx.globalCompositeOperation = 'screen';
+  const g1 = ctx.createRadialGradient(0,0,0, 0,0, 60*scale);
+  g1.addColorStop(0,   `rgba(255,200,80,${0.5*glow})`);
+  g1.addColorStop(0.4, `rgba(255,120,0,${0.25*glow})`);
+  g1.addColorStop(1,   'rgba(255,80,0,0)');
+  ctx.beginPath(); ctx.arc(0,0, 60*scale, 0, Math.PI*2);
+  ctx.fillStyle = g1; ctx.fill();
+
+  ctx.globalCompositeOperation = 'source-over';
+
+  // egg body
+  ctx.beginPath();
+  ctx.ellipse(0, 0, 22*scale, 28*scale, 0, 0, Math.PI*2);
+  const eg = ctx.createRadialGradient(-6*scale,-8*scale, 2, 0,0, 28*scale);
+  eg.addColorStop(0,   '#fffde7');
+  eg.addColorStop(0.3, '#ffca28');
+  eg.addColorStop(0.7, '#ff8f00');
+  eg.addColorStop(1,   '#e65100');
+  ctx.fillStyle = eg; ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+  ctx.lineWidth = 1.5*scale;
+  ctx.stroke();
+
+  // specular highlight
+  ctx.beginPath();
+  ctx.ellipse(-6*scale, -10*scale, 6*scale, 4*scale, -0.5, 0, Math.PI*2);
+  ctx.fillStyle = 'rgba(255,255,255,0.6)'; ctx.fill();
+
+  ctx.restore();
+}
+
+function drawTrail(points) {
+  if (points.length < 2) return;
+  ctx.save();
+  ctx.globalCompositeOperation = 'screen';
+  for (let i=1; i<points.length; i++) {
+    const p0 = points[i-1], p1 = points[i];
+    const pct = i / points.length;
+    const alpha = pct * 0.7;
+    const width = pct * 14;
+    ctx.beginPath();
+    ctx.moveTo(p0.x + shakeX, p0.y + shakeY);
+    ctx.lineTo(p1.x + shakeX, p1.y + shakeY);
+    const tg = ctx.createLinearGradient(p0.x, p0.y, p1.x, p1.y);
+    tg.addColorStop(0, `rgba(255,200,80,0)`);
+    tg.addColorStop(1, `rgba(255,140,40,${alpha})`);
+    ctx.strokeStyle = tg;
+    ctx.lineWidth  = width;
+    ctx.lineCap    = 'round';
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawParticles() {
+  ctx.save();
+  ctx.globalCompositeOperation = 'screen';
+  particles.forEach(p => {
+    const grad = ctx.createRadialGradient(
+      p.x+shakeX, p.y+shakeY, 0,
+      p.x+shakeX, p.y+shakeY, p.r*3
+    );
+    grad.addColorStop(0, `hsla(${p.hue},100%,80%,${p.life})`);
+    grad.addColorStop(1, `hsla(${p.hue},100%,60%,0)`);
+    ctx.beginPath();
+    ctx.arc(p.x+shakeX, p.y+shakeY, p.r*3, 0, Math.PI*2);
+    ctx.fillStyle = grad; ctx.fill();
+  });
+  ctx.restore();
+}
+
+function drawRings() {
+  rings.forEach(ring => {
+    ctx.save();
+    ctx.globalCompositeOperation = 'screen';
+    ctx.beginPath();
+    ctx.arc(ring.x+shakeX, ring.y+shakeY, ring.r, 0, Math.PI*2);
+    ctx.strokeStyle = `rgba(255,200,100,${ring.life * 0.6})`;
+    ctx.lineWidth = 4 * ring.life;
+    ctx.stroke();
+    ctx.restore();
+  });
+}
+
+function drawFuji(alpha=1, lava=0) {
+  const bx = W/2, by = H*0.82;
+  ctx.save();
+  ctx.translate(shakeX, shakeY);
+  ctx.globalAlpha = alpha;
+
+  // sky at horizon
+  const sky = ctx.createLinearGradient(0, H*0.55, 0, H);
+  sky.addColorStop(0, 'rgba(10,20,60,0)');
+  sky.addColorStop(1, 'rgba(5,12,30,0.7)');
+  ctx.fillStyle = sky; ctx.fillRect(0, H*0.55, W, H*0.45);
+
+  // distant mountains
+  ctx.globalAlpha = alpha * 0.4;
+  ctx.beginPath();
+  ctx.moveTo(0, H*0.75);
+  ctx.bezierCurveTo(W*0.1, H*0.58, W*0.2, H*0.6,  W*0.35, H*0.72);
+  ctx.bezierCurveTo(W*0.45, H*0.60, W*0.55, H*0.62, W*0.65, H*0.70);
+  ctx.bezierCurveTo(W*0.75, H*0.56, W*0.88, H*0.60, W, H*0.74);
+  ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath();
+  ctx.fillStyle = '#1a2a4a'; ctx.fill();
+  ctx.globalAlpha = alpha;
+
+  // fuji main — dark face (left)
+  ctx.beginPath();
+  ctx.moveTo(bx, H*0.12);
+  ctx.bezierCurveTo(bx-W*0.04, H*0.22, bx-W*0.14, H*0.38, bx-W*0.38, H*0.78);
+  ctx.lineTo(bx+W*0.38, H*0.78);
+  ctx.bezierCurveTo(bx+W*0.14, H*0.38, bx+W*0.04, H*0.22, bx, H*0.12);
+  ctx.fillStyle = '#1c2c3c'; ctx.fill();
+
+  // fuji right face (lighter)
+  ctx.beginPath();
+  ctx.moveTo(bx, H*0.12);
+  ctx.bezierCurveTo(bx+W*0.04, H*0.22, bx+W*0.14, H*0.38, bx+W*0.38, H*0.78);
+  ctx.lineTo(bx, H*0.78);
+  const rf = ctx.createLinearGradient(bx, H*0.12, bx+W*0.38, H*0.78);
+  rf.addColorStop(0,   '#2e4060');
+  rf.addColorStop(0.6, '#243248');
+  rf.addColorStop(1,   '#1c2c3c');
+  ctx.fillStyle = rf; ctx.fill();
+
+  // snow cap
+  ctx.beginPath();
+  ctx.moveTo(bx, H*0.12);
+  ctx.bezierCurveTo(bx-W*0.02, H*0.18, bx-W*0.06, H*0.22, bx-W*0.10, H*0.28);
+  ctx.bezierCurveTo(bx-W*0.04, H*0.26, bx+W*0.04, H*0.25, bx+W*0.10, H*0.28);
+  ctx.bezierCurveTo(bx+W*0.06, H*0.22, bx+W*0.02, H*0.18, bx, H*0.12);
+  ctx.fillStyle = '#e8eaf6'; ctx.fill();
+
+  // crescent moon
+  ctx.save();
+  ctx.globalCompositeOperation = 'screen';
+  ctx.globalAlpha = alpha * 0.9;
+  ctx.beginPath(); ctx.arc(W*0.72, H*0.14, 12, 0, Math.PI*2);
+  ctx.fillStyle = '#fffde7'; ctx.fill();
+  ctx.beginPath(); ctx.arc(W*0.76, H*0.14, 10, 0, Math.PI*2);
+  ctx.fillStyle = '#0d1b5e'; ctx.fill();
+  ctx.restore();
+
+  // lava
+  if (lava > 0) {
+    const lavaGrad = ctx.createRadialGradient(bx, H*0.14, 0, bx, H*0.14, W*0.2*lava);
+    lavaGrad.addColorStop(0,   `rgba(255,200,0,${lava})`);
+    lavaGrad.addColorStop(0.4, `rgba(255,80,0,${lava*0.8})`);
+    lavaGrad.addColorStop(1,   'rgba(200,0,0,0)');
+    ctx.save();
+    ctx.globalCompositeOperation = 'screen';
+    ctx.beginPath(); ctx.arc(bx, H*0.14, W*0.25*lava, 0, Math.PI*2);
+    ctx.fillStyle = lavaGrad; ctx.fill();
+    ctx.restore();
+  }
+
+  // base
+  const base = ctx.createLinearGradient(0, H*0.75, 0, H);
+  base.addColorStop(0, '#1a2a1a'); base.addColorStop(1, '#0d160d');
+  ctx.beginPath();
+  ctx.moveTo(0, H*0.80); ctx.lineTo(W, H*0.80);
+  ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath();
+  ctx.fillStyle = base; ctx.fill();
+
+  // tree silhouette
+  ctx.fillStyle = '#0a130a';
+  for (let i=0; i<20; i++) {
+    const tx = (i/20)*W + (i%3)*8;
+    const th = 20 + (i%5)*8;
+    ctx.beginPath();
+    ctx.moveTo(tx, H*0.80);
+    ctx.lineTo(tx+8, H*0.80);
+    ctx.lineTo(tx+4, H*0.80-th);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  ctx.restore();
+}
+
+// Animation loop
+let canvasPhase = 'idle';
+let canvasT = 0;
+let fujiAlpha = 0, lavaVal = 0;
+
+function loop(time) {
+  animId = requestAnimationFrame(loop);
+  ctx.clearRect(0, 0, W, H);
+
+  const t = time * 0.001;
+
+  if (canvasPhase === 'idle') {
+    // Just draw twinkling stars + fuji hint
+    drawSpaceBackground(t);
+    drawStars(t);
+    fujiAlpha = 0; lavaVal = 0;
+    shakeX = 0; shakeY = 0;
+    return;
+  }
+
+  const elapsed = t - canvasT;
+
+  // ---- PHASE 1: SPACE + METEOR FALL (0–2.5s) ----
+  if (elapsed < 2.5) {
+    drawSpaceBackground(t);
+    drawStars(t);
+    const pct = elapsed / 2.5;
+    eggX = W/2 + Math.sin(elapsed*3)*8;
+    eggY = -50 + (H*0.48 + 50) * Math.pow(pct, 1.4);
+    trailPoints.push({x:eggX, y:eggY});
+    if (trailPoints.length > 28) trailPoints.shift();
+    // spawn trail particles
+    if (Math.random() < 0.7) {
+      spawnTrailParticle(eggX, eggY, 0, -(H*0.48+50)/2.5*0.05);
+    }
+  }
+
+  // ---- PHASE 2: FUJI APPEARS (2.0–3.5s) ----
+  if (elapsed >= 2.0) {
+    drawSpaceBackground(t);
+    drawStars(t);
+    fujiAlpha = Math.min(1, (elapsed-2.0)/0.8);
+    drawFuji(fujiAlpha, lavaVal);
+  }
+
+  // ---- LANDING (2.4–2.6s) ----
+  if (elapsed >= 2.4 && elapsed < 2.6) {
+    const lp = (elapsed-2.4)/0.2;
+    eggX = W/2;
+    eggY = H*0.48 - lp*H*0.12;  // slight bounce
+    shakeX = (Math.random()-0.5)*14*(1-lp);
+    shakeY = (Math.random()-0.5)*14*(1-lp);
+    if (lp > 0.1 && elapsed-2.4 < 0.05) {
+      spawnBurstParticles(W/2, H*0.42, 60);
+    }
+  } else { shakeX=0; shakeY=0; }
+
+  // egg settled
+  if (elapsed >= 2.6 && elapsed < 3.5) {
+    eggX = W/2;
+    eggY = H*0.42;
+  }
+
+  // ---- LAVA / ERUPTION (2.7–3.5s) ----
+  if (elapsed >= 2.7 && elapsed < 3.5) {
+    lavaVal = Math.sin((elapsed-2.7)/0.8 * Math.PI) * 0.9;
+    drawFuji(1, lavaVal);
+    if (Math.random() < 0.8) {
+      for (let i=0; i<3; i++) {
+        const angle = -Math.PI/2 + (Math.random()-0.5)*1.2;
+        const spd = Math.random()*5+3;
+        particles.push({
+          x:W/2 + (Math.random()-0.5)*20, y:H*0.16,
+          vx:Math.cos(angle)*spd, vy:Math.sin(angle)*spd,
+          life:1, decay:0.025,
+          r:Math.random()*4+2, hue:20+Math.random()*40,
+        });
+      }
+    }
+  }
+
+  // ---- FLASH (3.5s) ----
+  if (elapsed >= 3.5 && elapsed < 4.2) {
+    const fp = (elapsed-3.5)/0.7;
+    drawFuji(1, 0);
+    const flashAlpha = Math.max(0, 1 - fp*1.4);
+    ctx.save();
+    ctx.globalAlpha = flashAlpha;
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0,0,W,H);
+    ctx.restore();
+    trailPoints = [];
+  }
+
+  // ---- RAINBOW GLOW (3.8–4.5s) ----
+  if (elapsed >= 3.8 && elapsed < 5.2) {
+    const rp = (elapsed-3.8)/1.4;
+    const rAlpha = Math.sin(rp * Math.PI) * 0.55;
+    ctx.save();
+    ctx.globalCompositeOperation = 'screen';
+    const rainbow = ctx.createConicGradient(0, W/2, H/2);
+    rainbow.addColorStop(0,     `rgba(255,0,0,${rAlpha})`);
+    rainbow.addColorStop(1/6,   `rgba(255,165,0,${rAlpha})`);
+    rainbow.addColorStop(2/6,   `rgba(255,255,0,${rAlpha})`);
+    rainbow.addColorStop(3/6,   `rgba(0,255,128,${rAlpha})`);
+    rainbow.addColorStop(4/6,   `rgba(0,128,255,${rAlpha})`);
+    rainbow.addColorStop(5/6,   `rgba(128,0,255,${rAlpha})`);
+    rainbow.addColorStop(1,     `rgba(255,0,0,${rAlpha})`);
+    ctx.fillStyle = rainbow;
+    ctx.fillRect(0,0,W,H);
+    ctx.restore();
+  }
+
+  // ---- KUUCCHI REVEAL (4.0–) ----
+  if (elapsed >= 4.0) {
+    drawFuji(1, 0);
+    const rp = Math.min(1, (elapsed-4.0)/0.6);
+    const scale = 0.2 + rp * 1.2;
+    // Card-like panel
+    ctx.save();
+    ctx.globalAlpha = rp;
+    const pw=W*0.58, ph=W*0.72;
+    const px=(W-pw)/2, py=(H-ph)/2-20;
+    const cardGrad = ctx.createLinearGradient(px,py,px+pw,py+ph);
+    if (elapsed < 4.8) {
+      cardGrad.addColorStop(0,'#fffde7'); cardGrad.addColorStop(1,'#fff8e1');
+    } else {
+      // UR pulse
+      const pulse = 0.5+0.5*Math.sin((elapsed-4.8)*6);
+      cardGrad.addColorStop(0, `hsl(45,100%,${85+pulse*10}%)`);
+      cardGrad.addColorStop(1, `hsl(30,100%,${75+pulse*8}%)`);
+    }
+    ctx.shadowColor = '#ffd600';
+    ctx.shadowBlur  = 30 * rp;
+    ctx.beginPath();
+    const r=18;
+    ctx.roundRect(px,py,pw,ph,r);
+    ctx.fillStyle = cardGrad; ctx.fill();
+    ctx.strokeStyle = '#ffd600'; ctx.lineWidth=3;
+    ctx.stroke();
+    ctx.restore();
+
+    // Kuucchi placeholder (since we can't render SVG on canvas easily)
+    ctx.save();
+    ctx.globalAlpha = rp;
+    ctx.translate(W/2, H/2-10);
+    ctx.scale(scale*0.9, scale*0.9);
+    // Body
+    ctx.beginPath(); ctx.ellipse(0,20,46,32,0,0,Math.PI*2);
+    ctx.fillStyle = '#ffd700'; ctx.fill();
+    ctx.strokeStyle = '#ff8f00'; ctx.lineWidth=2.5; ctx.stroke();
+    // Mouth dark
+    ctx.beginPath(); ctx.ellipse(0,25,40,22,0,0,Math.PI*2);
+    ctx.fillStyle = '#0d1117'; ctx.fill();
+    // Teeth top
+    ctx.fillStyle = 'ivory';
+    for (let i=0; i<9; i++) {
+      const tx = -36+i*9;
+      ctx.fillRect(tx, 10, 7, 12);
+    }
+    // Teeth bottom
+    for (let i=0; i<9; i++) {
+      const tx = -36+i*9;
+      ctx.fillRect(tx, 26, 7, 12);
+    }
+    // Halo
+    ctx.globalCompositeOperation = 'screen';
+    const halo = ctx.createRadialGradient(0,-10,5, 0,-10,60);
+    halo.addColorStop(0, 'rgba(255,215,0,0.5)');
+    halo.addColorStop(1, 'rgba(255,150,0,0)');
+    ctx.beginPath(); ctx.arc(0,-10,60,0,Math.PI*2);
+    ctx.fillStyle=halo; ctx.fill();
+    ctx.restore();
+
+    // "伝説レア" label
+    ctx.save();
+    ctx.globalAlpha = Math.min(1, (elapsed-4.3)/0.4);
+    ctx.font = 'bold 14px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#ff8f00';
+    ctx.shadowColor = '#ffd600'; ctx.shadowBlur = 10;
+    ctx.fillText('✦ 伝説レア ✦', W/2, H/2 + ph/2 - 30);
+    ctx.restore();
+  }
+
+  // Draw trail + egg during fall
+  if (elapsed < 2.6 || (elapsed >= 3.5 && elapsed < 4.0)) {
+    drawTrail(trailPoints);
+  }
+  if (elapsed < 3.4) {
+    const glow = elapsed < 2.6 ? 1 : Math.max(0, 1-(elapsed-2.6)/0.8);
+    drawEgg(eggX, eggY, 1, glow);
+  }
+
+  // Update particles
+  drawParticles();
+  particles.forEach(p => {
+    p.x   += p.vx;
+    p.y   += p.vy;
+    p.vy  += 0.12;
+    p.vx  *= 0.97;
+    p.life -= p.decay;
+  });
+  particles = particles.filter(p => p.life > 0);
+
+  // Update rings
+  drawRings();
+  rings.forEach(r => { r.r += 6; r.life -= 0.04; });
+  rings = rings.filter(r => r.life > 0);
+
+  // End
+  if (elapsed > 6.0) {
+    canvasPhase = 'idle';
+    trailPoints = [];
+    particles = [];
+    rings = [];
+    eggX = W/2; eggY = -50;
+    fujiAlpha = 0; lavaVal = 0;
+  }
+}
+
+requestAnimationFrame(loop);
+
+function runCanvas() {
+  canvasPhase = 'run';
+  canvasT = performance.now() * 0.001;
+  trailPoints = [];
+  particles = [];
+  rings = [];
+  fujiAlpha = 0; lavaVal = 0;
+}
+function runBoth() { runCSS(); runCanvas(); }
+</script>
+</body>
+</html>
