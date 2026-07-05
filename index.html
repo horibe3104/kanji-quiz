@@ -1268,15 +1268,6 @@
       line-height:1.5;
     }
 
-    #bgm-btn {
-      position:fixed; bottom:16px; right:16px; z-index:500;
-      width:44px; height:44px; border-radius:50%;
-      background:rgba(26,35,126,.85); color:white; border:none;
-      font-size:20px; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.3);
-      display:flex; align-items:center; justify-content:center;
-      transition:background .2s;
-    }
-    #bgm-btn:hover { background:rgba(26,35,126,1); }
 
     /* ===== キャラ詳細 ===== */
     .coll-item.collected { cursor:pointer; transition:transform .12s, box-shadow .12s; }
@@ -3839,9 +3830,6 @@ function toggleMissionPanel() {
   });
   // タブバー：ホーム画面が初期アクティブなので表示
   document.getElementById('home-tab-bar').style.display = 'flex';
-  // BGMボタン初期位置もタブバーの上に
-  const _bgmBtn = document.getElementById('bgm-btn');
-  if(_bgmBtn) _bgmBtn.style.bottom = '72px';
   // ホームセリフ初期表示
   updateHomeSpeech();
 })();
@@ -3894,9 +3882,6 @@ function showScreen(id) {
   // タブバー表示切り替え
   const tabBar = document.getElementById('home-tab-bar');
   if(tabBar) tabBar.style.display = (id === 'screen-start') ? 'flex' : 'none';
-  // BGMボタンをタブバーと被らないよう調整
-  const bgmBtn = document.getElementById('bgm-btn');
-  if(bgmBtn) bgmBtn.style.bottom = (id === 'screen-start') ? '72px' : '16px';
   if(id==='screen-start') updateEvent2Btn();
   // 画面に応じてBGM切り替え
   const bgmMap = {
@@ -7545,13 +7530,12 @@ function getAudioCtx(){
 function toggleBGM(){
   const ctx = getAudioCtx(); if(!ctx) return;
   if(bgmOn){ stopBGM(); }
-  else      { bgmOn=true; document.getElementById('bgm-btn').textContent='🔊'; playBGMLoop(); }
+  else      { bgmOn=true; playBGMLoop(); }
 }
 
 function stopBGM(){
   bgmNodes.forEach(n=>{ try{ n.stop(); }catch(e){} });
   bgmNodes = []; bgmOn = false; bgmType = null;
-  document.getElementById('bgm-btn').textContent = '🔇';
 }
 
 // 画面切替時に呼ばれる — BGMがONのときだけ切り替える
@@ -7979,7 +7963,6 @@ function _mazeEnd(won) {
 // ページロード時にイベント②ボタンを初期化
 updateEvent2Btn();
 </script>
-<button id="bgm-btn" onclick="toggleBGM()" title="BGM ON/OFF">🔇</button>
 
 <!-- マイルストーンモーダル -->
 <div id="milestone-modal">
