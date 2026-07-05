@@ -3872,6 +3872,9 @@ function switchHomeTab(tab) {
   if(tab === 'home') updateHomeSpeech();
 }
 
+// ===== 学年設定（initより前に宣言必須） =====
+let playerGrade = parseInt(localStorage.getItem('kq_player_grade') || '1');
+
 // ===== INIT =====
 (function init() {
   updateCoinBar(); updateGachaBtn(); updateExpBar(); updateTicketBar(); updateTicketGachaBtn(); updateMazeKeyBar();
@@ -3954,9 +3957,6 @@ const MODE_CONFIG = [
 
 let visibleModes = JSON.parse(localStorage.getItem('kq_visible_modes') || 'null') || {};
 MODE_CONFIG.forEach(m => { if (visibleModes[m.mode] === undefined) visibleModes[m.mode] = true; });
-
-// ===== 学年設定 =====
-let playerGrade = parseInt(localStorage.getItem('kq_player_grade') || '1');
 
 /** バトル・迷路で使うKANJI_DATAプール（学年に応じて拡張） */
 function getBattlePool() {
