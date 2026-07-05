@@ -160,6 +160,52 @@
     .choice-btn.correct { border-color:#43a047; border-bottom-color:#2e7d32; background:#e8f5e9; color:#2e7d32; animation:correctPop .35s ease-out; }
     .choice-btn.wrong   { border-color:#e53935; border-bottom-color:#b71c1c; background:#ffebee; color:#c62828; animation:wrongShake .35s ease-out; }
     .choice-btn:disabled { cursor:default; }
+    /* ===== 敵バトルエリア ===== */
+    #enemy-battle-area {
+      display:none; text-align:center; margin:0 0 14px; position:relative;
+      padding:10px 14px 12px;
+      background:linear-gradient(180deg,#1a0533 0%,#2d1b4e 100%);
+      border-radius:18px; border:2px solid #7c3aed;
+    }
+    #enemy-char-wrap { width:80px; height:80px; margin:0 auto 4px; position:relative; }
+    #enemy-char-wrap svg { width:80px; height:80px; }
+    .enemy-idle { animation:en-float 2.5s ease-in-out infinite; }
+    @keyframes en-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    .enemy-hit { animation:en-hit .35s ease-out; }
+    @keyframes en-hit {
+      0%  { filter:brightness(4); transform:scale(1.15); }
+      25% { filter:brightness(1); transform:translateX(-10px) scale(.95); }
+      75% { transform:translateX(8px) scale(.95); }
+      100%{ transform:translateX(0) scale(1); }
+    }
+    .enemy-dodge { animation:en-dodge .35s ease-out; }
+    @keyframes en-dodge {
+      0%,100%{ transform:translateX(0); }
+      30%    { transform:translateX(18px) rotate(6deg); }
+      70%    { transform:translateX(-8px); }
+    }
+    #enemy-name-label { font-size:11px; font-weight:900; color:#d8b4fe; letter-spacing:2px; margin-bottom:4px; }
+    #enemy-hp-track {
+      background:rgba(0,0,0,.5); border-radius:99px; height:14px;
+      overflow:hidden; margin:0 4px 3px; border:1px solid #4c1d95;
+    }
+    #enemy-hp-fill {
+      height:100%; border-radius:99px;
+      background:linear-gradient(90deg,#dc2626,#ef4444,#f87171);
+      transition:width .5s cubic-bezier(.4,0,.2,1); width:100%;
+    }
+    #enemy-hp-text { font-size:9px; color:#c4b5fd; font-weight:700; }
+    #enemy-dmg-popup {
+      position:absolute; top:6px; left:50%; transform:translateX(-50%);
+      font-size:20px; font-weight:900; text-shadow:2px 2px 0 #000;
+      pointer-events:none; opacity:0; z-index:20;
+    }
+    .en-dmg-anim { animation:en-dmg .8s ease-out forwards !important; }
+    @keyframes en-dmg {
+      0%  { opacity:1; transform:translateX(-50%) translateY(0) scale(1.3); }
+      30% { opacity:1; transform:translateX(-50%) translateY(-18px) scale(1); }
+      100%{ opacity:0; transform:translateX(-50%) translateY(-45px) scale(.8); }
+    }
     #quiz-next-btn {
       display:none; width:100%; margin-top:12px; padding:14px;
       background:linear-gradient(135deg,#1565c0,#0d47a1);
@@ -1523,6 +1569,14 @@
       <div id="timer-count">10</div>
     </div>
     <div class="score-pill" id="score-badge">⭐ 0問 正かい</div>
+    <!-- 敵バトルエリア -->
+    <div id="enemy-battle-area">
+      <div id="enemy-dmg-popup">💥 ダメージ！</div>
+      <div id="enemy-char-wrap" class="enemy-idle"></div>
+      <div id="enemy-name-label">🔮 もじバケ</div>
+      <div id="enemy-hp-track"><div id="enemy-hp-fill"></div></div>
+      <div id="enemy-hp-text">たいりょく</div>
+    </div>
     <div class="question-type-label" id="q-type-label"></div>
     <button id="eng-speak-btn" onclick="speakEng()">🔊 もう一度きく</button>
     <div class="question-box">
@@ -3709,6 +3763,68 @@ function startEventQuiz() {
   renderQuestion();
 }
 
+// ===== 敵バトル =====
+const ENEMY_SVG = `<svg viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="50" cy="98" rx="28" ry="6" fill="rgba(0,0,0,.25)"/>
+  <circle cx="50" cy="52" r="42" fill="#7c3aed"/>
+  <defs><radialGradient id="egr" cx="35%" cy="30%" r="70%"><stop offset="0%" stop-color="rgba(255,255,255,.35)"/><stop offset="100%" stop-color="rgba(124,58,237,0)"/></radialGradient></defs>
+  <circle cx="50" cy="52" r="42" fill="url(#egr)"/>
+  <polygon points="28,18 20,2 36,12" fill="#6d28d9"/>
+  <polygon points="72,18 80,2 64,12" fill="#6d28d9"/>
+  <ellipse cx="36" cy="46" rx="10" ry="11" fill="#fff"/>
+  <ellipse cx="64" cy="46" rx="10" ry="11" fill="#fff"/>
+  <circle cx="38" cy="47" r="6" fill="#1e1b4b"/>
+  <circle cx="66" cy="47" r="6" fill="#1e1b4b"/>
+  <circle cx="40" cy="44" r="2" fill="#fff"/>
+  <circle cx="68" cy="44" r="2" fill="#fff"/>
+  <path d="M26 33 Q36 27 46 33" fill="none" stroke="#4c1d95" stroke-width="3" stroke-linecap="round"/>
+  <path d="M54 33 Q64 27 74 33" fill="none" stroke="#4c1d95" stroke-width="3" stroke-linecap="round"/>
+  <path d="M34 68 Q50 82 66 68" fill="#4c1d95"/>
+  <polygon points="40,68 43,78 46,68" fill="#fff"/>
+  <polygon points="54,68 57,78 60,68" fill="#fff"/>
+  <ellipse cx="22" cy="60" rx="7" ry="5" fill="#a855f7" opacity=".5"/>
+  <ellipse cx="78" cy="60" rx="7" ry="5" fill="#a855f7" opacity=".5"/>
+</svg>`;
+let enemyCurrentHP = 0, enemyMaxHP = 0;
+
+function initEnemyBattle(total) {
+  enemyMaxHP = total; enemyCurrentHP = total;
+  document.getElementById('enemy-char-wrap').innerHTML = ENEMY_SVG;
+  document.getElementById('enemy-char-wrap').className = 'enemy-idle';
+  document.getElementById('enemy-hp-fill').style.width = '100%';
+  document.getElementById('enemy-hp-fill').style.background = 'linear-gradient(90deg,#dc2626,#ef4444,#f87171)';
+  document.getElementById('enemy-battle-area').style.display = 'block';
+}
+function updateEnemyHPBar() {
+  const pct = Math.max(0, enemyCurrentHP / enemyMaxHP * 100);
+  const fill = document.getElementById('enemy-hp-fill');
+  fill.style.width = pct + '%';
+  if (pct > 50) fill.style.background = 'linear-gradient(90deg,#dc2626,#ef4444,#f87171)';
+  else if (pct > 25) fill.style.background = 'linear-gradient(90deg,#d97706,#f59e0b,#fbbf24)';
+  else fill.style.background = 'linear-gradient(90deg,#16a34a,#22c55e,#86efac)';
+}
+function enemyTakeDamage() {
+  if (enemyCurrentHP > 0) enemyCurrentHP--;
+  updateEnemyHPBar();
+  const wrap = document.getElementById('enemy-char-wrap');
+  wrap.className = ''; void wrap.offsetWidth; wrap.className = 'enemy-hit';
+  setTimeout(() => { wrap.className = 'enemy-idle'; }, 400);
+  const pop = document.getElementById('enemy-dmg-popup');
+  pop.textContent = '💥 ダメージ！'; pop.style.color = '#fbbf24';
+  pop.className = ''; void pop.offsetWidth; pop.className = 'en-dmg-anim';
+}
+function enemyDodge() {
+  const wrap = document.getElementById('enemy-char-wrap');
+  wrap.className = ''; void wrap.offsetWidth; wrap.className = 'enemy-dodge';
+  setTimeout(() => { wrap.className = 'enemy-idle'; }, 400);
+  const pop = document.getElementById('enemy-dmg-popup');
+  pop.textContent = 'かわした…'; pop.style.color = '#94a3b8';
+  pop.className = ''; void pop.offsetWidth; pop.className = 'en-dmg-anim';
+}
+function hideEnemyBattle() {
+  document.getElementById('enemy-battle-area').style.display = 'none';
+}
+
 // ===== イベント②：３年生の漢字まとめ① =====
 const EVENT_STAGE_DATA_2 = [
   // ─── レベル1 ───
@@ -3826,6 +3942,7 @@ function startEventQuiz2() {
   activeQuizId = 'event2';
   _primeSpeech();
   showScreen('screen-quiz');
+  initEnemyBattle(questions.length);
   renderQuestion();
 }
 
@@ -4130,6 +4247,7 @@ function handleAnswer(choice, btn) {
     const bonus = streak>=5?3:streak>=3?2:1;
     coins+=bonus; quizCoinsEarned+=bonus;
     saveState(); updateCoinBar(); spawnCoinFloat(bonus); showFeedback('⭕',600);
+    if(activeQuizId === 'event2') enemyTakeDamage();
     // クイズ正解でEXPのかけらをゲット
     expStones += 2; saveExpStones(); updateExpBar();
     // かけら +1（毎回）、100個で迷路プレイ可
@@ -4138,7 +4256,7 @@ function handleAnswer(choice, btn) {
     if(keyFragments % 100 === 0){
       spawnKeyFloat();
     }
-  } else { showFeedback('❌',600); }
+  } else { showFeedback('❌',600); if(activeQuizId === 'event2') enemyDodge(); }
   // iOS: ユーザー操作タイミングで無音発話してセッションを維持
   if (window.speechSynthesis && _speechPrimed) {
     window.speechSynthesis.cancel();
@@ -4174,6 +4292,7 @@ function showFeedback(e,d) {
 }
 
 function showResult() {
+  hideEnemyBattle();
   // イベント②：累計正解数を加算してアンロックチェック
   if(activeQuizId === 'event2'){
     event2TotalCorrect += correctCount;
