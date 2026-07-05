@@ -7221,9 +7221,12 @@ function answerSuperQuiz(btn, answer, correct){
     setTimeout(()=>{ dealEnemyDamage(dmg, true); }, 1350);
   } else {
     playSound('wrong');
-    const dmg = Math.max(1, Math.round(sp.atk * 0.5));
-    setLog(answer ? `${sp.name} しっぱい…\n${dmg}ダメージ` : `じかんぎれ！\n${sp.name} まにあわず！`);
-    setTimeout(()=>dealEnemyDamage(dmg, false), 650);
+    btCombo = 0; hideBtCombo();
+    setLog(answer ? `${sp.name} しっぱい…\nはんげき！` : `じかんぎれ！\n${sp.name} まにあわず！`);
+    setTimeout(()=>{
+      document.getElementById('bt-quiz-panel').style.display = 'none';
+      enemyCounterAttack(); // ミス時はプレイヤーがダメージを受ける
+    }, 650);
   }
 }
 
@@ -7369,12 +7372,8 @@ function dealEnemyDamage(dmg, isCombo){
       hideBtCombo();
       battleWin();
     } else {
-      // コンボ継続中は自動で次の問題へ、途切れた場合はアクションボタンへ
-      if(btCombo > 0){
-        setTimeout(()=>{ btPhase='quiz'; showBtQuiz(); }, 600);
-      } else {
-        enemyTurn();
-      }
+      // 攻撃後は常に敵のターン（コンボ自動継続なし）
+      enemyTurn();
     }
   }, 1000);
 }
