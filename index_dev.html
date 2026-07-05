@@ -947,6 +947,101 @@
       100% { opacity:0; transform:translateX(-50%) translateY(-24px); }
     }
 
+    /* ===== 育成強化: 進化グロー ===== */
+    .evolved-glow svg, #soda-svg.evolved-glow svg {
+      filter: drop-shadow(0 0 8px #ffd700) drop-shadow(0 0 16px #ff9800);
+      animation: evolveRing 2s ease-in-out infinite alternate;
+    }
+    @keyframes evolveRing {
+      0%   { filter: drop-shadow(0 0 6px #ffd700) drop-shadow(0 0 12px #ff9800); }
+      100% { filter: drop-shadow(0 0 14px #ffd700) drop-shadow(0 0 24px #ff6000); }
+    }
+    .evolved-badge {
+      display:inline-block; background:linear-gradient(135deg,#ffd700,#ff9800);
+      color:#fff; font-size:10px; font-weight:900; border-radius:99px;
+      padding:2px 7px; margin-left:4px; vertical-align:middle;
+    }
+    .evolve-btn {
+      width:100%; padding:14px; margin-bottom:8px;
+      background:linear-gradient(135deg,#7b1fa2,#ffd700);
+      color:white; border:none; border-bottom:4px solid #4a0072;
+      border-radius:14px; font-size:16px; font-weight:900; cursor:pointer;
+      transition:transform .1s, border-bottom-width .1s;
+    }
+    .evolve-btn:disabled { background:linear-gradient(135deg,#bdbdbd,#9e9e9e); border-bottom-color:#757575; cursor:not-allowed; }
+    .evolve-btn:not(:disabled):active { transform:translateY(3px); border-bottom-width:1px; }
+
+    /* ===== 育成強化: スキルリスト ===== */
+    .skill-section { margin:10px 0; text-align:left; }
+    .skill-section-title { font-size:12px; font-weight:900; color:#7b1fa2; margin-bottom:6px; }
+    .skill-list { display:flex; flex-direction:column; gap:5px; }
+    .skill-item {
+      display:flex; align-items:center; gap:8px;
+      background:#f3e5f5; border-radius:10px; padding:6px 10px;
+      opacity:0.35; transition:opacity .3s;
+    }
+    .skill-item.unlocked { opacity:1; background:#e8f5e9; }
+    .skill-item .skill-icon { font-size:18px; flex-shrink:0; }
+    .skill-item .skill-info { flex:1; }
+    .skill-item .skill-name { font-size:12px; font-weight:900; color:#37474f; }
+    .skill-item .skill-desc { font-size:10px; color:#607d8b; }
+    .skill-item .skill-lv-req { font-size:10px; color:#9e9e9e; margin-left:auto; flex-shrink:0; }
+
+    /* ===== 育成強化: 絆ゲージ ===== */
+    .bond-section { margin:10px 0; }
+    .bond-section-title { font-size:12px; font-weight:900; color:#e91e63; margin-bottom:6px; }
+    .bond-bar-wrap { display:flex; align-items:center; gap:8px; }
+    .bond-bar-track { flex:1; height:14px; background:#fce4ec; border-radius:99px; overflow:hidden; }
+    .bond-bar-fill { height:100%; background:linear-gradient(90deg,#f48fb1,#e91e63); border-radius:99px; transition:width .5s; }
+    .bond-bar-num { font-size:11px; font-weight:900; color:#e91e63; white-space:nowrap; }
+    .bond-stage-label { font-size:11px; font-weight:900; color:#c2185b; margin-top:3px; text-align:center; }
+
+    /* ===== 育成強化: マイルストーンモーダル ===== */
+    #milestone-modal {
+      display:none; position:fixed; inset:0; background:rgba(0,0,0,.65);
+      z-index:999; align-items:center; justify-content:center;
+    }
+    #milestone-modal.show { display:flex; }
+    .milestone-card {
+      background:white; border-radius:20px; padding:28px 24px; max-width:320px; width:90%;
+      text-align:center; box-shadow:0 8px 40px rgba(0,0,0,.35);
+      animation:msCardIn .4s cubic-bezier(.34,1.56,.64,1) forwards;
+    }
+    @keyframes msCardIn {
+      0%   { transform:scale(.4); opacity:0; }
+      100% { transform:scale(1);  opacity:1; }
+    }
+    .milestone-title { font-size:22px; font-weight:900; color:#ff9800; margin-bottom:10px; }
+    .milestone-reward { font-size:14px; font-weight:900; color:#37474f; margin-bottom:8px; }
+    .milestone-skill  { font-size:13px; color:#7b1fa2; font-weight:700; margin-bottom:14px; }
+    .milestone-btn {
+      width:100%; padding:14px;
+      background:linear-gradient(135deg,#ff9800,#f44336);
+      color:white; border:none; border-bottom:4px solid #bf360c;
+      border-radius:14px; font-size:16px; font-weight:900; cursor:pointer;
+    }
+
+    /* ===== 育成強化: レベルアップ パーティクル ===== */
+    .lv-particle {
+      position:absolute; font-size:22px; pointer-events:none;
+      animation:lvParticle 1s ease-out forwards;
+    }
+    @keyframes lvParticle {
+      0%   { opacity:1; transform:translate(0,0) scale(1); }
+      100% { opacity:0; transform:var(--particle-transform, translate(0,-60px)) scale(0.5); }
+    }
+    .lv-stat-popup {
+      position:absolute; top:-8px; left:50%; transform:translateX(-50%);
+      background:rgba(0,0,0,.75); color:#fff; border-radius:99px;
+      padding:4px 12px; font-size:12px; font-weight:900; white-space:nowrap;
+      animation:lvStatPop .9s ease-out forwards; pointer-events:none;
+    }
+    @keyframes lvStatPop {
+      0%   { opacity:0; transform:translateX(-50%) translateY(0); }
+      20%  { opacity:1; }
+      100% { opacity:0; transform:translateX(-50%) translateY(-36px); }
+    }
+
     /* ===== GIF ガチャ: 特別演出バナー ===== */
     #g-special-banner {
       position:absolute; bottom:80px; left:50%; transform:translateX(-50%);
@@ -1877,6 +1972,21 @@
         <div class="soda-bar-text" id="soda-exp-text">0 / 20 EXP</div>
       </div>
       <button class="soda-up-btn" id="soda-up-btn" onclick="useExpStones()" disabled>🍟 レベルアップ！</button>
+      <button class="evolve-btn" id="soda-evolve-btn" onclick="evolveKuucchi(sodaSelectedId)" style="display:none">⚡ しんか！（🪙300まい）</button>
+      <!-- スキルセクション -->
+      <div class="skill-section" id="soda-skill-section" style="display:none">
+        <div class="skill-section-title">📚 スキル</div>
+        <div class="skill-list" id="soda-skill-list"></div>
+      </div>
+      <!-- 絆ゲージ -->
+      <div class="bond-section" id="soda-bond-section" style="display:none">
+        <div class="bond-section-title">💖 きずな</div>
+        <div class="bond-bar-wrap">
+          <div class="bond-bar-track"><div class="bond-bar-fill" id="soda-bond-fill" style="width:0%"></div></div>
+          <span class="bond-bar-num" id="soda-bond-num">0/50</span>
+        </div>
+        <div class="bond-stage-label" id="soda-bond-label"></div>
+      </div>
       <button class="soda-back-inner-btn" onclick="sodaBack()">← くうっちをえらびなおす</button>
     </div>
     <button class="gacha-back-btn" id="soda-home-btn" onclick="goHome()">← トップへ</button>
@@ -1905,10 +2015,10 @@
         <div class="soda-exp-track"><div class="soda-exp-fill" id="soda-exp-fill"></div></div>
         <span class="soda-exp-num" id="soda-exp-text">0 / 20 EXP</span>
       </div>
-      <button class="soda-use-btn" id="soda-up-btn" onclick="useExpStones()">🍟 レベルアップ！</button>
+      <button class="soda-use-btn" id="soda-up-btn2" onclick="useExpStones()">🍟 レベルアップ！</button>
       <button class="soda-back-btn" onclick="sodaBack()">← くうっちをえらびなおす</button>
     </div>
-    <button class="gacha-back-btn" id="soda-home-btn" onclick="goHome()">← トップへ</button>
+    <button class="gacha-back-btn" id="soda-home-btn2" onclick="goHome()">← トップへ</button>
   </div>
 </div>
 
@@ -3389,6 +3499,43 @@ let coins          = parseInt(localStorage.getItem('kq_coins') || '0');
 let collection     = JSON.parse(localStorage.getItem('kq_collection') || '{}');
 let kuucchiLevels  = JSON.parse(localStorage.getItem('kq_levels')     || '{}');
 let expStones      = parseInt(localStorage.getItem('kq_exps') || '0');
+let evolvedKuucchi = JSON.parse(localStorage.getItem('kq_evolved')    || '{}');
+let bondData       = JSON.parse(localStorage.getItem('kq_bond')       || '{}');
+let milestoneClaimed = JSON.parse(localStorage.getItem('kq_milestone_claimed') || '{}');
+function saveEvolved(){ localStorage.setItem('kq_evolved', JSON.stringify(evolvedKuucchi)); }
+function saveBond()  { localStorage.setItem('kq_bond',    JSON.stringify(bondData)); }
+function saveMilestoneClaimed(){ localStorage.setItem('kq_milestone_claimed', JSON.stringify(milestoneClaimed)); }
+
+// ===== マイルストーン定義 =====
+const MILESTONES = {
+  5:  { msg:'Lv.5 たっせい！🎉',   reward:{ coins:30,  exp:0   } },
+  10: { msg:'Lv.10 たっせい！🌟',  reward:{ coins:50,  exp:10  } },
+  15: { msg:'Lv.15 たっせい！💫',  reward:{ coins:80,  exp:20  } },
+  20: { msg:'Lv.20 たっせい！🔥',  reward:{ coins:100, exp:30  } },
+  25: { msg:'Lv.25 たっせい！⚡',  reward:{ coins:150, exp:50  } },
+  30: { msg:'🏆 MAX レベル！\n進化できるようになった！', reward:{ coins:200, exp:100 } },
+};
+
+// ===== スキル定義 =====
+const SKILL_DEFS = [
+  { lv:5,  id:'skill_atk1',  name:'ちからのめざめ',    icon:'⚔️',  desc:'ATK +10%',                     effect:{ atkMul:0.10 } },
+  { lv:10, id:'skill_def1',  name:'てっぺきのよろい',  icon:'🛡️',  desc:'DEF +15%',                     effect:{ defMul:0.15 } },
+  { lv:15, id:'skill_hp1',   name:'せいめいりょく',    icon:'❤️',  desc:'HP +20%',                      effect:{ hpMul:0.20 } },
+  { lv:20, id:'skill_atk2',  name:'ひっさつのオーラ',  icon:'✨',  desc:'ATK +20% / 必殺倍率 +0.5',     effect:{ atkMul:0.20, specialMulBonus:0.5 } },
+  { lv:25, id:'skill_def2',  name:'ぜったいぼうぎょ',  icon:'🏰',  desc:'DEF +25% / HP +10%',           effect:{ defMul:0.25, hpMul:0.10 } },
+  { lv:30, id:'skill_max',   name:'チャンピオンオーラ', icon:'👑',  desc:'全ステータス +30%',             effect:{ atkMul:0.30, defMul:0.30, hpMul:0.30 } },
+];
+
+// ===== 絆ステージ定義 =====
+const BOND_STAGES = [
+  { required:10, icon:'💛', label:'なかま',     atkBonus:5,  defBonus:3  },
+  { required:25, icon:'❤️', label:'しんゆう',   atkBonus:12, defBonus:8  },
+  { required:50, icon:'💖', label:'いのちがけ', atkBonus:25, defBonus:18, specialMulBonus:0.3 },
+];
+
+// 現在表示中のマイルストーン報酬キュー
+let _msQueue = [];
+let _msPendingReward = null;
 let floorClears = JSON.parse(localStorage.getItem('kq_floor_clears') || '[]');
 // イベント②：３年生の漢字まとめ① 累計正解数
 const EVENT2_GOAL = 1000;
@@ -3473,6 +3620,15 @@ function earnBadge(id) {
   toast.classList.add('show');
   clearTimeout(toast._hideTimer);
   toast._hideTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+function showToast(msg, duration=2500){
+  const toast = document.getElementById('badge-toast');
+  if(!toast) return;
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toast._hideTimer);
+  toast._hideTimer = setTimeout(()=>toast.classList.remove('show'), duration);
 }
 
 function checkBadges() {
@@ -3759,7 +3915,7 @@ function _toggleMode(mode, visible, group) {
 
 const _DATA_KEYS = ['kq_coins','kq_collection','kq_levels','kq_exps','kq_tickets',
   'kq_floor_clears','kq_key_frags','kq_login_day','kq_login_last','kq_visible_modes',
-  'kq_event2_correct'];
+  'kq_event2_correct','kq_evolved','kq_bond','kq_milestone_claimed'];
 
 function exportData() {
   const data = {};
@@ -6302,9 +6458,42 @@ function getStats(k){
     return { ...k.fixedStats, lv };
   }
   const b = getBaseStats(k);
-  const lv = kuucchiLvData(k.id).lv;
-  const m = 1+(lv-1)*0.07;
-  return { hp:Math.round(b.hp*m), atk:Math.round(b.atk*m), def:Math.round(b.def*m), lv };
+  const ld = kuucchiLvData(k.id);
+  const lv = ld.lv;
+  // 進化による基底倍率
+  const evolvedMul = evolvedKuucchi[k.id] ? 1.5 : 1.0;
+  const m = (1+(lv-1)*0.07) * evolvedMul;
+
+  let hp  = b.hp  * m;
+  let atk = b.atk * m;
+  let def = b.def * m;
+  let specialMulBonus = evolvedKuucchi[k.id] ? 0.5 : 0;
+
+  // スキルボーナス累積
+  let hpMul = 0, atkMul = 0, defMul = 0;
+  for(const sk of SKILL_DEFS){
+    if(lv >= sk.lv){
+      if(sk.effect.hpMul)  hpMul  += sk.effect.hpMul;
+      if(sk.effect.atkMul) atkMul += sk.effect.atkMul;
+      if(sk.effect.defMul) defMul += sk.effect.defMul;
+      if(sk.effect.specialMulBonus) specialMulBonus += sk.effect.specialMulBonus;
+    }
+  }
+  hp  *= (1 + hpMul);
+  atk *= (1 + atkMul);
+  def *= (1 + defMul);
+
+  // 絆ボーナス
+  const bond = bondData[k.id] || 0;
+  for(const stage of BOND_STAGES){
+    if(bond >= stage.required){
+      atk += stage.atkBonus;
+      def += stage.defBonus;
+      if(stage.specialMulBonus) specialMulBonus += stage.specialMulBonus;
+    }
+  }
+
+  return { hp:Math.round(hp), atk:Math.round(atk), def:Math.round(def), lv, specialMulBonus };
 }
 
 // ===== バトル状態 =====
@@ -6396,7 +6585,6 @@ function selectSodaKuucchi(id){
   const ld = kuucchiLvData(id);
 
   document.getElementById('soda-svg').innerHTML = kSVG(k);
-  document.getElementById('soda-name').textContent = k.name;
   document.getElementById('soda-lv-txt').textContent = `Lv.${ld.lv}`;
   const _hpPct2  = Math.min(100,Math.round(st.hp /1200*100));
   const _atkPct2 = Math.min(100,Math.round(st.atk/170 *100));
@@ -6418,9 +6606,71 @@ function selectSodaKuucchi(id){
   const canLevel = !atMax && expStones >= needed;
   const btn = document.getElementById('soda-up-btn');
   btn.disabled = !canLevel;
-  if(atMax) btn.textContent = '🏆 MAX レベル！';
+  if(atMax && !evolvedKuucchi[id]) btn.textContent = '🏆 MAXレベル！';
+  else if(atMax && evolvedKuucchi[id]) { btn.disabled = true; btn.textContent = '🏆 MAX レベル！（しんか ずみ）'; }
   else if(!canLevel) btn.textContent = `あと ${needed - expStones} こ たりない`;
   else btn.textContent = `🍟 レベルアップ！（${needed}こ つかう）`;
+
+  // 進化ボタン
+  const evolveBtn = document.getElementById('soda-evolve-btn');
+  if(evolveBtn){
+    if(atMax && !evolvedKuucchi[id]){
+      evolveBtn.style.display = 'block';
+      evolveBtn.disabled = coins < 300;
+      evolveBtn.textContent = coins >= 300 ? '⚡ しんか！（🪙300まい）' : '⚡ しんか！（🪙たりない）';
+    } else {
+      evolveBtn.style.display = 'none';
+    }
+  }
+
+  // 進化グロー
+  const svgEl = document.getElementById('soda-svg');
+  if(svgEl){
+    if(evolvedKuucchi[id]) svgEl.classList.add('evolved-glow');
+    else svgEl.classList.remove('evolved-glow');
+  }
+
+  // 進化バッジ（名前の横）
+  const nameEl = document.getElementById('soda-name');
+  if(nameEl){
+    nameEl.innerHTML = k.name + (evolvedKuucchi[id] ? '<span class="evolved-badge">✨進化</span>' : '');
+  }
+
+  // スキルセクション
+  const skillSection = document.getElementById('soda-skill-section');
+  const skillList = document.getElementById('soda-skill-list');
+  if(skillSection && skillList){
+    skillSection.style.display = 'block';
+    skillList.innerHTML = '';
+    SKILL_DEFS.forEach(sk=>{
+      const unlocked = ld.lv >= sk.lv;
+      const div = document.createElement('div');
+      div.className = 'skill-item' + (unlocked ? ' unlocked' : '');
+      div.innerHTML = `<div class="skill-icon">${sk.icon}</div>
+        <div class="skill-info">
+          <div class="skill-name">${sk.name}</div>
+          <div class="skill-desc">${sk.desc}</div>
+        </div>
+        <div class="skill-lv-req">Lv.${sk.lv}</div>`;
+      skillList.appendChild(div);
+    });
+  }
+
+  // 絆ゲージ
+  const bondSection = document.getElementById('soda-bond-section');
+  if(bondSection){
+    bondSection.style.display = 'block';
+    const bond = bondData[id] || 0;
+    const bondPct = Math.min(100, Math.round(bond / 50 * 100));
+    document.getElementById('soda-bond-fill').style.width = bondPct + '%';
+    document.getElementById('soda-bond-num').textContent = `${bond}/50`;
+    // 現在の絆ステージ
+    let stageLabel = '（まだなかまじゃない）';
+    for(const stage of BOND_STAGES){
+      if(bond >= stage.required) stageLabel = `${stage.icon} ${stage.label}`;
+    }
+    document.getElementById('soda-bond-label').textContent = stageLabel;
+  }
 
   document.getElementById('soda-grid').style.display = 'none';
   document.getElementById('soda-home-btn').style.display = 'none';
@@ -6440,20 +6690,129 @@ function useExpStones(){
   if(ld.lv >= MAX_LV || expStones <= 0) return;
   const needed = expForLv(ld.lv) - ld.exp;
   if(expStones < needed) return;
+
+  const k = KD.find(x=>x.id===sodaSelectedId);
+  const stBefore = getStats(k);
   expStones -= needed;
   saveExpStones();
   updateExpBar();
+  const prevLv = ld.lv;
   const leveled = addExp(sodaSelectedId, needed);
   saveLevels();
+
   if(leveled){
-    // レベルアップエフェクト
+    const stAfter = getStats(k);
+    const area = document.getElementById('soda-kuucchi-area');
+
+    // ⬆️ レベルアップテキスト
     const fl = document.createElement('div');
     fl.className = 'soda-levelup-flash';
     fl.textContent = '⬆️ レベルアップ！';
-    document.getElementById('soda-kuucchi-area').appendChild(fl);
+    area.appendChild(fl);
     setTimeout(()=>fl.remove(), 1200);
+
+    // ステータスアップポップアップ
+    const dAtk = stAfter.atk - stBefore.atk;
+    const dDef = stAfter.def - stBefore.def;
+    const dHp  = stAfter.hp  - stBefore.hp;
+    const popup = document.createElement('div');
+    popup.className = 'lv-stat-popup';
+    popup.textContent = `+ATK ${dAtk}↑ / +DEF ${dDef}↑ / +HP ${dHp}↑`;
+    area.appendChild(popup);
+    setTimeout(()=>popup.remove(), 1200);
+
+    // 星パーティクル5個
+    const particles = ['⭐','✨','💫','🌟','⚡'];
+    const offsets = [
+      'translate(-50px,-60px)',
+      'translate(50px,-60px)',
+      'translate(-70px,-30px)',
+      'translate(70px,-30px)',
+      'translate(0px,-80px)',
+    ];
+    particles.forEach((emoji,i)=>{
+      const p = document.createElement('div');
+      p.className = 'lv-particle';
+      p.textContent = emoji;
+      p.style.setProperty('--particle-transform', offsets[i]);
+      p.style.left = (30 + Math.random()*40) + '%';
+      p.style.top  = '40%';
+      area.appendChild(p);
+      setTimeout(()=>p.remove(), 1100);
+    });
+
+    // マイルストーンチェック（レベルアップした全レベルを確認）
+    const newLv = ld.lv;
+    for(let lv = prevLv+1; lv <= newLv; lv++){
+      if(MILESTONES[lv]){
+        const msKey = sodaSelectedId + '_' + lv;
+        if(!milestoneClaimed[msKey]){
+          _msQueue.push({ lv, id: sodaSelectedId });
+        }
+      }
+    }
+    // マイルストーンモーダル表示
+    setTimeout(()=>showNextMilestone(), 1400);
   }
   selectSodaKuucchi(sodaSelectedId);
+}
+
+function showNextMilestone(){
+  if(_msQueue.length === 0) return;
+  const { lv, id } = _msQueue.shift();
+  const ms = MILESTONES[lv];
+  if(!ms) { showNextMilestone(); return; }
+  const msKey = id + '_' + lv;
+  if(milestoneClaimed[msKey]) { showNextMilestone(); return; }
+
+  // スキル解放があるか確認
+  const unlockedSkill = SKILL_DEFS.find(sk => sk.lv === lv);
+
+  document.getElementById('ms-title').textContent = ms.msg.replace('\n',' ');
+  let rewardText = '';
+  if(ms.reward.coins) rewardText += `🪙 コイン +${ms.reward.coins}まい　`;
+  if(ms.reward.exp)   rewardText += `🍟 ポテトフライ +${ms.reward.exp}こ`;
+  document.getElementById('ms-reward').textContent = rewardText;
+  document.getElementById('ms-skill').textContent = unlockedSkill
+    ? `${unlockedSkill.icon} スキル解放：「${unlockedSkill.name}」（${unlockedSkill.desc}）`
+    : '';
+
+  _msPendingReward = { ms, msKey };
+  document.getElementById('milestone-modal').classList.add('show');
+}
+
+function claimMilestone(){
+  document.getElementById('milestone-modal').classList.remove('show');
+  if(!_msPendingReward) return;
+  const { ms, msKey } = _msPendingReward;
+  _msPendingReward = null;
+
+  milestoneClaimed[msKey] = true;
+  saveMilestoneClaimed();
+
+  if(ms.reward.coins){ coins += ms.reward.coins; saveState(); updateCoinBar(); }
+  if(ms.reward.exp)  { expStones += ms.reward.exp; saveExpStones(); updateExpBar(); }
+
+  // 次のキューへ
+  setTimeout(()=>showNextMilestone(), 300);
+  if(sodaSelectedId) selectSodaKuucchi(sodaSelectedId);
+}
+
+function evolveKuucchi(id){
+  if(!id) return;
+  const ld = kuucchiLvData(id);
+  if(ld.lv < MAX_LV) return;
+  if(evolvedKuucchi[id]) return;
+  if(coins < 300){ showToast('🪙 コインが たりない！ 300まい ひつよう'); return; }
+
+  coins -= 300; saveState(); updateCoinBar();
+  evolvedKuucchi[id] = true; saveEvolved();
+  // レベルリセット
+  ld.lv = 1; ld.exp = 0; saveLevels();
+  // 進化エフェクト
+  launchConfetti();
+  selectSodaKuucchi(id);
+  showToast('✨ しんか した！ さらに つよくなった！');
 }
 
 function renderFloorDots(containerId, dotClass){
@@ -6675,9 +7034,13 @@ function battleSuper(){
     const atk = getStats(k).atk;
     if(atk > bestAtk){ bestAtk = atk; bestK = k; }
   });
-  btCurrentSpecial = bestK
-    ? { name: bestK.specialName, mul: bestK.specialMul, atk: bestAtk, kuucchi: bestK }
-    : { name: '必殺アタック', mul: 3.0, atk: battleParty.reduce((s,k)=>s+getStats(k).atk,0)/battleParty.length, kuucchi: null };
+  if(bestK){
+    const bestStats = getStats(bestK);
+    const bonusMul  = bestStats.specialMulBonus || 0;
+    btCurrentSpecial = { name: bestK.specialName, mul: bestK.specialMul + bonusMul, atk: bestAtk, kuucchi: bestK };
+  } else {
+    btCurrentSpecial = { name: '必殺アタック', mul: 3.0, atk: battleParty.reduce((s,k)=>s+getStats(k).atk,0)/battleParty.length, kuucchi: null };
+  }
 
   showBtSuperQuiz();
 }
@@ -6975,6 +7338,22 @@ function battleWin(){
   const expReward  = 2 + btFloor;
   coins      += coinReward; saveState(); updateCoinBar();
   expStones  += expReward;  saveExpStones(); updateExpBar();
+
+  // 絆ボーナス: バトルパーティー全員に絆+1
+  if(battleParty && battleParty.length > 0){
+    battleParty.forEach(k=>{
+      const prevBond = bondData[k.id] || 0;
+      const newBond  = Math.min(50, prevBond + 1);
+      bondData[k.id] = newBond;
+      // 絆ステージアップ通知
+      for(const stage of BOND_STAGES){
+        if(prevBond < stage.required && newBond >= stage.required){
+          showToast(`${stage.icon} ${k.name}が「${stage.label}」になった！`);
+        }
+      }
+    });
+    saveBond();
+  }
 
   const clearedFloor = btFloor;
   btFloor++;
@@ -7886,6 +8265,16 @@ function _tsumGameOver() {
 updateEvent2Btn();
 </script>
 <button id="bgm-btn" onclick="toggleBGM()" title="BGM ON/OFF">🔇</button>
+
+<!-- マイルストーンモーダル -->
+<div id="milestone-modal">
+  <div class="milestone-card">
+    <div class="milestone-title" id="ms-title">🎉 マイルストーン！</div>
+    <div class="milestone-reward" id="ms-reward"></div>
+    <div class="milestone-skill" id="ms-skill"></div>
+    <button class="milestone-btn" onclick="claimMilestone()">うけとる！🎁</button>
+  </div>
+</div>
 
 <!-- ログインボーナスオーバーレイ -->
 <div id="login-bonus-overlay">
