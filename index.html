@@ -116,6 +116,51 @@
     .start-btn:hover { transform:translateY(-2px); }
     .start-btn:active { transform:translateY(4px); border-bottom-width:1px; }
 
+    /* ============ BOTTOM TAB BAR ============ */
+    .home-tab-bar {
+      position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+      width:100%; max-width:460px;
+      display:flex; background:#fff;
+      border-top:2px solid #e0e0e0;
+      box-shadow:0 -4px 16px rgba(0,0,0,.18);
+      z-index:200;
+      padding-bottom:env(safe-area-inset-bottom,0px);
+    }
+    .tab-nav-btn {
+      flex:1; padding:10px 0 8px; border:none; background:transparent;
+      font-size:10px; font-weight:800; color:#aaa; cursor:pointer;
+      display:flex; flex-direction:column; align-items:center; gap:2px;
+      letter-spacing:.5px; transition:color .15s;
+      font-family:'Hiragino Maru Gothic Pro','BIZ UDPGothic',sans-serif;
+    }
+    .tab-nav-btn .tab-icon { font-size:22px; line-height:1; }
+    .tab-nav-btn.active { color:#7b1fa2; }
+    .tab-nav-btn:active { opacity:.7; }
+    .tab-panel { display:none; }
+    .tab-panel.active { display:block; }
+    .tab-section-title {
+      font-size:18px; font-weight:900; color:#1a237e;
+      text-align:center; margin:8px 0 14px; letter-spacing:1px;
+    }
+    #screen-start .card { padding-bottom:80px; }
+    .mypage-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:8px; }
+    .mypage-grid-btn {
+      padding:22px 10px; border:none; border-radius:16px;
+      background:linear-gradient(135deg,#f3e5f5,#e8eaf6);
+      color:#4a148c; font-size:30px; font-weight:900; cursor:pointer;
+      border-bottom:4px solid #ce93d8;
+      transition:transform .1s,border-bottom-width .1s;
+      font-family:'Hiragino Maru Gothic Pro','BIZ UDPGothic',sans-serif;
+      line-height:1.4;
+    }
+    .mypage-grid-btn span { display:block; font-size:12px; margin-top:5px; color:#6a1b9a; }
+    .mypage-grid-btn:active { transform:translateY(3px); border-bottom-width:1px; }
+    .battle-tab-card {
+      background:linear-gradient(135deg,#1a237e,#283593);
+      border-radius:18px; padding:20px; margin-bottom:14px; color:white; text-align:center;
+    }
+    .battle-tab-card-sub { font-size:12px; opacity:.7; margin-top:10px; line-height:1.6; }
+
     /* QUIZ SCREEN */
     .power-bar-wrap { height:13px; border-radius:99px; background:#e0e0e0; border:2px solid #bdbdbd; overflow:hidden; margin-bottom:5px; }
     .power-bar-fill {
@@ -1687,78 +1732,114 @@
 <!-- START -->
 <div class="screen active" id="screen-start">
   <div class="card">
-    <div class="mascot-pair">
-      <div class="mascot-wrap" id="mascot-start"></div>
-      <div class="mascot-wrap bounce2" id="mascot-start-pote"></div>
-    </div>
-    <div class="game-title">🐾 くうっち<span class="battle">勉強</span>バトル！</div>
-    <div class="game-sub">くうっちと いっしょに かんじを まなぼう！</div>
-    <div class="action-row">
-      <button class="gacha-main-btn" id="gacha-main-btn" onclick="showGacha()">
+
+    <!-- ========= ホームタブ ========= -->
+    <div id="tab-panel-home" class="tab-panel active">
+      <div class="mascot-pair">
+        <div class="mascot-wrap" id="mascot-start"></div>
+        <div class="mascot-wrap bounce2" id="mascot-start-pote"></div>
+      </div>
+      <div class="game-title">🐾 くうっち<span class="battle">勉強</span>バトル！</div>
+      <div class="game-sub">くうっちと いっしょに かんじを まなぼう！</div>
+      <button class="gacha-main-btn" id="gacha-main-btn" onclick="showGacha()" style="width:100%;margin-bottom:14px">
         🎲 くじを 引く！<br><span class="gacha-cost-tag">🪙 20まい つかう</span>
       </button>
-      <button class="collection-btn" onclick="showCollection()">🎒<br>コレクション</button>
-      <button class="sodateru-btn" onclick="showSodateru()">⬆️<br>そだてる</button>
-    </div>
-    <div class="divider"></div>
-    <div class="section-label" id="section-kanji">漢検１０級</div>
-    <div class="mode-buttons" id="mode-group-kanji">
-      <button class="mode-btn selected" data-mode="reading" onclick="selectMode('reading')"><span class="mode-icon">👂</span>読み方は？</button>
-      <button class="mode-btn" data-mode="writing" onclick="selectMode('writing')"><span class="mode-icon">📝</span>漢字は？</button>
-      <button class="mode-btn" data-mode="strokes" onclick="selectMode('strokes')"><span class="mode-icon">✏️</span>何画目？</button>
-      <button class="mode-btn" data-mode="mixed" onclick="selectMode('mixed')"><span class="mode-icon">🌀</span>まぜこぜ</button>
-    </div>
-    <div class="section-label" id="section-kanji2">📖 漢字（2年生）</div>
-    <div class="mode-buttons" id="mode-group-kanji2">
-      <button class="mode-btn" data-mode="reading2" onclick="selectMode('reading2')"><span class="mode-icon">👂</span>読み方は？</button>
-      <button class="mode-btn" data-mode="writing2" onclick="selectMode('writing2')"><span class="mode-icon">📝</span>漢字は？</button>
-      <button class="mode-btn" data-mode="strokes2" onclick="selectMode('strokes2')"><span class="mode-icon">✏️</span>何画目？</button>
-    </div>
-    <div class="section-label" id="section-kanji3">📖 漢字（3年生）</div>
-    <div class="mode-buttons" id="mode-group-kanji3">
-      <button class="mode-btn" data-mode="reading3" onclick="selectMode('reading3')"><span class="mode-icon">👂</span>読み方は？</button>
-      <button class="mode-btn" data-mode="writing3" onclick="selectMode('writing3')"><span class="mode-icon">📝</span>漢字は？</button>
-      <button class="mode-btn" data-mode="strokes3" onclick="selectMode('strokes3')"><span class="mode-icon">✏️</span>何画目？</button>
-    </div>
-    <div class="section-label" id="section-math">計算</div>
-    <div class="mode-buttons" id="mode-group-math">
-      <button class="mode-btn" data-mode="plus"   onclick="selectMode('plus')"><span class="mode-icon">➕</span>足し算</button>
-      <button class="mode-btn" data-mode="minus"  onclick="selectMode('minus')"><span class="mode-icon">➖</span>引き算</button>
-      <button class="mode-btn" data-mode="times"  onclick="selectMode('times')"><span class="mode-icon">✖️</span>掛け算</button>
-      <button class="mode-btn" data-mode="divide" onclick="selectMode('divide')"><span class="mode-icon">➗</span>割り算</button>
-    </div>
-    <div class="section-label" id="section-english">🇬🇧 えいご</div>
-    <div class="mode-buttons" id="mode-group-english">
-      <button class="mode-btn" data-mode="alpha"   onclick="selectMode('alpha')"><span class="mode-icon">🔤</span>アルファベット</button>
-      <button class="mode-btn" data-mode="engword" onclick="selectMode('engword')"><span class="mode-icon">🌍</span>えいご単語</button>
-    </div>
-    <div class="section-label">問いの数</div>
-    <div class="count-buttons">
-      <button class="count-btn selected" data-count="10" onclick="selectCount(10)">10</button>
-      <button class="count-btn" data-count="20" onclick="selectCount(20)">20</button>
-      <button class="count-btn" data-count="40" onclick="selectCount(40)">40</button>
-    </div>
-    <button class="start-btn" onclick="startQuiz()">📖 クイズ スタート！</button>
-    <button class="event-stage-btn" onclick="startEventQuiz()" style="display:none">🎌 イベント！　漢字チャレンジ①<br><span style="font-size:13px;font-weight:700;opacity:.9">全15問 ✦ 読みから漢字をえらぼう</span></button>
-    <button id="event2-btn" class="event2-challenge-btn" onclick="startEventQuiz2()"></button>
-    <button class="battle-mode-btn" onclick="showBattleSelect()">⚔️ くうっちバトル！</button>
-
-    <!-- デイリーミッション -->
-    <div class="mission-section">
-      <button class="mission-toggle-btn" id="mission-toggle-btn" onclick="toggleMissionPanel()">
-        <span>📋 デイリーミッション</span>
-        <span class="mission-toggle-arrow">▼</span>
-      </button>
-      <div class="mission-panel" id="mission-panel">
-        <div id="mission-list"></div>
+      <button class="event-stage-btn" onclick="startEventQuiz()" style="display:none">🎌 イベント！　漢字チャレンジ①<br><span style="font-size:13px;font-weight:700;opacity:.9">全15問 ✦ 読みから漢字をえらぼう</span></button>
+      <button id="event2-btn" class="event2-challenge-btn" onclick="startEventQuiz2()"></button>
+      <div class="mission-section">
+        <button class="mission-toggle-btn" id="mission-toggle-btn" onclick="toggleMissionPanel()">
+          <span>📋 デイリーミッション</span>
+          <span class="mission-toggle-arrow">▼</span>
+        </button>
+        <div class="mission-panel" id="mission-panel">
+          <div id="mission-list"></div>
+        </div>
       </div>
     </div>
 
-    <button class="maze-btn-home" id="maze-home-btn" onclick="showMaze()">🗺️ ボーナス迷路！&nbsp;&nbsp;🗝️ <span id="maze-key-home">0</span></button>
+    <!-- ========= クイズタブ ========= -->
+    <div id="tab-panel-quiz" class="tab-panel">
+      <div class="tab-section-title">📚 クイズをえらぼう</div>
+      <div class="section-label" id="section-kanji">漢検１０級</div>
+      <div class="mode-buttons" id="mode-group-kanji">
+        <button class="mode-btn selected" data-mode="reading" onclick="selectMode('reading')"><span class="mode-icon">👂</span>読み方は？</button>
+        <button class="mode-btn" data-mode="writing" onclick="selectMode('writing')"><span class="mode-icon">📝</span>漢字は？</button>
+        <button class="mode-btn" data-mode="strokes" onclick="selectMode('strokes')"><span class="mode-icon">✏️</span>何画目？</button>
+        <button class="mode-btn" data-mode="mixed" onclick="selectMode('mixed')"><span class="mode-icon">🌀</span>まぜこぜ</button>
+      </div>
+      <div class="section-label" id="section-kanji2">📖 漢字（2年生）</div>
+      <div class="mode-buttons" id="mode-group-kanji2">
+        <button class="mode-btn" data-mode="reading2" onclick="selectMode('reading2')"><span class="mode-icon">👂</span>読み方は？</button>
+        <button class="mode-btn" data-mode="writing2" onclick="selectMode('writing2')"><span class="mode-icon">📝</span>漢字は？</button>
+        <button class="mode-btn" data-mode="strokes2" onclick="selectMode('strokes2')"><span class="mode-icon">✏️</span>何画目？</button>
+      </div>
+      <div class="section-label" id="section-kanji3">📖 漢字（3年生）</div>
+      <div class="mode-buttons" id="mode-group-kanji3">
+        <button class="mode-btn" data-mode="reading3" onclick="selectMode('reading3')"><span class="mode-icon">👂</span>読み方は？</button>
+        <button class="mode-btn" data-mode="writing3" onclick="selectMode('writing3')"><span class="mode-icon">📝</span>漢字は？</button>
+        <button class="mode-btn" data-mode="strokes3" onclick="selectMode('strokes3')"><span class="mode-icon">✏️</span>何画目？</button>
+      </div>
+      <div class="section-label" id="section-math">計算</div>
+      <div class="mode-buttons" id="mode-group-math">
+        <button class="mode-btn" data-mode="plus"   onclick="selectMode('plus')"><span class="mode-icon">➕</span>足し算</button>
+        <button class="mode-btn" data-mode="minus"  onclick="selectMode('minus')"><span class="mode-icon">➖</span>引き算</button>
+        <button class="mode-btn" data-mode="times"  onclick="selectMode('times')"><span class="mode-icon">✖️</span>掛け算</button>
+        <button class="mode-btn" data-mode="divide" onclick="selectMode('divide')"><span class="mode-icon">➗</span>割り算</button>
+      </div>
+      <div class="section-label" id="section-english">🇬🇧 えいご</div>
+      <div class="mode-buttons" id="mode-group-english">
+        <button class="mode-btn" data-mode="alpha"   onclick="selectMode('alpha')"><span class="mode-icon">🔤</span>アルファベット</button>
+        <button class="mode-btn" data-mode="engword" onclick="selectMode('engword')"><span class="mode-icon">🌍</span>えいご単語</button>
+      </div>
+      <div class="section-label">問いの数</div>
+      <div class="count-buttons">
+        <button class="count-btn selected" data-count="10" onclick="selectCount(10)">10</button>
+        <button class="count-btn" data-count="20" onclick="selectCount(20)">20</button>
+        <button class="count-btn" data-count="40" onclick="selectCount(40)">40</button>
+      </div>
+      <button class="start-btn" onclick="startQuiz()">📖 クイズ スタート！</button>
+    </div>
 
-    <button class="badge-home-btn" onclick="showBadges()">🏅 バッジ・しょうごう</button>
-    <button class="settings-home-btn" onclick="showSettings()">⚙️ せってい</button>
+    <!-- ========= バトルタブ ========= -->
+    <div id="tab-panel-battle" class="tab-panel">
+      <div class="tab-section-title">⚔️ バトル</div>
+      <div class="battle-tab-card">
+        <div style="font-size:11px;font-weight:700;opacity:.8;margin-bottom:6px">クイズに正解してモンスターを倒せ！</div>
+        <div style="font-size:48px;margin:6px 0">🐾⚔️</div>
+        <button class="battle-mode-btn" onclick="showBattleSelect()">⚔️ くうっちバトル！</button>
+        <div class="battle-tab-card-sub">コンボでダメージアップ！<br>まちがえると反撃を受けるぞ！</div>
+      </div>
+      <button class="maze-btn-home" id="maze-home-btn" onclick="showMaze()">🗺️ ボーナス迷路！&nbsp;&nbsp;🗝️ <span id="maze-key-home">0</span></button>
+    </div>
+
+    <!-- ========= マイページタブ ========= -->
+    <div id="tab-panel-mypage" class="tab-panel">
+      <div class="tab-section-title">🎒 マイページ</div>
+      <div class="mypage-grid">
+        <button class="mypage-grid-btn" onclick="showCollection()">🎒<br><span>コレクション</span></button>
+        <button class="mypage-grid-btn" onclick="showSodateru()">⬆️<br><span>そだてる</span></button>
+        <button class="mypage-grid-btn" onclick="showBadges()">🏅<br><span>バッジ</span></button>
+        <button class="mypage-grid-btn" onclick="showSettings()">⚙️<br><span>せってい</span></button>
+      </div>
+    </div>
+
   </div>
+</div>
+
+<!-- ボトムタブバー（ホーム画面のみ表示） -->
+<div class="home-tab-bar" id="home-tab-bar">
+  <button class="tab-nav-btn active" data-tab="home" onclick="switchHomeTab('home')">
+    <span class="tab-icon">🏠</span>ホーム
+  </button>
+  <button class="tab-nav-btn" data-tab="quiz" onclick="switchHomeTab('quiz')">
+    <span class="tab-icon">📚</span>クイズ
+  </button>
+  <button class="tab-nav-btn" data-tab="battle" onclick="switchHomeTab('battle')">
+    <span class="tab-icon">⚔️</span>バトル
+  </button>
+  <button class="tab-nav-btn" data-tab="mypage" onclick="switchHomeTab('mypage')">
+    <span class="tab-icon">🎒</span>マイページ
+  </button>
 </div>
 
 <!-- SETTINGS -->
@@ -3735,6 +3816,8 @@ function toggleMissionPanel() {
     const d = document.createElement('div'); d.className='gacha-deco-mini';
     d.innerHTML = kSVG(k); row.appendChild(d);
   });
+  // タブバー：ホーム画面が初期アクティブなので表示
+  document.getElementById('home-tab-bar').style.display = 'flex';
 })();
 
 function saveState()  { localStorage.setItem('kq_coins',coins); localStorage.setItem('kq_collection',JSON.stringify(collection)); }
@@ -3746,10 +3829,24 @@ function updateGachaBtn() {
   const hasTicket = (tickets.r||0) > 0 || (tickets.sr||0) > 0;
   document.getElementById('gacha-main-btn').disabled = coins < GACHA_COST && !hasTicket;
 }
+// タブ切り替え
+let currentHomeTab = 'home';
+function switchHomeTab(tab) {
+  currentHomeTab = tab;
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-panel-' + tab).classList.add('active');
+  document.querySelectorAll('.tab-nav-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.tab === tab));
+  window.scrollTo(0, 0);
+}
+
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
+  // タブバー表示切り替え
+  const tabBar = document.getElementById('home-tab-bar');
+  if(tabBar) tabBar.style.display = (id === 'screen-start') ? 'flex' : 'none';
   if(id==='screen-start') updateEvent2Btn();
   // 画面に応じてBGM切り替え
   const bgmMap = {
