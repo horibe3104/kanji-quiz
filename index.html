@@ -116,6 +116,24 @@
     .start-btn:hover { transform:translateY(-2px); }
     .start-btn:active { transform:translateY(4px); border-bottom-width:1px; }
 
+    /* ============ ホームタブ キャラエリア ============ */
+    .home-chara-area {
+      position:relative;
+      background:linear-gradient(160deg,#e3f2fd 0%,#ede7f6 60%,#fce4ec 100%);
+      border-radius:22px; padding:14px 12px 6px; margin-bottom:14px;
+      box-shadow:inset 0 0 30px rgba(255,255,255,.4);
+    }
+    .home-speech-bubble {
+      background:white; border-radius:18px 18px 18px 4px;
+      padding:10px 16px; font-size:13px; font-weight:800; color:#1a237e;
+      box-shadow:0 3px 12px rgba(0,0,0,.12); margin-bottom:10px;
+      text-align:center; line-height:1.6; letter-spacing:.3px;
+      animation:speech-pop .4s ease-out;
+    }
+    @keyframes speech-pop { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
+    .home-chara-pair { display:flex; justify-content:center; align-items:flex-end; gap:16px; }
+    .home-chara-pair .mascot-wrap { width:130px; }
+
     /* ============ BOTTOM TAB BAR ============ */
     .home-tab-bar {
       position:fixed; bottom:0; left:50%; transform:translateX(-50%);
@@ -1735,12 +1753,15 @@
 
     <!-- ========= ホームタブ ========= -->
     <div id="tab-panel-home" class="tab-panel active">
-      <div class="mascot-pair">
-        <div class="mascot-wrap" id="mascot-start"></div>
-        <div class="mascot-wrap bounce2" id="mascot-start-pote"></div>
+      <!-- キャラクターエリア -->
+      <div class="home-chara-area">
+        <div class="home-speech-bubble" id="home-speech">きょうも いっしょに がんばろう！</div>
+        <div class="home-chara-pair">
+          <div class="mascot-wrap" id="mascot-start"></div>
+          <div class="mascot-wrap bounce2" id="mascot-start-pote"></div>
+        </div>
       </div>
-      <div class="game-title">🐾 くうっち<span class="battle">勉強</span>バトル！</div>
-      <div class="game-sub">くうっちと いっしょに かんじを まなぼう！</div>
+      <div class="game-title" style="margin-bottom:12px">🐾 くうっち<span class="battle">勉強</span>バトル！</div>
       <button class="gacha-main-btn" id="gacha-main-btn" onclick="showGacha()" style="width:100%;margin-bottom:14px">
         🎲 くじを 引く！<br><span class="gacha-cost-tag">🪙 20まい つかう</span>
       </button>
@@ -3821,6 +3842,8 @@ function toggleMissionPanel() {
   // BGMボタン初期位置もタブバーの上に
   const _bgmBtn = document.getElementById('bgm-btn');
   if(_bgmBtn) _bgmBtn.style.bottom = '72px';
+  // ホームセリフ初期表示
+  updateHomeSpeech();
 })();
 
 function saveState()  { localStorage.setItem('kq_coins',coins); localStorage.setItem('kq_collection',JSON.stringify(collection)); }
@@ -3832,6 +3855,26 @@ function updateGachaBtn() {
   const hasTicket = (tickets.r||0) > 0 || (tickets.sr||0) > 0;
   document.getElementById('gacha-main-btn').disabled = coins < GACHA_COST && !hasTicket;
 }
+// ホームタブ セリフ
+const HOME_SPEECHES = [
+  'きょうも いっしょに がんばろう！',
+  'れんしゅう すると つよく なるよ！',
+  'まいにち ちょっとずつ おぼえよう！',
+  'クイズに せいかいして コインをゲット！',
+  'バトルで くうっちを そだてよう！',
+  'きょうは なんもん といた？',
+  'まちがっても だいじょうぶ！もう いちど！',
+  'がんばれ！きみなら できる！',
+];
+function updateHomeSpeech() {
+  const el = document.getElementById('home-speech');
+  if(!el) return;
+  el.style.animation = 'none';
+  void el.offsetHeight;
+  el.style.animation = '';
+  el.textContent = HOME_SPEECHES[Math.floor(Math.random() * HOME_SPEECHES.length)];
+}
+
 // タブ切り替え
 let currentHomeTab = 'home';
 function switchHomeTab(tab) {
@@ -3841,6 +3884,7 @@ function switchHomeTab(tab) {
   document.querySelectorAll('.tab-nav-btn').forEach(b =>
     b.classList.toggle('active', b.dataset.tab === tab));
   window.scrollTo(0, 0);
+  if(tab === 'home') updateHomeSpeech();
 }
 
 function showScreen(id) {
