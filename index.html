@@ -929,7 +929,11 @@
     .mode-btn[data-mode="divide"].selected  { background:#e0f2f1; border-color:#009688; color:#004d40; }
     .mode-btn[data-mode="alpha"].selected   { background:#e1f5fe; border-color:#0288d1; color:#01579b; }
     .mode-btn[data-mode="engword"].selected { background:#e8f5e9; border-color:#43a047; color:#1b5e20; }
+    .mode-btn[data-mode="romaji"].selected  { background:#fff8e1; border-color:#f57c00; color:#bf360c; }
     .math-display { font-size:36px !important; letter-spacing:3px; }
+    /* ローマ字問題表示 */
+    .romaji-kana-display { font-size:88px !important; font-weight:900; color:#bf360c; letter-spacing:0; }
+    .romaji-roma-display { font-size:56px !important; font-weight:900; color:#1565c0; letter-spacing:2px; font-family:monospace; }
     .alpha-display { font-size:88px !important; font-weight:900; color:#01579b; letter-spacing:0; }
     .engword-display { font-size:72px !important; line-height:1.1; }
     .engword-word-label { font-size:15px; font-weight:900; color:#455a64; margin-top:4px; letter-spacing:2px; }
@@ -1802,6 +1806,10 @@
       <div class="mode-buttons" id="mode-group-english">
         <button class="mode-btn" data-mode="alpha"   onclick="selectMode('alpha')"><span class="mode-icon">🔤</span>アルファベット</button>
         <button class="mode-btn" data-mode="engword" onclick="selectMode('engword')"><span class="mode-icon">🌍</span>えいご単語</button>
+      </div>
+      <div class="section-label" id="section-romaji">🔡 ローマ字</div>
+      <div class="mode-buttons" id="mode-group-romaji">
+        <button class="mode-btn" data-mode="romaji" onclick="selectMode('romaji')"><span class="mode-icon">🔡</span>ローマ字よみ書き</button>
       </div>
       <div class="section-label">問いの数</div>
       <div class="count-buttons">
@@ -3812,12 +3820,43 @@ function toggleMissionPanel() {
   btn.classList.toggle('open', open);
 }
 
+// ===== ホームタブ（init前に宣言が必要） =====
+const HOME_SPEECHES = [
+  'きょうも いっしょに がんばろう！',
+  'れんしゅう すると つよく なるよ！',
+  'まいにち ちょっとずつ おぼえよう！',
+  'クイズに せいかいして コインをゲット！',
+  'バトルで くうっちを そだてよう！',
+  'きょうは なんもん といた？',
+  'まちがっても だいじょうぶ！もう いちど！',
+  'がんばれ！きみなら できる！',
+];
+function updateHomeSpeech() {
+  const el = document.getElementById('home-speech');
+  if(!el) return;
+  el.style.animation = 'none';
+  void el.offsetHeight;
+  el.style.animation = '';
+  el.textContent = HOME_SPEECHES[Math.floor(Math.random() * HOME_SPEECHES.length)];
+}
+let currentHomeTab = 'home';
+function switchHomeTab(tab) {
+  currentHomeTab = tab;
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-panel-' + tab).classList.add('active');
+  document.querySelectorAll('.tab-nav-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.tab === tab));
+  window.scrollTo(0, 0);
+  if(tab === 'home') updateHomeSpeech();
+}
+
 // ===== INIT =====
 (function init() {
   updateCoinBar(); updateGachaBtn(); updateExpBar(); updateTicketBar(); updateTicketGachaBtn(); updateMazeKeyBar();
   setTimeout(checkLoginBonus, 400); // 起動時にログインボーナスチェック
   initDailyMissions();
   checkBadges();
+  updateEvent2Btn();
   document.getElementById('mascot-start').innerHTML = kSVG(KD[0]);
   // ぽてまよ（ノーマル）を常に表示
   document.getElementById('mascot-start-pote').innerHTML = mSVG(MD[0]);
@@ -3842,37 +3881,6 @@ function updateCoinBar() { document.getElementById('coin-count').textContent = c
 function updateGachaBtn() {
   const hasTicket = (tickets.r||0) > 0 || (tickets.sr||0) > 0;
   document.getElementById('gacha-main-btn').disabled = coins < GACHA_COST && !hasTicket;
-}
-// ホームタブ セリフ
-const HOME_SPEECHES = [
-  'きょうも いっしょに がんばろう！',
-  'れんしゅう すると つよく なるよ！',
-  'まいにち ちょっとずつ おぼえよう！',
-  'クイズに せいかいして コインをゲット！',
-  'バトルで くうっちを そだてよう！',
-  'きょうは なんもん といた？',
-  'まちがっても だいじょうぶ！もう いちど！',
-  'がんばれ！きみなら できる！',
-];
-function updateHomeSpeech() {
-  const el = document.getElementById('home-speech');
-  if(!el) return;
-  el.style.animation = 'none';
-  void el.offsetHeight;
-  el.style.animation = '';
-  el.textContent = HOME_SPEECHES[Math.floor(Math.random() * HOME_SPEECHES.length)];
-}
-
-// タブ切り替え
-let currentHomeTab = 'home';
-function switchHomeTab(tab) {
-  currentHomeTab = tab;
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-panel-' + tab).classList.add('active');
-  document.querySelectorAll('.tab-nav-btn').forEach(b =>
-    b.classList.toggle('active', b.dataset.tab === tab));
-  window.scrollTo(0, 0);
-  if(tab === 'home') updateHomeSpeech();
 }
 
 function showScreen(id) {
@@ -3917,6 +3925,7 @@ const MODE_CONFIG = [
   { mode:'divide',   label:'➗ 割り算',           group:'math',    groupLabel:'🔢 計算' },
   { mode:'alpha',    label:'🔤 アルファベット',    group:'english', groupLabel:'🇬🇧 えいご' },
   { mode:'engword',  label:'🌍 えいご単語',       group:'english', groupLabel:'🇬🇧 えいご' },
+  { mode:'romaji',   label:'🔡 ローマ字よみ書き', group:'romaji',  groupLabel:'🔡 ローマ字' },
 ];
 
 let visibleModes = JSON.parse(localStorage.getItem('kq_visible_modes') || 'null') || {};
@@ -4246,6 +4255,50 @@ const ENGWORD_DATA = [
   {emoji:'🏖️',word:'BEACH',    kana:'ビーチ'},
   {emoji:'🗻',word:'MOUNTAIN', kana:'マウンテン'},
 ];
+
+// ===== ローマ字データ =====
+const ROMAJI_DATA = [
+  // あ行
+  {kana:'あ',roma:'a'},   {kana:'い',roma:'i'},   {kana:'う',roma:'u'},   {kana:'え',roma:'e'},   {kana:'お',roma:'o'},
+  // か行
+  {kana:'か',roma:'ka'},  {kana:'き',roma:'ki'},  {kana:'く',roma:'ku'},  {kana:'け',roma:'ke'},  {kana:'こ',roma:'ko'},
+  // さ行
+  {kana:'さ',roma:'sa'},  {kana:'し',roma:'shi'}, {kana:'す',roma:'su'},  {kana:'せ',roma:'se'},  {kana:'そ',roma:'so'},
+  // た行
+  {kana:'た',roma:'ta'},  {kana:'ち',roma:'chi'}, {kana:'つ',roma:'tsu'}, {kana:'て',roma:'te'},  {kana:'と',roma:'to'},
+  // な行
+  {kana:'な',roma:'na'},  {kana:'に',roma:'ni'},  {kana:'ぬ',roma:'nu'},  {kana:'ね',roma:'ne'},  {kana:'の',roma:'no'},
+  // は行
+  {kana:'は',roma:'ha'},  {kana:'ひ',roma:'hi'},  {kana:'ふ',roma:'fu'},  {kana:'へ',roma:'he'},  {kana:'ほ',roma:'ho'},
+  // ま行
+  {kana:'ま',roma:'ma'},  {kana:'み',roma:'mi'},  {kana:'む',roma:'mu'},  {kana:'め',roma:'me'},  {kana:'も',roma:'mo'},
+  // や行
+  {kana:'や',roma:'ya'},  {kana:'ゆ',roma:'yu'},  {kana:'よ',roma:'yo'},
+  // ら行
+  {kana:'ら',roma:'ra'},  {kana:'り',roma:'ri'},  {kana:'る',roma:'ru'},  {kana:'れ',roma:'re'},  {kana:'ろ',roma:'ro'},
+  // わ行
+  {kana:'わ',roma:'wa'},  {kana:'を',roma:'wo'},  {kana:'ん',roma:'n'},
+  // が行
+  {kana:'が',roma:'ga'},  {kana:'ぎ',roma:'gi'},  {kana:'ぐ',roma:'gu'},  {kana:'げ',roma:'ge'},  {kana:'ご',roma:'go'},
+  // ざ行
+  {kana:'ざ',roma:'za'},  {kana:'じ',roma:'ji'},  {kana:'ず',roma:'zu'},  {kana:'ぜ',roma:'ze'},  {kana:'ぞ',roma:'zo'},
+  // ば行
+  {kana:'ば',roma:'ba'},  {kana:'び',roma:'bi'},  {kana:'ぶ',roma:'bu'},  {kana:'べ',roma:'be'},  {kana:'ぼ',roma:'bo'},
+  // ぱ行
+  {kana:'ぱ',roma:'pa'},  {kana:'ぴ',roma:'pi'},  {kana:'ぷ',roma:'pu'},  {kana:'ぺ',roma:'pe'},  {kana:'ぽ',roma:'po'},
+];
+
+function buildRomajiQuestion(item) {
+  if (Math.random() < 0.5) {
+    // ひらがな → ローマ字
+    const others = ROMAJI_DATA.filter(r => r !== item).map(r => r.roma);
+    return { type:'romaji-read', kana:item.kana, correct:item.roma, choices:shuffle([item.roma, ...pickRandom(others, 3)]) };
+  } else {
+    // ローマ字 → ひらがな
+    const others = ROMAJI_DATA.filter(r => r !== item).map(r => r.kana);
+    return { type:'romaji-write', roma:item.roma, correct:item.kana, choices:shuffle([item.kana, ...pickRandom(others, 3)]) };
+  }
+}
 
 function buildAlphaQuestion(item) {
   if (Math.random() < 0.5) {
@@ -4650,6 +4703,9 @@ function startQuiz() {
   } else if(selectedMode === 'engword'){
     const pool = shuffle(ENGWORD_DATA).slice(0, Math.min(selectedCount, ENGWORD_DATA.length));
     questions_tmp = pool.map(w=>buildEngWordQuestion(w));
+  } else if(selectedMode === 'romaji'){
+    const pool = shuffle(ROMAJI_DATA).slice(0, Math.min(selectedCount, ROMAJI_DATA.length));
+    questions_tmp = pool.map(r=>buildRomajiQuestion(r));
   } else {
     let kdata = KANJI_DATA;
     let bmode = selectedMode;
@@ -4773,6 +4829,14 @@ function renderQuestion() {
     kEl.innerHTML=`<div style="font-size:72px;line-height:1">${q.emoji}</div><div class="engword-word-label">${q.word}</div>`;
     rEl.style.display='none';
     _showEngSpeakBtn(q.word);
+  } else if(q.type==='romaji-read'){
+    document.getElementById('q-type-label').textContent='🔡 ローマ字で どう書く？';
+    kEl.className='kanji-display romaji-kana-display';
+    kEl.style.display='block'; kEl.textContent=q.kana; rEl.style.display='none';
+  } else if(q.type==='romaji-write'){
+    document.getElementById('q-type-label').textContent='🔡 このローマ字は どの ひらがな？';
+    kEl.className='kanji-display romaji-roma-display';
+    kEl.style.display='block'; kEl.textContent=q.roma; rEl.style.display='none';
   } else if(q.type==='event-writing'){
     document.getElementById('q-type-label').textContent='📝 読みに合う　漢字をえらんでね';
     kEl.className='kanji-display';
