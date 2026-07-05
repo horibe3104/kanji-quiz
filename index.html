@@ -3818,6 +3818,9 @@ function toggleMissionPanel() {
   });
   // タブバー：ホーム画面が初期アクティブなので表示
   document.getElementById('home-tab-bar').style.display = 'flex';
+  // BGMボタン初期位置もタブバーの上に
+  const _bgmBtn = document.getElementById('bgm-btn');
+  if(_bgmBtn) _bgmBtn.style.bottom = '72px';
 })();
 
 function saveState()  { localStorage.setItem('kq_coins',coins); localStorage.setItem('kq_collection',JSON.stringify(collection)); }
@@ -3847,6 +3850,9 @@ function showScreen(id) {
   // タブバー表示切り替え
   const tabBar = document.getElementById('home-tab-bar');
   if(tabBar) tabBar.style.display = (id === 'screen-start') ? 'flex' : 'none';
+  // BGMボタンをタブバーと被らないよう調整
+  const bgmBtn = document.getElementById('bgm-btn');
+  if(bgmBtn) bgmBtn.style.bottom = (id === 'screen-start') ? '72px' : '16px';
   if(id==='screen-start') updateEvent2Btn();
   // 画面に応じてBGM切り替え
   const bgmMap = {
