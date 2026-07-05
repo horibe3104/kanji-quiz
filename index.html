@@ -1436,11 +1436,158 @@
   #eng-speak-btn.bounce   { animation:speakBounce .5s; }
   @keyframes speakPulse  { from{opacity:1;transform:scale(1)} to{opacity:.55;transform:scale(.97)} }
   @keyframes speakBounce { 0%,100%{transform:scale(1)} 35%{transform:scale(1.18)} 65%{transform:scale(.95)} }
+
+  /* ============ デイリーミッション ============ */
+  .mission-section { margin-top:8px; }
+  .mission-toggle-btn {
+    width:100%; padding:10px 14px; border:2px solid #b39ddb;
+    background:linear-gradient(135deg,#ede7f6,#f3e5f5);
+    border-radius:14px; font-size:14px; font-weight:900;
+    color:#4a148c; cursor:pointer; display:flex; align-items:center;
+    justify-content:space-between; transition:background .15s;
+  }
+  .mission-toggle-btn:hover { background:linear-gradient(135deg,#d1c4e9,#e1bee7); }
+  .mission-toggle-btn .mission-toggle-arrow { transition:transform .25s; }
+  .mission-toggle-btn.open .mission-toggle-arrow { transform:rotate(180deg); }
+  .mission-panel {
+    display:none; margin-top:6px;
+    background:#fafafa; border:1.5px solid #d1c4e9;
+    border-radius:12px; padding:10px 10px 6px; overflow:hidden;
+  }
+  .mission-panel.open { display:block; }
+  .mission-item {
+    display:flex; align-items:center; gap:8px;
+    background:white; border:2px solid #e0e0e0; border-radius:12px;
+    padding:9px 10px; margin-bottom:7px;
+  }
+  .mission-item.done { background:#f1f8e9; border-color:#a5d6a7; }
+  .mission-item.done .mission-label { color:#388e3c; }
+  .mission-progress-wrap { flex:1; min-width:0; }
+  .mission-label { font-size:12px; font-weight:900; color:#37474f; margin-bottom:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .mission-bar-bg { height:8px; background:#e0e0e0; border-radius:99px; overflow:hidden; }
+  .mission-bar-fill { height:100%; background:linear-gradient(90deg,#7c4dff,#e040fb); border-radius:99px; transition:width .4s; }
+  .mission-bar-fill.done { background:linear-gradient(90deg,#43a047,#66bb6a); }
+  .mission-count { font-size:10px; color:#90a4ae; font-weight:700; margin-top:1px; }
+  .mission-claim-btn {
+    padding:7px 12px; border:none; border-radius:10px;
+    background:linear-gradient(135deg,#7c4dff,#512da8);
+    color:white; font-size:11px; font-weight:900; cursor:pointer;
+    white-space:nowrap; border-bottom:3px solid #311b92;
+    transition:transform .1s, border-bottom-width .1s; flex-shrink:0;
+  }
+  .mission-claim-btn:active { transform:translateY(2px); border-bottom-width:1px; }
+  .mission-claim-btn.claimed { background:#bdbdbd; border-bottom-color:#9e9e9e; cursor:default; }
+  .mission-reward-tag { font-size:10px; color:#7c4dff; font-weight:900; flex-shrink:0; }
+
+  /* ============ バッジシステム ============ */
+  .badge-home-btn {
+    display:block; width:100%; margin-top:6px;
+    background:linear-gradient(135deg,#fff8e1,#ffe082);
+    color:#e65100; border:2px solid #ffca28; border-bottom:3px solid #f9a825;
+    border-radius:14px; padding:9px; font-size:13px; font-weight:900;
+    cursor:pointer; transition:transform .1s;
+  }
+  .badge-home-btn:hover { transform:translateY(-2px); }
+  .badge-home-btn:active { transform:translateY(2px); border-bottom-width:1px; }
+  #screen-badges .card { padding-bottom:20px; }
+  .badges-title { font-size:20px; font-weight:900; color:#1a237e; margin-bottom:4px; }
+  .badges-subtitle { font-size:12px; color:#90a4ae; font-weight:700; margin-bottom:14px; }
+  .badges-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px; }
+  .badge-cell {
+    border:2px solid #e0e0e0; border-radius:14px; padding:12px 6px 8px;
+    text-align:center; background:#fafafa;
+    transition:border-color .2s, background .2s;
+  }
+  .badge-cell.earned { border-color:#ffd600; background:#fffde7; }
+  .badge-icon { font-size:32px; margin-bottom:4px; filter:grayscale(1) opacity(0.4); }
+  .badge-cell.earned .badge-icon { filter:none; }
+  .badge-name { font-size:10px; font-weight:900; color:#78909c; line-height:1.3; }
+  .badge-cell.earned .badge-name { color:#e65100; }
+  .badge-desc { font-size:9px; color:#b0bec5; margin-top:2px; line-height:1.4; }
+  .badge-cell.earned .badge-desc { color:#78909c; }
+  #badge-toast {
+    position:fixed; bottom:80px; left:50%; transform:translateX(-50%);
+    background:linear-gradient(135deg,#ffd600,#ff9800);
+    color:#4a2800; border-radius:99px; padding:10px 22px;
+    font-size:14px; font-weight:900; z-index:999;
+    box-shadow:0 4px 16px rgba(0,0,0,.35);
+    animation:badgeToastIn .4s ease-out;
+    display:none; white-space:nowrap; text-align:center;
+  }
+  #badge-toast.show { display:block; }
+  @keyframes badgeToastIn { from{transform:translateX(-50%) translateY(20px);opacity:0} to{transform:translateX(-50%) translateY(0);opacity:1} }
+
+  /* ============ パーフェクトオーバーレイ ============ */
+  #perfect-overlay {
+    display:none; position:fixed; inset:0; z-index:700;
+    background:linear-gradient(135deg,#ffd600,#ff9800);
+    align-items:center; justify-content:center; flex-direction:column;
+    animation:perfectIn .4s ease-out;
+  }
+  #perfect-overlay.show { display:flex; }
+  @keyframes perfectIn { from{opacity:0;transform:scale(.8)} to{opacity:1;transform:scale(1)} }
+  .perfect-text {
+    font-size:56px; font-weight:900; color:white;
+    text-shadow:0 4px 16px rgba(0,0,0,.3);
+    animation:perfectPulse .6s ease-in-out infinite alternate;
+  }
+  @keyframes perfectPulse { from{transform:scale(1)} to{transform:scale(1.1)} }
+  .perfect-sub { font-size:18px; font-weight:900; color:#4a2800; margin-top:10px; }
+  .perfect-stars {
+    position:absolute; top:0; left:0; right:0; bottom:0;
+    pointer-events:none; overflow:hidden;
+  }
+  .perfect-star {
+    position:absolute; font-size:32px;
+    animation:starFloat 2s ease-out forwards;
+  }
+  @keyframes starFloat {
+    from { transform:translateY(100vh) rotate(0deg); opacity:1; }
+    to   { transform:translateY(-20vh) rotate(360deg); opacity:0; }
+  }
+
+  /* ============ フィーバーモード ============ */
+  #fever-banner {
+    display:none; width:100%; padding:8px 10px;
+    background:linear-gradient(135deg,#ff6f00,#f44336);
+    border-radius:12px; margin-bottom:8px;
+    text-align:center; font-size:15px; font-weight:900; color:white;
+    animation:feverPulse .5s ease-in-out infinite alternate;
+    box-shadow:0 4px 12px rgba(244,67,54,.4);
+  }
+  #fever-banner.show { display:block; }
+  @keyframes feverPulse { from{transform:scale(1)} to{transform:scale(1.03)} }
+
+  /* ============ スコアシステム ============ */
+  .result-quiz-score {
+    background:linear-gradient(135deg,#e8f5e9,#f1f8e9);
+    border:2px solid #a5d6a7; border-radius:14px;
+    padding:10px 14px; margin-bottom:10px;
+    text-align:center;
+  }
+  .result-quiz-score-label { font-size:11px; color:#2e7d32; font-weight:900; margin-bottom:2px; }
+  .result-quiz-score-val { font-size:28px; font-weight:900; color:#1b5e20; }
+  .result-highscore { font-size:11px; color:#4caf50; font-weight:900; margin-top:3px; }
+  .result-new-highscore {
+    font-size:13px; font-weight:900; color:#e65100;
+    animation:newHighPop .5s ease-out;
+  }
+  @keyframes newHighPop { 0%{transform:scale(0);opacity:0} 70%{transform:scale(1.2)} 100%{transform:scale(1);opacity:1} }
   </style>
 </head>
 <body>
 
 <div id="coin-bar">🪙 <span id="coin-count">0</span> &nbsp; 🍟 <span id="exp-stone-count">0</span> &nbsp; 🎫 <span id="ticket-r-count">0</span> &nbsp; 🌟 <span id="ticket-sr-count">0</span> &nbsp; 🗝️ <span id="maze-key-count">0</span></div>
+
+<!-- パーフェクトオーバーレイ -->
+<div id="perfect-overlay">
+  <div class="perfect-stars" id="perfect-stars"></div>
+  <div class="perfect-text">PERFECT!! 🌟</div>
+  <div class="perfect-sub">ぜんもん せいかい！</div>
+</div>
+
+<!-- バッジトースト -->
+<div id="badge-toast"></div>
 
 <!-- START -->
 <div class="screen active" id="screen-start">
@@ -1500,7 +1647,21 @@
     <button class="event-stage-btn" onclick="startEventQuiz()" style="display:none">🎌 イベント！　漢字チャレンジ①<br><span style="font-size:13px;font-weight:700;opacity:.9">全15問 ✦ 読みから漢字をえらぼう</span></button>
     <button id="event2-btn" class="event2-challenge-btn" onclick="startEventQuiz2()"></button>
     <button class="battle-mode-btn" onclick="showBattleSelect()">⚔️ くうっちバトル！</button>
+
+    <!-- デイリーミッション -->
+    <div class="mission-section">
+      <button class="mission-toggle-btn" id="mission-toggle-btn" onclick="toggleMissionPanel()">
+        <span>📋 デイリーミッション</span>
+        <span class="mission-toggle-arrow">▼</span>
+      </button>
+      <div class="mission-panel" id="mission-panel">
+        <div id="mission-list"></div>
+      </div>
+    </div>
+
     <button class="maze-btn-home" id="maze-home-btn" onclick="showMaze()">🗺️ ボーナス迷路！&nbsp;&nbsp;🗝️ <span id="maze-key-home">0</span></button>
+
+    <button class="badge-home-btn" onclick="showBadges()">🏅 バッジ・しょうごう</button>
     <button class="settings-home-btn" onclick="showSettings()">⚙️ せってい</button>
   </div>
 </div>
@@ -1526,6 +1687,16 @@
   </div>
 </div>
 
+<!-- BADGES -->
+<div class="screen" id="screen-badges">
+  <div class="card">
+    <div class="badges-title">🏅 バッジ・しょうごう</div>
+    <div class="badges-subtitle" id="badges-subtitle">がんばってバッジを あつめよう！</div>
+    <div class="badges-grid" id="badges-grid"></div>
+    <button class="gacha-back-btn" onclick="goHome()">← もどる</button>
+  </div>
+</div>
+
 <!-- QUIZ -->
 <div class="screen" id="screen-quiz">
   <div class="card">
@@ -1541,6 +1712,7 @@
       </div>
       <div id="timer-count">10</div>
     </div>
+    <div id="fever-banner">🔥 FEVER!! コイン2ばい！</div>
     <div class="score-pill" id="score-badge">⭐ 0問 正かい</div>
     <div class="question-type-label" id="q-type-label"></div>
     <button id="eng-speak-btn" onclick="speakEng()">🔊 もう一度きく</button>
@@ -1587,6 +1759,11 @@
     <div class="result-score"   id="result-score"></div>
     <div class="result-pct"     id="result-pct"></div>
     <div class="result-comment" id="result-comment"></div>
+    <div class="result-quiz-score" id="result-quiz-score-box">
+      <div class="result-quiz-score-label">今回のスコア</div>
+      <div class="result-quiz-score-val" id="result-quiz-score-val">0 点</div>
+      <div class="result-highscore" id="result-highscore-hint"></div>
+    </div>
     <div class="coins-earned-box">
       <div class="coins-earned-label">もらえたコイン 🪙</div>
       <div class="coins-earned-amount" id="coins-earned-amount"></div>
@@ -3207,10 +3384,190 @@ const QUESTION_TIME = 10; // seconds per question
 let timerLeft = 0, timerTick = null, savedTimerLeft = 0;
 let questionTimeout = null;
 
+// ===== Feature 5: フィーバーモード =====
+let feverMode = false;
+let feverStreak = 0;
+
+// ===== Feature 10: スコアシステム =====
+let quizScore = 0;
+let kqHighScore = parseInt(localStorage.getItem('kq_high_score') || '0');
+
+// ===== Feature 3: バッジシステム =====
+let kqBadges = JSON.parse(localStorage.getItem('kq_badges') || '[]');
+let kqTotalCorrect = parseInt(localStorage.getItem('kq_total_correct_count') || '0');
+
+const BADGE_DEFS = [
+  { id:'first_correct', icon:'🌱', name:'はじめの一歩',    desc:'はじめて正解した！' },
+  { id:'correct100',    icon:'💯', name:'100もんマスター', desc:'合計100問 正解した！' },
+  { id:'correct500',    icon:'🏅', name:'500もんマスター', desc:'合計500問 正解した！' },
+  { id:'correct1000',   icon:'🏆', name:'1000もんマスター',desc:'合計1000問 正解した！' },
+  { id:'perfect',       icon:'⭐', name:'パーフェクト',     desc:'クイズで全問 正解した！' },
+  { id:'combo5',        icon:'🔥', name:'コンボキング',     desc:'バトルで5コンボ達成！' },
+  { id:'login7',        icon:'📅', name:'1しゅうかん ログイン', desc:'7日 連続ログイン！' },
+  { id:'fever',         icon:'🌈', name:'フィーバー！',     desc:'フィーバーモードになった！' },
+  { id:'score1000',     icon:'🎯', name:'スコアアタッカー', desc:'スコア1000点以上！' },
+  { id:'collect10',     icon:'🎒', name:'スーパーコレクター',desc:'キャラを10体 集めた！' },
+];
+
+function earnBadge(id) {
+  if (kqBadges.includes(id)) return;
+  kqBadges.push(id);
+  localStorage.setItem('kq_badges', JSON.stringify(kqBadges));
+  const def = BADGE_DEFS.find(b => b.id === id);
+  if (!def) return;
+  const toast = document.getElementById('badge-toast');
+  toast.textContent = `${def.icon} バッジかくとく！「${def.name}」`;
+  toast.classList.add('show');
+  clearTimeout(toast._hideTimer);
+  toast._hideTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+function checkBadges() {
+  if (kqTotalCorrect >= 1)    earnBadge('first_correct');
+  if (kqTotalCorrect >= 100)  earnBadge('correct100');
+  if (kqTotalCorrect >= 500)  earnBadge('correct500');
+  if (kqTotalCorrect >= 1000) earnBadge('correct1000');
+  const owned = KD ? KD.filter(k => (collection[k.id] || 0) > 0).length : 0;
+  if (owned >= 10) earnBadge('collect10');
+}
+
+function showBadges() {
+  const grid = document.getElementById('badges-grid');
+  grid.innerHTML = '';
+  const earnedCount = BADGE_DEFS.filter(b => kqBadges.includes(b.id)).length;
+  document.getElementById('badges-subtitle').textContent =
+    `${earnedCount} / ${BADGE_DEFS.length} かくとく！`;
+  BADGE_DEFS.forEach(b => {
+    const cell = document.createElement('div');
+    cell.className = 'badge-cell' + (kqBadges.includes(b.id) ? ' earned' : '');
+    cell.innerHTML =
+      `<div class="badge-icon">${b.icon}</div>` +
+      `<div class="badge-name">${b.name}</div>` +
+      `<div class="badge-desc">${b.desc}</div>`;
+    grid.appendChild(cell);
+  });
+  showScreen('screen-badges');
+}
+
+// ===== Feature 2: デイリーミッション =====
+const MISSION_POOL = [
+  { id:'correct10',  label:'10問 せいかいしよう',      goal:10, reward:{type:'coins',amount:30} },
+  { id:'correct20',  label:'20問 せいかいしよう',      goal:20, reward:{type:'coins',amount:60} },
+  { id:'play2',      label:'クイズを2かい プレイしよう', goal:2,  reward:{type:'coins',amount:40} },
+  { id:'play3',      label:'クイズを3かい プレイしよう', goal:3,  reward:{type:'coins',amount:60} },
+  { id:'combo3',     label:'バトルで3コンボ しよう',    goal:1,  reward:{type:'coins',amount:50} },
+  { id:'combo5',     label:'バトルで5コンボ しよう',    goal:1,  reward:{type:'ticket_r',amount:1} },
+  { id:'perfect',    label:'クイズで ぜんもん せいかい しよう', goal:1, reward:{type:'ticket_r',amount:1} },
+  { id:'battle_win', label:'バトルで かとう！',         goal:1,  reward:{type:'coins',amount:80} },
+];
+
+let dailyMissions = [];
+
+function _shuffleArr(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function initDailyMissions() {
+  const today = _todayStr();
+  const raw = JSON.parse(localStorage.getItem('kq_daily_missions') || 'null');
+  if (raw && raw.date === today) {
+    dailyMissions = raw.missions;
+  } else {
+    dailyMissions = _shuffleArr(MISSION_POOL).slice(0, 3).map(m => ({
+      id: m.id, label: m.label, goal: m.goal,
+      progress: 0, reward: m.reward, done: false
+    }));
+    localStorage.setItem('kq_daily_missions', JSON.stringify({ date: today, missions: dailyMissions }));
+  }
+  renderMissionList();
+}
+
+function saveDailyMissions() {
+  localStorage.setItem('kq_daily_missions', JSON.stringify({ date: _todayStr(), missions: dailyMissions }));
+}
+
+function updateMissionProgress(type, amount) {
+  let changed = false;
+  dailyMissions.forEach(m => {
+    if (m.done) return;
+    let match = false;
+    if (type === 'correct' && (m.id === 'correct10' || m.id === 'correct20')) match = true;
+    if (type === 'play'    && (m.id === 'play2' || m.id === 'play3')) match = true;
+    if (type === 'combo3'  && m.id === 'combo3') match = true;
+    if (type === 'combo5'  && m.id === 'combo5') match = true;
+    if (type === 'perfect' && m.id === 'perfect') match = true;
+    if (type === 'battle_win' && m.id === 'battle_win') match = true;
+    if (match) { m.progress = Math.min(m.goal, m.progress + amount); changed = true; }
+  });
+  if (changed) { saveDailyMissions(); renderMissionList(); }
+}
+
+function claimMission(idx) {
+  const m = dailyMissions[idx];
+  if (!m || m.done || m.progress < m.goal) return;
+  m.done = true;
+  if (m.reward.type === 'coins') {
+    coins += m.reward.amount; saveState(); updateCoinBar();
+    spawnCoinFloat(m.reward.amount);
+  } else if (m.reward.type === 'ticket_r') {
+    tickets.r += m.reward.amount; saveTickets(); updateTicketBar();
+    const toast = document.getElementById('badge-toast');
+    toast.textContent = `🎫 げきレアチケット ×${m.reward.amount} もらったよ！`;
+    toast.classList.add('show');
+    clearTimeout(toast._hideTimer);
+    toast._hideTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+  saveDailyMissions();
+  renderMissionList();
+}
+
+function renderMissionList() {
+  const list = document.getElementById('mission-list');
+  if (!list) return;
+  list.innerHTML = '';
+  dailyMissions.forEach((m, idx) => {
+    const pct = Math.min(100, Math.round(m.progress / m.goal * 100));
+    const complete = m.progress >= m.goal;
+    const rewardLabel = m.reward.type === 'coins'
+      ? `🪙 ${m.reward.amount}まい`
+      : `🎫 ×${m.reward.amount}`;
+    const div = document.createElement('div');
+    div.className = 'mission-item' + (m.done ? ' done' : '');
+    div.innerHTML =
+      `<div class="mission-progress-wrap">` +
+        `<div class="mission-label">${m.label}</div>` +
+        `<div class="mission-bar-bg"><div class="mission-bar-fill${m.done?' done':''}" style="width:${m.done?100:pct}%"></div></div>` +
+        `<div class="mission-count">${m.done ? '✅ クリア！' : `${m.progress} / ${m.goal}`}</div>` +
+      `</div>` +
+      `<div>` +
+        `<div class="mission-reward-tag">${rewardLabel}</div>` +
+        `<button class="mission-claim-btn${m.done?' claimed':''}" ` +
+          `${m.done || !complete ? 'disabled' : `onclick="claimMission(${idx})"`}>` +
+          `${m.done ? '受取済' : complete ? 'うけとる' : 'まだ'}` +
+        `</button>` +
+      `</div>`;
+    list.appendChild(div);
+  });
+}
+
+function toggleMissionPanel() {
+  const panel = document.getElementById('mission-panel');
+  const btn   = document.getElementById('mission-toggle-btn');
+  const open  = panel.classList.toggle('open');
+  btn.classList.toggle('open', open);
+}
+
 // ===== INIT =====
 (function init() {
   updateCoinBar(); updateGachaBtn(); updateExpBar(); updateTicketBar(); updateTicketGachaBtn(); updateMazeKeyBar();
   setTimeout(checkLoginBonus, 400); // 起動時にログインボーナスチェック
+  initDailyMissions();
+  checkBadges();
   document.getElementById('mascot-start').innerHTML = kSVG(KD[0]);
   // ぽてまよ（ノーマル）を常に表示
   document.getElementById('mascot-start-pote').innerHTML = mSVG(MD[0]);
@@ -3249,6 +3606,7 @@ function showScreen(id) {
     'screen-char-detail':  'title',
     'screen-sodateru':     'title',
     'screen-maze':         'title',
+    'screen-badges':       'title',
   };
   switchBGM(bgmMap[id] || 'title');
 }
@@ -3429,9 +3787,12 @@ function claimLoginBonus() {
   if (r.ticket === 'r')  { tickets.r++;  saveTickets(); updateTicketBar(); }
   if (r.ticket === 'sr') { tickets.sr++; saveTickets(); updateTicketBar(); }
   loginLast = _todayStr();
+  const prevDay = loginDay;
   loginDay  = (loginDay + 1) % 7;
   localStorage.setItem('kq_login_last', loginLast);
   localStorage.setItem('kq_login_day',  loginDay.toString());
+  // Feature 3: 7日ログインバッジ
+  if (prevDay === 6) earnBadge('login7');
   document.getElementById('login-bonus-overlay').style.display = 'none';
 }
 
@@ -4010,6 +4371,12 @@ function startQuiz() {
   }
   questions = questions_tmp;
   currentIdx=0; correctCount=0; streak=0; quizCoinsEarned=0;
+  // Feature 5: フィーバーリセット
+  feverMode = false; feverStreak = 0;
+  const fb = document.getElementById('fever-banner');
+  if (fb) fb.classList.remove('show');
+  // Feature 10: スコアリセット
+  quizScore = 0;
   _primeSpeech(); // iOS: ユーザー操作タイミングでアンロック
   showScreen('screen-quiz'); renderQuestion();
 }
@@ -4148,8 +4515,26 @@ function handleAnswer(choice, btn) {
   if(!ok){ btn.classList.add('wrong'); streak=0; }
   if(ok) {
     correctCount++; streak++;
-    const bonus = streak>=5?3:streak>=3?2:1;
+    // Feature 5: フィーバー
+    feverStreak++;
+    if (!feverMode && feverStreak >= 5) {
+      feverMode = true;
+      const fb = document.getElementById('fever-banner');
+      if (fb) fb.classList.add('show');
+      earnBadge('fever');
+      updateMissionProgress('fever', 1);
+    }
+    const bonus = (streak>=5?3:streak>=3?2:1) * (feverMode ? 2 : 1);
     coins+=bonus; quizCoinsEarned+=bonus;
+    // Feature 10: スコア計算
+    const speedBonus = Math.round(timerLeft * 5);
+    const streakBonus = streak * 10;
+    quizScore += 100 + speedBonus + streakBonus;
+    // ミッション：正解
+    kqTotalCorrect++;
+    localStorage.setItem('kq_total_correct_count', kqTotalCorrect.toString());
+    updateMissionProgress('correct', 1);
+    checkBadges();
     saveState(); updateCoinBar(); spawnCoinFloat(bonus); showFeedback('⭕',600);
     // クイズ正解でEXPのかけらをゲット
     expStones += 2; saveExpStones(); updateExpBar();
@@ -4159,7 +4544,13 @@ function handleAnswer(choice, btn) {
     if(keyFragments % 100 === 0){
       spawnKeyFloat();
     }
-  } else { showFeedback('❌',600); }
+  } else {
+    showFeedback('❌',600);
+    // Feature 5: フィーバー解除
+    feverMode = false; feverStreak = 0;
+    const fb = document.getElementById('fever-banner');
+    if (fb) fb.classList.remove('show');
+  }
   // iOS: ユーザー操作タイミングで無音発話してセッションを維持
   if (window.speechSynthesis && _speechPrimed) {
     window.speechSynthesis.cancel();
@@ -4215,6 +4606,46 @@ function showResult() {
   else if(pct>=40){ title='がんばれ！'; comment='毎日 少しずつ 練習 すれば\n強くなれる！'; kidx=3; }
   else            { title='もっと練習！'; comment='くりかえし 練習 して\n漢字王への道 上位を 目指せ！'; kidx=0; }
 
+  // Feature 2: ミッション更新（プレイ完了）
+  updateMissionProgress('play', 1);
+
+  // Feature 4: パーフェクトクリアボーナス
+  if (pct === 100) {
+    coins += 50; quizCoinsEarned += 50; saveState(); updateCoinBar();
+    tickets.r += 1; saveTickets(); updateTicketBar();
+    updateMissionProgress('perfect', 1);
+    earnBadge('perfect');
+    _showPerfectOverlay(function() {
+      _finishShowResult(title, comment, kidx, pct, total);
+    });
+    return;
+  }
+
+  _finishShowResult(title, comment, kidx, pct, total);
+}
+
+function _showPerfectOverlay(callback) {
+  const ov = document.getElementById('perfect-overlay');
+  const starsEl = document.getElementById('perfect-stars');
+  starsEl.innerHTML = '';
+  const starEmojis = ['⭐','🌟','✨','💫'];
+  for (let i = 0; i < 18; i++) {
+    const s = document.createElement('div');
+    s.className = 'perfect-star';
+    s.textContent = starEmojis[Math.floor(Math.random() * starEmojis.length)];
+    s.style.left = Math.random() * 90 + '%';
+    s.style.animationDelay = Math.random() * 1.5 + 's';
+    s.style.animationDuration = (1.2 + Math.random() * 0.8) + 's';
+    starsEl.appendChild(s);
+  }
+  ov.classList.add('show');
+  setTimeout(() => {
+    ov.classList.remove('show');
+    callback();
+  }, 2000);
+}
+
+function _finishShowResult(title, comment, kidx, pct, total) {
   const mw=document.getElementById('mascot-result');
   mw.innerHTML=kSVG(KD[kidx]);
   mw.className='result-mascot-wrap'+(pct===100?' celebrate':pct<40?' sad':'');
@@ -4225,6 +4656,26 @@ function showResult() {
   document.getElementById('result-comment').textContent = comment;
   document.getElementById('coins-earned-amount').textContent = `🪙 ${quizCoinsEarned} まい もらったよ！`;
   document.getElementById('coins-total-hint').textContent    = `今のコイン：🪙 ${coins} まい（くじは 20まいから）`;
+
+  // Feature 10: スコア表示
+  const scoreVal = document.getElementById('result-quiz-score-val');
+  const scoreHint = document.getElementById('result-highscore-hint');
+  if (scoreVal) scoreVal.textContent = quizScore.toLocaleString() + ' 点';
+  if (quizScore > kqHighScore && quizScore > 0) {
+    kqHighScore = quizScore;
+    localStorage.setItem('kq_high_score', kqHighScore.toString());
+    if (scoreHint) {
+      scoreHint.className = 'result-highscore result-new-highscore';
+      scoreHint.textContent = '🎉 じこベスト こうしん！';
+    }
+  } else {
+    if (scoreHint) {
+      scoreHint.className = 'result-highscore';
+      scoreHint.textContent = `🏆 じこベスト：${kqHighScore.toLocaleString()} 点`;
+    }
+  }
+  if (quizScore >= 1000) earnBadge('score1000');
+
   showScreen('screen-result');
 }
 
@@ -6296,6 +6747,10 @@ function answerBtQuiz(btn, answer, correct){
     const base = Math.max(Math.round(avgAtk*0.15), Math.round(avgAtk - btEnemy._bDef*0.3));
     const dmg  = Math.max(1, Math.round(base * mul));
 
+    // Feature 2: コンボミッション
+    if (btCombo === 3) updateMissionProgress('combo3', 1);
+    if (btCombo === 5) { updateMissionProgress('combo5', 1); earnBadge('combo5'); }
+
     if(btCombo >= 2){
       showBtCombo(btCombo, mul);
       setLog(`${btCombo}コンボ！\n×${mul.toFixed(1)} → ${dmg}ダメージ！`);
@@ -6416,6 +6871,8 @@ function enemyTurn(){
 // ===== 勝敗 =====
 function battleWin(){
   btPhase = 'end';
+  // Feature 2: バトル勝利ミッション
+  updateMissionProgress('battle_win', 1);
   const coinReward = 5 + btFloor * 4;
   const expReward  = 2 + btFloor;
   coins      += coinReward; saveState(); updateCoinBar();
