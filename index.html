@@ -3740,6 +3740,7 @@ const MISSION_POOL = [
   { id:'perfect',    label:'クイズで ぜんもん せいかい しよう', goal:1, reward:{type:'ticket_r',amount:1} },
   { id:'battle_win', label:'バトルで かとう！',         goal:1,  reward:{type:'coins',amount:80} },
 ];
+const DAILY_MISSION_COUNT = 4;
 
 let dailyMissions = [];
 
@@ -3755,10 +3756,10 @@ function _shuffleArr(arr) {
 function initDailyMissions() {
   const today = _todayStr();
   const raw = JSON.parse(localStorage.getItem('kq_daily_missions') || 'null');
-  if (raw && raw.date === today) {
+  if (raw && raw.date === today && raw.missions.length === DAILY_MISSION_COUNT) {
     dailyMissions = raw.missions;
   } else {
-    dailyMissions = _shuffleArr(MISSION_POOL).slice(0, 4).map(m => ({
+    dailyMissions = _shuffleArr(MISSION_POOL).slice(0, DAILY_MISSION_COUNT).map(m => ({
       id: m.id, label: m.label, goal: m.goal,
       progress: 0, reward: m.reward, done: false
     }));
