@@ -3758,7 +3758,7 @@ function initDailyMissions() {
   if (raw && raw.date === today) {
     dailyMissions = raw.missions;
   } else {
-    dailyMissions = _shuffleArr(MISSION_POOL).slice(0, 3).map(m => ({
+    dailyMissions = _shuffleArr(MISSION_POOL).slice(0, 5).map(m => ({
       id: m.id, label: m.label, goal: m.goal,
       progress: 0, reward: m.reward, done: false
     }));
