@@ -844,12 +844,9 @@
     .tw-lane {
       position:relative; flex:1; min-height:0; margin:2px 0 6px;
       border-radius:10px; overflow:hidden; border:2px solid #4e342e;
-      background:
-        radial-gradient(90px 26px at 18% 18%, rgba(255,255,255,.9) 58%, transparent 62%),
-        radial-gradient(66px 20px at 52% 10%, rgba(255,255,255,.8) 58%, transparent 62%),
-        radial-gradient(110px 30px at 84% 22%, rgba(255,255,255,.85) 58%, transparent 62%),
-        linear-gradient(180deg,#4fc3f7 0%,#81d4fa 40%,#b3e5fc 61%,#66bb6a 61%,#4caf50 67%,#8d6e63 67%,#6d4c41 100%);
+      background:#90caf9;
     }
+    .tw-bg { position:absolute; inset:0; width:100%; height:100%; z-index:0; }
     .tw-castle { position:absolute; bottom:30%; width:72px; text-align:center; z-index:2; }
     .tw-castle.enemy  { left:2px; }
     .tw-castle.player { right:2px; }
@@ -860,7 +857,7 @@
     }
     .tw-unit {
       position:absolute; bottom:31%; width:38px; height:38px;
-      transition:left .1s linear;
+      transition:left .1s linear; z-index:1;
     }
     .tw-unit svg { width:100%; height:auto; display:block; }
     .tw-unit.boss { width:64px; height:64px; }
@@ -910,21 +907,43 @@
     @keyframes twAtkLungeR { 0%{transform:translateX(0)} 35%{transform:translateX(7px) rotate(6deg)} 100%{transform:translateX(0)} }
     .tw-unit.tw-atk-l { animation:twAtkLungeL .3s ease-out; }
     .tw-unit.tw-atk-r { animation:twAtkLungeR .3s ease-out; }
-    /* やられ演出：後ろにバウンドして天に召される */
+    /* やられ演出：後ろに小さくバウンドして消え、魂が昇る */
     @keyframes twDieP {
-      0%   { transform:translate(0,0) rotate(0);            opacity:1; }
-      30%  { transform:translate(16px,-30px) rotate(150deg); opacity:1; }
-      55%  { transform:translate(26px,-4px) rotate(270deg);  opacity:1; }
-      100% { transform:translate(34px,-80px) rotate(480deg); opacity:0; }
+      0%   { transform:translate(0,0) rotate(0);             opacity:1; }
+      45%  { transform:translate(14px,-22px) rotate(160deg); opacity:1; }
+      100% { transform:translate(24px,2px) rotate(330deg);   opacity:0; }
     }
     @keyframes twDieE {
-      0%   { transform:translate(0,0) rotate(0);              opacity:1; }
-      30%  { transform:translate(-16px,-30px) rotate(-150deg); opacity:1; }
-      55%  { transform:translate(-26px,-4px) rotate(-270deg);  opacity:1; }
-      100% { transform:translate(-34px,-80px) rotate(-480deg); opacity:0; }
+      0%   { transform:translate(0,0) rotate(0);               opacity:1; }
+      45%  { transform:translate(-14px,-22px) rotate(-160deg); opacity:1; }
+      100% { transform:translate(-24px,2px) rotate(-330deg);   opacity:0; }
     }
-    .tw-unit.tw-die-p { animation:twDieP 1s ease-in forwards; z-index:4; }
-    .tw-unit.tw-die-e { animation:twDieE 1s ease-in forwards; z-index:4; }
+    .tw-unit.tw-die-p { animation:twDieP .55s ease-in forwards; z-index:4; }
+    .tw-unit.tw-die-e { animation:twDieE .55s ease-in forwards; z-index:4; }
+    /* 魂の昇天 */
+    .tw-soul {
+      position:absolute; bottom:36%; width:32px; z-index:5; pointer-events:none;
+      animation:twSoulRise 1.6s ease-out forwards;
+      filter:drop-shadow(0 0 4px rgba(255,255,255,.7));
+    }
+    .tw-soul svg { width:100%; height:auto; display:block; }
+    @keyframes twSoulRise {
+      0%   { transform:translate(0,10px);  opacity:0; }
+      15%  { transform:translate(2px,-4px);  opacity:.95; }
+      45%  { transform:translate(-4px,-34px); opacity:.9; }
+      75%  { transform:translate(3px,-62px);  opacity:.55; }
+      100% { transform:translate(-2px,-88px); opacity:0; }
+    }
+    /* 城破壊 */
+    @keyframes twCastleFall {
+      0%   { transform:translate(0,0) rotate(0); opacity:1; }
+      12%  { transform:translate(-4px,0); }
+      24%  { transform:translate(4px,0); }
+      36%  { transform:translate(-4px,0); }
+      48%  { transform:translate(4px,0); }
+      100% { transform:translate(2px,34px) rotate(16deg); opacity:0; }
+    }
+    .tw-castle.destroyed { animation:twCastleFall 1.2s ease-in forwards; }
     /* くうっち砲：地を走る衝撃波ビーム */
     .tw-cannon-beam {
       position:absolute; top:18%; bottom:26%; width:7%; left:86%;
@@ -2386,11 +2405,12 @@
         <div class="tw-money-badge">🪙 <span id="tw-money-num">0</span>/<span id="tw-money-cap">-</span></div>
       </div>
       <div class="tw-lane" id="tw-lane">
-        <div class="tw-castle enemy">
+        <svg class="tw-bg" viewBox="0 0 860 300" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="twSkyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#42a5f5"/><stop offset="70%" stop-color="#90caf9"/><stop offset="100%" stop-color="#d7f0fd"/></linearGradient><linearGradient id="twGrassG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8bc34a"/><stop offset="45%" stop-color="#689f38"/><stop offset="100%" stop-color="#558b2f"/></linearGradient><linearGradient id="twDirtG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8d6e63"/><stop offset="55%" stop-color="#795548"/><stop offset="100%" stop-color="#5d4037"/></linearGradient></defs><rect width="860" height="300" fill="url(#twSkyG)"/><circle cx="742" cy="46" r="34" fill="#fff9c4" opacity=".4"/><circle cx="742" cy="46" r="21" fill="#fff59d"/><g opacity=".95" fill="white"><ellipse cx="150" cy="62" rx="34" ry="13"/><ellipse cx="128" cy="66" rx="20" ry="9"/><ellipse cx="174" cy="67" rx="22" ry="10"/><ellipse cx="154" cy="54" rx="18" ry="9"/></g><g opacity=".95" fill="white"><ellipse cx="430" cy="40" rx="27" ry="10"/><ellipse cx="413" cy="43" rx="16" ry="7"/><ellipse cx="449" cy="44" rx="17" ry="8"/><ellipse cx="433" cy="34" rx="14" ry="7"/></g><g opacity=".95" fill="white"><ellipse cx="680" cy="84" rx="39" ry="14"/><ellipse cx="655" cy="88" rx="23" ry="10"/><ellipse cx="707" cy="89" rx="25" ry="11"/><ellipse cx="684" cy="75" rx="20" ry="10"/></g><g opacity=".95" fill="white"><ellipse cx="300" cy="100" rx="20" ry="7"/><ellipse cx="287" cy="102" rx="12" ry="5"/><ellipse cx="314" cy="103" rx="13" ry="6"/><ellipse cx="302" cy="96" rx="10" ry="5"/></g><ellipse cx="120" cy="196" rx="230" ry="46" fill="#aed581" opacity=".75"/><ellipse cx="500" cy="200" rx="260" ry="52" fill="#9ccc65" opacity=".6"/><ellipse cx="800" cy="198" rx="210" ry="44" fill="#aed581" opacity=".7"/><rect y="186" width="860" height="26" fill="url(#twGrassG)"/><rect y="186" width="860" height="3" fill="#c5e1a5" opacity=".8"/><path d="M341 194 q1.5 -7 3 0 M345 194 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M414 191 q1.5 -7 3 0 M418 191 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M84 193 q1.5 -7 3 0 M88 193 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M384 191 q1.5 -7 3 0 M388 191 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M529 196 q1.5 -7 3 0 M533 196 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M48 192 q1.5 -7 3 0 M52 192 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M454 203 q1.5 -7 3 0 M458 203 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M81 197 q1.5 -7 3 0 M85 197 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M102 203 q1.5 -7 3 0 M106 203 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M70 193 q1.5 -7 3 0 M74 193 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M238 191 q1.5 -7 3 0 M242 191 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M600 202 q1.5 -7 3 0 M604 202 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M60 197 q1.5 -7 3 0 M64 197 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M57 194 q1.5 -7 3 0 M61 194 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M306 203 q1.5 -7 3 0 M310 203 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M157 193 q1.5 -7 3 0 M161 193 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M594 199 q1.5 -7 3 0 M598 199 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M583 195 q1.5 -7 3 0 M587 195 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M115 196 q1.5 -7 3 0 M119 196 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M391 193 q1.5 -7 3 0 M395 193 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M570 192 q1.5 -7 3 0 M574 192 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M587 191 q1.5 -7 3 0 M591 191 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M643 196 q1.5 -7 3 0 M647 196 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M518 203 q1.5 -7 3 0 M522 203 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M805 200 q1.5 -7 3 0 M809 200 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><path d="M486 204 q1.5 -7 3 0 M490 204 q1.5 -5 3 0" stroke="#33691e" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".7"/><rect y="210" width="860" height="90" fill="url(#twDirtG)"/><rect y="210" width="860" height="3" fill="#4e342e" opacity=".5"/><rect y="240" width="860" height="2" fill="#4e342e" opacity=".18"/><rect y="268" width="860" height="2" fill="#4e342e" opacity=".18"/><ellipse cx="385" cy="262" rx="5" ry="4" fill="#a1887f" stroke="#6d4c41" stroke-width="1" opacity=".85"/><ellipse cx="730" cy="255" rx="4" ry="3" fill="#a1887f" stroke="#6d4c41" stroke-width="1" opacity=".85"/><ellipse cx="322" cy="287" rx="6" ry="3" fill="#a1887f" stroke="#6d4c41" stroke-width="1" opacity=".85"/><ellipse cx="474" cy="260" rx="8" ry="7" fill="#a1887f" stroke="#6d4c41" stroke-width="1" opacity=".85"/><ellipse cx="135" cy="277" rx="5" ry="3" fill="#a1887f" stroke="#6d4c41" stroke-width="1" opacity=".85"/><ellipse cx="170" cy="286" rx="7" ry="6" fill="#a1887f" stroke="#6d4c41" stroke-width="1" opacity=".85"/><ellipse cx="699" cy="233" rx="8" ry="5" fill="#a1887f" stroke="#6d4c41" stroke-width="1" opacity=".85"/><ellipse cx="823" cy="264" rx="6" ry="3" fill="#a1887f" stroke="#6d4c41" stroke-width="1" opacity=".85"/><ellipse cx="373" cy="287" rx="8" ry="6" fill="#a1887f" stroke="#6d4c41" stroke-width="1" opacity=".85"/><ellipse cx="85" cy="235" rx="6" ry="4" fill="#a1887f" stroke="#6d4c41" stroke-width="1" opacity=".85"/><ellipse cx="728" cy="232" rx="4" ry="3" fill="#a1887f" stroke="#6d4c41" stroke-width="1" opacity=".85"/><ellipse cx="733" cy="263" rx="9" ry="6" fill="#a1887f" stroke="#6d4c41" stroke-width="1" opacity=".85"/><ellipse cx="712" cy="281" rx="6" ry="3" fill="#a1887f" stroke="#6d4c41" stroke-width="1" opacity=".85"/><ellipse cx="410" cy="268" rx="4" ry="3" fill="#a1887f" stroke="#6d4c41" stroke-width="1" opacity=".85"/></svg>
+        <div class="tw-castle enemy" id="tw-castle-enemy">
           <div class="tw-castle-hp"><span id="tw-enemy-hp-num">-</span></div>
           <div class="tw-castle-icon">🏯</div>
         </div>
-        <div class="tw-castle player">
+        <div class="tw-castle player" id="tw-castle-player">
           <div class="tw-castle-hp"><span id="tw-player-hp-num">-</span></div>
           <div class="tw-castle-icon">🏠</div>
         </div>
@@ -7859,6 +7879,13 @@ function twRoleOf(k){
   for(const c of k.id) h = (h*31 + c.charCodeAt(0)) >>> 0;
   return ['melee','melee','tank','ranged','area'][h % 5];
 }
+const TW_SOUL_SVG = `<svg viewBox="0 0 60 84" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="30" cy="9" rx="13" ry="4.5" fill="none" stroke="white" stroke-width="3" opacity=".95"/>
+  <path d="M16 27 Q3 23 5 12 Q14 12 20 21 Z" fill="white"/>
+  <path d="M44 27 Q57 23 55 12 Q46 12 40 21 Z" fill="white"/>
+  <path d="M30 18 C42 18 47 31 38 37 C31 41 24 36 26 30 C28 26 34 26 34 30 C34 33 31 34 30 32" fill="none" stroke="white" stroke-width="5.5" stroke-linecap="round"/>
+  <path d="M29 37 C25 48 32 56 26 66 C24 70 27 76 24 81" fill="none" stroke="white" stroke-width="4.5" stroke-linecap="round"/>
+</svg>`;
 const TW_CANNON_CHARGE_SEC = 25; // フルチャージまでの秒数
 const TW_ENEMY_CASTLE_POS  = 8;   // 敵の城（左端）
 const TW_PLAYER_CASTLE_POS = 92;  // 自分の城（右端）
@@ -8199,10 +8226,19 @@ function twAtkAnim(u){
 
 function twDeathAnim(u){
   const el = document.getElementById('tw-u-'+u.uid);
-  if(!el) return;
-  el.id = '';
-  el.classList.add('tw-corpse', u.side==='player' ? 'tw-die-p' : 'tw-die-e');
-  setTimeout(()=>el.remove(), 1000);
+  if(el){
+    el.id = '';
+    el.classList.add('tw-corpse', u.side==='player' ? 'tw-die-p' : 'tw-die-e');
+    setTimeout(()=>el.remove(), 600);
+  }
+  // 魂が浮かび上がる
+  const lane = document.getElementById('tw-lane');
+  const soul = document.createElement('div');
+  soul.className = 'tw-soul';
+  soul.innerHTML = TW_SOUL_SVG;
+  soul.style.left = u.pos + '%';
+  lane.appendChild(soul);
+  setTimeout(()=>soul.remove(), 1600);
 }
 
 function twHitUnit(o, dmg){
@@ -8338,6 +8374,21 @@ function twEnd(won){
   if(twTickTimer){ clearInterval(twTickTimer); twTickTimer=null; }
   if(twEnemySpawnTimer){ clearTimeout(twEnemySpawnTimer); twEnemySpawnTimer=null; }
 
+  // 城破壊演出：揺れて傾いて崩れ落ちる＋連続爆発
+  const castleEl  = document.getElementById(won ? 'tw-castle-enemy' : 'tw-castle-player');
+  const castlePos = won ? TW_ENEMY_CASTLE_POS : TW_PLAYER_CASTLE_POS;
+  if(castleEl) castleEl.classList.add('destroyed');
+  playSound('attack');
+  for(let i=0;i<5;i++){
+    setTimeout(()=>{
+      twHitSpark(castlePos + (Math.random()*8-4));
+      if(i===2) playSound('attack');
+    }, i*180);
+  }
+  setTimeout(()=>twShowEndOverlay(won), 1300);
+}
+
+function twShowEndOverlay(won){
   const ov = document.createElement('div');
   ov.className = 'bt-end-overlay ' + (won ? 'win' : 'lose');
   if(won){
@@ -8372,7 +8423,9 @@ function twEnd(won){
 }
 
 function twResetOverlay(){
-  document.getElementById('tw-lane').querySelectorAll('.tw-unit').forEach(el=>el.remove());
+  document.getElementById('tw-lane').querySelectorAll('.tw-unit, .tw-soul').forEach(el=>el.remove());
+  document.getElementById('tw-castle-enemy').classList.remove('destroyed');
+  document.getElementById('tw-castle-player').classList.remove('destroyed');
   document.getElementById('tw-start-overlay').style.display = 'flex';
   twUpdateStagePreview();
 }
