@@ -574,11 +574,15 @@
     /* ===== BATTLE BUTTON (スタート画面) ===== */
     .battle-mode-btn {
       width:100%; padding:13px; margin-top:8px;
-      background:linear-gradient(135deg,#1a237e,#283593);
-      color:white; border:none; border-bottom:5px solid #0d1253;
+      background:linear-gradient(135deg,#e53935,#ff5722);
+      color:white; border:none; border-bottom:5px solid #b71c1c;
       border-radius:16px; font-size:18px; font-weight:900; cursor:pointer;
       text-shadow:0 2px 4px rgba(0,0,0,.3); letter-spacing:.5px;
       transition:transform .1s, border-bottom-width .1s;
+    }
+    .battle-mode-btn.tower {
+      background:linear-gradient(135deg,#43a047,#66bb6a);
+      border-bottom-color:#2e7d32;
     }
     .battle-mode-btn:hover { transform:translateY(-2px); }
     .battle-mode-btn:active { transform:translateY(4px); border-bottom-width:1px; }
@@ -2036,10 +2040,10 @@
       </div>
       <button class="maze-btn-home" id="maze-home-btn" onclick="showMaze()">🗺️ ボーナス迷路！&nbsp;&nbsp;🗝️ <span id="maze-key-home">0</span></button>
       <div class="battle-tab-card" style="margin-top:10px">
-        <div style="font-size:11px;font-weight:700;opacity:.8;margin-bottom:6px">クイズに正解してねこユニットを出撃させ、てきの おしろを こうげきしよう！</div>
+        <div style="font-size:11px;font-weight:700;opacity:.8;margin-bottom:6px">おかねを ためて ユニットを出撃させ、てきの おしろを こわそう！</div>
         <div style="font-size:48px;margin:6px 0">🐱🏰</div>
-        <button class="battle-mode-btn" onclick="showTowerSelect()">🐱 くうっち防衛戦！</button>
-        <div class="battle-tab-card-sub">コンボが つづくほど つよいねこが でるぞ！</div>
+        <button class="battle-mode-btn tower" onclick="showTowerSelect()">🐱 くうっち防衛戦！</button>
+        <div class="battle-tab-card-sub">ガチャで あつめた キャラで たたかえ！<br>スマホを よこにして あそんでね！</div>
       </div>
     </div>
 
