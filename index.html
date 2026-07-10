@@ -886,8 +886,17 @@
     .tw-deploy-btn svg, .tw-deploy-btn .tw-unit-emoji { width:30px; height:30px; }
     .tw-deploy-cost { font-size:9px; font-weight:900; color:#1a237e; }
     .tw-deploy-cd {
-      position:absolute; left:0; right:0; bottom:0; background:rgba(0,0,0,.55);
-      transition:height .1s linear;
+      position:absolute; inset:0; background:rgba(0,0,0,.45); display:none;
+    }
+    .tw-deploy-gauge {
+      position:absolute; left:5px; right:5px; bottom:3px; height:8px;
+      background:rgba(0,0,0,.78); border-radius:3px; display:none; overflow:hidden;
+      border:1px solid rgba(255,255,255,.25);
+    }
+    .tw-deploy-gauge-fill {
+      height:100%; width:0%;
+      background:linear-gradient(180deg,#6ff9ff,#00e5ff 60%,#00b8d4);
+      transition:width .1s linear;
     }
     .tw-deploy-btn:disabled { opacity:.55; cursor:not-allowed; }
     .tw-role-chip {
@@ -8302,7 +8311,7 @@ function twRenderDeployBar(){
     const btn = document.createElement('button');
     btn.className = 'tw-deploy-btn';
     btn.dataset.id = id;
-    btn.innerHTML = `<div class="tw-deploy-role">${def.role.icon}</div>${def.svg}<div class="tw-deploy-cost">🪙<span class="tw-cost-num">-</span></div><div class="tw-deploy-cd" id="tw-cd-${id}" style="height:0%"></div>`;
+    btn.innerHTML = `<div class="tw-deploy-role">${def.role.icon}</div>${def.svg}<div class="tw-deploy-cost">🪙<span class="tw-cost-num">-</span></div><div class="tw-deploy-gauge"><div class="tw-deploy-gauge-fill"></div></div><div class="tw-deploy-cd" id="tw-cd-${id}"></div>`;
     btn.onclick = ()=>twDeployUnit(id);
     row.appendChild(btn);
   });
@@ -8679,11 +8688,19 @@ function updateTwDeployButtons(){
     if(!def) return;
     const rs = TW_RARITY_STATS[def.rarity] || TW_RARITY_STATS.common;
     const cd = twDeckCooldowns[id] || 0;
-    const costEl = btn.querySelector('.tw-cost-num');
-    if(costEl) costEl.textContent = rs.cost;
-    const cdEl = document.getElementById('tw-cd-'+id);
-    if(cdEl) cdEl.style.height = (cd/rs.cooldown*100)+'%';
-    btn.disabled = cd > 0 || twMoney < rs.cost;
+    const onCd = cd > 0;
+    const costEl  = btn.querySelector('.tw-deploy-cost');
+    const numEl   = btn.querySelector('.tw-cost-num');
+    const gauge   = btn.querySelector('.tw-deploy-gauge');
+    const fill    = btn.querySelector('.tw-deploy-gauge-fill');
+    const cdEl    = document.getElementById('tw-cd-'+id);
+    if(numEl) numEl.textContent = rs.cost;
+    // クールダウン中：アイコンを暗くして青い再生産ゲージを表示（本家風）
+    if(costEl) costEl.style.visibility = onCd ? 'hidden' : 'visible';
+    if(gauge)  gauge.style.display = onCd ? 'block' : 'none';
+    if(fill)   fill.style.width = ((1 - cd/rs.cooldown)*100)+'%';
+    if(cdEl)   cdEl.style.display = onCd ? 'block' : 'none';
+    btn.disabled = onCd || twMoney < rs.cost;
   });
 }
 
