@@ -8013,27 +8013,26 @@ function twTick(){
   });
   updateTwDeployButtons();
 
-  // ユニット同士の戦闘（1対1で足止め）
-  const engagedIds = new Set();
+  // ユニット同士の戦闘（距離内に敵がいれば止まって攻撃。複数で同じ敵を攻撃できる。
+  // 前後を問わない絶対距離判定なので、すれ違い・背後湧きでも素通りしない）
+  const fightingIds = new Set();
   twUnits.forEach(u=>{
-    if(engagedIds.has(u.uid)) return;
-    let nearest = null, nearestDist = Infinity;
+    let target = null, nearestDist = Infinity;
     twUnits.forEach(o=>{
-      if(o.side===u.side || engagedIds.has(o.uid)) return;
-      const ahead = u.side==='player' ? (u.pos - o.pos) : (o.pos - u.pos);
-      if(ahead < 0 || ahead > TW_ENGAGE_RANGE) return;
-      if(ahead < nearestDist){ nearestDist = ahead; nearest = o; }
+      if(o.side===u.side) return;
+      const dist = Math.abs(u.pos - o.pos);
+      if(dist > TW_ENGAGE_RANGE) return;
+      if(dist < nearestDist){ nearestDist = dist; target = o; }
     });
-    if(nearest){
-      engagedIds.add(u.uid); engagedIds.add(nearest.uid);
-      u.hp       -= nearest.atk*0.12;
-      nearest.hp -= u.atk*0.12;
+    if(target){
+      fightingIds.add(u.uid);
+      target.hp -= u.atk*0.12;
     }
   });
 
   // 移動 or 城への連続攻撃
   twUnits.forEach(u=>{
-    if(engagedIds.has(u.uid)) return;
+    if(fightingIds.has(u.uid)) return;
     if(u.side==='player'){
       if(u.pos <= TW_ENEMY_CASTLE_POS){
         twEnemyCastleHP = Math.max(0, twEnemyCastleHP - u.atk*0.15);
