@@ -872,26 +872,26 @@
       background:url('sprites/bg_grass.jpg') no-repeat;
       background-size:100% 100%;
     }
-    .tw-castle { position:absolute; bottom:30%; width:72px; text-align:center; z-index:2; }
+    .tw-castle { position:absolute; bottom:30%; width:84px; text-align:center; z-index:2; }
     .tw-castle.enemy  { left:2px; }
     .tw-castle.player { right:2px; }
-    .tw-castle-icon { font-size:46px; line-height:1; }
+    .tw-castle-icon { font-size:56px; line-height:1; }
     .tw-castle-hp {
       font-size:12px; font-weight:900; color:white;
       text-shadow:0 1px 3px rgba(0,0,0,.6); margin-bottom:2px;
     }
     .tw-unit {
-      position:absolute; bottom:31%; width:38px; height:38px;
+      position:absolute; bottom:31%; width:50px; height:50px;
       transition:left .1s linear; z-index:1;
     }
     .tw-unit.fly { bottom:38%; }
     .tw-fly-shadow {
-      position:absolute; bottom:30.5%; width:28px; height:8px; margin-left:5px;
+      position:absolute; bottom:30.5%; width:36px; height:9px; margin-left:7px;
       border-radius:50%; background:rgba(0,0,0,.3); z-index:0;
       transition:left .1s linear; pointer-events:none;
     }
     .tw-unit svg { width:100%; height:auto; display:block; }
-    .tw-unit.boss { width:64px; height:64px; }
+    .tw-unit.boss { width:84px; height:84px; }
     .tw-deploy-row { display:flex; gap:5px; padding:2px 2px 4px; }
     .tw-deploy-btn {
       flex:1; position:relative; border:2px solid #7986cb; border-radius:10px;
@@ -922,7 +922,7 @@
     @keyframes twHitFlash { 0%{ filter:brightness(2.2) saturate(.2); } 100%{ filter:none; } }
     .tw-unit.tw-hit { animation:twHitFlash .18s ease-out; }
     .tw-hit-spark {
-      position:absolute; bottom:34%; z-index:5; font-size:20px;
+      position:absolute; bottom:34%; z-index:5; font-size:26px;
       animation:twSparkPop .28s ease-out forwards; pointer-events:none;
     }
     @keyframes twSparkPop {
@@ -962,7 +962,7 @@
     .tw-unit.tw-die-e { animation:twDieE .55s ease-in forwards; z-index:4; }
     /* 魂の昇天 */
     .tw-soul {
-      position:absolute; bottom:36%; width:32px; z-index:5; pointer-events:none;
+      position:absolute; bottom:36%; width:40px; z-index:5; pointer-events:none;
       animation:twSoulRise 1.6s ease-out forwards;
       filter:drop-shadow(0 0 4px rgba(255,255,255,.7));
     }
@@ -8696,7 +8696,7 @@ function twRenderUnits(){
       el = document.createElement('div');
       el.id = 'tw-u-'+u.uid;
       el.className = 'tw-unit' + (u.boss ? ' boss' : '') + (u.fly ? ' fly' : '');
-      if(u.hScale && u.hScale !== 1) el.style.height = Math.round(38*u.hScale) + 'px';
+      if(u.hScale && u.hScale !== 1) el.style.height = Math.round(50*u.hScale) + 'px';
       if(u.sprite){
         if(u.side==='player') el.classList.add('sprite-flip');
         el.innerHTML = `<img class="tw-sprite" src="${u.sprite.idle}">`;
