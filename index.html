@@ -8080,6 +8080,15 @@ const TW_POTE2_SPRITE = {
   atk:  ['sprites/pote2_atk1.png','sprites/pote2_atk2.png','sprites/pote2_atk3.png'],
   dmg:  'sprites/pote2_dmg.png',
 };
+// コマアニメ式：くうっち（かみつき）
+const TW_KUU_ID = 'tw_kuucchi_basic';
+const TW_KUU_SPRITE = {
+  icon: 'sprites/kuu_icon.png',
+  idle: 'sprites/kuu_idle.png',
+  walk: ['sprites/kuu_walk1.png','sprites/kuu_walk2.png','sprites/kuu_walk3.png','sprites/kuu_walk4.png'],
+  atk:  ['sprites/kuu_atk1.png','sprites/kuu_atk2.png','sprites/kuu_atk3.png'],
+  dmg:  'sprites/kuu_dmg.png',
+};
 // デッキIDからユニット定義を解決（常設キャラ or ガチャキャラ）
 function twUnitDef(id){
   if(id === TW_DEBUG_CAT_ID){
@@ -8098,6 +8107,13 @@ function twUnitDef(id){
     return { id, rarity:'common', name:'ぽてまよ', role:rushRole,
              svg:`<img class="tw-icon-img" src="${TW_POTE2_SPRITE.icon}">`,
              sprite:TW_POTE2_SPRITE, lv:1 };
+  }
+  if(id === TW_KUU_ID){
+    // かみつき：バランス型のちょい強め近接
+    const kuuRole = { icon:'🦷', label:'かみつき', hpMul:1.2, atkMul:1.2, range:6, interval:1.1, area:false };
+    return { id, rarity:'common', name:'くうっち', role:kuuRole,
+             svg:`<img class="tw-icon-img" src="${TW_KUU_SPRITE.icon}">`,
+             sprite:TW_KUU_SPRITE, lv:1 };
   }
   const k = KD.find(kk=>kk.id===id);
   if(!k) return null;
@@ -8135,7 +8151,7 @@ function showTowerSelect(){
   grid.innerHTML = '';
   document.getElementById('tw-deck-start-btn').disabled = true;
   const owned = KD.filter(k=>(collection[k.id]||0)>0 && (k.kanji || k.char==='mochi' || k.char==='neko'));
-  twDeckSelected = twDeckSelected.filter(id => id===TW_DEBUG_CAT_ID || id===TW_POTE_ID || id===TW_POTE2_ID || owned.some(k=>k.id===id));
+  twDeckSelected = twDeckSelected.filter(id => id===TW_DEBUG_CAT_ID || id===TW_POTE_ID || id===TW_POTE2_ID || id===TW_KUU_ID || owned.some(k=>k.id===id));
 
   // 常時使用可能キャラを先頭に
   const dbgHdr = document.createElement('div');
@@ -8143,7 +8159,7 @@ function showTowerSelect(){
   dbgHdr.style.gridColumn = '1 / -1';
   dbgHdr.textContent = '🐾 いつでも つかえる';
   grid.appendChild(dbgHdr);
-  [TW_DEBUG_CAT_ID, TW_POTE2_ID, TW_POTE_ID].forEach(bid=>{
+  [TW_DEBUG_CAT_ID, TW_KUU_ID, TW_POTE2_ID, TW_POTE_ID].forEach(bid=>{
     const def = twUnitDef(bid);
     const dbg = document.createElement('div');
     dbg.className = 'bt-sel-item tw-deck-grid-item';
