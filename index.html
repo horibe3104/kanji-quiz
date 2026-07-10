@@ -50,8 +50,8 @@
       transform:translateX(-103%) skewX(-6deg); transform-origin:center;
       pointer-events:none; display:none; width:106%; margin-left:-3%;
     }
-    #screen-wipe.in  { transition:transform .22s ease-in;  transform:translateX(0) skewX(-6deg); }
-    #screen-wipe.out { transition:transform .22s ease-out; transform:translateX(103%) skewX(-6deg); }
+    #screen-wipe.in     { transition:transform .22s ease-in;  transform:translateX(0) skewX(-6deg); }
+    #screen-wipe.in.out { transition:transform .22s ease-out; transform:translateX(103%) skewX(-6deg); }
 
     /* BGM TOGGLE */
     #bgm-btn {
@@ -4237,25 +4237,26 @@ function _showScreenRaw(id) {
 }
 
 // 本家風：黒い帯が左から右へ走って画面が切り替わる
-let _wipeTimer = null;
+let _wipeState = null; // 進行中のワイプ（遷移先IDを保持）
 function showScreen(id){
   const w = document.getElementById('screen-wipe');
   if(!w){ _showScreenRaw(id); return; }
-  if(_wipeTimer){ clearTimeout(_wipeTimer); _wipeTimer = null; }
+  // ワイプ進行中に再度呼ばれたら、遷移先だけ差し替えて演出はそのまま
+  if(_wipeState){ _wipeState.targetId = id; return; }
+  _wipeState = { targetId: id };
   w.style.display = 'block';
   w.className = '';
   void w.offsetWidth;
   w.classList.add('in');
-  _wipeTimer = setTimeout(()=>{
-    _showScreenRaw(id);
-    w.classList.remove('in');
-    void w.offsetWidth;
+  setTimeout(()=>{
+    _showScreenRaw(_wipeState.targetId);
+    // in を保持したまま out を重ねる（帯は画面中央から右へ連続して抜ける）
     w.classList.add('out');
-    _wipeTimer = setTimeout(()=>{
+    setTimeout(()=>{
       w.className = ''; w.style.display = 'none';
-      _wipeTimer = null;
-    }, 240);
-  }, 240);
+      _wipeState = null;
+    }, 260);
+  }, 260);
 }
 /* ===== 設定：表示モード管理 ===== */
 const MODE_CONFIG = [
