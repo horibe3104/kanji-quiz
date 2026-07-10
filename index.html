@@ -856,16 +856,25 @@
       background:rgba(255,255,255,.15); color:white; border-radius:99px;
       padding:5px 14px; font-size:13px; font-weight:900; white-space:nowrap;
     }
-    .tw-wallet-btn {
-      border:none; border-radius:99px; padding:6px 14px; font-size:12px; font-weight:900;
-      background:linear-gradient(135deg,#7c4dff,#512da8); color:white; cursor:pointer;
-      white-space:nowrap;
-    }
-    .tw-wallet-btn:disabled { background:#555c6e; color:#aab; cursor:not-allowed; }
+    /* 右上：お金（本家風の大きな黄色数字） */
     .tw-money-badge {
-      background:linear-gradient(135deg,#f7b731,#f0932b); color:white; border-radius:99px;
-      padding:5px 14px; font-size:13px; font-weight:900; flex-shrink:0; white-space:nowrap;
+      color:#ffd600; font-size:22px; font-weight:900; flex-shrink:0; white-space:nowrap;
+      text-shadow:2px 2px 0 #6d4c00, -1px -1px 0 #6d4c00, 1px -1px 0 #6d4c00, -1px 1px 0 #6d4c00;
+      letter-spacing:1px; padding-right:4px;
     }
+    .tw-money-unit { font-size:14px; margin-left:2px; }
+    /* 下段バー：左＝おさいふLEVEL、中央＝出撃、右＝くうっち砲 */
+    .tw-bottombar { display:flex; gap:6px; padding:2px 2px 4px; align-items:stretch; }
+    .tw-wallet-btn {
+      width:74px; flex-shrink:0; border:none; border-radius:12px; cursor:pointer;
+      background:linear-gradient(180deg,#8e64ff,#5e35b1); color:white;
+      border-bottom:4px solid #3f2482;
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+    }
+    .tw-wallet-btn:active:not(:disabled) { transform:translateY(2px); }
+    .tw-wallet-btn:disabled { filter:grayscale(.6) brightness(.8); cursor:not-allowed; }
+    .tw-wallet-lv-label { font-size:13px; font-weight:900; letter-spacing:.5px; }
+    .tw-wallet-cost-label { font-size:11px; font-weight:900; opacity:.95; }
     .tw-lane {
       position:relative; flex:1; min-height:0; margin:2px 0 6px;
       border-radius:10px; overflow:hidden; border:2px solid #4e342e;
@@ -876,6 +885,7 @@
     .tw-castle.enemy  { left:2px; }
     .tw-castle.player { right:2px; }
     .tw-castle-icon { font-size:56px; line-height:1; }
+    .tw-castle-img { width:100%; height:auto; display:block; margin:0 auto; }
     .tw-castle-hp {
       font-size:12px; font-weight:900; color:white;
       text-shadow:0 1px 3px rgba(0,0,0,.6); margin-bottom:2px;
@@ -892,7 +902,7 @@
     }
     .tw-unit svg { width:100%; height:auto; display:block; }
     .tw-unit.boss { width:84px; height:84px; }
-    .tw-deploy-row { display:flex; gap:5px; padding:2px 2px 4px; }
+    .tw-deploy-row { flex:1; display:flex; gap:5px; min-width:0; }
     .tw-deploy-btn {
       flex:1; position:relative; border:2px solid #7986cb; border-radius:10px;
       background:#e8eaf6; padding:3px 2px 2px; cursor:pointer; overflow:hidden;
@@ -931,18 +941,22 @@
       100% { transform:scale(1.5) rotate(15deg); opacity:0; }
     }
     .tw-cannon-btn {
-      position:relative; border:none; border-radius:99px; padding:6px 14px;
-      font-size:12px; font-weight:900; color:white; background:#455a64;
-      cursor:pointer; overflow:hidden; white-space:nowrap; flex-shrink:0;
+      position:relative; width:74px; flex-shrink:0; border:none; border-radius:12px;
+      font-size:11px; font-weight:900; color:white; background:#455a64;
+      cursor:pointer; overflow:hidden; border-bottom:4px solid #263238;
+      display:flex; align-items:center; justify-content:center;
     }
     .tw-cannon-fill {
-      position:absolute; left:0; top:0; bottom:0; width:0%;
-      background:linear-gradient(135deg,#ff7043,#e53935); transition:width .2s;
+      position:absolute; left:0; right:0; bottom:0; height:0%;
+      background:linear-gradient(180deg,#ff7043,#e53935); transition:height .2s;
     }
-    .tw-cannon-btn span { position:relative; z-index:1; }
+    .tw-cannon-label { position:relative; z-index:1; line-height:1.4; text-align:center; }
     .tw-cannon-btn:disabled { cursor:not-allowed; color:#cfd8dc; }
-    .tw-cannon-btn.ready { animation:twCannonPulse 1s infinite; }
-    @keyframes twCannonPulse { 50%{ box-shadow:0 0 12px #ff5722; } }
+    .tw-cannon-btn.ready {
+      background:linear-gradient(180deg,#ff4081,#d81b60); border-bottom-color:#880e4f;
+      animation:twCannonPulse .8s infinite;
+    }
+    @keyframes twCannonPulse { 50%{ box-shadow:0 0 14px #ff4081; } }
     @keyframes twAtkLungeL { 0%{transform:translateX(0)} 35%{transform:translateX(-7px) rotate(-6deg)} 100%{transform:translateX(0)} }
     @keyframes twAtkLungeR { 0%{transform:translateX(0)} 35%{transform:translateX(7px) rotate(6deg)} 100%{transform:translateX(0)} }
     .tw-unit.tw-atk-l { animation:twAtkLungeL .3s ease-out; }
@@ -2461,9 +2475,7 @@
         <button class="tw-quit-btn" onclick="twQuit()">✕</button>
         <div class="tw-stage-badge" id="tw-stage-badge">ステージ 1</div>
         <div style="flex:1"></div>
-        <button class="tw-cannon-btn" id="tw-cannon-btn" onclick="twFireCannon()" disabled><div class="tw-cannon-fill" id="tw-cannon-fill"></div><span>💥 くうっち砲</span></button>
-        <button class="tw-wallet-btn" id="tw-wallet-btn" onclick="twUpgradeWallet()">⤴️ おさいふ Lv.<span id="tw-wallet-lv">1</span>　🪙<span id="tw-wallet-cost">-</span></button>
-        <div class="tw-money-badge">🪙 <span id="tw-money-num">0</span>/<span id="tw-money-cap">-</span></div>
+        <div class="tw-money-badge"><span id="tw-money-num">0</span>/<span id="tw-money-cap">-</span><span class="tw-money-unit">円</span></div>
       </div>
       <div class="tw-lane" id="tw-lane">
         
@@ -2473,7 +2485,7 @@
         </div>
         <div class="tw-castle player" id="tw-castle-player">
           <div class="tw-castle-hp"><span id="tw-player-hp-num">-</span></div>
-          <div class="tw-castle-icon">🏠</div>
+          <img class="tw-castle-img" src="sprites/castle_player.png" alt="">
         </div>
         <div class="tw-start-overlay" id="tw-start-overlay">
           <div class="tw-start-title" id="tw-start-title">🐱 くうっち防衛戦！</div>
@@ -2481,7 +2493,17 @@
           <button class="tw-start-btn" onclick="startTowerDefense()">▶ スタート</button>
         </div>
       </div>
-      <div class="tw-deploy-row" id="tw-deploy-row"></div>
+      <div class="tw-bottombar">
+        <button class="tw-wallet-btn" id="tw-wallet-btn" onclick="twUpgradeWallet()">
+          <div class="tw-wallet-lv-label">LEVEL <span id="tw-wallet-lv">1</span></div>
+          <div class="tw-wallet-cost-label">🪙<span id="tw-wallet-cost">-</span></div>
+        </button>
+        <div class="tw-deploy-row" id="tw-deploy-row"></div>
+        <button class="tw-cannon-btn" id="tw-cannon-btn" onclick="twFireCannon()" disabled>
+          <div class="tw-cannon-fill" id="tw-cannon-fill"></div>
+          <span class="tw-cannon-label" id="tw-cannon-label">💥<br>くうっち砲</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -8640,13 +8662,15 @@ function twHitSpark(pos){
 }
 
 function updateTwCannonUI(){
-  const btn  = document.getElementById('tw-cannon-btn');
-  const fill = document.getElementById('tw-cannon-fill');
+  const btn   = document.getElementById('tw-cannon-btn');
+  const fill  = document.getElementById('tw-cannon-fill');
+  const label = document.getElementById('tw-cannon-label');
   if(!btn || !fill) return;
-  fill.style.width = twCannonCharge + '%';
+  fill.style.height = twCannonCharge + '%';
   const ready = twActive && twCannonCharge >= 100;
   btn.disabled = !ready;
   btn.classList.toggle('ready', ready);
+  if(label) label.innerHTML = ready ? '💥<br>はっしゃ<br>OK!!' : '💥<br>くうっち砲';
 }
 
 function twFireCannon(){
