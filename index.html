@@ -884,19 +884,15 @@
     .tw-deploy-role { position:absolute; top:1px; right:3px; font-size:10px; z-index:1; }
     @keyframes twHitFlash { 0%{ filter:brightness(2.2) saturate(.2); } 100%{ filter:none; } }
     .tw-unit.tw-hit { animation:twHitFlash .18s ease-out; }
-    .tw-dmg-float {
-      position:absolute; bottom:52%; z-index:5; font-size:13px; font-weight:900;
-      color:white; text-shadow:0 1px 3px rgba(0,0,0,.7);
-      animation:twDmgUp .7s ease-out forwards; pointer-events:none;
+    .tw-hit-spark {
+      position:absolute; bottom:34%; z-index:5; font-size:20px;
+      animation:twSparkPop .28s ease-out forwards; pointer-events:none;
     }
-    .tw-dmg-float.on-enemy { color:#ffeb3b; }
-    @keyframes twDmgUp { 0%{ transform:translateY(0); opacity:1 } 100%{ transform:translateY(-26px); opacity:0 } }
-    .tw-money-float {
-      position:absolute; bottom:58%; z-index:5; font-size:14px; font-weight:900;
-      color:#ffd600; text-shadow:0 1px 3px rgba(0,0,0,.75);
-      animation:twMoneyUp .9s ease-out forwards; pointer-events:none;
+    @keyframes twSparkPop {
+      0%   { transform:scale(.4) rotate(-15deg); opacity:1; }
+      60%  { transform:scale(1.25) rotate(8deg); opacity:1; }
+      100% { transform:scale(1.5) rotate(15deg); opacity:0; }
     }
-    @keyframes twMoneyUp { 0%{ transform:translateY(0) scale(1); opacity:1 } 100%{ transform:translateY(-34px) scale(1.15); opacity:0 } }
     .tw-cannon-btn {
       position:relative; border:none; border-radius:99px; padding:6px 14px;
       font-size:12px; font-weight:900; color:white; background:#455a64;
@@ -8150,7 +8146,7 @@ function twTick(){
           u.atkTimer = u.interval;
           twAtkAnim(u);
           twEnemyCastleHP = Math.max(0, twEnemyCastleHP - u.atk);
-          twDmgFloat(TW_ENEMY_CASTLE_POS + 2, u.atk, true);
+          twHitSpark(TW_ENEMY_CASTLE_POS + 2);
           if(!twBossSpawned && twEnemyCastleHP <= twEnemyCastleMax*0.5){
             twBossSpawned = true;
             twSpawnBoss();
@@ -8166,7 +8162,7 @@ function twTick(){
           u.atkTimer = u.interval;
           twAtkAnim(u);
           twPlayerCastleHP = Math.max(0, twPlayerCastleHP - u.atk);
-          twDmgFloat(TW_PLAYER_CASTLE_POS - 2, u.atk, false);
+          twHitSpark(TW_PLAYER_CASTLE_POS - 2);
         }
       } else {
         u.pos += u.speed;
@@ -8180,7 +8176,6 @@ function twTick(){
     if(u.hp > 0){ alive.push(u); return; }
     if(u.side==='enemy'){
       twMoney = Math.min(TW_WALLET[twWalletLv-1].cap, twMoney + (u.bounty||0));
-      if(u.bounty) twMoneyFloat(u.pos, u.bounty);
     }
     twDeathAnim(u);
   });
@@ -8212,7 +8207,7 @@ function twDeathAnim(u){
 
 function twHitUnit(o, dmg){
   o.hp -= dmg;
-  twDmgFloat(o.pos, dmg, o.side==='enemy');
+  twHitSpark(o.pos);
   const el = document.getElementById('tw-u-'+o.uid);
   if(el){ el.classList.remove('tw-hit'); void el.offsetWidth; el.classList.add('tw-hit'); }
   // ノックバック（HPが一定割合を下回るたびに後退）
@@ -8223,24 +8218,14 @@ function twHitUnit(o, dmg){
   }
 }
 
-function twMoneyFloat(pos, amount){
+function twHitSpark(pos){
   const lane = document.getElementById('tw-lane');
   const d = document.createElement('div');
-  d.className = 'tw-money-float';
-  d.textContent = '🪙+' + amount;
+  d.className = 'tw-hit-spark';
+  d.textContent = '💥';
   d.style.left = pos + '%';
   lane.appendChild(d);
-  setTimeout(()=>d.remove(), 900);
-}
-
-function twDmgFloat(pos, dmg, onEnemy){
-  const lane = document.getElementById('tw-lane');
-  const d = document.createElement('div');
-  d.className = 'tw-dmg-float' + (onEnemy ? ' on-enemy' : '');
-  d.textContent = Math.round(dmg);
-  d.style.left = pos + '%';
-  lane.appendChild(d);
-  setTimeout(()=>d.remove(), 700);
+  setTimeout(()=>d.remove(), 300);
 }
 
 function updateTwCannonUI(){
