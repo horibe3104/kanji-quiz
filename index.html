@@ -885,6 +885,11 @@
       transition:left .1s linear; z-index:1;
     }
     .tw-unit.fly { bottom:38%; }
+    .tw-fly-shadow {
+      position:absolute; bottom:30.5%; width:28px; height:8px; margin-left:5px;
+      border-radius:50%; background:rgba(0,0,0,.3); z-index:0;
+      transition:left .1s linear; pointer-events:none;
+    }
     .tw-unit svg { width:100%; height:auto; display:block; }
     .tw-unit.boss { width:64px; height:64px; }
     .tw-deploy-row { display:flex; gap:5px; padding:2px 2px 4px; }
@@ -8689,9 +8694,24 @@ function twRenderUnits(){
       if(img && img.dataset.s !== src){ img.dataset.s = src; img.src = src; }
     }
     el.style.left = u.pos + '%';
+    // 飛行ユニットは地面に影を落とす
+    if(u.fly){
+      let sh = document.getElementById('tw-us-'+u.uid);
+      if(!sh){
+        sh = document.createElement('div');
+        sh.id = 'tw-us-'+u.uid;
+        sh.className = 'tw-fly-shadow';
+        lane.appendChild(sh);
+      }
+      sh.style.left = u.pos + '%';
+    }
   });
   lane.querySelectorAll('.tw-unit:not(.tw-corpse)').forEach(el=>{
     const uid = parseInt(el.id.replace('tw-u-',''));
+    if(!seen.has(uid)) el.remove();
+  });
+  lane.querySelectorAll('.tw-fly-shadow').forEach(el=>{
+    const uid = parseInt(el.id.replace('tw-us-',''));
     if(!seen.has(uid)) el.remove();
   });
 }
@@ -8808,7 +8828,7 @@ function twShowEndOverlay(won){
 }
 
 function twResetOverlay(){
-  document.getElementById('tw-lane').querySelectorAll('.tw-unit, .tw-soul').forEach(el=>el.remove());
+  document.getElementById('tw-lane').querySelectorAll('.tw-unit, .tw-soul, .tw-fly-shadow').forEach(el=>el.remove());
   document.getElementById('tw-castle-enemy').classList.remove('destroyed');
   document.getElementById('tw-castle-player').classList.remove('destroyed');
   document.getElementById('tw-start-overlay').style.display = 'flex';
