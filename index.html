@@ -891,6 +891,12 @@
     }
     .tw-dmg-float.on-enemy { color:#ffeb3b; }
     @keyframes twDmgUp { 0%{ transform:translateY(0); opacity:1 } 100%{ transform:translateY(-26px); opacity:0 } }
+    .tw-money-float {
+      position:absolute; bottom:58%; z-index:5; font-size:14px; font-weight:900;
+      color:#ffd600; text-shadow:0 1px 3px rgba(0,0,0,.75);
+      animation:twMoneyUp .9s ease-out forwards; pointer-events:none;
+    }
+    @keyframes twMoneyUp { 0%{ transform:translateY(0) scale(1); opacity:1 } 100%{ transform:translateY(-34px) scale(1.15); opacity:0 } }
     .tw-cannon-btn {
       position:relative; border:none; border-radius:99px; padding:6px 14px;
       font-size:12px; font-weight:900; color:white; background:#455a64;
@@ -8174,6 +8180,7 @@ function twTick(){
     if(u.hp > 0){ alive.push(u); return; }
     if(u.side==='enemy'){
       twMoney = Math.min(TW_WALLET[twWalletLv-1].cap, twMoney + (u.bounty||0));
+      if(u.bounty) twMoneyFloat(u.pos, u.bounty);
     }
     twDeathAnim(u);
   });
@@ -8214,6 +8221,16 @@ function twHitUnit(o, dmg){
     o.pos += (o.side==='player' ? 5 : -5);
     o.pos = Math.max(TW_ENEMY_CASTLE_POS, Math.min(TW_PLAYER_CASTLE_POS, o.pos));
   }
+}
+
+function twMoneyFloat(pos, amount){
+  const lane = document.getElementById('tw-lane');
+  const d = document.createElement('div');
+  d.className = 'tw-money-float';
+  d.textContent = '🪙+' + amount;
+  d.style.left = pos + '%';
+  lane.appendChild(d);
+  setTimeout(()=>d.remove(), 900);
 }
 
 function twDmgFloat(pos, dmg, onEnemy){
