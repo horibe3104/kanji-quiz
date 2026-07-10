@@ -788,6 +788,99 @@
       border-radius:16px; font-size:18px; font-weight:900; cursor:pointer;
       border-bottom:4px solid rgba(0,0,0,.18); margin-top:4px;
     }
+    /* ===== TOWER DEFENSE デッキ選択 (くうっち防衛戦) ===== */
+    .tw-deck-grid-item { position:relative; }
+    .tw-deck-order {
+      position:absolute; top:-7px; right:-7px; width:20px; height:20px;
+      background:#43a047; color:white; border-radius:50%;
+      font-size:11px; font-weight:900; display:flex; align-items:center; justify-content:center;
+    }
+
+    /* ===== TOWER DEFENSE 本編 (横画面) ===== */
+    #screen-tower.active {
+      position:fixed; inset:0; max-width:none; width:100%; height:100%;
+      padding:0; z-index:40; display:flex; align-items:center; justify-content:center;
+      background:#0d1b3e;
+    }
+    #screen-tower .tw-card {
+      width:100%; height:100%; max-width:none; border-radius:0; border-top:none;
+      box-shadow:none; padding:8px 10px; position:relative; overflow:hidden;
+      background:#0d1b3e;
+    }
+    .tw-rotate-hint {
+      display:none; height:100%; flex-direction:column; align-items:center; justify-content:center;
+      gap:10px; color:white; text-align:center; padding:20px;
+    }
+    .tw-rotate-icon { font-size:48px; animation:twRotate 1.6s ease-in-out infinite; }
+    @keyframes twRotate { 0%,100%{transform:rotate(0deg)} 50%{transform:rotate(-90deg)} }
+    .tw-rotate-text { font-size:14px; font-weight:700; }
+    .tw-game { height:100%; display:flex; flex-direction:column; }
+    @media (orientation:portrait) {
+      #screen-tower .tw-game    { display:none !important; }
+      #screen-tower .tw-rotate-hint { display:flex; }
+    }
+    @media (orientation:landscape) {
+      .tw-rotate-hint { display:none !important; }
+    }
+    .tw-topbar { display:flex; align-items:center; gap:8px; padding:2px 4px 6px; }
+    .tw-quit-btn {
+      width:30px; height:30px; border-radius:50%; border:none; background:rgba(255,255,255,.15);
+      color:white; font-size:15px; font-weight:900; cursor:pointer; flex-shrink:0;
+    }
+    .tw-hp-bars { flex:1; display:flex; flex-direction:column; gap:3px; }
+    .tw-base-row { display:flex; align-items:center; gap:6px; }
+    .tw-base-icon { font-size:16px; line-height:1; }
+    .tw-base-hp-track { flex:1; height:10px; background:rgba(255,255,255,.2); border-radius:99px; overflow:hidden; }
+    .tw-base-hp-fill { height:100%; border-radius:99px; transition:width .4s; }
+    .tw-base-hp-fill.player { background:linear-gradient(90deg,#43a047,#66bb6a); }
+    .tw-base-hp-fill.enemy  { background:linear-gradient(90deg,#e53935,#ff7043); }
+    .tw-base-hp-num { font-size:9px; font-weight:900; color:white; min-width:38px; text-align:center; }
+    .tw-money-badge {
+      background:linear-gradient(135deg,#f7b731,#f0932b); color:white; border-radius:99px;
+      padding:4px 12px; font-size:14px; font-weight:900; flex-shrink:0; white-space:nowrap;
+    }
+    .tw-lane {
+      position:relative; flex:1; min-height:0; margin:2px 0 6px;
+      background:linear-gradient(180deg,#c8e6c9,#a5d6a7);
+      border-radius:10px; overflow:hidden; border:2px solid #81c784;
+    }
+    .tw-lane-mid { position:absolute; top:50%; left:0; right:0; height:2px; background:rgba(255,255,255,.5); }
+    .tw-unit {
+      position:absolute; top:50%; width:38px; height:38px; margin-top:-19px;
+      transition:left .1s linear; display:flex; flex-direction:column; align-items:center;
+    }
+    .tw-unit.enemy-unit { transform:scaleX(-1); }
+    .tw-unit svg, .tw-unit .tw-unit-emoji { width:32px; height:32px; }
+    .tw-unit-emoji { font-size:28px; line-height:1; display:block; }
+    .tw-unit-hp-track { width:32px; height:4px; background:rgba(0,0,0,.25); border-radius:99px; margin-top:1px; }
+    .tw-unit.enemy-unit .tw-unit-hp-track { transform:scaleX(-1); }
+    .tw-unit-hp-fill { height:100%; background:#4caf50; border-radius:99px; }
+    .tw-deploy-row { display:flex; gap:5px; padding:2px 2px 4px; }
+    .tw-deploy-btn {
+      flex:1; position:relative; border:2px solid #7986cb; border-radius:10px;
+      background:#e8eaf6; padding:3px 2px 2px; cursor:pointer; overflow:hidden;
+      display:flex; flex-direction:column; align-items:center;
+    }
+    .tw-deploy-btn svg, .tw-deploy-btn .tw-unit-emoji { width:30px; height:30px; }
+    .tw-deploy-cost { font-size:9px; font-weight:900; color:#1a237e; }
+    .tw-deploy-cd {
+      position:absolute; left:0; right:0; bottom:0; background:rgba(0,0,0,.55);
+      transition:height .1s linear;
+    }
+    .tw-deploy-btn:disabled { opacity:.55; cursor:not-allowed; }
+    .tw-start-overlay {
+      position:absolute; inset:0; z-index:30; background:rgba(13,27,62,.92);
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:8px; text-align:center; padding:14px; color:white;
+    }
+    .tw-start-title { font-size:20px; font-weight:900; }
+    .tw-start-desc  { font-size:12px; font-weight:700; line-height:1.5; color:#e1f5fe; }
+    .tw-start-btn {
+      padding:12px 30px; background:linear-gradient(135deg,#43a047,#66bb6a);
+      color:white; border:none; border-bottom:4px solid #2e7d32;
+      border-radius:14px; font-size:16px; font-weight:900; cursor:pointer;
+    }
+    .tw-start-btn:active { transform:translateY(2px); }
     /* コレクションのレベルバッジ */
     .coll-item { position:relative; }
     .coll-lv {
@@ -1852,6 +1945,12 @@
         <div class="battle-tab-card-sub">コンボでダメージアップ！<br>まちがえると反撃を受けるぞ！</div>
       </div>
       <button class="maze-btn-home" id="maze-home-btn" onclick="showMaze()">🗺️ ボーナス迷路！&nbsp;&nbsp;🗝️ <span id="maze-key-home">0</span></button>
+      <div class="battle-tab-card" style="margin-top:10px">
+        <div style="font-size:11px;font-weight:700;opacity:.8;margin-bottom:6px">クイズに正解してねこユニットを出撃させ、てきの おしろを こうげきしよう！</div>
+        <div style="font-size:48px;margin:6px 0">🐱🏰</div>
+        <button class="battle-mode-btn" onclick="showTowerSelect()">🐱 くうっち防衛戦！</button>
+        <div class="battle-tab-card-sub">コンボが つづくほど つよいねこが でるぞ！</div>
+      </div>
     </div>
 
     <!-- ========= マイページタブ ========= -->
@@ -2185,6 +2284,54 @@
       <div class="bt-choices" id="bt-choices"></div>
     </div>
     <button class="quiz-quit-btn" style="margin-top:6px" onclick="btQuitConfirm()">🏃 にげる（1かいに もどる）</button>
+  </div>
+</div>
+
+<!-- TOWER DEFENSE デッキ選択 -->
+<div class="screen" id="screen-tower-select">
+  <div class="card">
+    <div class="bt-select-title">🐱 出撃メンバーをえらぼう！</div>
+    <div class="bt-select-sub">さいだい6たいまで えらべるよ</div>
+    <div class="bt-select-grid" id="tw-select-grid"></div>
+    <button class="bt-start-btn" id="tw-deck-start-btn" onclick="confirmTowerDeck()" disabled>⚔️ しゅつげき じゅんび かんりょう！</button>
+    <button class="gacha-back-btn" onclick="goHome()">← もどる</button>
+  </div>
+</div>
+
+<!-- TOWER DEFENSE (くうっち防衛戦) -->
+<div class="screen" id="screen-tower">
+  <div class="card tw-card">
+    <div class="tw-rotate-hint">
+      <div class="tw-rotate-icon">📱</div>
+      <div class="tw-rotate-text">スマホを よこに してね！</div>
+    </div>
+    <div class="tw-game">
+      <div class="tw-topbar">
+        <button class="tw-quit-btn" onclick="twQuit()">✕</button>
+        <div class="tw-hp-bars">
+          <div class="tw-base-row">
+            <span class="tw-base-icon">🏠</span>
+            <div class="tw-base-hp-track"><div class="tw-base-hp-fill player" id="tw-player-hp-fill" style="width:100%"></div></div>
+            <span class="tw-base-hp-num" id="tw-player-hp-num">100/100</span>
+          </div>
+          <div class="tw-base-row">
+            <span class="tw-base-icon">🏰</span>
+            <div class="tw-base-hp-track"><div class="tw-base-hp-fill enemy" id="tw-enemy-hp-fill" style="width:100%"></div></div>
+            <span class="tw-base-hp-num" id="tw-enemy-hp-num">100/100</span>
+          </div>
+        </div>
+        <div class="tw-money-badge">🪙 <span id="tw-money-num">0</span></div>
+      </div>
+      <div class="tw-lane" id="tw-lane" style="position:relative">
+        <div class="tw-lane-mid"></div>
+        <div class="tw-start-overlay" id="tw-start-overlay">
+          <div class="tw-start-title">🐱 くうっち防衛戦！</div>
+          <div class="tw-start-desc">おかねが たまったら ユニットを 出撃させよう！<br>てきの おしろの HPを 0にしよう！</div>
+          <button class="tw-start-btn" onclick="startTowerDefense()">▶ スタート</button>
+        </div>
+      </div>
+      <div class="tw-deploy-row" id="tw-deploy-row"></div>
+    </div>
   </div>
 </div>
 
@@ -3918,6 +4065,9 @@ function showScreen(id) {
   // タブバー表示切り替え
   const tabBar = document.getElementById('home-tab-bar');
   if(tabBar) tabBar.style.display = (id === 'screen-start') ? 'flex' : 'none';
+  // タワー防衛戦は全画面レイアウトなので共通コインバーは隠す
+  const coinBar = document.getElementById('coin-bar');
+  if(coinBar) coinBar.style.display = (id === 'screen-tower') ? 'none' : '';
   if(id==='screen-start') updateEvent2Btn();
   // 画面に応じてBGM切り替え
   const bgmMap = {
@@ -3927,6 +4077,8 @@ function showScreen(id) {
     'screen-gacha':        'gacha',
     'screen-battle-select':'battle',
     'screen-battle':       'battle',
+    'screen-tower-select': 'battle',
+    'screen-tower':        'battle',
     'screen-collection':   'title',
     'screen-char-detail':  'title',
     'screen-sodateru':     'title',
@@ -7599,6 +7751,334 @@ function battleLose(){
     <button class="bt-end-btn" style="background:#546e7a;margin-top:6px;font-size:14px" onclick="this.closest('.bt-end-overlay').remove();goHome()">🏠 もどる</button>
   `;
   document.body.appendChild(ov);
+}
+
+// ===== くうっち防衛戦（タワーディフェンス） =====
+const TW_RARITY_STATS = {
+  common: { cost:60,  cooldown:2.0, speed:0.85, baseHp:16, baseAtk:4  },
+  rare:   { cost:120, cooldown:3.2, speed:0.7,  baseHp:26, baseAtk:6  },
+  sr:     { cost:220, cooldown:4.6, speed:0.6,  baseHp:40, baseAtk:9  },
+  ur:     { cost:380, cooldown:6.2, speed:0.5,  baseHp:60, baseAtk:13 },
+};
+const TW_ENEMY_TYPES = [
+  { key:'slime',  name:'スライム', hp:16, atk:3, speed:0.55, svg: MONSTERS.find(m=>m.id==='slime').svg },
+  { key:'bat',    name:'こうもり', hp:12, atk:4, speed:0.85, svg: MONSTERS.find(m=>m.id==='bat').svg },
+  { key:'goblin', name:'ゴブリン', hp:24, atk:5, speed:0.45, svg: MONSTERS.find(m=>m.id==='goblin').svg },
+];
+const TW_BASE_MAX_HP  = 150;
+const TW_ENGAGE_RANGE = 6;
+const TW_MONEY_RATE   = 22; // 1秒あたりの収入
+
+let twActive          = false;
+let twPlayerHP        = TW_BASE_MAX_HP;
+let twEnemyHP         = TW_BASE_MAX_HP;
+let twMoney           = 100;
+let twUnits           = [];   // {uid, side, name, hp, maxHp, atk, speed, pos, svg}
+let twUnitSeq         = 0;
+let twTickTimer       = null;
+let twEnemySpawnTimer = null;
+let twEnemySpawnDelay = 4200;
+let twEnemySpawnCount = 0;
+let twDeckSelected    = JSON.parse(localStorage.getItem('kq_tower_deck') || '[]');
+let twDeckCooldowns   = {};
+
+function showTowerSelect(){
+  const grid = document.getElementById('tw-select-grid');
+  grid.innerHTML = '';
+  document.getElementById('tw-deck-start-btn').disabled = true;
+  const owned = KD.filter(k=>(collection[k.id]||0)>0 && (k.kanji || k.char==='mochi' || k.char==='neko'));
+  if(owned.length===0){
+    grid.innerHTML = '<div class="bt-no-kuucchi">まず ガチャで キャラを ゲットしよう！🎲</div>';
+    showScreen('screen-tower-select');
+    return;
+  }
+  twDeckSelected = twDeckSelected.filter(id => owned.some(k=>k.id===id));
+  RARITY_ORDER.forEach(rarity=>{
+    const group = owned.filter(k=>k.rarity===rarity);
+    if(group.length===0) return;
+    const hdr = document.createElement('div');
+    hdr.className = `soda-rarity-header ${RARITY_INFO[rarity].cls}`;
+    hdr.style.gridColumn = '1 / -1';
+    hdr.textContent = `${RARITY_INFO[rarity].label}（${group.length}たい）`;
+    grid.appendChild(hdr);
+    group.forEach(k=>{
+      const st  = getStats(k);
+      const div = document.createElement('div');
+      div.className = 'bt-sel-item tw-deck-grid-item';
+      div.dataset.id = k.id;
+      div.innerHTML = `
+        ${kSVG(k)}
+        <div class="sel-lv">Lv.${st.lv}</div>
+        <div class="sel-name">${k.type||k.name}</div>
+      `;
+      div.onclick = ()=>toggleTowerDeck(k.id);
+      grid.appendChild(div);
+    });
+  });
+  refreshTowerDeckGridUI();
+  showScreen('screen-tower-select');
+}
+
+function toggleTowerDeck(id){
+  const idx = twDeckSelected.indexOf(id);
+  if(idx>=0){
+    twDeckSelected.splice(idx,1);
+  } else {
+    if(twDeckSelected.length>=6){ showToast('さいだい6たいまでだよ！'); return; }
+    twDeckSelected.push(id);
+  }
+  localStorage.setItem('kq_tower_deck', JSON.stringify(twDeckSelected));
+  refreshTowerDeckGridUI();
+}
+
+function refreshTowerDeckGridUI(){
+  document.querySelectorAll('#tw-select-grid .tw-deck-grid-item').forEach(div=>{
+    const idx = twDeckSelected.indexOf(div.dataset.id);
+    div.classList.toggle('selected', idx>=0);
+    let badge = div.querySelector('.tw-deck-order');
+    if(idx>=0){
+      if(!badge){ badge = document.createElement('div'); badge.className='tw-deck-order'; div.appendChild(badge); }
+      badge.textContent = idx+1;
+    } else if(badge){ badge.remove(); }
+  });
+  document.getElementById('tw-deck-start-btn').disabled = twDeckSelected.length===0;
+}
+
+function confirmTowerDeck(){
+  if(twDeckSelected.length===0) return;
+  showScreen('screen-tower');
+}
+
+function startTowerDefense(){
+  twActive          = true;
+  twPlayerHP        = TW_BASE_MAX_HP;
+  twEnemyHP         = TW_BASE_MAX_HP;
+  twMoney           = 100;
+  twUnits           = [];
+  twEnemySpawnDelay = 4200;
+  twEnemySpawnCount = 0;
+  twDeckCooldowns   = {};
+  document.getElementById('tw-start-overlay').style.display = 'none';
+  document.getElementById('tw-lane').querySelectorAll('.tw-unit').forEach(el=>el.remove());
+  twRenderDeployBar();
+  updateTwBaseBars();
+  updateTwMoneyUI();
+
+  if(twTickTimer) clearInterval(twTickTimer);
+  twTickTimer = setInterval(twTick, 100);
+  twScheduleEnemySpawn();
+}
+
+function twRenderDeployBar(){
+  const row = document.getElementById('tw-deploy-row');
+  row.innerHTML = '';
+  twDeckSelected.forEach(id=>{
+    const k = KD.find(kk=>kk.id===id);
+    if(!k) return;
+    const btn = document.createElement('button');
+    btn.className = 'tw-deploy-btn';
+    btn.dataset.id = id;
+    btn.innerHTML = `${kSVG(k)}<div class="tw-deploy-cost">🪙<span class="tw-cost-num">-</span></div><div class="tw-deploy-cd" id="tw-cd-${id}" style="height:0%"></div>`;
+    btn.onclick = ()=>twDeployUnit(id);
+    row.appendChild(btn);
+  });
+}
+
+function twDeployUnit(id){
+  if(!twActive) return;
+  const k = KD.find(kk=>kk.id===id);
+  if(!k) return;
+  const rs = TW_RARITY_STATS[k.rarity] || TW_RARITY_STATS.common;
+  if((twDeckCooldowns[id]||0) > 0) return;
+  if(twMoney < rs.cost) return;
+  twMoney -= rs.cost;
+  twDeckCooldowns[id] = rs.cooldown;
+  updateTwMoneyUI();
+
+  const st  = getStats(k);
+  const lvMul = Math.min(2.0, 1 + (st.lv-1)*0.02);
+  twUnits.push({
+    uid: ++twUnitSeq, side:'player', name:k.name||k.type,
+    hp: Math.round(rs.baseHp*lvMul), maxHp: Math.round(rs.baseHp*lvMul),
+    atk: Math.round(rs.baseAtk*lvMul), speed: rs.speed,
+    pos: 4, svg: kSVG(k),
+  });
+  twRenderUnits();
+}
+
+function twScheduleEnemySpawn(){
+  if(twEnemySpawnTimer) clearTimeout(twEnemySpawnTimer);
+  twEnemySpawnTimer = setTimeout(()=>{
+    if(!twActive) return;
+    twSpawnEnemyUnit();
+    twEnemySpawnDelay = Math.max(1900, twEnemySpawnDelay - 90);
+    twScheduleEnemySpawn();
+  }, twEnemySpawnDelay);
+}
+
+function twSpawnEnemyUnit(){
+  twEnemySpawnCount++;
+  const base = TW_ENEMY_TYPES[Math.floor(Math.random()*TW_ENEMY_TYPES.length)];
+  const scale = 1 + Math.min(0.9, twEnemySpawnCount * 0.05);
+  twUnits.push({
+    uid: ++twUnitSeq, side:'enemy', name:base.name,
+    hp: Math.round(base.hp*scale), maxHp: Math.round(base.hp*scale),
+    atk: Math.round(base.atk*scale), speed: base.speed,
+    pos: 96, svg: base.svg,
+  });
+  twRenderUnits();
+}
+
+function twTick(){
+  if(!twActive) return;
+
+  // おかね収入
+  twMoney += TW_MONEY_RATE * 0.1;
+  updateTwMoneyUI();
+
+  // デッキのクールダウン消化
+  twDeckSelected.forEach(id=>{
+    if(twDeckCooldowns[id] > 0){
+      twDeckCooldowns[id] = Math.max(0, twDeckCooldowns[id] - 0.1);
+    }
+  });
+  updateTwDeployButtons();
+
+  const engagedIds = new Set();
+
+  twUnits.forEach(u=>{
+    if(engagedIds.has(u.uid)) return;
+    let nearest = null, nearestDist = Infinity;
+    twUnits.forEach(o=>{
+      if(o.side===u.side || engagedIds.has(o.uid)) return;
+      const ahead = u.side==='player' ? (o.pos - u.pos) : (u.pos - o.pos);
+      if(ahead < 0 || ahead > TW_ENGAGE_RANGE) return;
+      if(ahead < nearestDist){ nearestDist = ahead; nearest = o; }
+    });
+    if(nearest){
+      engagedIds.add(u.uid); engagedIds.add(nearest.uid);
+      u.hp       -= nearest.atk*0.12;
+      nearest.hp -= u.atk*0.12;
+    }
+  });
+
+  twUnits.forEach(u=>{
+    if(engagedIds.has(u.uid)) return;
+    u.pos += (u.side==='player' ? 1 : -1) * u.speed;
+  });
+
+  // 拠点到達判定
+  twUnits = twUnits.filter(u=>{
+    if(u.side==='player' && u.pos >= 96){
+      twEnemyHP = Math.max(0, twEnemyHP - u.atk);
+      return false;
+    }
+    if(u.side==='enemy' && u.pos <= 4){
+      twPlayerHP = Math.max(0, twPlayerHP - u.atk);
+      return false;
+    }
+    return u.hp > 0;
+  });
+
+  updateTwBaseBars();
+  twRenderUnits();
+
+  if(twEnemyHP <= 0){ twEnd(true); return; }
+  if(twPlayerHP <= 0){ twEnd(false); return; }
+}
+
+function twRenderUnits(){
+  const lane = document.getElementById('tw-lane');
+  const seen = new Set();
+  twUnits.forEach(u=>{
+    seen.add(u.uid);
+    let el = document.getElementById('tw-u-'+u.uid);
+    if(!el){
+      el = document.createElement('div');
+      el.id = 'tw-u-'+u.uid;
+      el.className = 'tw-unit' + (u.side==='enemy' ? ' enemy-unit' : '');
+      el.innerHTML = `${u.svg}<div class="tw-unit-hp-track"><div class="tw-unit-hp-fill" id="tw-u-${u.uid}-hp"></div></div>`;
+      lane.appendChild(el);
+    }
+    el.style.left = u.pos + '%';
+    const hpEl = document.getElementById('tw-u-'+u.uid+'-hp');
+    if(hpEl) hpEl.style.width = Math.max(0, u.hp/u.maxHp*100) + '%';
+  });
+  lane.querySelectorAll('.tw-unit').forEach(el=>{
+    const uid = parseInt(el.id.replace('tw-u-',''));
+    if(!seen.has(uid)) el.remove();
+  });
+}
+
+function updateTwBaseBars(){
+  document.getElementById('tw-player-hp-fill').style.width = (twPlayerHP/TW_BASE_MAX_HP*100)+'%';
+  document.getElementById('tw-enemy-hp-fill').style.width  = (twEnemyHP/TW_BASE_MAX_HP*100)+'%';
+  document.getElementById('tw-player-hp-num').textContent  = `${twPlayerHP}/${TW_BASE_MAX_HP}`;
+  document.getElementById('tw-enemy-hp-num').textContent   = `${twEnemyHP}/${TW_BASE_MAX_HP}`;
+}
+
+function updateTwMoneyUI(){
+  document.getElementById('tw-money-num').textContent = Math.floor(twMoney);
+}
+
+function updateTwDeployButtons(){
+  document.querySelectorAll('#tw-deploy-row .tw-deploy-btn').forEach(btn=>{
+    const id = btn.dataset.id;
+    const k  = KD.find(kk=>kk.id===id);
+    if(!k) return;
+    const rs = TW_RARITY_STATS[k.rarity] || TW_RARITY_STATS.common;
+    const cd = twDeckCooldowns[id] || 0;
+    const costEl = btn.querySelector('.tw-cost-num');
+    if(costEl) costEl.textContent = rs.cost;
+    const cdEl = document.getElementById('tw-cd-'+id);
+    if(cdEl) cdEl.style.height = (cd/rs.cooldown*100)+'%';
+    btn.disabled = cd > 0 || twMoney < rs.cost;
+  });
+}
+
+function twEnd(won){
+  twActive = false;
+  if(twTickTimer){ clearInterval(twTickTimer); twTickTimer=null; }
+  if(twEnemySpawnTimer){ clearTimeout(twEnemySpawnTimer); twEnemySpawnTimer=null; }
+
+  const ov = document.createElement('div');
+  ov.className = 'bt-end-overlay ' + (won ? 'win' : 'lose');
+  if(won){
+    const coinReward = 60;
+    coins += coinReward; saveState(); updateCoinBar();
+    updateMissionProgress('battle_win', 1);
+    ov.innerHTML = `
+      <div class="bt-end-title">🏆 しょうり！</div>
+      <div class="bt-end-sub">てきの おしろを たおしたよ！</div>
+      <div class="bt-end-reward">🪙 +${coinReward}まい　ゲット！</div>
+      <button class="bt-end-btn" onclick="this.closest('.bt-end-overlay').remove();showScreen('screen-tower');twResetOverlay();">🔄 もう一度！</button>
+      <button class="bt-end-btn" style="background:#546e7a;margin-top:6px;font-size:14px" onclick="this.closest('.bt-end-overlay').remove();goHome()">🏠 もどる</button>
+    `;
+    document.body.appendChild(ov);
+    launchConfetti();
+  } else {
+    ov.innerHTML = `
+      <div class="bt-end-title" style="color:white">やられた！</div>
+      <div class="bt-end-sub">おしろが おちてしまった！</div>
+      <button class="bt-end-btn" onclick="this.closest('.bt-end-overlay').remove();showScreen('screen-tower');twResetOverlay();">🔄 もう一度！</button>
+      <button class="bt-end-btn" style="background:#546e7a;margin-top:6px;font-size:14px" onclick="this.closest('.bt-end-overlay').remove();goHome()">🏠 もどる</button>
+    `;
+    document.body.appendChild(ov);
+  }
+}
+
+function twResetOverlay(){
+  document.getElementById('tw-lane').querySelectorAll('.tw-unit').forEach(el=>el.remove());
+  document.getElementById('tw-start-overlay').style.display = 'flex';
+}
+
+function twQuit(){
+  twActive = false;
+  if(twTickTimer){ clearInterval(twTickTimer); twTickTimer=null; }
+  if(twEnemySpawnTimer){ clearTimeout(twEnemySpawnTimer); twEnemySpawnTimer=null; }
+  document.querySelectorAll('.bt-end-overlay').forEach(el=>el.remove());
+  twResetOverlay();
+  goHome();
 }
 
 // ===== CONFETTI =====
