@@ -8154,6 +8154,15 @@ const TW_BKUU_SPRITE = {
   atk:  ['sprites/bkuu_atk1.png','sprites/bkuu_atk2.png','sprites/bkuu_atk3.png'],
   dmg:  'sprites/bkuu_dmg.png',
 };
+// コマアニメ式：キモマヨ（あしなが・背が高い）
+const TW_KIMO_ID = 'tw_kimomayo';
+const TW_KIMO_SPRITE = {
+  icon: 'sprites/kimo_icon.png',
+  idle: 'sprites/kimo_idle.png',
+  walk: ['sprites/kimo_walk1.png','sprites/kimo_walk2.png','sprites/kimo_walk3.png','sprites/kimo_walk4.png'],
+  atk:  ['sprites/kimo_atk1.png','sprites/kimo_atk2.png','sprites/kimo_atk3.png'],
+  dmg:  'sprites/kimo_dmg.png',
+};
 // デッキIDからユニット定義を解決（常設キャラ or ガチャキャラ）
 function twUnitDef(id){
   if(id === TW_DEBUG_CAT_ID){
@@ -8194,6 +8203,13 @@ function twUnitDef(id){
              svg:`<img class="tw-icon-img" src="${TW_BKUU_SPRITE.icon}">`,
              sprite:TW_BKUU_SPRITE, lv:1 };
   }
+  if(id === TW_KIMO_ID){
+    // あしなが：長い脚を伸ばして中距離から突く。背が高い
+    const kimoRole = { icon:'🦵', label:'あしなが', hpMul:0.9, atkMul:1.0, range:13, interval:1.2, area:false };
+    return { id, rarity:'common', name:'キモマヨ', role:kimoRole, hScale:1.5,
+             svg:`<img class="tw-icon-img" src="${TW_KIMO_SPRITE.icon}">`,
+             sprite:TW_KIMO_SPRITE, lv:1 };
+  }
   const k = KD.find(kk=>kk.id===id);
   if(!k) return null;
   return { id, rarity:k.rarity, name:k.name||k.type, role:TW_ROLES[twRoleOf(k)], svg:kSVG(k), lv:getStats(k).lv };
@@ -8230,7 +8246,7 @@ function showTowerSelect(){
   grid.innerHTML = '';
   document.getElementById('tw-deck-start-btn').disabled = true;
   const owned = KD.filter(k=>(collection[k.id]||0)>0 && (k.kanji || k.char==='mochi' || k.char==='neko'));
-  const TW_BUILTIN_IDS = [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID];
+  const TW_BUILTIN_IDS = [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID, TW_KIMO_ID];
   twDeckSelected = twDeckSelected.filter(id => TW_BUILTIN_IDS.includes(id) || owned.some(k=>k.id===id));
 
   // 常時使用可能キャラを先頭に
@@ -8239,7 +8255,7 @@ function showTowerSelect(){
   dbgHdr.style.gridColumn = '1 / -1';
   dbgHdr.textContent = '🐾 いつでも つかえる';
   grid.appendChild(dbgHdr);
-  [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID].forEach(bid=>{
+  [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID, TW_KIMO_ID].forEach(bid=>{
     const def = twUnitDef(bid);
     const dbg = document.createElement('div');
     dbg.className = 'bt-sel-item tw-deck-grid-item';
@@ -8387,7 +8403,7 @@ function twDeployUnit(id){
   const role  = def.role;
   const hp    = Math.round(rs.baseHp*lvMul*role.hpMul);
   twUnits.push({
-    uid: ++twUnitSeq, side:'player', name:def.name, fly: !!role.fly,
+    uid: ++twUnitSeq, side:'player', name:def.name, fly: !!role.fly, hScale: def.hScale||1,
     hp, maxHp: hp,
     atk: Math.round(rs.baseAtk*lvMul*role.atkMul), speed: role.speed || rs.speed,
     range: role.range, interval: role.interval, area: role.area, atkTimer: 0.3,
@@ -8680,6 +8696,7 @@ function twRenderUnits(){
       el = document.createElement('div');
       el.id = 'tw-u-'+u.uid;
       el.className = 'tw-unit' + (u.boss ? ' boss' : '') + (u.fly ? ' fly' : '');
+      if(u.hScale && u.hScale !== 1) el.style.height = Math.round(38*u.hScale) + 'px';
       if(u.sprite){
         if(u.side==='player') el.classList.add('sprite-flip');
         el.innerHTML = `<img class="tw-sprite" src="${u.sprite.idle}">`;
