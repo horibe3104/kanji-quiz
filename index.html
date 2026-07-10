@@ -8422,13 +8422,16 @@ function twTick(){
       if(u.atkTimer <= 0){
         u.atkTimer = u.interval;
         twAtkAnim(u);
-        if(u.area){
-          twUnits.forEach(o=>{
-            if(o.side!==u.side && Math.abs(u.pos-o.pos) <= u.range) twHitUnit(o, u.atk);
-          });
-        } else {
-          twHitUnit(target, u.atk);
-        }
+        // ダメージはモーションの「当たり」コマに合わせて少し遅らせる
+        twScheduleImpact(u, ()=>{
+          if(u.area){
+            twUnits.forEach(o=>{
+              if(o.side!==u.side && o.hp>0 && Math.abs(u.pos-o.pos) <= u.range) twHitUnit(o, u.atk);
+            });
+          } else if(target.hp > 0){
+            twHitUnit(target, u.atk);
+          }
+        });
       }
     }
   });
@@ -8443,15 +8446,19 @@ function twTick(){
         if(u.atkTimer <= 0){
           u.atkTimer = u.interval;
           twAtkAnim(u);
-          twEnemyCastleHP = Math.max(0, twEnemyCastleHP - u.atk);
-          twHitSpark(TW_ENEMY_CASTLE_POS + 2);
-          if(!twBossSpawned && twEnemyCastleHP <= twEnemyCastleMax*0.5){
-            twBossSpawned = true;
-            twSpawnBoss();
-          }
+          twScheduleImpact(u, ()=>{
+            twEnemyCastleHP = Math.max(0, twEnemyCastleHP - u.atk);
+            twHitSpark(TW_ENEMY_CASTLE_POS + 2);
+            if(!twBossSpawned && twEnemyCastleHP <= twEnemyCastleMax*0.5){
+              twBossSpawned = true;
+              twSpawnBoss();
+            }
+          });
         }
       } else {
         u.pos -= u.speed;
+        // 歩行中は攻撃タイマーを整えて、接触したらすぐ初撃が出るように
+        u.atkTimer = Math.min(u.atkTimer, 0.3);
       }
     } else {
       if(TW_PLAYER_CASTLE_POS - u.pos <= u.range){
@@ -8460,11 +8467,14 @@ function twTick(){
         if(u.atkTimer <= 0){
           u.atkTimer = u.interval;
           twAtkAnim(u);
-          twPlayerCastleHP = Math.max(0, twPlayerCastleHP - u.atk);
-          twHitSpark(TW_PLAYER_CASTLE_POS - 2);
+          twScheduleImpact(u, ()=>{
+            twPlayerCastleHP = Math.max(0, twPlayerCastleHP - u.atk);
+            twHitSpark(TW_PLAYER_CASTLE_POS - 2);
+          });
         }
       } else {
         u.pos += u.speed;
+        u.atkTimer = Math.min(u.atkTimer, 0.3);
       }
     }
   });
@@ -8485,6 +8495,14 @@ function twTick(){
 
   if(twEnemyCastleHP <= 0){ twEnd(true); return; }
   if(twPlayerCastleHP <= 0){ twEnd(false); return; }
+}
+
+// 攻撃モーションの当たりコマ（約160ms後）にダメージを合わせる
+function twScheduleImpact(u, fn){
+  setTimeout(()=>{
+    if(!twActive || u.hp <= 0) return;
+    fn();
+  }, 160);
 }
 
 function twAtkAnim(u){
