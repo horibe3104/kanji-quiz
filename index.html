@@ -877,6 +877,39 @@
       transition:height .1s linear;
     }
     .tw-deploy-btn:disabled { opacity:.55; cursor:not-allowed; }
+    .tw-role-chip {
+      font-size:8px; font-weight:900; color:#7b1fa2; background:#f3e5f5;
+      border-radius:4px; padding:1px 3px; margin-top:2px; display:inline-block;
+    }
+    .tw-deploy-role { position:absolute; top:1px; right:3px; font-size:10px; z-index:1; }
+    @keyframes twHitFlash { 0%{ filter:brightness(2.2) saturate(.2); } 100%{ filter:none; } }
+    .tw-unit.tw-hit { animation:twHitFlash .18s ease-out; }
+    .tw-dmg-float {
+      position:absolute; bottom:52%; z-index:5; font-size:13px; font-weight:900;
+      color:white; text-shadow:0 1px 3px rgba(0,0,0,.7);
+      animation:twDmgUp .7s ease-out forwards; pointer-events:none;
+    }
+    .tw-dmg-float.on-enemy { color:#ffeb3b; }
+    @keyframes twDmgUp { 0%{ transform:translateY(0); opacity:1 } 100%{ transform:translateY(-26px); opacity:0 } }
+    .tw-cannon-btn {
+      position:relative; border:none; border-radius:99px; padding:6px 14px;
+      font-size:12px; font-weight:900; color:white; background:#455a64;
+      cursor:pointer; overflow:hidden; white-space:nowrap; flex-shrink:0;
+    }
+    .tw-cannon-fill {
+      position:absolute; left:0; top:0; bottom:0; width:0%;
+      background:linear-gradient(135deg,#ff7043,#e53935); transition:width .2s;
+    }
+    .tw-cannon-btn span { position:relative; z-index:1; }
+    .tw-cannon-btn:disabled { cursor:not-allowed; color:#cfd8dc; }
+    .tw-cannon-btn.ready { animation:twCannonPulse 1s infinite; }
+    @keyframes twCannonPulse { 50%{ box-shadow:0 0 12px #ff5722; } }
+    .tw-cannon-flash {
+      position:absolute; inset:0; z-index:6; pointer-events:none;
+      background:radial-gradient(circle at 30% 60%, rgba(255,255,255,.95), rgba(255,152,0,.4));
+      animation:twCannonFlash .5s ease-out forwards;
+    }
+    @keyframes twCannonFlash { 0%{opacity:1} 100%{opacity:0} }
     .tw-start-overlay {
       position:absolute; inset:0; z-index:30; background:rgba(13,27,62,.92);
       display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -2319,6 +2352,7 @@
         <button class="tw-quit-btn" onclick="twQuit()">✕</button>
         <div class="tw-stage-badge" id="tw-stage-badge">ステージ 1</div>
         <div style="flex:1"></div>
+        <button class="tw-cannon-btn" id="tw-cannon-btn" onclick="twFireCannon()" disabled><div class="tw-cannon-fill" id="tw-cannon-fill"></div><span>💥 くうっち砲</span></button>
         <button class="tw-wallet-btn" id="tw-wallet-btn" onclick="twUpgradeWallet()">⤴️ おさいふ Lv.<span id="tw-wallet-lv">1</span>　🪙<span id="tw-wallet-cost">-</span></button>
         <div class="tw-money-badge">🪙 <span id="tw-money-num">0</span>/<span id="tw-money-cap">-</span></div>
       </div>
@@ -7785,6 +7819,18 @@ const TW_WALLET = [
   { cap:850,  rate:42, upCost:420  },
   { cap:1200, rate:55, upCost:null },
 ];
+const TW_ROLES = {
+  melee:  { icon:'⚔️', label:'せんし', hpMul:1.0, atkMul:1.0, range:5,  interval:1.0, area:false },
+  tank:   { icon:'🛡️', label:'かべ',   hpMul:2.2, atkMul:0.5, range:5,  interval:1.2, area:false },
+  ranged: { icon:'🏹', label:'とおく', hpMul:0.6, atkMul:1.1, range:18, interval:1.4, area:false },
+  area:   { icon:'💥', label:'はんい', hpMul:0.8, atkMul:0.8, range:9,  interval:1.6, area:true  },
+};
+function twRoleOf(k){
+  let h = 0;
+  for(const c of k.id) h = (h*31 + c.charCodeAt(0)) >>> 0;
+  return ['melee','melee','tank','ranged','area'][h % 5];
+}
+const TW_CANNON_CHARGE_SEC = 25; // フルチャージまでの秒数
 const TW_ENEMY_CASTLE_POS  = 8;   // 敵の城（左端）
 const TW_PLAYER_CASTLE_POS = 92;  // 自分の城（右端）
 const TW_PLAYER_CASTLE_HP  = 300;
@@ -7807,6 +7853,7 @@ let twEnemySpawnCount = 0;
 let twBossSpawned     = false;
 let twDeckSelected    = JSON.parse(localStorage.getItem('kq_tower_deck') || '[]');
 let twDeckCooldowns   = {};
+let twCannonCharge    = 0;
 
 function twEnemyCastleMaxFor(stage){ return 250 + stage*80; }
 
@@ -7834,10 +7881,12 @@ function showTowerSelect(){
       const div = document.createElement('div');
       div.className = 'bt-sel-item tw-deck-grid-item';
       div.dataset.id = k.id;
+      const role = TW_ROLES[twRoleOf(k)];
       div.innerHTML = `
         ${kSVG(k)}
         <div class="sel-lv">Lv.${st.lv}</div>
         <div class="sel-name">${k.type||k.name}</div>
+        <div class="tw-role-chip">${role.icon} ${role.label}</div>
       `;
       div.onclick = ()=>toggleTowerDeck(k.id);
       grid.appendChild(div);
@@ -7904,6 +7953,8 @@ function startTowerDefense(){
   twEnemySpawnDelay = Math.max(2600, 4400 - twStage*150);
   twEnemySpawnCount = 0;
   twBossSpawned     = false;
+  twCannonCharge    = 0;
+  updateTwCannonUI();
   document.getElementById('tw-stage-badge').textContent = `ステージ ${twStage}`;
   document.getElementById('tw-start-overlay').style.display = 'none';
   document.getElementById('tw-lane').querySelectorAll('.tw-unit').forEach(el=>el.remove());
@@ -7926,7 +7977,8 @@ function twRenderDeployBar(){
     const btn = document.createElement('button');
     btn.className = 'tw-deploy-btn';
     btn.dataset.id = id;
-    btn.innerHTML = `${kSVG(k)}<div class="tw-deploy-cost">🪙<span class="tw-cost-num">-</span></div><div class="tw-deploy-cd" id="tw-cd-${id}" style="height:0%"></div>`;
+    const role = TW_ROLES[twRoleOf(k)];
+    btn.innerHTML = `<div class="tw-deploy-role">${role.icon}</div>${kSVG(k)}<div class="tw-deploy-cost">🪙<span class="tw-cost-num">-</span></div><div class="tw-deploy-cd" id="tw-cd-${id}" style="height:0%"></div>`;
     btn.onclick = ()=>twDeployUnit(id);
     row.appendChild(btn);
   });
@@ -7945,10 +7997,14 @@ function twDeployUnit(id){
 
   const st    = getStats(k);
   const lvMul = Math.min(2.0, 1 + (st.lv-1)*0.02);
+  const role  = TW_ROLES[twRoleOf(k)];
+  const hp    = Math.round(rs.baseHp*lvMul*role.hpMul);
   twUnits.push({
     uid: ++twUnitSeq, side:'player', name:k.name||k.type,
-    hp: Math.round(rs.baseHp*lvMul), maxHp: Math.round(rs.baseHp*lvMul),
-    atk: Math.round(rs.baseAtk*lvMul), speed: rs.speed,
+    hp, maxHp: hp,
+    atk: Math.round(rs.baseAtk*lvMul*role.atkMul), speed: rs.speed,
+    range: role.range, interval: role.interval, area: role.area, atkTimer: 0.3,
+    kbThresholds: [hp*2/3, hp*1/3],
     pos: TW_PLAYER_CASTLE_POS - 4, svg: kSVG(k),
   });
   twRenderUnits();
@@ -7974,6 +8030,8 @@ function twSpawnEnemyUnit(){
     uid: ++twUnitSeq, side:'enemy', name:base.name,
     hp, maxHp: hp,
     atk: Math.round(base.atk*scale), speed: base.speed,
+    range: 5, interval: 1.1, area: false, atkTimer: 0.3,
+    kbThresholds: [hp*2/3, hp*1/3],
     pos: TW_ENEMY_CASTLE_POS + 4, svg: base.svg,
     bounty: Math.round(hp*0.8),
   });
@@ -7988,6 +8046,8 @@ function twSpawnBoss(){
     uid: ++twUnitSeq, side:'enemy', name:m.name, boss:true,
     hp, maxHp: hp,
     atk: 10 + twStage*2, speed: 0.3,
+    range: 8, interval: 1.6, area: true, atkTimer: 0.8,
+    kbThresholds: [hp*3/4, hp*2/4, hp*1/4],
     pos: TW_ENEMY_CASTLE_POS + 4, svg: m.svg,
     bounty: 150 + twStage*30,
   });
@@ -8013,7 +8073,13 @@ function twTick(){
   });
   updateTwDeployButtons();
 
-  // ユニット同士の戦闘（距離内に敵がいれば止まって攻撃。複数で同じ敵を攻撃できる。
+  // くうっち砲チャージ
+  if(twCannonCharge < 100){
+    twCannonCharge = Math.min(100, twCannonCharge + 100*0.1/TW_CANNON_CHARGE_SEC);
+    updateTwCannonUI();
+  }
+
+  // ユニット同士の戦闘（射程内に敵がいれば止まり、攻撃間隔ごとにダメージ。
   // 前後を問わない絶対距離判定なので、すれ違い・背後湧きでも素通りしない）
   const fightingIds = new Set();
   twUnits.forEach(u=>{
@@ -8021,31 +8087,51 @@ function twTick(){
     twUnits.forEach(o=>{
       if(o.side===u.side) return;
       const dist = Math.abs(u.pos - o.pos);
-      if(dist > TW_ENGAGE_RANGE) return;
+      if(dist > u.range) return;
       if(dist < nearestDist){ nearestDist = dist; target = o; }
     });
     if(target){
       fightingIds.add(u.uid);
-      target.hp -= u.atk*0.12;
+      u.atkTimer -= 0.1;
+      if(u.atkTimer <= 0){
+        u.atkTimer = u.interval;
+        if(u.area){
+          twUnits.forEach(o=>{
+            if(o.side!==u.side && Math.abs(u.pos-o.pos) <= u.range) twHitUnit(o, u.atk);
+          });
+        } else {
+          twHitUnit(target, u.atk);
+        }
+      }
     }
   });
 
-  // 移動 or 城への連続攻撃
+  // 移動 or 城への攻撃（射程内なら止まって攻撃間隔ごとに城を殴る）
   twUnits.forEach(u=>{
     if(fightingIds.has(u.uid)) return;
     if(u.side==='player'){
-      if(u.pos <= TW_ENEMY_CASTLE_POS){
-        twEnemyCastleHP = Math.max(0, twEnemyCastleHP - u.atk*0.15);
-        if(!twBossSpawned && twEnemyCastleHP <= twEnemyCastleMax*0.5){
-          twBossSpawned = true;
-          twSpawnBoss();
+      if(u.pos - TW_ENEMY_CASTLE_POS <= u.range){
+        u.atkTimer -= 0.1;
+        if(u.atkTimer <= 0){
+          u.atkTimer = u.interval;
+          twEnemyCastleHP = Math.max(0, twEnemyCastleHP - u.atk);
+          twDmgFloat(TW_ENEMY_CASTLE_POS + 2, u.atk, true);
+          if(!twBossSpawned && twEnemyCastleHP <= twEnemyCastleMax*0.5){
+            twBossSpawned = true;
+            twSpawnBoss();
+          }
         }
       } else {
         u.pos -= u.speed;
       }
     } else {
-      if(u.pos >= TW_PLAYER_CASTLE_POS){
-        twPlayerCastleHP = Math.max(0, twPlayerCastleHP - u.atk*0.15);
+      if(TW_PLAYER_CASTLE_POS - u.pos <= u.range){
+        u.atkTimer -= 0.1;
+        if(u.atkTimer <= 0){
+          u.atkTimer = u.interval;
+          twPlayerCastleHP = Math.max(0, twPlayerCastleHP - u.atk);
+          twDmgFloat(TW_PLAYER_CASTLE_POS - 2, u.atk, false);
+        }
       } else {
         u.pos += u.speed;
       }
@@ -8067,6 +8153,57 @@ function twTick(){
 
   if(twEnemyCastleHP <= 0){ twEnd(true); return; }
   if(twPlayerCastleHP <= 0){ twEnd(false); return; }
+}
+
+function twHitUnit(o, dmg){
+  o.hp -= dmg;
+  twDmgFloat(o.pos, dmg, o.side==='enemy');
+  const el = document.getElementById('tw-u-'+o.uid);
+  if(el){ el.classList.remove('tw-hit'); void el.offsetWidth; el.classList.add('tw-hit'); }
+  // ノックバック（HPが一定割合を下回るたびに後退）
+  if(o.hp > 0 && o.kbThresholds && o.kbThresholds.length && o.hp <= o.kbThresholds[0]){
+    o.kbThresholds.shift();
+    o.pos += (o.side==='player' ? 5 : -5);
+    o.pos = Math.max(TW_ENEMY_CASTLE_POS, Math.min(TW_PLAYER_CASTLE_POS, o.pos));
+  }
+}
+
+function twDmgFloat(pos, dmg, onEnemy){
+  const lane = document.getElementById('tw-lane');
+  const d = document.createElement('div');
+  d.className = 'tw-dmg-float' + (onEnemy ? ' on-enemy' : '');
+  d.textContent = Math.round(dmg);
+  d.style.left = pos + '%';
+  lane.appendChild(d);
+  setTimeout(()=>d.remove(), 700);
+}
+
+function updateTwCannonUI(){
+  const btn  = document.getElementById('tw-cannon-btn');
+  const fill = document.getElementById('tw-cannon-fill');
+  if(!btn || !fill) return;
+  fill.style.width = twCannonCharge + '%';
+  const ready = twActive && twCannonCharge >= 100;
+  btn.disabled = !ready;
+  btn.classList.toggle('ready', ready);
+}
+
+function twFireCannon(){
+  if(!twActive || twCannonCharge < 100) return;
+  twCannonCharge = 0;
+  updateTwCannonUI();
+  playSound('attack');
+  const dmg = 25 + twStage*8;
+  twUnits.forEach(o=>{
+    if(o.side!=='enemy') return;
+    o.pos = Math.max(TW_ENEMY_CASTLE_POS, o.pos - 8);
+    twHitUnit(o, dmg);
+  });
+  const lane = document.getElementById('tw-lane');
+  const f = document.createElement('div');
+  f.className = 'tw-cannon-flash';
+  lane.appendChild(f);
+  setTimeout(()=>f.remove(), 500);
 }
 
 function twRenderUnits(){
