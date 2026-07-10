@@ -8077,7 +8077,9 @@ function twUnitDef(id){
     return { id, rarity:'common', name:'しろねこ', role:TW_ROLES.melee, svg:twPuppetCatSVG(), lv:1 };
   }
   if(id === TW_POTE_ID){
-    return { id, rarity:'common', name:'ぽてまよ', role:TW_ROLES.tank,
+    // ロケットパンチのリーチを活かした専用の中距離役割
+    const poteRole = { icon:'🥊', label:'パンチ', hpMul:1.6, atkMul:0.8, range:12, interval:1.4, area:false };
+    return { id, rarity:'common', name:'ぽてまよ', role:poteRole,
              svg:`<img class="tw-icon-img" src="${TW_POTE_SPRITE.icon}">`,
              sprite:TW_POTE_SPRITE, lv:1 };
   }
