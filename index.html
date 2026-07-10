@@ -904,12 +904,39 @@
     .tw-cannon-btn:disabled { cursor:not-allowed; color:#cfd8dc; }
     .tw-cannon-btn.ready { animation:twCannonPulse 1s infinite; }
     @keyframes twCannonPulse { 50%{ box-shadow:0 0 12px #ff5722; } }
-    .tw-cannon-flash {
-      position:absolute; inset:0; z-index:6; pointer-events:none;
-      background:radial-gradient(circle at 30% 60%, rgba(255,255,255,.95), rgba(255,152,0,.4));
-      animation:twCannonFlash .5s ease-out forwards;
+    @keyframes twAtkLungeL { 0%{transform:translateX(0)} 35%{transform:translateX(-7px) rotate(-6deg)} 100%{transform:translateX(0)} }
+    @keyframes twAtkLungeR { 0%{transform:translateX(0)} 35%{transform:translateX(7px) rotate(6deg)} 100%{transform:translateX(0)} }
+    .tw-unit.tw-atk-l { animation:twAtkLungeL .3s ease-out; }
+    .tw-unit.tw-atk-r { animation:twAtkLungeR .3s ease-out; }
+    /* やられ演出：後ろにバウンドして天に召される */
+    @keyframes twDieP {
+      0%   { transform:translate(0,0) rotate(0);            opacity:1; }
+      30%  { transform:translate(16px,-30px) rotate(150deg); opacity:1; }
+      55%  { transform:translate(26px,-4px) rotate(270deg);  opacity:1; }
+      100% { transform:translate(34px,-80px) rotate(480deg); opacity:0; }
     }
-    @keyframes twCannonFlash { 0%{opacity:1} 100%{opacity:0} }
+    @keyframes twDieE {
+      0%   { transform:translate(0,0) rotate(0);              opacity:1; }
+      30%  { transform:translate(-16px,-30px) rotate(-150deg); opacity:1; }
+      55%  { transform:translate(-26px,-4px) rotate(-270deg);  opacity:1; }
+      100% { transform:translate(-34px,-80px) rotate(-480deg); opacity:0; }
+    }
+    .tw-unit.tw-die-p { animation:twDieP 1s ease-in forwards; z-index:4; }
+    .tw-unit.tw-die-e { animation:twDieE 1s ease-in forwards; z-index:4; }
+    /* くうっち砲：地を走る衝撃波ビーム */
+    .tw-cannon-beam {
+      position:absolute; top:18%; bottom:26%; width:7%; left:86%;
+      z-index:6; pointer-events:none; border-radius:8px;
+      background:linear-gradient(90deg, transparent, rgba(255,235,59,.85), rgba(255,255,255,.95));
+      box-shadow:0 0 24px 10px rgba(255,193,7,.75);
+      transform:skewX(-12deg);
+      animation:twBeamSweep .8s linear forwards;
+    }
+    .tw-cannon-beam::after {
+      content:'⚡'; position:absolute; inset:0;
+      display:flex; align-items:center; justify-content:center; font-size:30px;
+    }
+    @keyframes twBeamSweep { 0%{ left:86%; } 100%{ left:2%; } }
     .tw-start-overlay {
       position:absolute; inset:0; z-index:30; background:rgba(13,27,62,.92);
       display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -8095,6 +8122,7 @@ function twTick(){
       u.atkTimer -= 0.1;
       if(u.atkTimer <= 0){
         u.atkTimer = u.interval;
+        twAtkAnim(u);
         if(u.area){
           twUnits.forEach(o=>{
             if(o.side!==u.side && Math.abs(u.pos-o.pos) <= u.range) twHitUnit(o, u.atk);
@@ -8114,6 +8142,7 @@ function twTick(){
         u.atkTimer -= 0.1;
         if(u.atkTimer <= 0){
           u.atkTimer = u.interval;
+          twAtkAnim(u);
           twEnemyCastleHP = Math.max(0, twEnemyCastleHP - u.atk);
           twDmgFloat(TW_ENEMY_CASTLE_POS + 2, u.atk, true);
           if(!twBossSpawned && twEnemyCastleHP <= twEnemyCastleMax*0.5){
@@ -8129,6 +8158,7 @@ function twTick(){
         u.atkTimer -= 0.1;
         if(u.atkTimer <= 0){
           u.atkTimer = u.interval;
+          twAtkAnim(u);
           twPlayerCastleHP = Math.max(0, twPlayerCastleHP - u.atk);
           twDmgFloat(TW_PLAYER_CASTLE_POS - 2, u.atk, false);
         }
@@ -8138,13 +8168,14 @@ function twTick(){
     }
   });
 
-  // 倒れたユニットの整理（敵は倒すとおかねがもらえる）
+  // 倒れたユニットの整理（敵は倒すとおかねがもらえる。やられ演出つき）
   const alive = [];
   twUnits.forEach(u=>{
     if(u.hp > 0){ alive.push(u); return; }
     if(u.side==='enemy'){
       twMoney = Math.min(TW_WALLET[twWalletLv-1].cap, twMoney + (u.bounty||0));
     }
+    twDeathAnim(u);
   });
   twUnits = alive;
 
@@ -8153,6 +8184,23 @@ function twTick(){
 
   if(twEnemyCastleHP <= 0){ twEnd(true); return; }
   if(twPlayerCastleHP <= 0){ twEnd(false); return; }
+}
+
+function twAtkAnim(u){
+  const el = document.getElementById('tw-u-'+u.uid);
+  if(!el) return;
+  const cls = u.side==='player' ? 'tw-atk-l' : 'tw-atk-r';
+  el.classList.remove('tw-atk-l','tw-atk-r');
+  void el.offsetWidth;
+  el.classList.add(cls);
+}
+
+function twDeathAnim(u){
+  const el = document.getElementById('tw-u-'+u.uid);
+  if(!el) return;
+  el.id = '';
+  el.classList.add('tw-corpse', u.side==='player' ? 'tw-die-p' : 'tw-die-e');
+  setTimeout(()=>el.remove(), 1000);
 }
 
 function twHitUnit(o, dmg){
@@ -8193,17 +8241,24 @@ function twFireCannon(){
   twCannonCharge = 0;
   updateTwCannonUI();
   playSound('attack');
-  const dmg = 25 + twStage*8;
-  twUnits.forEach(o=>{
-    if(o.side!=='enemy') return;
-    o.pos = Math.max(TW_ENEMY_CASTLE_POS, o.pos - 8);
-    twHitUnit(o, dmg);
-  });
+  const dmg  = 25 + twStage*8;
   const lane = document.getElementById('tw-lane');
-  const f = document.createElement('div');
-  f.className = 'tw-cannon-flash';
-  lane.appendChild(f);
-  setTimeout(()=>f.remove(), 500);
+  // 本家風：自分の城から地を走る衝撃波が左へ抜けていく
+  const beam = document.createElement('div');
+  beam.className = 'tw-cannon-beam';
+  lane.appendChild(beam);
+  setTimeout(()=>beam.remove(), 900);
+  // 波が通過したタイミングで、右にいる敵から順にヒット
+  const crossMs = 800;
+  twUnits.filter(o=>o.side==='enemy').forEach(o=>{
+    const frac  = (TW_PLAYER_CASTLE_POS - o.pos) / (TW_PLAYER_CASTLE_POS - TW_ENEMY_CASTLE_POS);
+    const delay = Math.max(0, frac*crossMs);
+    setTimeout(()=>{
+      if(!twActive || o.hp <= 0) return;
+      o.pos = Math.max(TW_ENEMY_CASTLE_POS, o.pos - 8);
+      twHitUnit(o, dmg);
+    }, delay);
+  });
 }
 
 function twRenderUnits(){
@@ -8221,7 +8276,7 @@ function twRenderUnits(){
     }
     el.style.left = u.pos + '%';
   });
-  lane.querySelectorAll('.tw-unit').forEach(el=>{
+  lane.querySelectorAll('.tw-unit:not(.tw-corpse)').forEach(el=>{
     const uid = parseInt(el.id.replace('tw-u-',''));
     if(!seen.has(uid)) el.remove();
   });
