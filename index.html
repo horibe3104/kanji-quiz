@@ -44,6 +44,18 @@
       text-shadow: 0 1px 2px rgba(0,0,0,.35); user-select: none;
     }
 
+    /* BGM TOGGLE */
+    #bgm-btn {
+      position: fixed; top: 10px; left: 12px; z-index: 50;
+      width: 40px; height: 40px; border-radius: 50%; border: none;
+      background: linear-gradient(135deg, #7c4dff, #512da8);
+      color: white; font-size: 18px; cursor: pointer;
+      box-shadow: 0 3px 0 #311b92, 0 5px 14px rgba(124,77,255,.5);
+      transition: transform .1s;
+    }
+    #bgm-btn:active { transform: translateY(2px); }
+    #bgm-btn.off { background: #78909c; box-shadow: 0 3px 0 #455a64, 0 5px 14px rgba(0,0,0,.3); }
+
     /* SCREENS */
     .screen { display: none; width: 100%; max-width: 460px; padding: 10px; padding-top: 56px; }
     .screen.active { display: block; }
@@ -1933,6 +1945,7 @@
 </head>
 <body>
 
+<button id="bgm-btn" class="off" onclick="toggleBGM()" aria-label="BGMのオン・オフ">🔇</button>
 <div id="coin-bar">🪙 <span id="coin-count">0</span> &nbsp; 🍟 <span id="exp-stone-count">0</span> &nbsp; 🎫 <span id="ticket-r-count">0</span> &nbsp; 🌟 <span id="ticket-sr-count">0</span> &nbsp; 🗝️ <span id="maze-key-count">0</span></div>
 
 <!-- パーフェクトオーバーレイ -->
@@ -4159,9 +4172,11 @@ function showScreen(id) {
   // タブバー表示切り替え
   const tabBar = document.getElementById('home-tab-bar');
   if(tabBar) tabBar.style.display = (id === 'screen-start') ? 'flex' : 'none';
-  // タワー防衛戦は全画面レイアウトなので共通コインバーは隠す
+  // タワー防衛戦は全画面レイアウトなので共通コインバーとBGMボタンは隠す
   const coinBar = document.getElementById('coin-bar');
   if(coinBar) coinBar.style.display = (id === 'screen-tower') ? 'none' : '';
+  const bgmBtn = document.getElementById('bgm-btn');
+  if(bgmBtn) bgmBtn.style.display = (id === 'screen-tower') ? 'none' : '';
   if(id==='screen-start') updateEvent2Btn();
   // 画面に応じてBGM切り替え
   const bgmMap = {
@@ -8603,7 +8618,27 @@ function getAudioCtx(){
 function toggleBGM(){
   const ctx = getAudioCtx(); if(!ctx) return;
   if(bgmOn){ stopBGM(); }
-  else      { bgmOn=true; playBGMLoop(); }
+  else      { bgmOn=true; bgmType=null; switchScreenBGM(); playBGMLoop(); }
+  updateBgmBtn();
+}
+
+// 現在の画面に合ったBGMタイプをセットしてから鳴らす
+function switchScreenBGM(){
+  const active = document.querySelector('.screen.active');
+  if(!active) return;
+  const map = {
+    'screen-quiz':'quiz','screen-result':'quiz','screen-gacha':'gacha',
+    'screen-battle-select':'battle','screen-battle':'battle',
+    'screen-tower-select':'tower','screen-tower':'tower',
+  };
+  bgmType = map[active.id] || 'title';
+}
+
+function updateBgmBtn(){
+  const btn = document.getElementById('bgm-btn');
+  if(!btn) return;
+  btn.textContent = bgmOn ? '🎵' : '🔇';
+  btn.classList.toggle('off', !bgmOn);
 }
 
 function stopBGM(){
