@@ -827,34 +827,43 @@
       width:30px; height:30px; border-radius:50%; border:none; background:rgba(255,255,255,.15);
       color:white; font-size:15px; font-weight:900; cursor:pointer; flex-shrink:0;
     }
-    .tw-hp-bars { flex:1; display:flex; flex-direction:column; gap:3px; }
-    .tw-base-row { display:flex; align-items:center; gap:6px; }
-    .tw-base-icon { font-size:16px; line-height:1; }
-    .tw-base-hp-track { flex:1; height:10px; background:rgba(255,255,255,.2); border-radius:99px; overflow:hidden; }
-    .tw-base-hp-fill { height:100%; border-radius:99px; transition:width .4s; }
-    .tw-base-hp-fill.player { background:linear-gradient(90deg,#43a047,#66bb6a); }
-    .tw-base-hp-fill.enemy  { background:linear-gradient(90deg,#e53935,#ff7043); }
-    .tw-base-hp-num { font-size:9px; font-weight:900; color:white; min-width:38px; text-align:center; }
+    .tw-stage-badge {
+      background:rgba(255,255,255,.15); color:white; border-radius:99px;
+      padding:5px 14px; font-size:13px; font-weight:900; white-space:nowrap;
+    }
+    .tw-wallet-btn {
+      border:none; border-radius:99px; padding:6px 14px; font-size:12px; font-weight:900;
+      background:linear-gradient(135deg,#7c4dff,#512da8); color:white; cursor:pointer;
+      white-space:nowrap;
+    }
+    .tw-wallet-btn:disabled { background:#555c6e; color:#aab; cursor:not-allowed; }
     .tw-money-badge {
       background:linear-gradient(135deg,#f7b731,#f0932b); color:white; border-radius:99px;
-      padding:4px 12px; font-size:14px; font-weight:900; flex-shrink:0; white-space:nowrap;
+      padding:5px 14px; font-size:13px; font-weight:900; flex-shrink:0; white-space:nowrap;
     }
     .tw-lane {
       position:relative; flex:1; min-height:0; margin:2px 0 6px;
-      background:linear-gradient(180deg,#c8e6c9,#a5d6a7);
-      border-radius:10px; overflow:hidden; border:2px solid #81c784;
+      border-radius:10px; overflow:hidden; border:2px solid #4e342e;
+      background:
+        radial-gradient(90px 26px at 18% 18%, rgba(255,255,255,.9) 58%, transparent 62%),
+        radial-gradient(66px 20px at 52% 10%, rgba(255,255,255,.8) 58%, transparent 62%),
+        radial-gradient(110px 30px at 84% 22%, rgba(255,255,255,.85) 58%, transparent 62%),
+        linear-gradient(180deg,#4fc3f7 0%,#81d4fa 40%,#b3e5fc 61%,#66bb6a 61%,#4caf50 67%,#8d6e63 67%,#6d4c41 100%);
     }
-    .tw-lane-mid { position:absolute; top:50%; left:0; right:0; height:2px; background:rgba(255,255,255,.5); }
+    .tw-castle { position:absolute; bottom:30%; width:72px; text-align:center; z-index:2; }
+    .tw-castle.enemy  { left:2px; }
+    .tw-castle.player { right:2px; }
+    .tw-castle-icon { font-size:46px; line-height:1; }
+    .tw-castle-hp {
+      font-size:12px; font-weight:900; color:white;
+      text-shadow:0 1px 3px rgba(0,0,0,.6); margin-bottom:2px;
+    }
     .tw-unit {
-      position:absolute; top:50%; width:38px; height:38px; margin-top:-19px;
-      transition:left .1s linear; display:flex; flex-direction:column; align-items:center;
+      position:absolute; bottom:31%; width:38px; height:38px;
+      transition:left .1s linear;
     }
-    .tw-unit.enemy-unit { transform:scaleX(-1); }
-    .tw-unit svg, .tw-unit .tw-unit-emoji { width:32px; height:32px; }
-    .tw-unit-emoji { font-size:28px; line-height:1; display:block; }
-    .tw-unit-hp-track { width:32px; height:4px; background:rgba(0,0,0,.25); border-radius:99px; margin-top:1px; }
-    .tw-unit.enemy-unit .tw-unit-hp-track { transform:scaleX(-1); }
-    .tw-unit-hp-fill { height:100%; background:#4caf50; border-radius:99px; }
+    .tw-unit svg { width:100%; height:auto; display:block; }
+    .tw-unit.boss { width:64px; height:64px; }
     .tw-deploy-row { display:flex; gap:5px; padding:2px 2px 4px; }
     .tw-deploy-btn {
       flex:1; position:relative; border:2px solid #7986cb; border-radius:10px;
@@ -2308,25 +2317,23 @@
     <div class="tw-game">
       <div class="tw-topbar">
         <button class="tw-quit-btn" onclick="twQuit()">✕</button>
-        <div class="tw-hp-bars">
-          <div class="tw-base-row">
-            <span class="tw-base-icon">🏠</span>
-            <div class="tw-base-hp-track"><div class="tw-base-hp-fill player" id="tw-player-hp-fill" style="width:100%"></div></div>
-            <span class="tw-base-hp-num" id="tw-player-hp-num">100/100</span>
-          </div>
-          <div class="tw-base-row">
-            <span class="tw-base-icon">🏰</span>
-            <div class="tw-base-hp-track"><div class="tw-base-hp-fill enemy" id="tw-enemy-hp-fill" style="width:100%"></div></div>
-            <span class="tw-base-hp-num" id="tw-enemy-hp-num">100/100</span>
-          </div>
-        </div>
-        <div class="tw-money-badge">🪙 <span id="tw-money-num">0</span></div>
+        <div class="tw-stage-badge" id="tw-stage-badge">ステージ 1</div>
+        <div style="flex:1"></div>
+        <button class="tw-wallet-btn" id="tw-wallet-btn" onclick="twUpgradeWallet()">⤴️ おさいふ Lv.<span id="tw-wallet-lv">1</span>　🪙<span id="tw-wallet-cost">-</span></button>
+        <div class="tw-money-badge">🪙 <span id="tw-money-num">0</span>/<span id="tw-money-cap">-</span></div>
       </div>
-      <div class="tw-lane" id="tw-lane" style="position:relative">
-        <div class="tw-lane-mid"></div>
+      <div class="tw-lane" id="tw-lane">
+        <div class="tw-castle enemy">
+          <div class="tw-castle-hp"><span id="tw-enemy-hp-num">-</span></div>
+          <div class="tw-castle-icon">🏯</div>
+        </div>
+        <div class="tw-castle player">
+          <div class="tw-castle-hp"><span id="tw-player-hp-num">-</span></div>
+          <div class="tw-castle-icon">🏠</div>
+        </div>
         <div class="tw-start-overlay" id="tw-start-overlay">
-          <div class="tw-start-title">🐱 くうっち防衛戦！</div>
-          <div class="tw-start-desc">おかねが たまったら ユニットを 出撃させよう！<br>てきの おしろの HPを 0にしよう！</div>
+          <div class="tw-start-title" id="tw-start-title">🐱 くうっち防衛戦！</div>
+          <div class="tw-start-desc">おかねを ためて ユニットを 出撃させよう！<br>ひだりにある てきの おしろを こわせば かち！</div>
           <button class="tw-start-btn" onclick="startTowerDefense()">▶ スタート</button>
         </div>
       </div>
@@ -7761,26 +7768,47 @@ const TW_RARITY_STATS = {
   ur:     { cost:380, cooldown:6.2, speed:0.5,  baseHp:60, baseAtk:13 },
 };
 const TW_ENEMY_TYPES = [
-  { key:'slime',  name:'スライム', hp:16, atk:3, speed:0.55, svg: MONSTERS.find(m=>m.id==='slime').svg },
-  { key:'bat',    name:'こうもり', hp:12, atk:4, speed:0.85, svg: MONSTERS.find(m=>m.id==='bat').svg },
-  { key:'goblin', name:'ゴブリン', hp:24, atk:5, speed:0.45, svg: MONSTERS.find(m=>m.id==='goblin').svg },
+  { id:'slime',  minStage:1, hp:16, atk:3, speed:0.5  },
+  { id:'bat',    minStage:1, hp:12, atk:4, speed:0.8  },
+  { id:'goblin', minStage:2, hp:24, atk:5, speed:0.42 },
+  { id:'wolf',   minStage:3, hp:34, atk:7, speed:0.62 },
+  { id:'orc',    minStage:5, hp:52, atk:9, speed:0.36 },
+].map(t => {
+  const m = MONSTERS.find(mm => mm.id === t.id);
+  return { ...t, name: m.name, svg: m.svg };
+});
+const TW_BOSS_IDS = ['wolf','orc','skeleton','witch','troll'];
+const TW_WALLET = [
+  { cap:250,  rate:18, upCost:80   },
+  { cap:400,  rate:24, upCost:150  },
+  { cap:600,  rate:32, upCost:260  },
+  { cap:850,  rate:42, upCost:420  },
+  { cap:1200, rate:55, upCost:null },
 ];
-const TW_BASE_MAX_HP  = 150;
-const TW_ENGAGE_RANGE = 6;
-const TW_MONEY_RATE   = 22; // 1秒あたりの収入
+const TW_ENEMY_CASTLE_POS  = 8;   // 敵の城（左端）
+const TW_PLAYER_CASTLE_POS = 92;  // 自分の城（右端）
+const TW_PLAYER_CASTLE_HP  = 300;
+const TW_ENGAGE_RANGE      = 5;
 
 let twActive          = false;
-let twPlayerHP        = TW_BASE_MAX_HP;
-let twEnemyHP         = TW_BASE_MAX_HP;
-let twMoney           = 100;
-let twUnits           = [];   // {uid, side, name, hp, maxHp, atk, speed, pos, svg}
+let twStageCleared    = parseInt(localStorage.getItem('kq_tower_cleared') || '0');
+let twStage           = twStageCleared + 1;
+let twPlayerCastleHP  = TW_PLAYER_CASTLE_HP;
+let twEnemyCastleHP   = 0;
+let twEnemyCastleMax  = 0;
+let twMoney           = 0;
+let twWalletLv        = 1;
+let twUnits           = [];   // {uid, side, name, hp, maxHp, atk, speed, pos, svg, boss, bounty}
 let twUnitSeq         = 0;
 let twTickTimer       = null;
 let twEnemySpawnTimer = null;
 let twEnemySpawnDelay = 4200;
 let twEnemySpawnCount = 0;
+let twBossSpawned     = false;
 let twDeckSelected    = JSON.parse(localStorage.getItem('kq_tower_deck') || '[]');
 let twDeckCooldowns   = {};
+
+function twEnemyCastleMaxFor(stage){ return 250 + stage*80; }
 
 function showTowerSelect(){
   const grid = document.getElementById('tw-select-grid');
@@ -7847,22 +7875,42 @@ function refreshTowerDeckGridUI(){
 function confirmTowerDeck(){
   if(twDeckSelected.length===0) return;
   showScreen('screen-tower');
+  twUpdateStagePreview();
+}
+
+function twUpdateStagePreview(){
+  const stage = twStageCleared + 1;
+  document.getElementById('tw-stage-badge').textContent = `ステージ ${stage}`;
+  document.getElementById('tw-start-title').textContent = `🐱 ステージ ${stage}`;
+  document.getElementById('tw-player-hp-num').textContent = TW_PLAYER_CASTLE_HP;
+  document.getElementById('tw-enemy-hp-num').textContent  = twEnemyCastleMaxFor(stage);
+  document.getElementById('tw-money-num').textContent    = 80;
+  document.getElementById('tw-money-cap').textContent    = TW_WALLET[0].cap;
+  document.getElementById('tw-wallet-lv').textContent    = 1;
+  document.getElementById('tw-wallet-cost').textContent  = TW_WALLET[0].upCost;
+  document.getElementById('tw-wallet-btn').disabled      = true;
 }
 
 function startTowerDefense(){
+  twStage           = twStageCleared + 1;
   twActive          = true;
-  twPlayerHP        = TW_BASE_MAX_HP;
-  twEnemyHP         = TW_BASE_MAX_HP;
-  twMoney           = 100;
+  twPlayerCastleHP  = TW_PLAYER_CASTLE_HP;
+  twEnemyCastleMax  = twEnemyCastleMaxFor(twStage);
+  twEnemyCastleHP   = twEnemyCastleMax;
+  twMoney           = 80;
+  twWalletLv        = 1;
   twUnits           = [];
-  twEnemySpawnDelay = 4200;
-  twEnemySpawnCount = 0;
   twDeckCooldowns   = {};
+  twEnemySpawnDelay = Math.max(2600, 4400 - twStage*150);
+  twEnemySpawnCount = 0;
+  twBossSpawned     = false;
+  document.getElementById('tw-stage-badge').textContent = `ステージ ${twStage}`;
   document.getElementById('tw-start-overlay').style.display = 'none';
   document.getElementById('tw-lane').querySelectorAll('.tw-unit').forEach(el=>el.remove());
   twRenderDeployBar();
-  updateTwBaseBars();
+  updateTwCastleUI();
   updateTwMoneyUI();
+  updateTwWalletUI();
 
   if(twTickTimer) clearInterval(twTickTimer);
   twTickTimer = setInterval(twTick, 100);
@@ -7895,13 +7943,13 @@ function twDeployUnit(id){
   twDeckCooldowns[id] = rs.cooldown;
   updateTwMoneyUI();
 
-  const st  = getStats(k);
+  const st    = getStats(k);
   const lvMul = Math.min(2.0, 1 + (st.lv-1)*0.02);
   twUnits.push({
     uid: ++twUnitSeq, side:'player', name:k.name||k.type,
     hp: Math.round(rs.baseHp*lvMul), maxHp: Math.round(rs.baseHp*lvMul),
     atk: Math.round(rs.baseAtk*lvMul), speed: rs.speed,
-    pos: 4, svg: kSVG(k),
+    pos: TW_PLAYER_CASTLE_POS - 4, svg: kSVG(k),
   });
   twRenderUnits();
 }
@@ -7918,14 +7966,33 @@ function twScheduleEnemySpawn(){
 
 function twSpawnEnemyUnit(){
   twEnemySpawnCount++;
-  const base = TW_ENEMY_TYPES[Math.floor(Math.random()*TW_ENEMY_TYPES.length)];
-  const scale = 1 + Math.min(0.9, twEnemySpawnCount * 0.05);
+  const pool  = TW_ENEMY_TYPES.filter(t=>t.minStage<=twStage);
+  const base  = pool[Math.floor(Math.random()*pool.length)];
+  const scale = (1 + (twStage-1)*0.18) * (1 + Math.min(0.9, twEnemySpawnCount * 0.05));
+  const hp    = Math.round(base.hp*scale);
   twUnits.push({
     uid: ++twUnitSeq, side:'enemy', name:base.name,
-    hp: Math.round(base.hp*scale), maxHp: Math.round(base.hp*scale),
+    hp, maxHp: hp,
     atk: Math.round(base.atk*scale), speed: base.speed,
-    pos: 96, svg: base.svg,
+    pos: TW_ENEMY_CASTLE_POS + 4, svg: base.svg,
+    bounty: Math.round(hp*0.8),
   });
+  twRenderUnits();
+}
+
+function twSpawnBoss(){
+  const id = TW_BOSS_IDS[(twStage-1) % TW_BOSS_IDS.length];
+  const m  = MONSTERS.find(mm=>mm.id===id);
+  const hp = 120 + twStage*70;
+  twUnits.push({
+    uid: ++twUnitSeq, side:'enemy', name:m.name, boss:true,
+    hp, maxHp: hp,
+    atk: 10 + twStage*2, speed: 0.3,
+    pos: TW_ENEMY_CASTLE_POS + 4, svg: m.svg,
+    bounty: 150 + twStage*30,
+  });
+  showToast(`⚠️ ボス「${m.name}」が あらわれた！`);
+  playSound('wrong');
   twRenderUnits();
 }
 
@@ -7933,8 +8000,10 @@ function twTick(){
   if(!twActive) return;
 
   // おかね収入
-  twMoney += TW_MONEY_RATE * 0.1;
+  const w = TW_WALLET[twWalletLv-1];
+  twMoney = Math.min(w.cap, twMoney + w.rate*0.1);
   updateTwMoneyUI();
+  updateTwWalletUI();
 
   // デッキのクールダウン消化
   twDeckSelected.forEach(id=>{
@@ -7944,14 +8013,14 @@ function twTick(){
   });
   updateTwDeployButtons();
 
+  // ユニット同士の戦闘（1対1で足止め）
   const engagedIds = new Set();
-
   twUnits.forEach(u=>{
     if(engagedIds.has(u.uid)) return;
     let nearest = null, nearestDist = Infinity;
     twUnits.forEach(o=>{
       if(o.side===u.side || engagedIds.has(o.uid)) return;
-      const ahead = u.side==='player' ? (o.pos - u.pos) : (u.pos - o.pos);
+      const ahead = u.side==='player' ? (u.pos - o.pos) : (o.pos - u.pos);
       if(ahead < 0 || ahead > TW_ENGAGE_RANGE) return;
       if(ahead < nearestDist){ nearestDist = ahead; nearest = o; }
     });
@@ -7962,29 +8031,43 @@ function twTick(){
     }
   });
 
+  // 移動 or 城への連続攻撃
   twUnits.forEach(u=>{
     if(engagedIds.has(u.uid)) return;
-    u.pos += (u.side==='player' ? 1 : -1) * u.speed;
+    if(u.side==='player'){
+      if(u.pos <= TW_ENEMY_CASTLE_POS){
+        twEnemyCastleHP = Math.max(0, twEnemyCastleHP - u.atk*0.15);
+        if(!twBossSpawned && twEnemyCastleHP <= twEnemyCastleMax*0.5){
+          twBossSpawned = true;
+          twSpawnBoss();
+        }
+      } else {
+        u.pos -= u.speed;
+      }
+    } else {
+      if(u.pos >= TW_PLAYER_CASTLE_POS){
+        twPlayerCastleHP = Math.max(0, twPlayerCastleHP - u.atk*0.15);
+      } else {
+        u.pos += u.speed;
+      }
+    }
   });
 
-  // 拠点到達判定
-  twUnits = twUnits.filter(u=>{
-    if(u.side==='player' && u.pos >= 96){
-      twEnemyHP = Math.max(0, twEnemyHP - u.atk);
-      return false;
+  // 倒れたユニットの整理（敵は倒すとおかねがもらえる）
+  const alive = [];
+  twUnits.forEach(u=>{
+    if(u.hp > 0){ alive.push(u); return; }
+    if(u.side==='enemy'){
+      twMoney = Math.min(TW_WALLET[twWalletLv-1].cap, twMoney + (u.bounty||0));
     }
-    if(u.side==='enemy' && u.pos <= 4){
-      twPlayerHP = Math.max(0, twPlayerHP - u.atk);
-      return false;
-    }
-    return u.hp > 0;
   });
+  twUnits = alive;
 
-  updateTwBaseBars();
+  updateTwCastleUI();
   twRenderUnits();
 
-  if(twEnemyHP <= 0){ twEnd(true); return; }
-  if(twPlayerHP <= 0){ twEnd(false); return; }
+  if(twEnemyCastleHP <= 0){ twEnd(true); return; }
+  if(twPlayerCastleHP <= 0){ twEnd(false); return; }
 }
 
 function twRenderUnits(){
@@ -7996,13 +8079,11 @@ function twRenderUnits(){
     if(!el){
       el = document.createElement('div');
       el.id = 'tw-u-'+u.uid;
-      el.className = 'tw-unit' + (u.side==='enemy' ? ' enemy-unit' : '');
-      el.innerHTML = `${u.svg}<div class="tw-unit-hp-track"><div class="tw-unit-hp-fill" id="tw-u-${u.uid}-hp"></div></div>`;
+      el.className = 'tw-unit' + (u.boss ? ' boss' : '');
+      el.innerHTML = u.svg;
       lane.appendChild(el);
     }
     el.style.left = u.pos + '%';
-    const hpEl = document.getElementById('tw-u-'+u.uid+'-hp');
-    if(hpEl) hpEl.style.width = Math.max(0, u.hp/u.maxHp*100) + '%';
   });
   lane.querySelectorAll('.tw-unit').forEach(el=>{
     const uid = parseInt(el.id.replace('tw-u-',''));
@@ -8010,15 +8091,38 @@ function twRenderUnits(){
   });
 }
 
-function updateTwBaseBars(){
-  document.getElementById('tw-player-hp-fill').style.width = (twPlayerHP/TW_BASE_MAX_HP*100)+'%';
-  document.getElementById('tw-enemy-hp-fill').style.width  = (twEnemyHP/TW_BASE_MAX_HP*100)+'%';
-  document.getElementById('tw-player-hp-num').textContent  = `${twPlayerHP}/${TW_BASE_MAX_HP}`;
-  document.getElementById('tw-enemy-hp-num').textContent   = `${twEnemyHP}/${TW_BASE_MAX_HP}`;
+function updateTwCastleUI(){
+  document.getElementById('tw-player-hp-num').textContent = Math.ceil(twPlayerCastleHP);
+  document.getElementById('tw-enemy-hp-num').textContent  = Math.ceil(twEnemyCastleHP);
 }
 
 function updateTwMoneyUI(){
   document.getElementById('tw-money-num').textContent = Math.floor(twMoney);
+  document.getElementById('tw-money-cap').textContent = TW_WALLET[twWalletLv-1].cap;
+}
+
+function updateTwWalletUI(){
+  const w   = TW_WALLET[twWalletLv-1];
+  const btn = document.getElementById('tw-wallet-btn');
+  document.getElementById('tw-wallet-lv').textContent = twWalletLv;
+  if(w.upCost===null){
+    document.getElementById('tw-wallet-cost').textContent = 'MAX';
+    btn.disabled = true;
+  } else {
+    document.getElementById('tw-wallet-cost').textContent = w.upCost;
+    btn.disabled = !twActive || twMoney < w.upCost;
+  }
+}
+
+function twUpgradeWallet(){
+  if(!twActive) return;
+  const w = TW_WALLET[twWalletLv-1];
+  if(w.upCost===null || twMoney < w.upCost) return;
+  twMoney -= w.upCost;
+  twWalletLv++;
+  playSound('correct');
+  updateTwMoneyUI();
+  updateTwWalletUI();
 }
 
 function updateTwDeployButtons(){
@@ -8044,14 +8148,21 @@ function twEnd(won){
   const ov = document.createElement('div');
   ov.className = 'bt-end-overlay ' + (won ? 'win' : 'lose');
   if(won){
-    const coinReward = 60;
+    const clearedStage = twStage;
+    const coinReward = 40 + clearedStage*20;
+    const expReward  = 3 + clearedStage;
     coins += coinReward; saveState(); updateCoinBar();
+    expStones += expReward; saveExpStones(); updateExpBar();
     updateMissionProgress('battle_win', 1);
+    if(clearedStage === twStageCleared + 1){
+      twStageCleared = clearedStage;
+      localStorage.setItem('kq_tower_cleared', twStageCleared);
+    }
     ov.innerHTML = `
-      <div class="bt-end-title">🏆 しょうり！</div>
-      <div class="bt-end-sub">てきの おしろを たおしたよ！</div>
-      <div class="bt-end-reward">🪙 +${coinReward}まい　ゲット！</div>
-      <button class="bt-end-btn" onclick="this.closest('.bt-end-overlay').remove();showScreen('screen-tower');twResetOverlay();">🔄 もう一度！</button>
+      <div class="bt-end-title">🏆 ステージ${clearedStage} クリア！</div>
+      <div class="bt-end-sub">てきの おしろを こわしたよ！</div>
+      <div class="bt-end-reward">🪙 +${coinReward}まい　🍟 +${expReward}こ</div>
+      <button class="bt-end-btn" onclick="this.closest('.bt-end-overlay').remove();showScreen('screen-tower');twResetOverlay();">➡️ つぎのステージへ！</button>
       <button class="bt-end-btn" style="background:#546e7a;margin-top:6px;font-size:14px" onclick="this.closest('.bt-end-overlay').remove();goHome()">🏠 もどる</button>
     `;
     document.body.appendChild(ov);
@@ -8070,6 +8181,7 @@ function twEnd(won){
 function twResetOverlay(){
   document.getElementById('tw-lane').querySelectorAll('.tw-unit').forEach(el=>el.remove());
   document.getElementById('tw-start-overlay').style.display = 'flex';
+  twUpdateStagePreview();
 }
 
 function twQuit(){
