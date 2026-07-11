@@ -968,6 +968,17 @@
     @keyframes twAtkLungeR { 0%{transform:translateX(0)} 35%{transform:translateX(7px) rotate(6deg)} 100%{transform:translateX(0)} }
     .tw-unit.tw-atk-l { animation:twAtkLungeL .3s ease-out; }
     .tw-unit.tw-atk-r { animation:twAtkLungeR .3s ease-out; }
+    /* ノックバック：おっとっとと後ろに跳ねる（本家風） */
+    @keyframes twKbHopP {
+      0%{ transform:translateY(0) rotate(0); } 35%{ transform:translateY(-16px) rotate(13deg); }
+      70%{ transform:translateY(1px) rotate(-5deg); } 100%{ transform:translateY(0) rotate(0); }
+    }
+    @keyframes twKbHopE {
+      0%{ transform:translateY(0) rotate(0); } 35%{ transform:translateY(-16px) rotate(-13deg); }
+      70%{ transform:translateY(1px) rotate(5deg); } 100%{ transform:translateY(0) rotate(0); }
+    }
+    .tw-unit.tw-kb-p { animation:twKbHopP .5s ease-out; }
+    .tw-unit.tw-kb-e { animation:twKbHopE .5s ease-out; }
     /* やられ演出：後ろに小さくバウンドして消え、魂が昇る */
     @keyframes twDieP {
       0%   { transform:translate(0,0) rotate(0);             opacity:1; }
@@ -8199,7 +8210,7 @@ const TW_KIMO_SPRITE = {
 };
 // コマアニメ式：わんこ（敵キャラ・左向きシート）
 const TW_WANKO_SPRITE = {
-  facing: 'left',
+  facing: 'right',
   icon: 'sprites/wanko_icon.png',
   idle: 'sprites/wanko_idle.png',
   walk: ['sprites/wanko_walk1.png','sprites/wanko_walk2.png','sprites/wanko_walk3.png','sprites/wanko_walk4.png'],
@@ -8529,8 +8540,10 @@ function twTick(){
   // ユニット同士の戦闘（射程内に敵がいれば止まり、攻撃間隔ごとにダメージ。
   // 前後を問わない絶対距離判定なので、すれ違い・背後湧きでも素通りしない）
   const fightingIds = new Set();
+  const nowMs = performance.now();
   twUnits.forEach(u=>{ u._still = false; });
   twUnits.forEach(u=>{
+    if(u.kbUntil && nowMs < u.kbUntil){ fightingIds.add(u.uid); return; } // 吹っ飛び中
     let target = null, nearestDist = Infinity;
     twUnits.forEach(o=>{
       if(o.side===u.side) return;
@@ -8665,11 +8678,28 @@ function twHitUnit(o, dmg){
   if(nowMs - _twLastHitSnd > 90){ _twLastHitSnd = nowMs; playSound('hit'); }
   const el = document.getElementById('tw-u-'+o.uid);
   if(el){ el.classList.remove('tw-hit'); void el.offsetWidth; el.classList.add('tw-hit'); }
-  // ノックバック（HPが一定割合を下回るたびに後退）
+  // ノックバック（HPが一定割合を下回るたびに発動）
   if(o.hp > 0 && o.kbThresholds && o.kbThresholds.length && o.hp <= o.kbThresholds[0]){
     o.kbThresholds.shift();
-    o.pos += (o.side==='player' ? 5 : -5);
-    o.pos = Math.max(TW_ENEMY_CASTLE_POS, Math.min(TW_PLAYER_CASTLE_POS, o.pos));
+    twKnockback(o);
+  }
+}
+
+// おっとっとと後ろに跳ねて吹っ飛ばされる（跳ねている間は行動不能）
+function twKnockback(o){
+  o.kbUntil = performance.now() + 520;
+  o.pos += (o.side==='player' ? 7 : -7);
+  o.pos = Math.max(TW_ENEMY_CASTLE_POS, Math.min(TW_PLAYER_CASTLE_POS, o.pos));
+  const el = document.getElementById('tw-u-'+o.uid);
+  if(el){
+    el.style.transition = 'left .45s ease-out';
+    el.classList.remove('tw-kb-p','tw-kb-e');
+    void el.offsetWidth;
+    el.classList.add(o.side==='player' ? 'tw-kb-p' : 'tw-kb-e');
+    setTimeout(()=>{
+      el.style.transition = '';
+      el.classList.remove('tw-kb-p','tw-kb-e');
+    }, 520);
   }
 }
 
