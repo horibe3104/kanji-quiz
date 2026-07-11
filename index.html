@@ -8138,9 +8138,9 @@ const TW_RARITY_STATS = {
   ur:     { cost:380, cooldown:6.2, speed:0.5,  baseHp:60, baseAtk:13 },
 };
 const TW_ENEMY_TYPES = [
-  { id:'wanko',       minStage:1, hp:18,  atk:4,  speed:0.55, name:'わんこ',   svg:'', spriteRef:'wanko' },
-  { id:'wanko_red',   minStage:3, hp:34,  atk:7,  speed:0.5,  name:'あかわんこ', svg:'', spriteRef:'wanko_red' },
-  { id:'wanko_black', minStage:6, hp:60,  atk:11, speed:0.44, name:'くろわんこ', svg:'', spriteRef:'wanko_black' },
+  { id:'wanko',       minStage:1, hp:18,  atk:4,  speed:0.55, name:'わんこ', svg:'', spriteRef:'wanko' },
+  { id:'wanko_mid',   minStage:3, hp:34,  atk:7,  speed:0.5,  name:'わんこ', svg:'', spriteRef:'wanko' },
+  { id:'wanko_tough', minStage:6, hp:60,  atk:11, speed:0.44, name:'わんこ', svg:'', spriteRef:'wanko' },
 ];
 const TW_BOSS_IDS = ['wolf','orc','skeleton','witch','troll'];
 const TW_WALLET = [
@@ -8256,9 +8256,7 @@ function _twMakeWankoSprite(prefix){
     dmg:  `sprites/${prefix}_dmg.png`,
   };
 }
-const TW_WANKO_SPRITE       = _twMakeWankoSprite('wanko');   // しろわんこ
-const TW_WANKO_RED_SPRITE   = _twMakeWankoSprite('wankor');  // あかわんこ
-const TW_WANKO_BLACK_SPRITE = _twMakeWankoSprite('wankok');  // くろわんこ
+const TW_WANKO_SPRITE = _twMakeWankoSprite('wanko');
 // デッキIDからユニット定義を解決（常設キャラ or ガチャキャラ）
 function twUnitDef(id){
   if(id === TW_DEBUG_CAT_ID){
@@ -8533,10 +8531,7 @@ function twSpawnEnemyUnit(){
     range: 5, interval: 1.1, area: false, atkTimer: 0.3,
     kbThresholds: [hp*2/3, hp*1/3],
     pos: TW_ENEMY_CASTLE_POS + 4, svg: base.svg,
-    sprite: base.spriteRef === 'wanko' ? TW_WANKO_SPRITE
-          : base.spriteRef === 'wanko_red' ? TW_WANKO_RED_SPRITE
-          : base.spriteRef === 'wanko_black' ? TW_WANKO_BLACK_SPRITE
-          : null,
+    sprite: base.spriteRef === 'wanko' ? TW_WANKO_SPRITE : null,
     bounty: Math.round(hp*0.8),
   });
   twRenderUnits();
