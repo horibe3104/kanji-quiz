@@ -8248,6 +8248,7 @@ const TW_KIMO_SPRITE = {
 // コマアニメ式：小さ大き首なが（かなり大きい・頭突き・低速）
 const TW_OBIG_ID = 'tw_obigkubinaga';
 const TW_OBIG_SPRITE = {
+  facing: 'left',
   icon: 'sprites/obig_icon.png',
   idle: 'sprites/obig_idle.png',
   walk: ['sprites/obig_walk1.png','sprites/obig_walk2.png'],
@@ -8316,7 +8317,7 @@ function twUnitDef(id){
   if(id === TW_OBIG_ID){
     // 頭突き：かなり大きく足は遅いが、リーチのある頭突きで殴る高耐久タイプ
     const obigRole = { icon:'🦕', label:'あたま', hpMul:2.4, atkMul:1.3, range:10, interval:1.5, area:false, speed:0.32 };
-    return { id, rarity:'common', name:'小さ大き首なが', role:obigRole, hScale:2.8,
+    return { id, rarity:'common', name:'小さ大き首なが', role:obigRole, hScale:3.6,
              svg:`<img class="tw-icon-img" src="${TW_OBIG_SPRITE.icon}">`,
              sprite:TW_OBIG_SPRITE, lv:1 };
   }
