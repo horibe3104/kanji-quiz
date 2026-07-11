@@ -8273,6 +8273,7 @@ const TW_ENEMY_CASTLE_POS  = 8;   // 敵の城（左端）
 const TW_PLAYER_CASTLE_POS = 92;  // 自分の城（右端）
 const TW_PLAYER_CASTLE_HP  = 300;
 const TW_ENGAGE_RANGE      = 5;
+const TW_UNIT_FRONT_PCT    = 6;   // ユニット本体の見た目の幅ぶん（絵柄が城にめり込まないための余白）
 
 let twActive          = false;
 let twStageCleared    = parseInt(localStorage.getItem('kq_tower_cleared') || '0');
@@ -8576,7 +8577,7 @@ function twTick(){
   twUnits.forEach(u=>{
     if(fightingIds.has(u.uid)) return;
     if(u.side==='player'){
-      if(u.pos - TW_ENEMY_CASTLE_POS <= u.range){
+      if(u.pos - TW_ENEMY_CASTLE_POS <= u.range - 2){
         u._still = true;
         u.atkTimer -= 0.1;
         if(u.atkTimer <= 0){
@@ -8597,7 +8598,7 @@ function twTick(){
         u.atkTimer = Math.min(u.atkTimer, 0.3);
       }
     } else {
-      if(TW_PLAYER_CASTLE_POS - u.pos <= u.range){
+      if(TW_PLAYER_CASTLE_POS - u.pos <= u.range + TW_UNIT_FRONT_PCT){
         u._still = true;
         u.atkTimer -= 0.1;
         if(u.atkTimer <= 0){
