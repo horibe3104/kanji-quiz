@@ -940,15 +940,15 @@
     .tw-unit.tw-hit { animation:twHitFlash .18s ease-out; }
     /* ヒットエフェクト：灰色の煙玉→白く明るくなって弾け散る（参考動画準拠） */
     .tw-poof-cloud {
-      position:absolute; bottom:34%; z-index:5; width:20px; height:20px;
-      margin-left:-10px; border-radius:50%; pointer-events:none;
-      background:radial-gradient(circle, #9e9e9e 0%, #555 65%, transparent 100%);
+      position:absolute; bottom:34%; z-index:5; width:34px; height:auto;
+      margin-left:-17px; pointer-events:none;
       animation:twPoofCloud .4s ease-out forwards;
     }
+    .tw-poof-cloud img { width:100%; height:auto; display:block; }
     @keyframes twPoofCloud {
-      0%   { transform:scale(.35); opacity:.95; filter:brightness(.65) contrast(1.1); }
-      50%  { transform:scale(1.15); opacity:1;  filter:brightness(1.3); }
-      100% { transform:scale(1.7); opacity:0;   filter:brightness(2.4); }
+      0%   { transform:scale(.4) rotate(-6deg);  opacity:.95; filter:brightness(.7) contrast(1.15); }
+      50%  { transform:scale(1.15) rotate(3deg); opacity:1;   filter:brightness(1.35); }
+      100% { transform:scale(1.6) rotate(8deg);  opacity:0;   filter:brightness(2.4); }
     }
     .tw-poof-spark {
       position:absolute; bottom:34%; z-index:6; width:5px; height:5px;
@@ -8731,6 +8731,7 @@ function twHitSpark(pos){
   const cloud = document.createElement('div');
   cloud.className = 'tw-poof-cloud';
   cloud.style.left = pos + '%';
+  cloud.innerHTML = '<img src="sprites/poof_cloud.png" alt="">';
   lane.appendChild(cloud);
   setTimeout(()=>cloud.remove(), 420);
   // 白い破片が弾け散る
