@@ -873,15 +873,34 @@
       display:flex; gap:6px; align-items:stretch; height:60px;
     }
     .tw-wallet-btn {
-      width:74px; flex-shrink:0; border:none; border-radius:12px; cursor:pointer;
-      background:linear-gradient(180deg,#8e64ff,#5e35b1); color:white;
-      border-bottom:4px solid #3f2482;
-      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+      width:60px; height:60px; flex-shrink:0; border:none; border-radius:50%; cursor:pointer;
+      position:relative; padding:0; overflow:visible;
+      background:#f8c400;
+      box-shadow:0 3px 0 #a97600, inset 0 0 0 2px rgba(255,255,255,.5);
     }
-    .tw-wallet-btn:active:not(:disabled) { transform:translateY(2px); }
-    .tw-wallet-btn:disabled { filter:grayscale(.6) brightness(.8); cursor:not-allowed; }
-    .tw-wallet-lv-label { font-size:13px; font-weight:900; letter-spacing:.5px; }
-    .tw-wallet-cost-label { font-size:11px; font-weight:900; opacity:.95; }
+    .tw-wallet-btn:active:not(:disabled) { transform:translateY(2px); box-shadow:0 1px 0 #a97600; }
+    .tw-wallet-btn:disabled { filter:grayscale(.5) brightness(.85); cursor:not-allowed; }
+    .tw-wallet-glow {
+      position:absolute; inset:-2px; border-radius:50%; z-index:0;
+      background:radial-gradient(circle at 65% 35%, #fff9c4, #ffd54f 55%, #f9a825 100%);
+    }
+    .tw-wallet-face {
+      position:absolute; left:50%; top:52%; transform:translate(-50%,-50%);
+      width:78%; height:78%; border-radius:50%; overflow:hidden; z-index:1;
+      background:#ffe082; border:2px solid #212121;
+    }
+    .tw-wallet-face img { width:112%; height:112%; object-fit:cover; margin:-6% 0 0 -6%; }
+    .tw-wallet-lv-label {
+      position:absolute; top:-9px; left:50%; transform:translate(-50%,0); z-index:2;
+      font-size:9px; font-weight:900; letter-spacing:.3px; white-space:nowrap; color:white;
+      -webkit-text-stroke:2px #111; paint-order:stroke fill;
+    }
+    .tw-wallet-cost-label {
+      position:absolute; bottom:-7px; left:50%; transform:translate(-50%,0); z-index:2;
+      font-family:'Courier New',monospace; font-size:10px; font-weight:900; letter-spacing:.5px;
+      color:#eaff00; background:#1a1a1a; border-radius:5px; padding:1px 5px;
+      white-space:nowrap; text-shadow:0 0 3px rgba(234,255,0,.8);
+    }
     .tw-lane {
       position:absolute; inset:0;
       border-radius:10px; overflow:hidden; border:2px solid #4e342e;
@@ -2527,8 +2546,10 @@
       </div>
       <div class="tw-bottombar">
         <button class="tw-wallet-btn" id="tw-wallet-btn" onclick="twUpgradeWallet()">
+          <div class="tw-wallet-glow"></div>
+          <div class="tw-wallet-face"><img src="sprites/pote_icon.png" alt=""></div>
           <div class="tw-wallet-lv-label">LEVEL <span id="tw-wallet-lv">1</span></div>
-          <div class="tw-wallet-cost-label">🪙<span id="tw-wallet-cost">-</span></div>
+          <div class="tw-wallet-cost-label"><span id="tw-wallet-cost">-</span></div>
         </button>
         <div class="tw-deploy-row" id="tw-deploy-row"></div>
         <button class="tw-cannon-btn" id="tw-cannon-btn" onclick="twFireCannon()" disabled>
@@ -8867,7 +8888,7 @@ function updateTwWalletUI(){
     document.getElementById('tw-wallet-cost').textContent = 'MAX';
     btn.disabled = true;
   } else {
-    document.getElementById('tw-wallet-cost').textContent = w.upCost;
+    document.getElementById('tw-wallet-cost').textContent = w.upCost + '円';
     btn.disabled = !twActive || twMoney < w.upCost;
   }
 }
