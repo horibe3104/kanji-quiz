@@ -880,17 +880,23 @@
     .tw-wallet-btn:active:not(:disabled) { transform:translateY(2px); box-shadow:0 1px 0 #a97600; }
     .tw-wallet-btn:disabled { filter:grayscale(.5) brightness(.85); cursor:not-allowed; }
     .tw-wallet-face {
-      position:absolute; inset:0; border-radius:50%; overflow:hidden; z-index:1;
+      position:absolute; inset:0; border-radius:50%; overflow:hidden; z-index:2;
       border:2px solid #212121;
     }
     .tw-wallet-face img { width:100%; height:100%; object-fit:cover; display:block; }
+    /* 画像の数字部分は透過の穴になっており、その下にこのパネルが素の色で見える */
+    .tw-wallet-lcd-panel {
+      position:absolute; left:14%; right:16%; bottom:15%; height:15%; z-index:1;
+      background:#0d0d0a; border-radius:3px;
+    }
     .tw-wallet-lv-label {
-      position:absolute; top:-9px; left:50%; transform:translate(-50%,0); z-index:2;
+      position:absolute; top:-9px; left:50%; transform:translate(-50%,0); z-index:3;
       font-size:9px; font-weight:900; letter-spacing:.3px; white-space:nowrap; color:white;
       -webkit-text-stroke:2px #111; paint-order:stroke fill;
     }
     .tw-wallet-cost-label {
-      position:absolute; bottom:9px; left:50%; transform:translate(-50%,0); z-index:2;
+      position:absolute; left:14%; right:16%; bottom:15%; height:15%; z-index:3;
+      display:flex; align-items:center; justify-content:center;
       font-family:'Courier New',monospace; font-size:8.5px; font-weight:900; letter-spacing:.3px;
       color:#eaff00; white-space:nowrap; text-shadow:0 0 3px rgba(234,255,0,.8);
     }
@@ -975,57 +981,23 @@
     }
     .tw-cannon-btn {
       position:relative; width:60px; height:60px; flex-shrink:0; border:none; border-radius:50%;
-      font-size:9px; font-weight:900; color:white;
-      background:radial-gradient(circle at 50% 40%, #e3f2fd, #90caf9 80%);
-      cursor:pointer; overflow:hidden; box-shadow:0 3px 0 #1565c0;
-      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; overflow:hidden; box-shadow:0 3px 0 #1565c0; padding:0;
       border:2px solid #212121;
     }
     .tw-cannon-btn:active:not(:disabled) { transform:translateY(2px); box-shadow:0 1px 0 #1565c0; }
-    .tw-cannon-icon-wrap { position:absolute; inset:0; z-index:2; pointer-events:none; }
-    .tw-cannon-face {
-      position:absolute; left:0; top:46%; width:58%; height:auto;
-      filter:drop-shadow(0 1px 1px rgba(0,0,0,.3));
+    .tw-cannon-btn img {
+      position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
     }
-    .tw-cannon-barrel {
-      position:absolute; left:26px; top:29px; width:30px; height:11px;
-      background:linear-gradient(180deg,#eceff1,#90a4ae 55%,#546e7a);
-      border:1.4px solid #212121; border-radius:5px;
-      transform-origin:0% 50%; transform:rotate(-38deg);
-    }
-    .tw-cannon-barrel::after {
-      content:''; position:absolute; right:-1.5px; top:-1.5px; bottom:-1.5px; width:6px;
-      background:#37474f; border:1.4px solid #212121; border-radius:2px;
-    }
-    .tw-cannon-mount {
-      position:absolute; left:21px; top:25px; width:12px; height:12px; border-radius:50%;
-      background:#78909c; border:1.4px solid #212121;
-    }
+    .tw-cannon-img-idle  { z-index:1; }
+    .tw-cannon-img-ready { z-index:2; display:none; }
     .tw-cannon-fill {
       position:absolute; left:0; right:0; bottom:0; height:0%; z-index:1;
-      background:linear-gradient(180deg,rgba(255,112,67,.55),rgba(229,57,53,.6)); transition:height .2s;
-    }
-    .tw-cannon-label {
-      position:absolute; left:0; right:0; bottom:3px; z-index:3; line-height:1.05; text-align:center;
+      background:rgba(229,57,53,.35); transition:height .2s; pointer-events:none;
     }
     .tw-cannon-btn:disabled { cursor:not-allowed; }
-    .tw-cannon-btn.ready {
-      border-color:#880e4f;
-      animation:twCannonPulse .8s infinite;
-    }
-    .tw-cannon-ready-burst {
-      position:absolute; inset:-30%; z-index:1; display:none;
-      background:repeating-conic-gradient(from 0deg, #ff2fa1 0deg 11deg, #ff8fd0 11deg 22deg);
-      animation:twCannonSpin 3s linear infinite;
-    }
-    .tw-cannon-btn.ready .tw-cannon-ready-burst { display:block; }
+    .tw-cannon-btn.ready { animation:twCannonPulse .8s infinite; }
+    .tw-cannon-btn.ready .tw-cannon-img-ready { display:block; }
     .tw-cannon-btn.ready .tw-cannon-fill { display:none; }
-    .tw-cannon-btn.ready .tw-cannon-label {
-      color:white; font-size:9px; font-weight:900; letter-spacing:.2px;
-      -webkit-text-stroke:1.5px #111; paint-order:stroke fill;
-      background:rgba(0,0,0,.15); border-radius:4px;
-    }
-    @keyframes twCannonSpin { 0%{ transform:rotate(0); } 100%{ transform:rotate(360deg); } }
     @keyframes twCannonPulse { 50%{ box-shadow:0 0 14px #ff4081; } }
     @keyframes twAtkLungeL { 0%{transform:translateX(0)} 35%{transform:translateX(-7px) rotate(-6deg)} 100%{transform:translateX(0)} }
     @keyframes twAtkLungeR { 0%{transform:translateX(0)} 35%{transform:translateX(7px) rotate(6deg)} 100%{transform:translateX(0)} }
@@ -2576,20 +2548,16 @@
       </div>
       <div class="tw-bottombar">
         <button class="tw-wallet-btn" id="tw-wallet-btn" onclick="twUpgradeWallet()">
+          <div class="tw-wallet-lcd-panel"></div>
           <div class="tw-wallet-face"><img src="sprites/wallet_badge_src.png" alt=""></div>
           <div class="tw-wallet-lv-label">LEVEL <span id="tw-wallet-lv">1</span></div>
           <div class="tw-wallet-cost-label"><span id="tw-wallet-cost">-</span></div>
         </button>
         <div class="tw-deploy-row" id="tw-deploy-row"></div>
         <button class="tw-cannon-btn" id="tw-cannon-btn" onclick="twFireCannon()" disabled>
-          <div class="tw-cannon-ready-burst"></div>
+          <img class="tw-cannon-img-idle" src="sprites/cannon_idle_src.png" alt="">
+          <img class="tw-cannon-img-ready" src="sprites/cannon_ready_src.png" alt="">
           <div class="tw-cannon-fill" id="tw-cannon-fill"></div>
-          <div class="tw-cannon-icon-wrap">
-            <div class="tw-cannon-barrel"></div>
-            <div class="tw-cannon-mount"></div>
-            <img class="tw-cannon-face" src="sprites/kuu_icon.png" alt="">
-          </div>
-          <span class="tw-cannon-label" id="tw-cannon-label"></span>
         </button>
       </div>
     </div>
@@ -8809,13 +8777,11 @@ function twHitSpark(pos){
 function updateTwCannonUI(){
   const btn   = document.getElementById('tw-cannon-btn');
   const fill  = document.getElementById('tw-cannon-fill');
-  const label = document.getElementById('tw-cannon-label');
   if(!btn || !fill) return;
   fill.style.height = twCannonCharge + '%';
   const ready = twActive && twCannonCharge >= 100;
   btn.disabled = !ready;
   btn.classList.toggle('ready', ready);
-  if(label) label.innerHTML = ready ? '発射<br>OK!!' : '';
 }
 
 function twFireCannon(){
