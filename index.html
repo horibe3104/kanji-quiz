@@ -8094,17 +8094,10 @@ const TW_RARITY_STATS = {
   ur:     { cost:380, cooldown:6.2, speed:0.5,  baseHp:60, baseAtk:13 },
 };
 const TW_ENEMY_TYPES = [
-  { id:'slime',  minStage:1, hp:16, atk:3, speed:0.5  },
-  { id:'bat',    minStage:1, hp:12, atk:4, speed:0.8  },
-  { id:'goblin', minStage:2, hp:24, atk:5, speed:0.42 },
-  { id:'wolf',   minStage:3, hp:34, atk:7, speed:0.62 },
-  { id:'orc',    minStage:5, hp:52, atk:9, speed:0.36 },
-].map(t => {
-  const m = MONSTERS.find(mm => mm.id === t.id);
-  return { ...t, name: m.name, svg: m.svg };
-});
-// スプライト敵（わんこ）を追加
-TW_ENEMY_TYPES.push({ id:'wanko', minStage:1, hp:18, atk:4, speed:0.55, name:'わんこ', svg:'', spriteRef:'wanko' });
+  { id:'wanko',       minStage:1, hp:18,  atk:4,  speed:0.55, name:'わんこ',   svg:'', spriteRef:'wanko' },
+  { id:'wanko_red',   minStage:3, hp:34,  atk:7,  speed:0.5,  name:'あかわんこ', svg:'', spriteRef:'wanko_red' },
+  { id:'wanko_black', minStage:6, hp:60,  atk:11, speed:0.44, name:'くろわんこ', svg:'', spriteRef:'wanko_black' },
+];
 const TW_BOSS_IDS = ['wolf','orc','skeleton','witch','troll'];
 const TW_WALLET = [
   { cap:250,  rate:18, upCost:80   },
@@ -8208,15 +8201,20 @@ const TW_KIMO_SPRITE = {
   atk:  ['sprites/kimo_atk1.png','sprites/kimo_atk2.png','sprites/kimo_atk3.png'],
   dmg:  'sprites/kimo_dmg.png',
 };
-// コマアニメ式：わんこ（敵キャラ・左向きシート）
-const TW_WANKO_SPRITE = {
-  facing: 'right',
-  icon: 'sprites/wanko_icon.png',
-  idle: 'sprites/wanko_idle.png',
-  walk: ['sprites/wanko_walk1.png','sprites/wanko_walk2.png','sprites/wanko_walk3.png','sprites/wanko_walk4.png'],
-  atk:  ['sprites/wanko_atk1.png','sprites/wanko_atk2.png','sprites/wanko_atk3.png'],
-  dmg:  'sprites/wanko_dmg.png',
-};
+// コマアニメ式：わんこ（敵キャラ・右向きシート）3色バリエーション
+function _twMakeWankoSprite(prefix){
+  return {
+    facing: 'right',
+    icon: `sprites/${prefix}_icon.png`,
+    idle: `sprites/${prefix}_idle.png`,
+    walk: [1,2,3,4].map(i=>`sprites/${prefix}_walk${i}.png`),
+    atk:  [1,2,3].map(i=>`sprites/${prefix}_atk${i}.png`),
+    dmg:  `sprites/${prefix}_dmg.png`,
+  };
+}
+const TW_WANKO_SPRITE       = _twMakeWankoSprite('wanko');   // しろわんこ
+const TW_WANKO_RED_SPRITE   = _twMakeWankoSprite('wankor');  // あかわんこ
+const TW_WANKO_BLACK_SPRITE = _twMakeWankoSprite('wankok');  // くろわんこ
 // デッキIDからユニット定義を解決（常設キャラ or ガチャキャラ）
 function twUnitDef(id){
   if(id === TW_DEBUG_CAT_ID){
@@ -8491,7 +8489,10 @@ function twSpawnEnemyUnit(){
     range: 5, interval: 1.1, area: false, atkTimer: 0.3,
     kbThresholds: [hp*2/3, hp*1/3],
     pos: TW_ENEMY_CASTLE_POS + 4, svg: base.svg,
-    sprite: base.spriteRef === 'wanko' ? TW_WANKO_SPRITE : null,
+    sprite: base.spriteRef === 'wanko' ? TW_WANKO_SPRITE
+          : base.spriteRef === 'wanko_red' ? TW_WANKO_RED_SPRITE
+          : base.spriteRef === 'wanko_black' ? TW_WANKO_BLACK_SPRITE
+          : null,
     bounty: Math.round(hp*0.8),
   });
   twRenderUnits();
