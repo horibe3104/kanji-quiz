@@ -8157,6 +8157,9 @@ const TW_ENEMY_TYPES = [
   { id:'wanko',       minStage:1, hp:18,  atk:4,  speed:0.55, name:'わんこ', svg:'', spriteRef:'wanko' },
   { id:'wanko_mid',   minStage:3, hp:34,  atk:7,  speed:0.5,  name:'わんこ', svg:'', spriteRef:'wanko' },
   { id:'wanko_tough', minStage:6, hp:60,  atk:11, speed:0.44, name:'わんこ', svg:'', spriteRef:'wanko' },
+  // にょろ：素早く群れる軽量アタッカー（わんこより速く・脆い）
+  { id:'nyoro',       minStage:2, hp:13,  atk:5,  speed:0.78, name:'にょろ', svg:'', spriteRef:'nyoro' },
+  { id:'nyoro_tough', minStage:5, hp:32,  atk:9,  speed:0.66, name:'にょろ', svg:'', spriteRef:'nyoro' },
 ];
 const TW_BOSS_IDS = ['wolf','orc','skeleton','witch','troll'];
 const TW_WALLET = [
@@ -8283,6 +8286,15 @@ function _twMakeWankoSprite(prefix){
   };
 }
 const TW_WANKO_SPRITE = _twMakeWankoSprite('wanko');
+// コマアニメ式：にょろ（敵キャラ・左向きシート。歩き4コマ・頭突き2コマ）
+const TW_NYORO_SPRITE = {
+  facing: 'left',
+  icon: 'sprites/nyoro_icon.png',
+  idle: 'sprites/nyoro_idle.png',
+  walk: [1,2,3,4].map(i=>`sprites/nyoro_walk${i}.png`),
+  atk:  ['sprites/nyoro_atk1.png','sprites/nyoro_atk2.png'],
+  dmg:  'sprites/nyoro_dmg.png',
+};
 // デッキIDからユニット定義を解決（常設キャラ or ガチャキャラ）
 function twUnitDef(id){
   if(id === TW_DEBUG_CAT_ID){
@@ -8565,7 +8577,8 @@ function twSpawnEnemyUnit(){
     range: 2, interval: 1.1, area: false, atkTimer: 0.3,
     kbThresholds: [hp*2/3, hp*1/3],
     pos: TW_ENEMY_CASTLE_POS + 4, svg: base.svg,
-    sprite: base.spriteRef === 'wanko' ? TW_WANKO_SPRITE : null,
+    sprite: base.spriteRef === 'wanko' ? TW_WANKO_SPRITE
+          : base.spriteRef === 'nyoro' ? TW_NYORO_SPRITE : null,
     bounty: Math.round(hp*0.8),
   });
   twRenderUnits();
