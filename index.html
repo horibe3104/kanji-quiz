@@ -978,7 +978,7 @@
     .tw-soul {
       position:absolute; bottom:36%; width:40px; z-index:5; pointer-events:none;
       animation:twSoulRise 1.6s ease-out forwards;
-      filter:drop-shadow(0 0 4px rgba(255,255,255,.7));
+      filter:drop-shadow(0 1px 3px rgba(0,0,0,.45));
     }
     .tw-soul svg { width:100%; height:auto; display:block; }
     @keyframes twSoulRise {
@@ -8105,9 +8105,12 @@ function twRoleOf(k){
   return ['melee','melee','tank','ranged','area'][h % 5];
 }
 const TW_SOUL_SVG = `<svg viewBox="0 0 60 84" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="30" cy="9" rx="13" ry="4.5" fill="none" stroke="#455a64" stroke-width="6" opacity=".95"/>
+  <path d="M30 18 C42 18 47 31 38 37 C31 41 24 36 26 30 C28 26 34 26 34 30 C34 33 31 34 30 32" fill="none" stroke="#455a64" stroke-width="9" stroke-linecap="round"/>
+  <path d="M29 37 C25 48 32 56 26 66 C24 70 27 76 24 81" fill="none" stroke="#455a64" stroke-width="8" stroke-linecap="round"/>
   <ellipse cx="30" cy="9" rx="13" ry="4.5" fill="none" stroke="white" stroke-width="3" opacity=".95"/>
-  <path d="M16 27 Q3 23 5 12 Q14 12 20 21 Z" fill="white"/>
-  <path d="M44 27 Q57 23 55 12 Q46 12 40 21 Z" fill="white"/>
+  <path d="M16 27 Q3 23 5 12 Q14 12 20 21 Z" fill="white" stroke="#455a64" stroke-width="2"/>
+  <path d="M44 27 Q57 23 55 12 Q46 12 40 21 Z" fill="white" stroke="#455a64" stroke-width="2"/>
   <path d="M30 18 C42 18 47 31 38 37 C31 41 24 36 26 30 C28 26 34 26 34 30 C34 33 31 34 30 32" fill="none" stroke="white" stroke-width="5.5" stroke-linecap="round"/>
   <path d="M29 37 C25 48 32 56 26 66 C24 70 27 76 24 81" fill="none" stroke="white" stroke-width="4.5" stroke-linecap="round"/>
 </svg>`;
