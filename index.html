@@ -975,18 +975,39 @@
     }
     .tw-cannon-btn {
       position:relative; width:60px; height:60px; flex-shrink:0; border:none; border-radius:50%;
-      font-size:9px; font-weight:900; color:white; background:#455a64;
-      cursor:pointer; overflow:hidden; box-shadow:0 3px 0 #263238;
+      font-size:9px; font-weight:900; color:white;
+      background:radial-gradient(circle at 50% 40%, #e3f2fd, #90caf9 80%);
+      cursor:pointer; overflow:hidden; box-shadow:0 3px 0 #1565c0;
       display:flex; align-items:center; justify-content:center;
       border:2px solid #212121;
     }
-    .tw-cannon-btn:active:not(:disabled) { transform:translateY(2px); box-shadow:0 1px 0 #263238; }
-    .tw-cannon-icon { position:relative; z-index:1; font-size:20px; line-height:1; }
-    .tw-cannon-fill {
-      position:absolute; left:0; right:0; bottom:0; height:0%;
-      background:linear-gradient(180deg,#ff7043,#e53935); transition:height .2s;
+    .tw-cannon-btn:active:not(:disabled) { transform:translateY(2px); box-shadow:0 1px 0 #1565c0; }
+    .tw-cannon-icon-wrap { position:absolute; inset:0; z-index:2; pointer-events:none; }
+    .tw-cannon-face {
+      position:absolute; left:0; top:46%; width:58%; height:auto;
+      filter:drop-shadow(0 1px 1px rgba(0,0,0,.3));
     }
-    .tw-cannon-label { position:relative; z-index:2; line-height:1.15; text-align:center; }
+    .tw-cannon-barrel {
+      position:absolute; left:26px; top:29px; width:30px; height:11px;
+      background:linear-gradient(180deg,#eceff1,#90a4ae 55%,#546e7a);
+      border:1.4px solid #212121; border-radius:5px;
+      transform-origin:0% 50%; transform:rotate(-38deg);
+    }
+    .tw-cannon-barrel::after {
+      content:''; position:absolute; right:-1.5px; top:-1.5px; bottom:-1.5px; width:6px;
+      background:#37474f; border:1.4px solid #212121; border-radius:2px;
+    }
+    .tw-cannon-mount {
+      position:absolute; left:21px; top:25px; width:12px; height:12px; border-radius:50%;
+      background:#78909c; border:1.4px solid #212121;
+    }
+    .tw-cannon-fill {
+      position:absolute; left:0; right:0; bottom:0; height:0%; z-index:1;
+      background:linear-gradient(180deg,rgba(255,112,67,.55),rgba(229,57,53,.6)); transition:height .2s;
+    }
+    .tw-cannon-label {
+      position:absolute; left:0; right:0; bottom:3px; z-index:3; line-height:1.05; text-align:center;
+    }
     .tw-cannon-btn:disabled { cursor:not-allowed; }
     .tw-cannon-btn.ready {
       border-color:#880e4f;
@@ -998,11 +1019,11 @@
       animation:twCannonSpin 3s linear infinite;
     }
     .tw-cannon-btn.ready .tw-cannon-ready-burst { display:block; }
-    .tw-cannon-btn.ready .tw-cannon-fill,
-    .tw-cannon-btn.ready .tw-cannon-icon { display:none; }
+    .tw-cannon-btn.ready .tw-cannon-fill { display:none; }
     .tw-cannon-btn.ready .tw-cannon-label {
       color:white; font-size:9px; font-weight:900; letter-spacing:.2px;
       -webkit-text-stroke:1.5px #111; paint-order:stroke fill;
+      background:rgba(0,0,0,.15); border-radius:4px;
     }
     @keyframes twCannonSpin { 0%{ transform:rotate(0); } 100%{ transform:rotate(360deg); } }
     @keyframes twCannonPulse { 50%{ box-shadow:0 0 14px #ff4081; } }
@@ -2563,7 +2584,11 @@
         <button class="tw-cannon-btn" id="tw-cannon-btn" onclick="twFireCannon()" disabled>
           <div class="tw-cannon-ready-burst"></div>
           <div class="tw-cannon-fill" id="tw-cannon-fill"></div>
-          <span class="tw-cannon-icon">💥</span>
+          <div class="tw-cannon-icon-wrap">
+            <div class="tw-cannon-barrel"></div>
+            <div class="tw-cannon-mount"></div>
+            <img class="tw-cannon-face" src="sprites/kuu_icon.png" alt="">
+          </div>
           <span class="tw-cannon-label" id="tw-cannon-label"></span>
         </button>
       </div>
