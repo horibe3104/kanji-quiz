@@ -938,14 +938,28 @@
     .tw-deploy-role { position:absolute; top:1px; right:3px; font-size:10px; z-index:1; }
     @keyframes twHitFlash { 0%{ filter:brightness(2.2) saturate(.2); } 100%{ filter:none; } }
     .tw-unit.tw-hit { animation:twHitFlash .18s ease-out; }
-    .tw-hit-spark {
-      position:absolute; bottom:34%; z-index:5; font-size:26px;
-      animation:twSparkPop .28s ease-out forwards; pointer-events:none;
+    /* ヒットエフェクト：灰色の煙玉→白く明るくなって弾け散る（参考動画準拠） */
+    .tw-poof-cloud {
+      position:absolute; bottom:34%; z-index:5; width:20px; height:20px;
+      margin-left:-10px; border-radius:50%; pointer-events:none;
+      background:radial-gradient(circle, #9e9e9e 0%, #555 65%, transparent 100%);
+      animation:twPoofCloud .4s ease-out forwards;
     }
-    @keyframes twSparkPop {
-      0%   { transform:scale(.4) rotate(-15deg); opacity:1; }
-      60%  { transform:scale(1.25) rotate(8deg); opacity:1; }
-      100% { transform:scale(1.5) rotate(15deg); opacity:0; }
+    @keyframes twPoofCloud {
+      0%   { transform:scale(.35); opacity:.95; filter:brightness(.65) contrast(1.1); }
+      50%  { transform:scale(1.15); opacity:1;  filter:brightness(1.3); }
+      100% { transform:scale(1.7); opacity:0;   filter:brightness(2.4); }
+    }
+    .tw-poof-spark {
+      position:absolute; bottom:34%; z-index:6; width:5px; height:5px;
+      margin-left:-2.5px; border-radius:50%; background:#fff; opacity:0;
+      pointer-events:none; box-shadow:0 0 4px 1px rgba(255,255,255,.9);
+      animation:twPoofSpark .42s ease-out forwards;
+    }
+    @keyframes twPoofSpark {
+      0%   { transform:translate(0,0) scale(.4); opacity:0; }
+      18%  { opacity:1; }
+      100% { transform:translate(var(--tx),var(--ty)) scale(.2); opacity:0; }
     }
     .tw-cannon-btn {
       position:relative; width:74px; flex-shrink:0; border:none; border-radius:12px;
@@ -5901,23 +5915,29 @@ function playSound(name){
         o.start(now); o.stop(now+0.18);
       }
       else if(name==='hit'){
-        // 打撃：短いパンチ音
+        // 打撃：参考動画準拠の「ポフッ（中高域）→キラッ（少し遅れて明るい高域）」の2層音
         master.gain.value = 0.3;
-        const buf=ctx.createBuffer(1,Math.floor(ctx.sampleRate*0.06),ctx.sampleRate);
-        const d=buf.getChannelData(0);
-        for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2);
-        const src=ctx.createBufferSource(), gn=ctx.createGain();
-        const flt=ctx.createBiquadFilter(); flt.type='lowpass'; flt.frequency.value=900;
-        gn.gain.value=0.7; src.buffer=buf;
-        src.connect(flt); flt.connect(gn); gn.connect(master); src.start(now);
-        const o=ctx.createOscillator(), gp=ctx.createGain();
-        o.type='square';
-        o.frequency.setValueAtTime(190,now);
-        o.frequency.exponentialRampToValueAtTime(60,now+0.07);
-        gp.gain.setValueAtTime(0.5,now);
-        gp.gain.exponentialRampToValueAtTime(0.001,now+0.09);
-        o.connect(gp); gp.connect(master);
-        o.start(now); o.stop(now+0.1);
+        // 層1: ポフッというノイズポップ（低域ほぼ無し・中高域中心）
+        const buf1=ctx.createBuffer(1,Math.floor(ctx.sampleRate*0.07),ctx.sampleRate);
+        const d1=buf1.getChannelData(0);
+        for(let i=0;i<d1.length;i++) d1[i]=(Math.random()*2-1)*Math.pow(1-i/d1.length,1.6);
+        const src1=ctx.createBufferSource(), bp1=ctx.createBiquadFilter(), gn1=ctx.createGain();
+        bp1.type='bandpass'; bp1.frequency.value=1400; bp1.Q.value=0.9;
+        gn1.gain.value=0.8; src1.buffer=buf1;
+        src1.connect(bp1); bp1.connect(gn1); gn1.connect(master); src1.start(now);
+        // 層2: 少し遅れて鳴る明るいキラッというシマー（高域寄り）
+        const t2 = now + 0.1;
+        const buf2=ctx.createBuffer(1,Math.floor(ctx.sampleRate*0.09),ctx.sampleRate);
+        const d2=buf2.getChannelData(0);
+        for(let i=0;i<d2.length;i++) d2[i]=(Math.random()*2-1)*Math.pow(1-i/d2.length,1.3);
+        const src2=ctx.createBufferSource(), bp2=ctx.createBiquadFilter(), gn2=ctx.createGain();
+        bp2.type='bandpass'; bp2.frequency.setValueAtTime(2600,t2); bp2.frequency.exponentialRampToValueAtTime(4200,t2+0.08);
+        bp2.Q.value=1.1;
+        gn2.gain.setValueAtTime(0,t2);
+        gn2.gain.linearRampToValueAtTime(0.5,t2+0.015);
+        gn2.gain.exponentialRampToValueAtTime(0.001,t2+0.1);
+        src2.buffer=buf2;
+        src2.connect(bp2); bp2.connect(gn2); gn2.connect(master); src2.start(t2);
       }
       else if(name==='soul'){
         // やられ：ヒュ〜っと降下する笛
@@ -8707,12 +8727,26 @@ function twKnockback(o){
 
 function twHitSpark(pos){
   const lane = document.getElementById('tw-lane');
-  const d = document.createElement('div');
-  d.className = 'tw-hit-spark';
-  d.textContent = '💥';
-  d.style.left = pos + '%';
-  lane.appendChild(d);
-  setTimeout(()=>d.remove(), 300);
+  // 灰色の煙玉
+  const cloud = document.createElement('div');
+  cloud.className = 'tw-poof-cloud';
+  cloud.style.left = pos + '%';
+  lane.appendChild(cloud);
+  setTimeout(()=>cloud.remove(), 420);
+  // 白い破片が弾け散る
+  const n = 6;
+  for(let i=0;i<n;i++){
+    const ang = (Math.PI*2*i/n) + (Math.random()*0.6-0.3);
+    const r = 10 + Math.random()*14;
+    const sp = document.createElement('div');
+    sp.className = 'tw-poof-spark';
+    sp.style.left = pos + '%';
+    sp.style.setProperty('--tx', (Math.cos(ang)*r).toFixed(1)+'px');
+    sp.style.setProperty('--ty', (Math.sin(ang)*r - 5).toFixed(1)+'px');
+    sp.style.animationDelay = (0.08 + Math.random()*0.05).toFixed(2)+'s';
+    lane.appendChild(sp);
+    setTimeout(()=>sp.remove(), 560);
+  }
 }
 
 function updateTwCannonUI(){
