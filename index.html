@@ -874,32 +874,25 @@
     }
     .tw-wallet-btn {
       width:60px; height:60px; flex-shrink:0; border:none; border-radius:50%; cursor:pointer;
-      position:relative; padding:0; overflow:visible;
-      background:#f8c400;
-      box-shadow:0 3px 0 #a97600, inset 0 0 0 2px rgba(255,255,255,.5);
+      position:relative; padding:0; overflow:visible; background:none;
+      box-shadow:0 3px 0 #a97600;
     }
     .tw-wallet-btn:active:not(:disabled) { transform:translateY(2px); box-shadow:0 1px 0 #a97600; }
     .tw-wallet-btn:disabled { filter:grayscale(.5) brightness(.85); cursor:not-allowed; }
-    .tw-wallet-glow {
-      position:absolute; inset:-2px; border-radius:50%; z-index:0;
-      background:radial-gradient(circle at 65% 35%, #fff9c4, #ffd54f 55%, #f9a825 100%);
-    }
     .tw-wallet-face {
-      position:absolute; left:50%; top:52%; transform:translate(-50%,-50%);
-      width:78%; height:78%; border-radius:50%; overflow:hidden; z-index:1;
-      background:#ffe082; border:2px solid #212121;
+      position:absolute; inset:0; border-radius:50%; overflow:hidden; z-index:1;
+      border:2px solid #212121;
     }
-    .tw-wallet-face img { width:112%; height:112%; object-fit:cover; margin:-6% 0 0 -6%; }
+    .tw-wallet-face img { width:100%; height:100%; object-fit:cover; display:block; }
     .tw-wallet-lv-label {
       position:absolute; top:-9px; left:50%; transform:translate(-50%,0); z-index:2;
       font-size:9px; font-weight:900; letter-spacing:.3px; white-space:nowrap; color:white;
       -webkit-text-stroke:2px #111; paint-order:stroke fill;
     }
     .tw-wallet-cost-label {
-      position:absolute; bottom:-7px; left:50%; transform:translate(-50%,0); z-index:2;
-      font-family:'Courier New',monospace; font-size:10px; font-weight:900; letter-spacing:.5px;
-      color:#eaff00; background:#1a1a1a; border-radius:5px; padding:1px 5px;
-      white-space:nowrap; text-shadow:0 0 3px rgba(234,255,0,.8);
+      position:absolute; bottom:9px; left:50%; transform:translate(-50%,0); z-index:2;
+      font-family:'Courier New',monospace; font-size:8.5px; font-weight:900; letter-spacing:.3px;
+      color:#eaff00; white-space:nowrap; text-shadow:0 0 3px rgba(234,255,0,.8);
     }
     .tw-lane {
       position:absolute; inset:0;
@@ -981,21 +974,37 @@
       100% { transform:translate(var(--tx),var(--ty)) scale(.2); opacity:0; }
     }
     .tw-cannon-btn {
-      position:relative; width:74px; flex-shrink:0; border:none; border-radius:12px;
-      font-size:11px; font-weight:900; color:white; background:#455a64;
-      cursor:pointer; overflow:hidden; border-bottom:4px solid #263238;
+      position:relative; width:60px; height:60px; flex-shrink:0; border:none; border-radius:50%;
+      font-size:9px; font-weight:900; color:white; background:#455a64;
+      cursor:pointer; overflow:hidden; box-shadow:0 3px 0 #263238;
       display:flex; align-items:center; justify-content:center;
+      border:2px solid #212121;
     }
+    .tw-cannon-btn:active:not(:disabled) { transform:translateY(2px); box-shadow:0 1px 0 #263238; }
+    .tw-cannon-icon { position:relative; z-index:1; font-size:20px; line-height:1; }
     .tw-cannon-fill {
       position:absolute; left:0; right:0; bottom:0; height:0%;
       background:linear-gradient(180deg,#ff7043,#e53935); transition:height .2s;
     }
-    .tw-cannon-label { position:relative; z-index:1; line-height:1.4; text-align:center; }
-    .tw-cannon-btn:disabled { cursor:not-allowed; color:#cfd8dc; }
+    .tw-cannon-label { position:relative; z-index:2; line-height:1.15; text-align:center; }
+    .tw-cannon-btn:disabled { cursor:not-allowed; }
     .tw-cannon-btn.ready {
-      background:linear-gradient(180deg,#ff4081,#d81b60); border-bottom-color:#880e4f;
+      border-color:#880e4f;
       animation:twCannonPulse .8s infinite;
     }
+    .tw-cannon-ready-burst {
+      position:absolute; inset:-30%; z-index:1; display:none;
+      background:repeating-conic-gradient(from 0deg, #ff2fa1 0deg 11deg, #ff8fd0 11deg 22deg);
+      animation:twCannonSpin 3s linear infinite;
+    }
+    .tw-cannon-btn.ready .tw-cannon-ready-burst { display:block; }
+    .tw-cannon-btn.ready .tw-cannon-fill,
+    .tw-cannon-btn.ready .tw-cannon-icon { display:none; }
+    .tw-cannon-btn.ready .tw-cannon-label {
+      color:white; font-size:9px; font-weight:900; letter-spacing:.2px;
+      -webkit-text-stroke:1.5px #111; paint-order:stroke fill;
+    }
+    @keyframes twCannonSpin { 0%{ transform:rotate(0); } 100%{ transform:rotate(360deg); } }
     @keyframes twCannonPulse { 50%{ box-shadow:0 0 14px #ff4081; } }
     @keyframes twAtkLungeL { 0%{transform:translateX(0)} 35%{transform:translateX(-7px) rotate(-6deg)} 100%{transform:translateX(0)} }
     @keyframes twAtkLungeR { 0%{transform:translateX(0)} 35%{transform:translateX(7px) rotate(6deg)} 100%{transform:translateX(0)} }
@@ -2546,15 +2555,16 @@
       </div>
       <div class="tw-bottombar">
         <button class="tw-wallet-btn" id="tw-wallet-btn" onclick="twUpgradeWallet()">
-          <div class="tw-wallet-glow"></div>
-          <div class="tw-wallet-face"><img src="sprites/pote_icon.png" alt=""></div>
+          <div class="tw-wallet-face"><img src="sprites/wallet_badge_src.png" alt=""></div>
           <div class="tw-wallet-lv-label">LEVEL <span id="tw-wallet-lv">1</span></div>
           <div class="tw-wallet-cost-label"><span id="tw-wallet-cost">-</span></div>
         </button>
         <div class="tw-deploy-row" id="tw-deploy-row"></div>
         <button class="tw-cannon-btn" id="tw-cannon-btn" onclick="twFireCannon()" disabled>
+          <div class="tw-cannon-ready-burst"></div>
           <div class="tw-cannon-fill" id="tw-cannon-fill"></div>
-          <span class="tw-cannon-label" id="tw-cannon-label">💥<br>くうっち砲</span>
+          <span class="tw-cannon-icon">💥</span>
+          <span class="tw-cannon-label" id="tw-cannon-label"></span>
         </button>
       </div>
     </div>
@@ -8780,7 +8790,7 @@ function updateTwCannonUI(){
   const ready = twActive && twCannonCharge >= 100;
   btn.disabled = !ready;
   btn.classList.toggle('ready', ready);
-  if(label) label.innerHTML = ready ? '💥<br>はっしゃ<br>OK!!' : '💥<br>くうっち砲';
+  if(label) label.innerHTML = ready ? '発射<br>OK!!' : '';
 }
 
 function twFireCannon(){
