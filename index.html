@@ -2525,7 +2525,7 @@
 <div class="screen" id="screen-tower-select">
   <div class="card">
     <div class="bt-select-title">🐱 出撃メンバーをえらぼう！</div>
-    <div class="bt-select-sub">さいだい6たいまで えらべるよ</div>
+    <div class="bt-select-sub">さいだい10たいまで えらべるよ</div>
     <div class="bt-select-grid" id="tw-select-grid"></div>
     <button class="bt-start-btn" id="tw-deck-start-btn" onclick="confirmTowerDeck()" disabled>⚔️ しゅつげき じゅんび かんりょう！</button>
     <button class="gacha-back-btn" onclick="goHome()">← もどる</button>
@@ -8363,6 +8363,7 @@ let twEnemySpawnTimer = null;
 let twEnemySpawnDelay = 4200;
 let twEnemySpawnCount = 0;
 let twBossSpawned     = false;
+const TW_DECK_MAX     = 10;   // 本家風：出撃スロットは最大10体
 let twDeckSelected    = JSON.parse(localStorage.getItem('kq_tower_deck') || '[]');
 let twDeckCooldowns   = {};
 let twCannonCharge    = 0;
@@ -8433,7 +8434,7 @@ function toggleTowerDeck(id){
   if(idx>=0){
     twDeckSelected.splice(idx,1);
   } else {
-    if(twDeckSelected.length>=6){ showToast('さいだい6たいまでだよ！'); return; }
+    if(twDeckSelected.length>=TW_DECK_MAX){ showToast(`さいだい${TW_DECK_MAX}たいまでだよ！`); return; }
     twDeckSelected.push(id);
   }
   localStorage.setItem('kq_tower_deck', JSON.stringify(twDeckSelected));
