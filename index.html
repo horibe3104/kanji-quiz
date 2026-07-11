@@ -839,7 +839,7 @@
     .tw-rotate-icon { font-size:48px; animation:twRotate 1.6s ease-in-out infinite; }
     @keyframes twRotate { 0%,100%{transform:rotate(0deg)} 50%{transform:rotate(-90deg)} }
     .tw-rotate-text { font-size:14px; font-weight:700; }
-    .tw-game { height:100%; display:flex; flex-direction:column; }
+    .tw-game { height:100%; position:relative; }
     @media (orientation:portrait) {
       #screen-tower .tw-game    { display:none !important; }
       #screen-tower .tw-rotate-hint { display:flex; }
@@ -847,7 +847,10 @@
     @media (orientation:landscape) {
       .tw-rotate-hint { display:none !important; }
     }
-    .tw-topbar { display:flex; align-items:center; gap:8px; padding:2px 4px 6px; }
+    .tw-topbar {
+      position:absolute; top:8px; left:10px; right:10px; z-index:10;
+      display:flex; align-items:center; gap:8px;
+    }
     .tw-quit-btn {
       width:30px; height:30px; border-radius:50%; border:none; background:rgba(255,255,255,.15);
       color:white; font-size:15px; font-weight:900; cursor:pointer; flex-shrink:0;
@@ -864,7 +867,11 @@
     }
     .tw-money-unit { font-size:14px; margin-left:2px; }
     /* 下段バー：左＝おさいふLEVEL、中央＝出撃、右＝くうっち砲 */
-    .tw-bottombar { display:flex; gap:6px; padding:2px 2px 4px; align-items:stretch; }
+    /* 地面の上に重ねる下段UI（本家風） */
+    .tw-bottombar {
+      position:absolute; bottom:8px; left:10px; right:10px; z-index:10;
+      display:flex; gap:6px; align-items:stretch; height:60px;
+    }
     .tw-wallet-btn {
       width:74px; flex-shrink:0; border:none; border-radius:12px; cursor:pointer;
       background:linear-gradient(180deg,#8e64ff,#5e35b1); color:white;
@@ -876,7 +883,7 @@
     .tw-wallet-lv-label { font-size:13px; font-weight:900; letter-spacing:.5px; }
     .tw-wallet-cost-label { font-size:11px; font-weight:900; opacity:.95; }
     .tw-lane {
-      position:relative; flex:1; min-height:0; margin:2px 0 6px;
+      position:absolute; inset:0;
       border-radius:10px; overflow:hidden; border:2px solid #4e342e;
       background:url('sprites/bg_grass.jpg') no-repeat;
       background-size:100% 100%;
