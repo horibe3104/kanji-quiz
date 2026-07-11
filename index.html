@@ -912,9 +912,12 @@
     .tw-castle-icon { font-size:56px; line-height:1; }
     .tw-castle-img { width:100%; height:auto; display:block; margin:0 auto; }
     .tw-castle-hp {
-      font-size:12px; font-weight:900; color:white;
-      text-shadow:0 1px 3px rgba(0,0,0,.6); margin-bottom:2px;
+      display:inline-block; font-size:12px; font-weight:900; color:white;
+      background:rgba(0,0,0,.62); border:1.5px solid rgba(255,255,255,.85);
+      border-radius:9px; padding:1px 8px; margin-bottom:3px; line-height:1.35;
+      box-shadow:0 1px 3px rgba(0,0,0,.4); white-space:nowrap;
     }
+    .tw-castle-hp::before { content:'❤'; font-size:10px; margin-right:2px; color:#ff5252; }
     .tw-unit {
       position:absolute; bottom:31%; width:50px; height:50px;
       transition:left .1s linear; z-index:1;
@@ -1051,20 +1054,33 @@
       100% { transform:translate(2px,34px) rotate(16deg); opacity:0; }
     }
     .tw-castle.destroyed { animation:twCastleFall 1.2s ease-in forwards; }
-    /* くうっち砲：地を走る衝撃波ビーム */
-    .tw-cannon-beam {
-      position:absolute; top:18%; bottom:26%; width:7%; left:86%;
-      z-index:6; pointer-events:none; border-radius:8px;
-      background:linear-gradient(90deg, transparent, rgba(255,235,59,.85), rgba(255,255,255,.95));
-      box-shadow:0 0 24px 10px rgba(255,193,7,.75);
-      transform:skewX(-12deg);
-      animation:twBeamSweep .8s linear forwards;
+    /* くうっち砲：自拠点から敵拠点へ徐々に進む衝撃波の前線 */
+    .tw-cannon-wave {
+      position:absolute; top:6%; bottom:20%; width:9%; margin-left:-4.5%;
+      z-index:6; pointer-events:none;
+      background:linear-gradient(90deg,
+        rgba(255,255,255,.98) 0%, rgba(255,241,118,.8) 35%,
+        rgba(255,167,38,.28) 75%, rgba(255,167,38,0) 100%);
+      border-left:4px solid rgba(255,255,255,.98);
+      border-radius:60% 10px 10px 60%;
+      box-shadow:0 0 30px 14px rgba(255,193,7,.6);
+      filter:blur(.4px);
+      animation:twWavePulse .18s ease-in-out infinite alternate;
     }
-    .tw-cannon-beam::after {
-      content:'⚡'; position:absolute; inset:0;
-      display:flex; align-items:center; justify-content:center; font-size:30px;
+    .tw-cannon-wave::before {
+      content:''; position:absolute; top:12%; bottom:12%; left:-10px; width:14px;
+      border-radius:50%; background:rgba(255,255,255,.95);
+      box-shadow:0 0 22px 10px rgba(255,255,255,.85);
     }
-    @keyframes twBeamSweep { 0%{ left:86%; } 100%{ left:2%; } }
+    @keyframes twWavePulse { from{ transform:scaleX(.92); } to{ transform:scaleX(1.06); } }
+    /* 発射時の銃口フラッシュ */
+    .tw-cannon-flash {
+      position:absolute; top:22%; width:56px; height:56px; margin-left:-28px;
+      z-index:6; pointer-events:none; border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,.98) 0%, rgba(255,214,0,.85) 45%, rgba(255,152,0,0) 72%);
+      animation:twFlashPop .35s ease-out forwards;
+    }
+    @keyframes twFlashPop { 0%{ transform:scale(.3); opacity:0; } 25%{ opacity:1; } 100%{ transform:scale(1.8); opacity:0; } }
     /* コマアニメ式キャラ（ぽてまよ） */
     .tw-unit .tw-sprite {
       position:absolute; bottom:0; left:50%; height:100%; width:auto;
@@ -8641,6 +8657,11 @@ function twTick(){
   // 密着せず自分のリーチ距離で攻撃する。すれ違い・背後湧きでも素通りしない）
   const _twLane = document.getElementById('tw-lane');
   const laneW = (_twLane && _twLane.clientWidth) || 840;
+  // ユニットのleft=pos%はコンテナ左端。見た目の中心はpos+25px（コンテナ幅50pxの半分）。
+  // 城の戦闘側の壁は端から約88px内側にある。城への攻撃判定はこの実座標で行う。
+  const twCtrOff    = 2500 / laneW;          // コンテナ中心オフセット(%)
+  const twEnemyWall  = 8800 / laneW;          // 敵城の戦闘側(右)端の%
+  const twPlayerWall = 100 - 8800 / laneW;    // 自城の戦闘側(左)端の%
   const fightingIds = new Set();
   const nowMs = performance.now();
   twUnits.forEach(u=>{ u._still = false; twMeasureBody(u); });
@@ -8681,8 +8702,8 @@ function twTick(){
     if(fightingIds.has(u.uid)) return;
     const uHW = twHalfWPct(u, laneW);
     if(u.side==='player'){
-      // 自分の前端(pos-uHW)が敵の城のリーチ内に入ったら攻撃
-      if((u.pos - uHW) - TW_ENEMY_CASTLE_POS <= u.range){
+      // 自分の見た目の前端(中心-体幅)が敵城の壁にリーチ内まで近づいたら攻撃
+      if(((u.pos + twCtrOff - uHW) - twEnemyWall) <= u.range){
         u._still = true;
         u.atkTimer -= 0.1;
         if(u.atkTimer <= 0){
@@ -8690,7 +8711,7 @@ function twTick(){
           twAtkAnim(u);
           twScheduleImpact(u, ()=>{
             twEnemyCastleHP = Math.max(0, twEnemyCastleHP - u.atk);
-            twHitSpark(TW_ENEMY_CASTLE_POS + 2);
+            twHitSpark(twEnemyWall);
             if(!twBossSpawned && twEnemyCastleHP <= twEnemyCastleMax*0.5){
               twBossSpawned = true;
               twSpawnBoss();
@@ -8703,8 +8724,8 @@ function twTick(){
         u.atkTimer = Math.min(u.atkTimer, 0.3);
       }
     } else {
-      // 自分の前端(pos+uHW)が自分の城のリーチ内に入ったら攻撃
-      if(TW_PLAYER_CASTLE_POS - (u.pos + uHW) <= u.range){
+      // 敵の見た目の前端(中心+体幅)が自城の壁にリーチ内まで近づいたら攻撃
+      if((twPlayerWall - (u.pos + twCtrOff + uHW)) <= u.range){
         u._still = true;
         u.atkTimer -= 0.1;
         if(u.atkTimer <= 0){
@@ -8712,7 +8733,7 @@ function twTick(){
           twAtkAnim(u);
           twScheduleImpact(u, ()=>{
             twPlayerCastleHP = Math.max(0, twPlayerCastleHP - u.atk);
-            twHitSpark(TW_PLAYER_CASTLE_POS - 2);
+            twHitSpark(twPlayerWall);
           });
         }
       } else {
@@ -8852,22 +8873,44 @@ function twFireCannon(){
   playSound('cannon');
   const dmg  = 25 + twStage*8;
   const lane = document.getElementById('tw-lane');
-  // 本家風：自分の城から地を走る衝撃波が左へ抜けていく
-  const beam = document.createElement('div');
-  beam.className = 'tw-cannon-beam';
-  lane.appendChild(beam);
-  setTimeout(()=>beam.remove(), 900);
-  // 波が通過したタイミングで、右にいる敵から順にヒット
-  const crossMs = 800;
-  twUnits.filter(o=>o.side==='enemy').forEach(o=>{
-    const frac  = (TW_PLAYER_CASTLE_POS - o.pos) / (TW_PLAYER_CASTLE_POS - TW_ENEMY_CASTLE_POS);
-    const delay = Math.max(0, frac*crossMs);
-    setTimeout(()=>{
-      if(!twActive || o.hp <= 0) return;
-      o.pos = Math.max(TW_ENEMY_CASTLE_POS, o.pos - 8);
-      twHitUnit(o, dmg);
-    }, delay);
-  });
+
+  // 銃口フラッシュ（自拠点）
+  const flash = document.createElement('div');
+  flash.className = 'tw-cannon-flash';
+  flash.style.left = (TW_PLAYER_CASTLE_POS - 3) + '%';
+  lane.appendChild(flash);
+  setTimeout(()=>flash.remove(), 360);
+
+  // 本家風：自拠点(右)から敵拠点(左)へ衝撃波の前線が徐々に進み、
+  // 前線が到達した敵から順にダメージ＆吹き飛ばし
+  const wave = document.createElement('div');
+  wave.className = 'tw-cannon-wave';
+  lane.appendChild(wave);
+
+  const startPos = TW_PLAYER_CASTLE_POS - 2;  // 前線の開始（右）
+  const endPos   = TW_ENEMY_CASTLE_POS + 2;   // 前線の終点（左）
+  const durMs    = 1050;
+  const t0       = performance.now();
+  const struck   = new Set();
+
+  const advance = ()=>{
+    if(!twActive){ wave.remove(); return; }
+    const t = Math.min(1, (performance.now() - t0) / durMs);
+    const front = startPos + (endPos - startPos) * t;   // 右→左へ減少
+    wave.style.left = front + '%';
+    // 前線が到達した（frontより右にいる）敵をヒット
+    twUnits.forEach(o=>{
+      if(o.side !== 'enemy' || o.hp <= 0 || struck.has(o.uid)) return;
+      if(o.pos >= front){
+        struck.add(o.uid);
+        twHitUnit(o, dmg);
+        twKnockback(o);   // 衝撃波に乗せて滑らかに後退＋のけぞり
+      }
+    });
+    if(t < 1){ requestAnimationFrame(advance); }
+    else { setTimeout(()=>wave.remove(), 160); }
+  };
+  requestAnimationFrame(advance);
 }
 
 function twSpriteSrc(u){
