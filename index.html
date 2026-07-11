@@ -8315,9 +8315,9 @@ function twUnitDef(id){
              sprite:TW_KIMO_SPRITE, lv:1 };
   }
   if(id === TW_OBIG_ID){
-    // 頭突き：かなり大きく足は遅いが、リーチのある頭突きで殴る高耐久タイプ
-    const obigRole = { icon:'🦕', label:'あたま', hpMul:2.4, atkMul:1.3, range:4, interval:1.5, area:false, speed:0.32 };
-    return { id, rarity:'common', name:'小さ大き首なが', role:obigRole, hScale:5.4,
+    // 頭突き：超大型・低速・高コスト。高耐久＆高火力だが攻撃間隔は長い重量級
+    const obigRole = { icon:'🦕', label:'あたま', hpMul:2.6, atkMul:1.6, range:4, interval:2.6, area:false, speed:0.22 };
+    return { id, rarity:'ur', name:'小さ大き首なが', role:obigRole, hScale:5.4,
              svg:`<img class="tw-icon-img" src="${TW_OBIG_SPRITE.icon}">`,
              sprite:TW_OBIG_SPRITE, lv:1 };
   }
