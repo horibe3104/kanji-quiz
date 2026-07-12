@@ -933,26 +933,35 @@
     /* 出撃スロット：5枠を1行表示し、スワイプで2ページ目に切替（本家風・重ねてスライド） */
     .tw-deploy-viewport {
       flex:1; min-width:0; align-self:stretch; position:relative;
-      overflow:hidden; border-radius:9px; touch-action:pan-y;
+      overflow:hidden; border-radius:9px; touch-action:pan-x;
     }
+    /* 縦にスタックし、上にスライドで2ページ目の5個に切替（本家風） */
     .tw-deploy-track {
-      display:flex; width:100%; height:100%;
+      display:flex; flex-direction:column; width:100%; height:100%;
       transition:transform .26s cubic-bezier(.22,.61,.36,1);
     }
     .tw-deploy-page {
-      flex:0 0 100%; min-width:0; height:100%;
+      flex:0 0 100%; width:100%; min-height:0;
       display:grid; grid-template-columns:repeat(5,1fr); gap:5px;
     }
-    .tw-deploy-page.tw-page-pad { grid-auto-flow:column; }
     .tw-deploy-pager {
-      position:absolute; top:2px; left:50%; transform:translateX(-50%);
-      display:flex; gap:5px; z-index:6; pointer-events:none;
+      position:absolute; top:50%; left:3px; transform:translateY(-50%);
+      display:flex; flex-direction:column; gap:5px; z-index:6;
     }
     .tw-deploy-pager .tw-dot {
-      width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.45);
-      border:1px solid rgba(0,0,0,.35);
+      width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.5);
+      border:1px solid rgba(0,0,0,.4); cursor:pointer;
     }
     .tw-deploy-pager .tw-dot.on { background:#ffd54f; }
+    /* もう一方の5個へ切替する▲ボタン（右端） */
+    .tw-deploy-chevron {
+      position:absolute; right:2px; top:50%; transform:translateY(-50%); z-index:7;
+      width:22px; height:calc(100% - 8px); padding:0; border:none; cursor:pointer;
+      background:rgba(33,33,33,.55); color:#fff; font-size:12px; font-weight:900;
+      border-radius:6px; display:flex; align-items:center; justify-content:center;
+      animation:twChevPulse 1.2s ease-in-out infinite;
+    }
+    @keyframes twChevPulse { 50%{ background:rgba(255,152,0,.85); } }
     .tw-deploy-arrow {
       position:absolute; top:50%; transform:translateY(-50%); z-index:6;
       width:20px; height:36px; display:flex; align-items:center; justify-content:center;
@@ -8692,16 +8701,30 @@ function twRenderDeployBar(){
     });
     track.appendChild(page);
   }
-  // ページャーのドット
+  // ページャーのドット（タップでも切替可能）
   const pager = document.getElementById('tw-deploy-pager');
   pager.innerHTML = '';
   if(twDeployPageCount > 1){
     for(let i=0;i<twDeployPageCount;i++){
       const dot = document.createElement('div');
       dot.className = 'tw-dot';
+      dot.onclick = ()=>twGoDeployPage(i, true);
       pager.appendChild(dot);
     }
   }
+  // 切替ボタン（▲）：もう一方の5個へ。2ページ以上のときだけ表示
+  const vp = document.getElementById('tw-deploy-viewport');
+  let chev = document.getElementById('tw-deploy-chevron');
+  if(twDeployPageCount > 1){
+    if(!chev){
+      chev = document.createElement('button');
+      chev.id = 'tw-deploy-chevron';
+      chev.className = 'tw-deploy-chevron';
+      chev.onclick = (e)=>{ e.stopPropagation(); twToggleDeployPage(); };
+      vp.appendChild(chev);
+    }
+    chev.style.display = '';
+  } else if(chev){ chev.style.display = 'none'; }
   if(twDeployPage >= twDeployPageCount) twDeployPage = twDeployPageCount-1;
   twSetupDeploySwipe();
   twGoDeployPage(twDeployPage, false);
@@ -8712,10 +8735,19 @@ function twGoDeployPage(pg, animate){
   const track = document.getElementById('tw-deploy-track');
   if(!track) return;
   track.style.transition = animate===false ? 'none' : '';
-  track.style.transform = `translateX(${-twDeployPage*100}%)`;
+  track.style.transform = `translateY(${-twDeployPage*100}%)`;   // 上にスライドして次のページ
   if(animate===false){ void track.offsetWidth; track.style.transition=''; }
   const dots = document.querySelectorAll('#tw-deploy-pager .tw-dot');
   dots.forEach((d,i)=>d.classList.toggle('on', i===twDeployPage));
+  // 切替ボタン：一番下なら▲(上へ)、それ以外は▼(下へ)…トグル表示
+  const chev = document.getElementById('tw-deploy-chevron');
+  if(chev) chev.textContent = (twDeployPage < twDeployPageCount-1) ? '▲' : '▼';
+}
+
+// もう一方の5個へ切替（トグル）
+function twToggleDeployPage(){
+  if(twDeployPageCount<=1) return;
+  twGoDeployPage(twDeployPage < twDeployPageCount-1 ? twDeployPage+1 : 0, true);
 }
 
 // スワイプ／ドラッグで2ページ目に切替（1回だけ設定）
@@ -8734,15 +8766,16 @@ function twSetupDeploySwipe(){
     if(!dragging) return;
     const pt = e.touches ? e.touches[0] : e;
     const dx = pt.clientX - startX, dy = pt.clientY - startY;
-    if(Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) moved=true;
+    if(Math.abs(dy) > 8 && Math.abs(dy) > Math.abs(dx)) moved=true;   // 縦スワイプ
   };
   const onUp = e=>{
     if(!dragging) return;
     dragging=false;
     const pt = (e.changedTouches ? e.changedTouches[0] : e);
-    const dx = pt.clientX - startX;
-    if(moved && Math.abs(dx) > 30){
-      twGoDeployPage(twDeployPage + (dx<0 ? 1 : -1), true);
+    const dy = pt.clientY - startY;
+    if(moved && Math.abs(dy) > 24){
+      // 上スワイプ(dy<0)で次のページ、下スワイプで前のページ
+      twGoDeployPage(twDeployPage + (dy<0 ? 1 : -1), true);
     }
   };
   vp.addEventListener('touchstart', onDown, {passive:true});
