@@ -8739,9 +8739,9 @@ function twGoDeployPage(pg, animate){
   if(animate===false){ void track.offsetWidth; track.style.transition=''; }
   const dots = document.querySelectorAll('#tw-deploy-pager .tw-dot');
   dots.forEach((d,i)=>d.classList.toggle('on', i===twDeployPage));
-  // 切替ボタン：一番下なら▲(上へ)、それ以外は▼(下へ)…トグル表示
+  // 上スライドで循環切替なので常に▲
   const chev = document.getElementById('tw-deploy-chevron');
-  if(chev) chev.textContent = (twDeployPage < twDeployPageCount-1) ? '▲' : '▼';
+  if(chev) chev.textContent = '▲';
 }
 
 // もう一方の5個へ切替（トグル）
@@ -8774,8 +8774,10 @@ function twSetupDeploySwipe(){
     const pt = (e.changedTouches ? e.changedTouches[0] : e);
     const dy = pt.clientY - startY;
     if(moved && Math.abs(dy) > 24){
-      // 上スワイプ(dy<0)で次のページ、下スワイプで前のページ
-      twGoDeployPage(twDeployPage + (dy<0 ? 1 : -1), true);
+      // 上スワイプで次のページ（最後まで行ったら先頭へ循環）、下スワイプは前へ循環
+      const n = twDeployPageCount;
+      const next = dy<0 ? (twDeployPage+1)%n : (twDeployPage-1+n)%n;
+      twGoDeployPage(next, true);
     }
   };
   vp.addEventListener('touchstart', onDown, {passive:true});
