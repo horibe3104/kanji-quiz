@@ -8286,8 +8286,9 @@ function _twMakeWankoSprite(prefix){
   };
 }
 const TW_WANKO_SPRITE = _twMakeWankoSprite('wanko');
-// コマアニメ式：にょろ（敵キャラ・右向き。歩き4コマ・頭突き2コマ）
-// スプライトは頭が右を向くよう反転済み。わんこと同じ facing:'right'（敵は反転なし）
+// コマアニメ式：にょろ（敵キャラ。歩き4コマ・頭突き2コマ）
+// シートは目・口が右を向いた造形なので facing:'right'（敵＝右進行、反転なし）で
+// 顔が進行方向を向く
 const TW_NYORO_SPRITE = {
   facing: 'right',
   icon: 'sprites/nyoro_icon.png',
