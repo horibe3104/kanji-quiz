@@ -936,17 +936,24 @@
       gap:4px;
     }
     .tw-deploy-btn {
-      flex:1; min-height:0; position:relative; border:2px solid #7986cb; border-radius:9px;
-      background:#e8eaf6; padding:2px; cursor:pointer; overflow:hidden;
-      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      flex:1; min-height:0; position:relative; border:2px solid #5c6bc0; border-radius:8px;
+      background:linear-gradient(180deg,#f4f6fb,#c8cfe4); padding:0; cursor:pointer; overflow:hidden;
     }
-    .tw-deploy-btn svg, .tw-deploy-btn .tw-unit-emoji { width:26px; height:26px; }
-    .tw-deploy-cost { font-size:9px; font-weight:900; color:#1a237e; }
+    /* 本家風：キャラ画像がカード全体を埋め、コスト・ゲージを上に重ねる */
+    .tw-deploy-btn svg { position:absolute; inset:0; width:100%; height:100%; }
+    .tw-deploy-btn .tw-unit-emoji {
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:30px;
+    }
+    .tw-deploy-cost {
+      position:absolute; left:0; right:0; bottom:0; z-index:3;
+      background:rgba(0,0,0,.6); color:#ffd54f; font-size:10px; font-weight:900;
+      text-align:center; line-height:1.5; letter-spacing:-.3px; white-space:nowrap;
+    }
     .tw-deploy-cd {
       position:absolute; inset:0; background:rgba(0,0,0,.45); display:none;
     }
     .tw-deploy-gauge {
-      position:absolute; left:5px; right:5px; bottom:3px; height:8px;
+      position:absolute; left:4px; right:4px; bottom:17px; height:7px; z-index:3;
       background:rgba(0,0,0,.78); border-radius:3px; display:none; overflow:hidden;
       border:1px solid rgba(255,255,255,.25);
     }
@@ -960,7 +967,10 @@
       font-size:8px; font-weight:900; color:#7b1fa2; background:#f3e5f5;
       border-radius:4px; padding:1px 3px; margin-top:2px; display:inline-block;
     }
-    .tw-deploy-role { position:absolute; top:1px; right:3px; font-size:10px; z-index:1; }
+    .tw-deploy-role {
+      position:absolute; top:1px; right:1px; font-size:9px; z-index:4; line-height:1;
+      background:rgba(0,0,0,.45); border-radius:4px; padding:1px 2px;
+    }
     @keyframes twHitFlash { 0%{ filter:brightness(2.2) saturate(.2); } 100%{ filter:none; } }
     .tw-unit.tw-hit { animation:twHitFlash .18s ease-out; }
     /* ヒットエフェクト：灰色の煙玉→白く明るくなって弾け散る（参考動画準拠） */
@@ -1092,7 +1102,7 @@
     }
     .tw-unit.sprite-flip .tw-sprite { transform:translateX(-50%) scaleX(-1); }
     .bt-sel-item .tw-icon-img { width:52px; height:auto; display:block; margin:0 auto; }
-    .tw-deploy-btn .tw-icon-img { width:26px; height:26px; object-fit:contain; }
+    .tw-deploy-btn .tw-icon-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
     /* パペット式キャラ（しろねこ） */
     .tw-puppet g { transform-box: view-box; }
     .tw-puppet .pp-leg-f { transform-origin:44px 72px; animation:ppWalk .35s ease-in-out infinite alternate; }
