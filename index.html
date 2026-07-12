@@ -1706,6 +1706,9 @@
     .cd-meter-fill.atk { background:linear-gradient(90deg,#ffcc80,#f57c00); }
     .cd-meter-fill.def { background:linear-gradient(90deg,#90caf9,#1976d2); }
     .cd-meter-num { font-size:13px; font-weight:900; color:#1a237e; width:38px; text-align:right; flex-shrink:0; }
+    .cd-td-title { font-size:12px; font-weight:900; color:#c62828; margin:2px 0 8px; letter-spacing:.3px; }
+    .cd-td-info { font-size:11px; font-weight:700; color:#455a64; background:#eceff1; border-radius:8px; padding:6px 8px; margin-top:4px; line-height:1.5; }
+    .cd-td-info b { color:#1a237e; }
     .char-detail-special { background:#ede7f6; border-radius:12px; padding:10px 14px; margin:0 16px 12px; text-align:center; font-size:13px; font-weight:700; color:#4a148c; }
     .cd-mul { font-size:18px; font-weight:900; color:#7b1fa2; margin-left:6px; }
     .char-detail-desc { margin:0 16px 16px; font-size:13px; color:#546e7a; line-height:1.7; background:#f9fbe7; border-radius:10px; padding:10px 14px; border-left:4px solid #aed581; }
@@ -7300,22 +7303,37 @@ const RARITY_INFO   = {
 
 function makeSodaItem(k){
   const ld = kuucchiLvData(k.id);
-  const st = getStats(k);
-  const hpPct  = Math.min(100,Math.round(st.hp /1200*100));
-  const atkPct = Math.min(100,Math.round(st.atk/170 *100));
-  const defPct = Math.min(100,Math.round(st.def/130 *100));
   const div = document.createElement('div');
   div.className = 'soda-item';
+  let statsHTML, specialHTML;
+  if(k.twdef){
+    // 防衛戦キャラは防衛戦の実数値を表示
+    const s = twTDStats(k.id);
+    const hpPct  = Math.min(100,Math.round(s.hp/320*100));
+    const atkPct = Math.min(100,Math.round(s.atk/50*100));
+    const rngPct = Math.min(100,Math.round(s.range/14*100));
+    statsHTML =
+      `<div class="soda-stat atk">⚔️<div class="mini-bar-track"><div class="mini-bar-fill atk" style="width:${atkPct}%"></div></div>${s.atk}</div>`+
+      `<div class="soda-stat def">🎯<div class="mini-bar-track"><div class="mini-bar-fill def" style="width:${rngPct}%"></div></div>${s.range}</div>`+
+      `<div class="soda-stat hp">❤️<div class="mini-bar-track"><div class="mini-bar-fill hp" style="width:${hpPct}%"></div></div>${s.hp}</div>`;
+    specialHTML = `<div class="soda-item-special">${s.icon} ${s.label}<br>${s.area?'はんい':'たんたい'}</div>`;
+  } else {
+    const st = getStats(k);
+    const hpPct  = Math.min(100,Math.round(st.hp /1200*100));
+    const atkPct = Math.min(100,Math.round(st.atk/170 *100));
+    const defPct = Math.min(100,Math.round(st.def/130 *100));
+    statsHTML =
+      `<div class="soda-stat atk">⚔️<div class="mini-bar-track"><div class="mini-bar-fill atk" style="width:${atkPct}%"></div></div>${st.atk}</div>`+
+      `<div class="soda-stat def">🛡️<div class="mini-bar-track"><div class="mini-bar-fill def" style="width:${defPct}%"></div></div>${st.def}</div>`+
+      `<div class="soda-stat hp">❤️<div class="mini-bar-track"><div class="mini-bar-fill hp" style="width:${hpPct}%"></div></div>${st.hp}</div>`;
+    specialHTML = `<div class="soda-item-special">⚡${k.specialName||'必殺アタック'}<br>×${(k.specialMul||2.5).toFixed(1)}倍</div>`;
+  }
   div.innerHTML = `
     ${kSVG(k)}
     <div class="soda-item-lv">Lv.${ld.lv}</div>
     <div class="soda-item-name">${k.type}</div>
-    <div class="soda-item-stats">
-      <div class="soda-stat atk">⚔️<div class="mini-bar-track"><div class="mini-bar-fill atk" style="width:${atkPct}%"></div></div>${st.atk}</div>
-      <div class="soda-stat def">🛡️<div class="mini-bar-track"><div class="mini-bar-fill def" style="width:${defPct}%"></div></div>${st.def}</div>
-      <div class="soda-stat hp">❤️<div class="mini-bar-track"><div class="mini-bar-fill hp" style="width:${hpPct}%"></div></div>${st.hp}</div>
-    </div>
-    <div class="soda-item-special">⚡${k.specialName||'必殺アタック'}<br>×${(k.specialMul||2.5).toFixed(1)}倍</div>`;
+    <div class="soda-item-stats">${statsHTML}</div>
+    ${specialHTML}`;
   div.onclick = ()=>selectSodaKuucchi(k.id);
   return div;
 }
@@ -7363,12 +7381,20 @@ function selectSodaKuucchi(id){
   const _hpPct2  = Math.min(100,Math.round(st.hp /1200*100));
   const _atkPct2 = Math.min(100,Math.round(st.atk/170 *100));
   const _defPct2 = Math.min(100,Math.round(st.def/130 *100));
-  document.getElementById('soda-stats-txt').innerHTML =
-    `<div class="cd-meter-row"><span class="cd-meter-label">❤️ HP</span><div class="cd-meter-track"><div class="cd-meter-fill hp" style="width:${_hpPct2}%"></div></div><span class="cd-meter-num">${st.hp}</span></div>`+
-    `<div class="cd-meter-row"><span class="cd-meter-label">⚔️ ATK</span><div class="cd-meter-track"><div class="cd-meter-fill atk" style="width:${_atkPct2}%"></div></div><span class="cd-meter-num">${st.atk}</span></div>`+
-    `<div class="cd-meter-row"><span class="cd-meter-label">🛡 DEF</span><div class="cd-meter-track"><div class="cd-meter-fill def" style="width:${_defPct2}%"></div></div><span class="cd-meter-num">${st.def}</span></div>`;
+  // 防衛戦キャラは「防衛戦のうりょく」を表示（TD実数値）。それ以外は従来のクイズ用ステータス
+  if(k.twdef){
+    document.getElementById('soda-stats-txt').innerHTML = twTDStatsHTML(id);
+  } else {
+    document.getElementById('soda-stats-txt').innerHTML =
+      `<div class="cd-meter-row"><span class="cd-meter-label">❤️ HP</span><div class="cd-meter-track"><div class="cd-meter-fill hp" style="width:${_hpPct2}%"></div></div><span class="cd-meter-num">${st.hp}</span></div>`+
+      `<div class="cd-meter-row"><span class="cd-meter-label">⚔️ ATK</span><div class="cd-meter-track"><div class="cd-meter-fill atk" style="width:${_atkPct2}%"></div></div><span class="cd-meter-num">${st.atk}</span></div>`+
+      `<div class="cd-meter-row"><span class="cd-meter-label">🛡 DEF</span><div class="cd-meter-track"><div class="cd-meter-fill def" style="width:${_defPct2}%"></div></div><span class="cd-meter-num">${st.def}</span></div>`;
+  }
   const spRow = document.getElementById('soda-special-row');
-  if(spRow) spRow.innerHTML = `⚡ <b>${k.specialName}</b> &nbsp;×${(k.specialMul||2.5).toFixed(1)}倍`;
+  if(spRow){
+    if(k.twdef){ const s=twTDStats(id); spRow.innerHTML = `${s.icon} <b>${s.label}</b> タイプ`; }
+    else spRow.innerHTML = `⚡ <b>${k.specialName}</b> &nbsp;×${(k.specialMul||2.5).toFixed(1)}倍`;
+  }
 
   const needed = expForLv(ld.lv) - ld.exp;
   const pct = Math.min(100, Math.round(ld.exp / expForLv(ld.lv) * 100));
@@ -7414,9 +7440,10 @@ function selectSodaKuucchi(id){
   const skillSection = document.getElementById('soda-skill-section');
   const skillList = document.getElementById('soda-skill-list');
   if(skillSection && skillList){
-    skillSection.style.display = 'block';
+    // 防衛戦キャラはクイズ用スキルがTDに影響しないため非表示
+    skillSection.style.display = k.twdef ? 'none' : 'block';
     skillList.innerHTML = '';
-    SKILL_DEFS.forEach(sk=>{
+    if(!k.twdef) SKILL_DEFS.forEach(sk=>{
       const unlocked = ld.lv >= sk.lv;
       const div = document.createElement('div');
       div.className = 'skill-item' + (unlocked ? ' unlocked' : '');
@@ -7430,9 +7457,10 @@ function selectSodaKuucchi(id){
     });
   }
 
-  // 絆ゲージ
+  // 絆ゲージ（防衛戦キャラはクイズ用の絆が無関係なので非表示）
   const bondSection = document.getElementById('soda-bond-section');
-  if(bondSection){
+  if(bondSection && k.twdef){ bondSection.style.display = 'none'; }
+  else if(bondSection){
     bondSection.style.display = 'block';
     const bond = bondData[id] || 0;
     const bondPct = Math.min(100, Math.round(bond / 50 * 100));
@@ -8440,6 +8468,42 @@ function twUnitDef(id){
   const k = KD.find(kk=>kk.id===id);
   if(!k) return null;
   return { id, rarity:k.rarity, name:k.name||k.type, role:TW_ROLES[twRoleOf(k)], svg:kSVG(k), lv:getStats(k).lv };
+}
+
+// 防衛戦（TD）での実能力を算出。育成画面などで「防衛戦のうりょく」として表示する
+function twTDStats(id){
+  const def = twUnitDef(id);
+  if(!def) return null;
+  const rs   = TW_RARITY_STATS[def.rarity] || TW_RARITY_STATS.common;
+  const role = def.role;
+  const lvMul = Math.min(2.0, 1 + (def.lv-1)*0.02);
+  return {
+    hp:   Math.round(rs.baseHp  * lvMul * role.hpMul),
+    atk:  Math.round(rs.baseAtk * lvMul * role.atkMul),
+    range: role.range,
+    interval: role.interval,
+    speed: role.speed || rs.speed,
+    area: !!role.area,
+    fly: !!role.fly,
+    cost: rs.cost,
+    label: role.label, icon: role.icon, lv: def.lv,
+  };
+}
+function twTDStatsHTML(id){
+  const s = twTDStats(id);
+  if(!s) return '';
+  const hpPct  = Math.min(100, Math.round(s.hp/320*100));
+  const atkPct = Math.min(100, Math.round(s.atk/50*100));
+  const rngPct = Math.min(100, Math.round(s.range/14*100));
+  const spdPct = Math.min(100, Math.round(s.speed/1.4*100));
+  const atkType = s.area ? 'はんい' : 'たんたい';
+  const flyTag  = s.fly ? '／ ひこう ' : '';
+  return `<div class="cd-td-title">⚔️ ぼうえいせん のうりょく</div>`+
+    `<div class="cd-meter-row"><span class="cd-meter-label">❤️ HP</span><div class="cd-meter-track"><div class="cd-meter-fill hp" style="width:${hpPct}%"></div></div><span class="cd-meter-num">${s.hp}</span></div>`+
+    `<div class="cd-meter-row"><span class="cd-meter-label">⚔️ こうげき</span><div class="cd-meter-track"><div class="cd-meter-fill atk" style="width:${atkPct}%"></div></div><span class="cd-meter-num">${s.atk}</span></div>`+
+    `<div class="cd-meter-row"><span class="cd-meter-label">🎯 リーチ</span><div class="cd-meter-track"><div class="cd-meter-fill def" style="width:${rngPct}%"></div></div><span class="cd-meter-num">${s.range}</span></div>`+
+    `<div class="cd-meter-row"><span class="cd-meter-label">👟 はやさ</span><div class="cd-meter-track"><div class="cd-meter-fill atk" style="width:${spdPct}%"></div></div><span class="cd-meter-num">${s.speed.toFixed(2)}</span></div>`+
+    `<div class="cd-td-info">${s.icon} ${s.label}こうげき（${atkType}${flyTag}）／ 🪙コスト <b>${s.cost}</b> ／ ⏱️かんかく <b>${s.interval.toFixed(1)}秒</b></div>`;
 }
 const TW_CANNON_CHARGE_SEC = 25; // フルチャージまでの秒数
 const TW_ENEMY_CASTLE_POS  = 8;   // 敵の城（左端）
