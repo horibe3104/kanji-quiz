@@ -870,7 +870,7 @@
     /* 地面の上に重ねる下段UI（本家風） */
     .tw-bottombar {
       position:absolute; bottom:8px; left:10px; right:10px; z-index:10;
-      display:flex; gap:6px; align-items:stretch; height:60px;
+      display:flex; gap:6px; align-items:center; height:88px;
     }
     .tw-wallet-btn {
       width:60px; height:60px; flex-shrink:0; border:none; border-radius:50%; cursor:pointer;
@@ -930,13 +930,17 @@
     }
     .tw-unit svg { width:100%; height:auto; display:block; }
     .tw-unit.boss { width:84px; height:84px; }
-    .tw-deploy-row { flex:1; display:flex; gap:5px; min-width:0; }
-    .tw-deploy-btn {
-      flex:1; position:relative; border:2px solid #7986cb; border-radius:10px;
-      background:#e8eaf6; padding:3px 2px 2px; cursor:pointer; overflow:hidden;
-      display:flex; flex-direction:column; align-items:center;
+    .tw-deploy-row {
+      flex:1; min-width:0; align-self:stretch;
+      display:grid; grid-template-columns:repeat(5,1fr); grid-template-rows:repeat(2,1fr);
+      gap:4px;
     }
-    .tw-deploy-btn svg, .tw-deploy-btn .tw-unit-emoji { width:30px; height:30px; }
+    .tw-deploy-btn {
+      flex:1; min-height:0; position:relative; border:2px solid #7986cb; border-radius:9px;
+      background:#e8eaf6; padding:2px; cursor:pointer; overflow:hidden;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+    }
+    .tw-deploy-btn svg, .tw-deploy-btn .tw-unit-emoji { width:26px; height:26px; }
     .tw-deploy-cost { font-size:9px; font-weight:900; color:#1a237e; }
     .tw-deploy-cd {
       position:absolute; inset:0; background:rgba(0,0,0,.45); display:none;
@@ -1088,7 +1092,7 @@
     }
     .tw-unit.sprite-flip .tw-sprite { transform:translateX(-50%) scaleX(-1); }
     .bt-sel-item .tw-icon-img { width:52px; height:auto; display:block; margin:0 auto; }
-    .tw-deploy-btn .tw-icon-img { width:30px; height:30px; object-fit:contain; }
+    .tw-deploy-btn .tw-icon-img { width:26px; height:26px; object-fit:contain; }
     /* パペット式キャラ（しろねこ） */
     .tw-puppet g { transform-box: view-box; }
     .tw-puppet .pp-leg-f { transform-origin:44px 72px; animation:ppWalk .35s ease-in-out infinite alternate; }
