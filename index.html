@@ -8286,9 +8286,10 @@ function _twMakeWankoSprite(prefix){
   };
 }
 const TW_WANKO_SPRITE = _twMakeWankoSprite('wanko');
-// コマアニメ式：にょろ（敵キャラ・左向きシート。歩き4コマ・頭突き2コマ）
+// コマアニメ式：にょろ（敵キャラ・右向き。歩き4コマ・頭突き2コマ）
+// スプライトは頭が右を向くよう反転済み。わんこと同じ facing:'right'（敵は反転なし）
 const TW_NYORO_SPRITE = {
-  facing: 'left',
+  facing: 'right',
   icon: 'sprites/nyoro_icon.png',
   idle: 'sprites/nyoro_idle.png',
   walk: [1,2,3,4].map(i=>`sprites/nyoro_walk${i}.png`),
@@ -8597,8 +8598,11 @@ function twSpawnBoss(){
     pos: TW_ENEMY_CASTLE_POS + 4, svg: m.svg,
     bounty: 150 + twStage*30,
   });
-  showToast(`⚠️ ボス「${m.name}」が あらわれた！`);
   playSound('wrong');
+  // 本家風：ボス出現の衝撃で味方全員が後方へノックバック（ダメージはなし）
+  twUnits.forEach(u=>{
+    if(u.side==='player' && u.hp>0) twKnockback(u, 14);
+  });
   twRenderUnits();
 }
 
@@ -8828,9 +8832,10 @@ function twHitUnit(o, dmg){
 }
 
 // おっとっとと後ろに跳ねて吹っ飛ばされる（跳ねている間は行動不能）
-function twKnockback(o){
+function twKnockback(o, dist){
+  const d = dist || 7;
   o.kbUntil = performance.now() + 520;
-  o.pos += (o.side==='player' ? 7 : -7);
+  o.pos += (o.side==='player' ? d : -d);
   o.pos = Math.max(TW_ENEMY_CASTLE_POS, Math.min(TW_PLAYER_CASTLE_POS, o.pos));
   const el = document.getElementById('tw-u-'+o.uid);
   if(el){
