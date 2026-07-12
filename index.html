@@ -1068,6 +1068,32 @@
       100% { transform:translate(2px,34px) rotate(16deg); opacity:0; }
     }
     .tw-castle.destroyed { animation:twCastleFall 1.2s ease-in forwards; }
+    /* ボス登場：拠点から広がる衝撃波リング＋画面シェイク（本家風の印象づけ） */
+    .tw-boss-shock {
+      position:absolute; z-index:7; pointer-events:none;
+      width:24px; height:24px; border-radius:50%;
+      border:7px solid rgba(255,255,255,.95);
+      box-shadow:0 0 34px 14px rgba(126,182,255,.75), inset 0 0 22px rgba(126,182,255,.6);
+      transform:translate(-50%,-50%) scale(.2); opacity:0;
+      animation:twBossShock 1s cubic-bezier(.16,.7,.3,1) forwards;
+    }
+    @keyframes twBossShock {
+      0%   { transform:translate(-50%,-50%) scale(.2);  opacity:0; }
+      12%  { opacity:1; }
+      100% { transform:translate(-50%,-50%) scale(34); opacity:0; }
+    }
+    .tw-boss-flash {
+      position:absolute; inset:0; z-index:6; pointer-events:none;
+      background:radial-gradient(circle at var(--fx,15%) 55%, rgba(255,255,255,.85), rgba(180,210,255,.25) 30%, transparent 60%);
+      animation:twBossFlash .5s ease-out forwards;
+    }
+    @keyframes twBossFlash { 0%{opacity:0;} 20%{opacity:1;} 100%{opacity:0;} }
+    @keyframes twLaneShake {
+      0%,100%{ transform:translate(0,0); } 15%{ transform:translate(-6px,3px); }
+      30%{ transform:translate(6px,-3px); } 45%{ transform:translate(-5px,-2px); }
+      60%{ transform:translate(5px,2px); } 75%{ transform:translate(-3px,1px); }
+    }
+    .tw-lane.tw-shake { animation:twLaneShake .6s ease-in-out; }
     /* くうっち砲：自拠点から敵拠点へ徐々に進む衝撃波の前線 */
     .tw-cannon-wave {
       position:absolute; top:6%; bottom:20%; width:9%; margin-left:-4.5%;
@@ -8614,11 +8640,13 @@ function twSpawnBoss(){
     bounty: 150 + twStage*30,
   });
   playSound('wrong');
-  // 本家風：ボス出現の衝撃で味方全員が後方へノックバック（ダメージはなし）
-  twUnits.forEach(u=>{
-    if(u.side==='player' && u.hp>0) twKnockback(u, 14);
-  });
   twRenderUnits();
+  // 本家風：ボス登場の衝撃波エフェクト＋画面シェイクで印象づけ
+  twBossShockwave();
+  // 衝撃で味方全員がゆっくり後方へノックバック（ダメージはなし・スロー演出）
+  twUnits.forEach(u=>{
+    if(u.side==='player' && u.hp>0) twKnockback(u, 14, 900);
+  });
 }
 
 // スプライトの実際の中身の横幅（キャンバス高さに対する比率）を測ってキャッシュ
@@ -8847,22 +8875,54 @@ function twHitUnit(o, dmg){
 }
 
 // おっとっとと後ろに跳ねて吹っ飛ばされる（跳ねている間は行動不能）
-function twKnockback(o, dist){
+// durMs を渡すとゆっくり大きく吹っ飛ぶ（ボス登場のスロー演出用）
+function twKnockback(o, dist, durMs){
   const d = dist || 7;
-  o.kbUntil = performance.now() + 520;
+  const dur = durMs || 520;
+  o.kbUntil = performance.now() + dur;
   o.pos += (o.side==='player' ? d : -d);
   o.pos = Math.max(TW_ENEMY_CASTLE_POS, Math.min(TW_PLAYER_CASTLE_POS, o.pos));
   const el = document.getElementById('tw-u-'+o.uid);
   if(el){
-    el.style.transition = 'left .45s ease-out';
+    el.style.transition = `left ${(dur*0.9/1000).toFixed(2)}s ease-out`;
+    el.style.animationDuration = (dur/1000).toFixed(2)+'s';
     el.classList.remove('tw-kb-p','tw-kb-e');
     void el.offsetWidth;
     el.classList.add(o.side==='player' ? 'tw-kb-p' : 'tw-kb-e');
     setTimeout(()=>{
       el.style.transition = '';
+      el.style.animationDuration = '';
       el.classList.remove('tw-kb-p','tw-kb-e');
-    }, 520);
+    }, dur);
   }
+}
+
+// ボス登場の衝撃波：拠点から広がるリング＋発光＋画面シェイク
+function twBossShockwave(){
+  const lane = document.getElementById('tw-lane');
+  if(!lane) return;
+  const originX = TW_ENEMY_CASTLE_POS + 4;   // ボスの湧く位置(%)
+  const flash = document.createElement('div');
+  flash.className = 'tw-boss-flash';
+  flash.style.setProperty('--fx', originX + '%');
+  lane.appendChild(flash);
+  setTimeout(()=>flash.remove(), 520);
+  // リングを2枚ずらして出す
+  [0, 160].forEach(delay=>{
+    setTimeout(()=>{
+      if(!twActive) return;
+      const ring = document.createElement('div');
+      ring.className = 'tw-boss-shock';
+      ring.style.left = originX + '%';
+      ring.style.top  = '58%';
+      lane.appendChild(ring);
+      setTimeout(()=>ring.remove(), 1000);
+    }, delay);
+  });
+  lane.classList.remove('tw-shake');
+  void lane.offsetWidth;
+  lane.classList.add('tw-shake');
+  setTimeout(()=>lane.classList.remove('tw-shake'), 600);
 }
 
 function twHitSpark(pos){
