@@ -4350,8 +4350,9 @@ let playerGrade = parseInt(localStorage.getItem('kq_player_grade') || '1');
 
 // ===== INIT =====
 (function init() {
-  // 防衛戦の常設キャラは初期から所有（図鑑・育成に表示。ガチャでも排出されLvが上がる）
-  ['tw_kuucchi_basic','tw_pote_basic','tw_pote_rush','tw_kimomayo','tw_kuucchi_bat','tw_kuucchi_fire','tw_obigkubinaga'].forEach(tid=>{
+  // 防衛戦キャラ：コモン4体は最初から所持（スターター）。レア以上(コウモリ/炎/首なが)は
+  // ガチャで入手する。所持キャラは図鑑・育成に表示され、ガチャ入手でLvが上がる。
+  ['tw_kuucchi_basic','tw_pote_basic','tw_pote_rush','tw_kimomayo'].forEach(tid=>{
     if(!collection[tid]) collection[tid] = 1;
   });
   saveState();
@@ -8474,24 +8475,28 @@ function showTowerSelect(){
   grid.innerHTML = '';
   document.getElementById('tw-deck-start-btn').disabled = true;
   const owned = KD.filter(k=>(collection[k.id]||0)>0 && (k.kanji || k.char==='mochi' || k.char==='neko'));
-  const TW_BUILTIN_IDS = [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID, TW_KIMO_ID, TW_OBIG_ID];
-  twDeckSelected = twDeckSelected.filter(id => TW_BUILTIN_IDS.includes(id) || owned.some(k=>k.id===id));
+  // 所持しているキャラだけ編成可能（常設キャラもガチャ入手制）
+  twDeckSelected = twDeckSelected.filter(id => (collection[id]||0)>0 || owned.some(k=>k.id===id));
 
-  // 常時使用可能キャラを先頭に
-  const dbgHdr = document.createElement('div');
-  dbgHdr.className = 'soda-rarity-header common';
-  dbgHdr.style.gridColumn = '1 / -1';
-  dbgHdr.textContent = '🐾 いつでも つかえる';
-  grid.appendChild(dbgHdr);
-  [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID, TW_KIMO_ID, TW_OBIG_ID].forEach(bid=>{
-    const def = twUnitDef(bid);
-    const dbg = document.createElement('div');
-    dbg.className = 'bt-sel-item tw-deck-grid-item';
-    dbg.dataset.id = bid;
-    dbg.innerHTML = `${def.svg}<div class="sel-lv">Lv.${kuucchiLvData(bid).lv}</div><div class="sel-name">${def.name}</div><div class="tw-role-chip">${def.role.icon} ${def.role.label}</div>`;
-    dbg.onclick = ()=>toggleTowerDeck(bid);
-    grid.appendChild(dbg);
-  });
+  // 所持している防衛戦キャラ（コモンはスターター、レア以上はガチャ入手）
+  const ownedBuiltins = [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID, TW_KIMO_ID, TW_OBIG_ID]
+    .filter(bid => (collection[bid]||0) > 0);
+  if(ownedBuiltins.length){
+    const dbgHdr = document.createElement('div');
+    dbgHdr.className = 'soda-rarity-header common';
+    dbgHdr.style.gridColumn = '1 / -1';
+    dbgHdr.textContent = '🐾 ぼうえいたいの なかま';
+    grid.appendChild(dbgHdr);
+    ownedBuiltins.forEach(bid=>{
+      const def = twUnitDef(bid);
+      const dbg = document.createElement('div');
+      dbg.className = 'bt-sel-item tw-deck-grid-item';
+      dbg.dataset.id = bid;
+      dbg.innerHTML = `${def.svg}<div class="sel-lv">Lv.${kuucchiLvData(bid).lv}</div><div class="sel-name">${def.name}</div><div class="tw-role-chip">${def.role.icon} ${def.role.label}</div>`;
+      dbg.onclick = ()=>toggleTowerDeck(bid);
+      grid.appendChild(dbg);
+    });
+  }
 
   if(owned.length===0){
     const note = document.createElement('div');
