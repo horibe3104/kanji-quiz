@@ -1152,15 +1152,43 @@
       text-shadow:0 1px 0 rgba(255,255,255,.5); letter-spacing:.5px; }
     .tw-map-prog { font-size:12px; font-weight:900; color:#fff8e1; background:#8d6e63;
       border:1.5px solid #5d4037; border-radius:12px; padding:3px 9px; flex-shrink:0; }
-    .tw-map-wrap {
-      position:relative; width:min(96%, 430px); aspect-ratio:1010/902;
-      margin:6px auto 0; flex:0 0 auto;
+    /* 拡大した地図をスライドで動かす（本家の横スクロール式）カメラ */
+    .tw-map-viewport {
+      position:relative; width:100%; flex:1 1 auto; min-height:0;
+      overflow:hidden; touch-action:pan-y;
+    }
+    .tw-map-camera {
+      position:absolute; top:0; left:0; width:250%; aspect-ratio:1010/902;
+      transform-origin:0 0; transition:transform .38s cubic-bezier(.22,.61,.36,1);
+      will-change:transform;
     }
     .tw-map-japan { position:absolute; inset:0; width:100%; height:100%; overflow:visible;
       filter:drop-shadow(0 3px 6px rgba(93,64,55,.35)); }
     .tw-map-japan .prefecture { fill:#c9a86a; stroke:#8d6e63; stroke-width:1.1; stroke-linejoin:round; }
     .tw-map-pins { position:absolute; inset:0; }
     .tw-map-route-svg { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+    /* 上部：都道府県カードのスライド帯 */
+    .tw-map-cards { position:relative; width:100%; height:58px; overflow:hidden; flex:0 0 auto; margin-top:2px; }
+    .tw-map-cards-track { position:absolute; top:0; left:50%; height:100%; display:flex; align-items:center;
+      transition:transform .38s cubic-bezier(.22,.61,.36,1); }
+    .tw-map-card {
+      width:104px; flex:0 0 104px; margin:0 4px; box-sizing:border-box; text-align:center;
+      background:#fff8e1; border:2px solid #8d6e63; border-radius:10px; padding:5px 4px;
+      opacity:.5; transform:scale(.86); transition:opacity .3s, transform .3s; position:relative;
+    }
+    .tw-map-card.sel { opacity:1; transform:scale(1); border-color:#e53935; box-shadow:0 2px 0 #b71c1c; }
+    .tw-map-card.locked { filter:grayscale(.7); }
+    .tw-map-card-name { font-size:14px; font-weight:900; color:#4e342e; white-space:nowrap; }
+    .tw-map-card-sub  { font-size:10px; font-weight:700; color:#8d6e63; }
+    .tw-map-card-clear { position:absolute; top:-8px; right:-6px; background:#43a047; color:#fff;
+      font-size:9px; font-weight:900; border-radius:8px; padding:1px 5px; border:1.5px solid #fff; }
+    .tw-map-arrow {
+      position:absolute; top:50%; transform:translateY(-50%); z-index:8;
+      width:34px; height:52px; border:none; border-radius:10px; cursor:pointer;
+      background:rgba(93,64,55,.6); color:#fff8e1; font-size:24px; font-weight:900; padding:0;
+    }
+    .tw-map-arrow.left { left:6px; } .tw-map-arrow.right { right:6px; }
+    .tw-map-arrow:disabled { opacity:.25; cursor:default; }
     .tw-map-pin {
       position:absolute; transform:translate(-50%,-50%); z-index:2;
       width:30px; height:30px; border-radius:50%; border:3px solid #fff8e1; cursor:pointer;
@@ -1186,7 +1214,7 @@
       text-shadow:0 1px 0 rgba(255,255,255,.5); }
     /* 下部アクションバー（ステージ情報＋いざ出陣） */
     .tw-map-actionbar {
-      width:min(96%,430px); margin:auto auto 12px; box-sizing:border-box;
+      width:min(96%,430px); margin:6px auto 12px; box-sizing:border-box; flex:0 0 auto;
       background:#fff8e1; border:3px solid #8d6e63; border-radius:16px;
       padding:8px 12px; display:flex; align-items:center; gap:10px;
       box-shadow:0 3px 0 #5d4037;
@@ -2679,7 +2707,9 @@
     <div class="tw-map-title">🗾 にっぽん ぼうえいの たび</div>
     <div class="tw-map-prog" id="tw-map-prog"></div>
   </div>
-  <div class="tw-map-wrap" id="tw-map-wrap">
+  <div class="tw-map-cards" id="tw-map-cards"></div>
+  <div class="tw-map-viewport" id="tw-map-viewport">
+    <div class="tw-map-camera" id="tw-map-camera">
     <svg class="tw-map-japan" viewBox="-5 -8 1010 902" preserveAspectRatio="xMidYMid meet">
 <g class="svg-map" transform="matrix(1.028807, 0, 0, 1.028807, -47.544239, -28.806583)">
     <g class="prefectures" transform="matrix(1, 0, 0, 1, 6, 18)">
@@ -2850,6 +2880,9 @@
   </g>
     </svg>
     <div class="tw-map-pins" id="tw-map-pins"></div>
+    </div>
+    <button class="tw-map-arrow left" id="tw-map-prev" onclick="twMapStep(-1)">‹</button>
+    <button class="tw-map-arrow right" id="tw-map-next" onclick="twMapStep(1)">›</button>
   </div>
   <div class="tw-map-actionbar">
     <div class="tw-map-stageinfo">
@@ -8804,28 +8837,30 @@ const TW_MAP_STAGES = [
   { s:12, x:64.3, y:37.2, name:'青森' },
   { s:13, x:73.1, y:18.8, name:'北海道', region:'北海道' },
 ];
+const TW_MAP_CARDW = 112;   // カード幅+マージン(px)
+let _twMapWalker = null;
+function twMaxSelStage(){ return Math.min(twStageCleared+1, TW_MAP_STAGES.length); }
 function showTowerMap(){
   const pins = document.getElementById('tw-map-pins');
   pins.innerHTML = '';
-  // 旅のルート（点線・ピンの下に敷く）
-  const routeNS = 'http://www.w3.org/2000/svg';
-  const rsvg = document.createElementNS(routeNS,'svg');
+  const NS = 'http://www.w3.org/2000/svg';
+  // 旅のルート（点線）
+  const rsvg = document.createElementNS(NS,'svg');
   rsvg.setAttribute('class','tw-map-route-svg');
   rsvg.setAttribute('viewBox','0 0 100 100'); rsvg.setAttribute('preserveAspectRatio','none');
-  const pl = document.createElementNS(routeNS,'polyline');
+  const pl = document.createElementNS(NS,'polyline');
   pl.setAttribute('points', TW_MAP_STAGES.map(st=>`${st.x},${st.y}`).join(' '));
   pl.setAttribute('fill','none'); pl.setAttribute('stroke','rgba(255,255,255,.85)');
-  pl.setAttribute('stroke-width','0.7'); pl.setAttribute('stroke-dasharray','0.4 2.4');
   pl.setAttribute('stroke-linecap','round'); pl.setAttribute('vector-effect','non-scaling-stroke');
-  pl.setAttribute('style','stroke-width:2.5px');
+  pl.setAttribute('style','stroke-width:2.5px; stroke-dasharray:2.5 6;');
   rsvg.appendChild(pl); pins.appendChild(rsvg);
-  // ピン＋名前ラベル
+  // 地方ラベル＋ピン
   const next = twStageCleared + 1;
   TW_MAP_STAGES.forEach(st=>{
     if(st.region){
       const r = document.createElement('div');
       r.className = 'tw-map-region'; r.textContent = st.region;
-      r.style.left = st.x+'%'; r.style.top = (st.y-6)+'%';
+      r.style.left = st.x+'%'; r.style.top = (st.y-5)+'%';
       pins.appendChild(r);
     }
     const b = document.createElement('button');
@@ -8839,30 +8874,95 @@ function showTowerMap(){
     if(cls!=='locked') b.onclick = ()=>twMapPickStage(st.s);
     pins.appendChild(b);
   });
-  // 現在ステージにキャラを歩かせる（本家風）
-  const cur = TW_MAP_STAGES.find(st=>st.s===Math.min(next, TW_MAP_STAGES.length));
-  if(cur){
-    const w = document.createElement('div');
-    w.className = 'tw-map-walker'; w.style.left = cur.x+'%'; w.style.top = cur.y+'%';
-    w.innerHTML = '<img src="sprites/kuu_icon.png" alt="">';
-    pins.appendChild(w);
-  }
+  // マップ上を移動するくうっち
+  _twMapWalker = document.createElement('div');
+  _twMapWalker.className = 'tw-map-walker';
+  _twMapWalker.innerHTML = '<img src="sprites/kuu_icon.png" alt="">';
+  pins.appendChild(_twMapWalker);
+  // 上部の都道府県カード
+  const cards = document.getElementById('tw-map-cards');
+  cards.innerHTML = '<div class="tw-map-cards-track" id="tw-map-cards-track"></div>';
+  const track = document.getElementById('tw-map-cards-track');
+  TW_MAP_STAGES.forEach(st=>{
+    const locked = st.s > twMaxSelStage();
+    const cleared = st.s <= twStageCleared;
+    const c = document.createElement('div');
+    c.className = 'tw-map-card' + (locked ? ' locked' : '');
+    c.dataset.s = st.s;
+    c.innerHTML = `<div class="tw-map-card-name">${locked ? '？？？' : st.name}</div>`+
+      `<div class="tw-map-card-sub">ステージ ${st.s}</div>`+
+      (cleared ? '<div class="tw-map-card-clear">CLEAR</div>' : '');
+    if(!locked) c.onclick = ()=>twMapPickStage(st.s);
+    track.appendChild(c);
+  });
   document.getElementById('tw-map-prog').textContent =
     `せいふく ${Math.min(twStageCleared, TW_MAP_STAGES.length)}/${TW_MAP_STAGES.length}`;
+  twSetupMapSwipe();
   showScreen('screen-tower-map');
-  twMapPickStage(Math.min(next, TW_MAP_STAGES.length));  // 既定で次のステージを選択
+  twMapPickStage(twMaxSelStage(), false);   // 既定で最新ステージ
 }
-function twMapPickStage(s){
+function twMapCenterOn(s, animate, _tries){
+  const st = TW_MAP_STAGES.find(x=>x.s===s); if(!st) return;
+  const vp = document.getElementById('tw-map-viewport');
+  const cam = document.getElementById('tw-map-camera');
+  const VW=vp.clientWidth, VH=vp.clientHeight, CW=cam.offsetWidth, CH=cam.offsetHeight;
+  if(!VW||!VH||!CW){
+    // レイアウト未確定（画面遷移演出中など）は少し待つ。最大90フレームで打ち切り
+    if((_tries||0) < 90) requestAnimationFrame(()=>twMapCenterOn(s,animate,(_tries||0)+1));
+    return;
+  }
+  let tx = VW/2 - st.x/100*CW;
+  let ty = VH/2 - st.y/100*CH;
+  tx = CW<=VW ? (VW-CW)/2 : Math.min(0, Math.max(VW-CW, tx));
+  ty = CH<=VH ? (VH-CH)/2 : Math.min(0, Math.max(VH-CH, ty));
+  if(animate===false) cam.style.transition='none';
+  cam.style.transform = `translate(${tx.toFixed(1)}px,${ty.toFixed(1)}px)`;
+  if(animate===false){ void cam.offsetWidth; cam.style.transition=''; }
+}
+function twMapPickStage(s, animate){
   const st = TW_MAP_STAGES.find(x=>x.s===s);
-  if(!st || s > twStageCleared+1) return;   // 未開放は選べない
+  if(!st || s > twMaxSelStage()) return;   // 未開放は選べない
   twSelectedStage = s;
   document.querySelectorAll('.tw-map-pin').forEach(p=>p.classList.toggle('selected', +p.dataset.s===s));
+  document.querySelectorAll('.tw-map-card').forEach(p=>p.classList.toggle('sel', +p.dataset.s===s));
+  if(_twMapWalker){ _twMapWalker.style.left = st.x+'%'; _twMapWalker.style.top = st.y+'%'; }
+  // カード帯を選択カードが中央に来るよう移動
+  const track = document.getElementById('tw-map-cards-track');
+  if(track) track.style.transform = `translateX(${-((s-1)*TW_MAP_CARDW + TW_MAP_CARDW/2)}px)`;
+  twMapCenterOn(s, animate);
   const cleared = s <= twStageCleared;
   document.getElementById('tw-map-stagename').textContent = `ステージ${s}：${st.name}`;
   document.getElementById('tw-map-stagesub').textContent  = cleared ? '✓ クリアずみ（もういちど ちょうせん）' : '⚔️ ここに しゅつげき！';
   document.getElementById('tw-map-deploy').disabled = false;
+  const prev=document.getElementById('tw-map-prev'), nx=document.getElementById('tw-map-next');
+  if(prev) prev.disabled = s<=1;
+  if(nx)   nx.disabled = s>=twMaxSelStage();
+}
+function twMapStep(d){
+  const ns = Math.max(1, Math.min(twMaxSelStage(), twSelectedStage + d));
+  if(ns!==twSelectedStage) twMapPickStage(ns);
 }
 function twMapDeploy(){ if(twSelectedStage) showTowerSelect(); }
+let _twMapSwipeReady=false;
+function twSetupMapSwipe(){
+  if(_twMapSwipeReady) return; _twMapSwipeReady=true;
+  const vp=document.getElementById('tw-map-viewport'); if(!vp) return;
+  let sx=0,sy=0,drag=false,moved=false;
+  const down=e=>{const p=e.touches?e.touches[0]:e; sx=p.clientX; sy=p.clientY; drag=true; moved=false;};
+  const move=e=>{if(!drag)return; const p=e.touches?e.touches[0]:e; if(Math.abs(p.clientX-sx)>10||Math.abs(p.clientY-sy)>10) moved=true;};
+  const up=e=>{if(!drag)return; drag=false; const p=e.changedTouches?e.changedTouches[0]:e;
+    const dx=p.clientX-sx, dy=p.clientY-sy;
+    if(!moved) return;
+    // 横スワイプ優先、縦も可。左/上=次へ、右/下=前へ
+    if(Math.abs(dx)>=Math.abs(dy)){ if(Math.abs(dx)>28) twMapStep(dx<0?1:-1); }
+    else { if(Math.abs(dy)>28) twMapStep(dy<0?1:-1); }
+  };
+  vp.addEventListener('touchstart',down,{passive:true});
+  vp.addEventListener('touchmove',move,{passive:true});
+  vp.addEventListener('touchend',up);
+  vp.addEventListener('mousedown',down); vp.addEventListener('mousemove',move); window.addEventListener('mouseup',up);
+  vp.addEventListener('click',e=>{ if(moved){ e.stopPropagation(); e.preventDefault(); moved=false; } },true);
+}
 let twPlayerCastleHP  = TW_PLAYER_CASTLE_HP;
 let twEnemyCastleHP   = 0;
 let twEnemyCastleMax  = 0;
