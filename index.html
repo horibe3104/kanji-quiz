@@ -1130,8 +1130,8 @@
     }
     .tw-lane.tw-shake { animation:twLaneShake .38s ease-in-out; }
     /* ===== 日本列島マップ（ステージ選択） ===== */
-    /* 本家風：羊皮紙（古地図）調のステージ選択 */
-    #screen-tower-map {
+    /* 本家風：羊皮紙（古地図）調のステージ選択。表示は .active のときだけ（idで.screenのnoneを上書きしない） */
+    #screen-tower-map.active {
       background:
         radial-gradient(circle at 30% 25%, rgba(255,255,255,.5), transparent 55%),
         radial-gradient(circle at 75% 80%, rgba(120,80,30,.18), transparent 60%),
@@ -1204,11 +1204,16 @@
     .tw-map-pin.selected { box-shadow:0 0 0 4px #ffd54f, 0 2px 4px rgba(93,64,55,.5); z-index:5; }
     .tw-map-pin.locked  { background:#a1887f; color:#efebe9; cursor:not-allowed; opacity:.85; }
     @keyframes twPinPulse { 0%,100%{ box-shadow:0 2px 4px rgba(93,64,55,.5); } 50%{ box-shadow:0 0 0 8px rgba(229,57,53,.3),0 2px 4px rgba(93,64,55,.5); } }
-    /* ルート上を歩くキャラ（現在ステージ付近） */
+    /* ルート上を歩くキャラ。スライドより少し遅れて歩いて移動する（left/topをトランジション） */
     .tw-map-walker { position:absolute; transform:translate(-50%,-115%); z-index:3;
-      width:26px; pointer-events:none; animation:twWalkerBob .7s ease-in-out infinite; }
-    .tw-map-walker img { width:100%; display:block; filter:drop-shadow(0 1px 2px rgba(0,0,0,.3)); }
-    @keyframes twWalkerBob { 0%,100%{ transform:translate(-50%,-115%);} 50%{ transform:translate(-50%,-128%);} }
+      width:28px; pointer-events:none; animation:twWalkerBob .7s ease-in-out infinite;
+      transition:left .62s ease-in-out .07s, top .62s ease-in-out .07s; }
+    .tw-map-walker img { width:100%; display:block; filter:drop-shadow(0 1px 2px rgba(0,0,0,.3)); transition:transform .2s; }
+    @keyframes twWalkerBob { 0%,100%{ transform:translate(-50%,-115%);} 50%{ transform:translate(-50%,-126%);} }
+    /* 移動中はワドル（左右に揺れて歩く） */
+    .tw-map-walker.walking { animation:twWalkerWalk .26s linear infinite; }
+    @keyframes twWalkerWalk {
+      0%,100%{ transform:translate(-50%,-118%) rotate(-7deg);} 50%{ transform:translate(-50%,-127%) rotate(7deg);} }
     .tw-map-region { position:absolute; transform:translate(-50%,-50%); z-index:1;
       font-size:11px; font-weight:900; color:#5d4037; opacity:.7; pointer-events:none; white-space:nowrap;
       text-shadow:0 1px 0 rgba(255,255,255,.5); }
@@ -8839,6 +8844,7 @@ const TW_MAP_STAGES = [
 ];
 const TW_MAP_CARDW = 112;   // カード幅+マージン(px)
 let _twMapWalker = null;
+let _twWalkTimer = null;
 function twMaxSelStage(){ return Math.min(twStageCleared+1, TW_MAP_STAGES.length); }
 function showTowerMap(){
   const pins = document.getElementById('tw-map-pins');
@@ -8925,7 +8931,23 @@ function twMapPickStage(s, animate){
   twSelectedStage = s;
   document.querySelectorAll('.tw-map-pin').forEach(p=>p.classList.toggle('selected', +p.dataset.s===s));
   document.querySelectorAll('.tw-map-card').forEach(p=>p.classList.toggle('sel', +p.dataset.s===s));
-  if(_twMapWalker){ _twMapWalker.style.left = st.x+'%'; _twMapWalker.style.top = st.y+'%'; }
+  // くうっちを歩かせて移動（スライドより少し遅れて）
+  if(_twMapWalker){
+    const prevX = parseFloat(_twMapWalker.style.left);
+    const img = _twMapWalker.querySelector('img');
+    if(img && !isNaN(prevX)) img.style.transform = 'scaleX(' + (st.x >= prevX ? 1 : -1) + ')';
+    if(animate===false){
+      _twMapWalker.classList.remove('walking');
+      _twMapWalker.style.transition = 'none';
+      _twMapWalker.style.left = st.x+'%'; _twMapWalker.style.top = st.y+'%';
+      void _twMapWalker.offsetWidth; _twMapWalker.style.transition = '';
+    } else {
+      _twMapWalker.style.left = st.x+'%'; _twMapWalker.style.top = st.y+'%';
+      _twMapWalker.classList.add('walking');
+      clearTimeout(_twWalkTimer);
+      _twWalkTimer = setTimeout(()=>{ if(_twMapWalker) _twMapWalker.classList.remove('walking'); }, 720);
+    }
+  }
   // カード帯を選択カードが中央に来るよう移動
   const track = document.getElementById('tw-map-cards-track');
   if(track) track.style.transform = `translateX(${-((s-1)*TW_MAP_CARDW + TW_MAP_CARDW/2)}px)`;
