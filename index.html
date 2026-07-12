@@ -870,7 +870,7 @@
     /* 地面の上に重ねる下段UI（本家風） */
     .tw-bottombar {
       position:absolute; bottom:8px; left:10px; right:10px; z-index:10;
-      display:flex; gap:6px; align-items:center; height:88px;
+      display:flex; gap:6px; align-items:center; height:60px;
     }
     .tw-wallet-btn {
       width:60px; height:60px; flex-shrink:0; border:none; border-radius:50%; cursor:pointer;
@@ -930,11 +930,38 @@
     }
     .tw-unit svg { width:100%; height:auto; display:block; }
     .tw-unit.boss { width:84px; height:84px; }
-    .tw-deploy-row {
-      flex:1; min-width:0; align-self:stretch;
-      display:grid; grid-template-columns:repeat(5,1fr); grid-template-rows:repeat(2,1fr);
-      gap:4px;
+    /* 出撃スロット：5枠を1行表示し、スワイプで2ページ目に切替（本家風・重ねてスライド） */
+    .tw-deploy-viewport {
+      flex:1; min-width:0; align-self:stretch; position:relative;
+      overflow:hidden; border-radius:9px; touch-action:pan-y;
     }
+    .tw-deploy-track {
+      display:flex; width:100%; height:100%;
+      transition:transform .26s cubic-bezier(.22,.61,.36,1);
+    }
+    .tw-deploy-page {
+      flex:0 0 100%; min-width:0; height:100%;
+      display:grid; grid-template-columns:repeat(5,1fr); gap:5px;
+    }
+    .tw-deploy-page.tw-page-pad { grid-auto-flow:column; }
+    .tw-deploy-pager {
+      position:absolute; top:2px; left:50%; transform:translateX(-50%);
+      display:flex; gap:5px; z-index:6; pointer-events:none;
+    }
+    .tw-deploy-pager .tw-dot {
+      width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.45);
+      border:1px solid rgba(0,0,0,.35);
+    }
+    .tw-deploy-pager .tw-dot.on { background:#ffd54f; }
+    .tw-deploy-arrow {
+      position:absolute; top:50%; transform:translateY(-50%); z-index:6;
+      width:20px; height:36px; display:flex; align-items:center; justify-content:center;
+      background:rgba(0,0,0,.4); color:#fff; font-size:15px; font-weight:900;
+      cursor:pointer; border:none; padding:0; border-radius:6px;
+    }
+    .tw-deploy-arrow.left  { left:1px; border-radius:6px 3px 3px 6px; }
+    .tw-deploy-arrow.right { right:1px; border-radius:3px 6px 6px 3px; }
+    .tw-deploy-arrow:disabled, .tw-deploy-arrow.hidden { display:none; }
     .tw-deploy-btn {
       flex:1; min-height:0; position:relative; border:2px solid #5c6bc0; border-radius:8px;
       background:linear-gradient(180deg,#f4f6fb,#c8cfe4); padding:0; cursor:pointer; overflow:hidden;
@@ -2609,7 +2636,10 @@
           <div class="tw-wallet-lv-label">LEVEL <span id="tw-wallet-lv">1</span></div>
           <div class="tw-wallet-cost-label"><span id="tw-wallet-cost">-</span></div>
         </button>
-        <div class="tw-deploy-row" id="tw-deploy-row"></div>
+        <div class="tw-deploy-viewport" id="tw-deploy-viewport">
+          <div class="tw-deploy-track" id="tw-deploy-track"></div>
+          <div class="tw-deploy-pager" id="tw-deploy-pager"></div>
+        </div>
         <button class="tw-cannon-btn" id="tw-cannon-btn" onclick="twFireCannon()" disabled>
           <img class="tw-cannon-img-idle" src="sprites/cannon_idle_src.png" alt="">
           <img class="tw-cannon-img-ready" src="sprites/cannon_ready_src.png" alt="">
@@ -8555,19 +8585,90 @@ function startTowerDefense(){
   twScheduleEnemySpawn();
 }
 
+const TW_SLOTS_PER_PAGE = 5;
+let twDeployPage = 0;
+let twDeployPageCount = 1;
+
 function twRenderDeployBar(){
-  const row = document.getElementById('tw-deploy-row');
-  row.innerHTML = '';
-  twDeckSelected.forEach(id=>{
-    const def = twUnitDef(id);
-    if(!def) return;
-    const btn = document.createElement('button');
-    btn.className = 'tw-deploy-btn';
-    btn.dataset.id = id;
-    btn.innerHTML = `<div class="tw-deploy-role">${def.role.icon}</div>${def.svg}<div class="tw-deploy-cost">🪙<span class="tw-cost-num">-</span></div><div class="tw-deploy-gauge"><div class="tw-deploy-gauge-fill"></div></div><div class="tw-deploy-cd" id="tw-cd-${id}"></div>`;
-    btn.onclick = ()=>twDeployUnit(id);
-    row.appendChild(btn);
-  });
+  const track = document.getElementById('tw-deploy-track');
+  track.innerHTML = '';
+  const ids = twDeckSelected.filter(id => twUnitDef(id));
+  twDeployPageCount = Math.max(1, Math.ceil(ids.length / TW_SLOTS_PER_PAGE));
+  for(let pg=0; pg<twDeployPageCount; pg++){
+    const page = document.createElement('div');
+    page.className = 'tw-deploy-page';
+    ids.slice(pg*TW_SLOTS_PER_PAGE, (pg+1)*TW_SLOTS_PER_PAGE).forEach(id=>{
+      const def = twUnitDef(id);
+      const btn = document.createElement('button');
+      btn.className = 'tw-deploy-btn';
+      btn.dataset.id = id;
+      btn.innerHTML = `<div class="tw-deploy-role">${def.role.icon}</div>${def.svg}<div class="tw-deploy-cost">🪙<span class="tw-cost-num">-</span></div><div class="tw-deploy-gauge"><div class="tw-deploy-gauge-fill"></div></div><div class="tw-deploy-cd" id="tw-cd-${id}"></div>`;
+      btn.onclick = ()=>twDeployUnit(id);
+      page.appendChild(btn);
+    });
+    track.appendChild(page);
+  }
+  // ページャーのドット
+  const pager = document.getElementById('tw-deploy-pager');
+  pager.innerHTML = '';
+  if(twDeployPageCount > 1){
+    for(let i=0;i<twDeployPageCount;i++){
+      const dot = document.createElement('div');
+      dot.className = 'tw-dot';
+      pager.appendChild(dot);
+    }
+  }
+  if(twDeployPage >= twDeployPageCount) twDeployPage = twDeployPageCount-1;
+  twSetupDeploySwipe();
+  twGoDeployPage(twDeployPage, false);
+}
+
+function twGoDeployPage(pg, animate){
+  twDeployPage = Math.max(0, Math.min(twDeployPageCount-1, pg));
+  const track = document.getElementById('tw-deploy-track');
+  if(!track) return;
+  track.style.transition = animate===false ? 'none' : '';
+  track.style.transform = `translateX(${-twDeployPage*100}%)`;
+  if(animate===false){ void track.offsetWidth; track.style.transition=''; }
+  const dots = document.querySelectorAll('#tw-deploy-pager .tw-dot');
+  dots.forEach((d,i)=>d.classList.toggle('on', i===twDeployPage));
+}
+
+// スワイプ／ドラッグで2ページ目に切替（1回だけ設定）
+let _twSwipeReady = false;
+function twSetupDeploySwipe(){
+  if(_twSwipeReady) return;
+  _twSwipeReady = true;
+  const vp = document.getElementById('tw-deploy-viewport');
+  if(!vp) return;
+  let startX=0, startY=0, dragging=false, moved=false;
+  const onDown = e=>{
+    const pt = e.touches ? e.touches[0] : e;
+    startX = pt.clientX; startY = pt.clientY; dragging=true; moved=false;
+  };
+  const onMove = e=>{
+    if(!dragging) return;
+    const pt = e.touches ? e.touches[0] : e;
+    const dx = pt.clientX - startX, dy = pt.clientY - startY;
+    if(Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) moved=true;
+  };
+  const onUp = e=>{
+    if(!dragging) return;
+    dragging=false;
+    const pt = (e.changedTouches ? e.changedTouches[0] : e);
+    const dx = pt.clientX - startX;
+    if(moved && Math.abs(dx) > 30){
+      twGoDeployPage(twDeployPage + (dx<0 ? 1 : -1), true);
+    }
+  };
+  vp.addEventListener('touchstart', onDown, {passive:true});
+  vp.addEventListener('touchmove',  onMove, {passive:true});
+  vp.addEventListener('touchend',   onUp);
+  vp.addEventListener('mousedown',  onDown);
+  vp.addEventListener('mousemove',  onMove);
+  window.addEventListener('mouseup', onUp);
+  // タップとスワイプの誤爆防止：スワイプ確定時はクリックを飲む
+  vp.addEventListener('click', e=>{ if(moved){ e.stopPropagation(); e.preventDefault(); moved=false; } }, true);
 }
 
 function twDeployUnit(id){
@@ -9104,7 +9205,7 @@ function twUpgradeWallet(){
 }
 
 function updateTwDeployButtons(){
-  document.querySelectorAll('#tw-deploy-row .tw-deploy-btn').forEach(btn=>{
+  document.querySelectorAll('#tw-deploy-track .tw-deploy-btn').forEach(btn=>{
     const id  = btn.dataset.id;
     const def = twUnitDef(id);
     if(!def) return;
