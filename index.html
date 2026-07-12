@@ -4703,6 +4703,10 @@ function _showScreenRaw(id) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
+  // 地図画面：黒帯で隠れている今のうちにカメラを中央寄せしておく（めくれた瞬間の位置飛び＝チカチカ防止）
+  if(id==='screen-tower-map' && typeof twMapCenterOn==='function'){
+    twMapCenterOn(twSelectedStage, false);
+  }
   // タブバー表示切り替え
   const tabBar = document.getElementById('home-tab-bar');
   if(tabBar) tabBar.style.display = (id === 'screen-start') ? 'flex' : 'none';
@@ -8912,11 +8916,9 @@ function twMapCenterOn(s, animate, _tries){
   const vp = document.getElementById('tw-map-viewport');
   const cam = document.getElementById('tw-map-camera');
   const VW=vp.clientWidth, VH=vp.clientHeight, CW=cam.offsetWidth, CH=cam.offsetHeight;
-  if(!VW||!VH||!CW){
-    // レイアウト未確定（画面遷移演出中など）は少し待つ。最大90フレームで打ち切り
-    if((_tries||0) < 90) requestAnimationFrame(()=>twMapCenterOn(s,animate,(_tries||0)+1));
-    return;
-  }
+  // レイアウト未確定（画面が非アクティブ＝遷移演出中）のときは何もしない。
+  // 画面がアクティブになった瞬間に _showScreenRaw から呼び直して中央寄せする。
+  if(!VW||!VH||!CW) return;
   let tx = VW/2 - st.x/100*CW;
   let ty = VH/2 - st.y/100*CH;
   tx = CW<=VW ? (VW-CW)/2 : Math.min(0, Math.max(VW-CW, tx));
