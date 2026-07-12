@@ -2787,6 +2787,8 @@ window.addEventListener('popstate', () => {
 
 // ===== くうっち SVG GENERATOR =====
 function kSVG(p={}) {
+  // スプライト系キャラ（防衛戦の常設キャラ）は画像をSVGで包んで表示
+  if(p && p.sprite && p.icon) return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="84" height="84"><image href="${p.icon}" x="0" y="0" width="100" height="100" preserveAspectRatio="xMidYMid meet"/></svg>`;
   // にゃんこキャラ（SVG+画像合成）
   if(p && p.char==='neko') return nSVG(p);
   // 画像キャラ（フォールバック）
@@ -3407,6 +3409,14 @@ const KD = [
     ddeco:`<text x="38" y="14" font-size="16">💕</text>` },
   { id:'dino_kami',     name:'かみ小さ大きくびなが',        type:'かみ',     rarity:'ur',     char:'dino', dhue:-45, dsat:'1.6', dbri:'1.1',
     ddeco:`<polygon points="50,5 46,12 38,12 44,17 42,24 50,20 58,24 56,17 62,12 54,12" fill="#ffd600" stroke="#ff8f00" stroke-width="1.5"/><circle cx="50" cy="11" r="2.5" fill="#ff1744"/>` },
+  // ===== くうっち防衛戦の常設キャラ（ガチャ＆育成対応・スプライト表示） =====
+  { id:'tw_kuucchi_basic', name:'くうっち',            type:'くうっち',       rarity:'common', sprite:true, twdef:true, icon:'sprites/kuu_icon.png'  },
+  { id:'tw_pote_basic',    name:'うでながぽてまよ',    type:'うでなが',       rarity:'common', sprite:true, twdef:true, icon:'sprites/pote_icon.png' },
+  { id:'tw_pote_rush',     name:'ぽてまよ',            type:'ぽてまよ',       rarity:'common', sprite:true, twdef:true, icon:'sprites/pote2_icon.png'},
+  { id:'tw_kimomayo',      name:'キモマヨ',            type:'キモマヨ',       rarity:'common', sprite:true, twdef:true, icon:'sprites/kimo_icon.png' },
+  { id:'tw_kuucchi_bat',   name:'コウモリくうっち',    type:'コウモリ',       rarity:'rare',   sprite:true, twdef:true, icon:'sprites/bkuu_icon.png' },
+  { id:'tw_kuucchi_fire',  name:'炎くうっち',          type:'炎',             rarity:'sr',     sprite:true, twdef:true, icon:'sprites/fkuu_icon.png' },
+  { id:'tw_obigkubinaga',  name:'小さ大き首なが',      type:'首なが',         rarity:'ur',     sprite:true, twdef:true, icon:'sprites/obig_icon.png' },
 ];
 
 // ===== ぽてまよ キャラクターデータ (50種) =====
@@ -4340,6 +4350,11 @@ let playerGrade = parseInt(localStorage.getItem('kq_player_grade') || '1');
 
 // ===== INIT =====
 (function init() {
+  // 防衛戦の常設キャラは初期から所有（図鑑・育成に表示。ガチャでも排出されLvが上がる）
+  ['tw_kuucchi_basic','tw_pote_basic','tw_pote_rush','tw_kimomayo','tw_kuucchi_bat','tw_kuucchi_fire','tw_obigkubinaga'].forEach(tid=>{
+    if(!collection[tid]) collection[tid] = 1;
+  });
+  saveState();
   updateCoinBar(); updateGachaBtn(); updateExpBar(); updateTicketBar(); updateTicketGachaBtn(); updateMazeKeyBar();
   setTimeout(checkLoginBonus, 400); // 起動時にログインボーナスチェック
   initDailyMissions();
@@ -8377,49 +8392,49 @@ function twUnitDef(id){
     const poteRole = { icon:'🥊', label:'パンチ', hpMul:1.6, atkMul:0.8, range:11, interval:1.4, area:false };
     return { id, rarity:'common', name:'うでながぽてまよ', role:poteRole,
              svg:`<img class="tw-icon-img" src="${TW_POTE_SPRITE.icon}">`,
-             sprite:TW_POTE_SPRITE, lv:1 };
+             sprite:TW_POTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_POTE2_ID){
     // 近距離ですばやく連打するタイプ
     const rushRole = { icon:'👊', label:'れんだ', hpMul:1.3, atkMul:0.6, range:2, interval:0.55, area:false };
     return { id, rarity:'common', name:'ぽてまよ', role:rushRole,
              svg:`<img class="tw-icon-img" src="${TW_POTE2_SPRITE.icon}">`,
-             sprite:TW_POTE2_SPRITE, lv:1 };
+             sprite:TW_POTE2_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_KUU_ID){
     // かみつき：バランス型のちょい強め近接
     const kuuRole = { icon:'🦷', label:'かみつき', hpMul:1.2, atkMul:1.2, range:3, interval:1.1, area:false };
     return { id, rarity:'common', name:'くうっち', role:kuuRole,
              svg:`<img class="tw-icon-img" src="${TW_KUU_SPRITE.icon}">`,
-             sprite:TW_KUU_SPRITE, lv:1 };
+             sprite:TW_KUU_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_FKUU_ID){
     // ひをはく：射程内の敵をまとめて焼く範囲攻撃。超激レア級の高コスト
     const fireRole = { icon:'🔥', label:'ひをはく', hpMul:1.3, atkMul:1.0, range:13, interval:1.3, area:true };
     return { id, rarity:'sr', name:'炎くうっち', role:fireRole,
              svg:`<img class="tw-icon-img" src="${TW_FKUU_SPRITE.icon}">`,
-             sprite:TW_FKUU_SPRITE, lv:1 };
+             sprite:TW_FKUU_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_BKUU_ID){
     // ひこう：空を飛んで移動がとても速い。打たれ弱め
     const batRole = { icon:'🦇', label:'ひこう', hpMul:0.8, atkMul:0.9, range:2, interval:0.9, area:false, speed:1.35, fly:true };
     return { id, rarity:'rare', name:'コウモリくうっち', role:batRole,
              svg:`<img class="tw-icon-img" src="${TW_BKUU_SPRITE.icon}">`,
-             sprite:TW_BKUU_SPRITE, lv:1 };
+             sprite:TW_BKUU_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_KIMO_ID){
     // あしなが：長い脚を伸ばして中距離から突く。背が高い
     const kimoRole = { icon:'🦵', label:'あしなが', hpMul:0.9, atkMul:1.0, range:12, interval:1.2, area:false };
     return { id, rarity:'common', name:'キモマヨ', role:kimoRole, hScale:2.5,
              svg:`<img class="tw-icon-img" src="${TW_KIMO_SPRITE.icon}">`,
-             sprite:TW_KIMO_SPRITE, lv:1 };
+             sprite:TW_KIMO_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_OBIG_ID){
     // 頭突き：超大型・低速・高コスト。高耐久＆高火力だが攻撃間隔は長い重量級
     const obigRole = { icon:'🦕', label:'あたま', hpMul:2.6, atkMul:1.6, range:4, interval:2.6, area:false, speed:0.22 };
     return { id, rarity:'ur', name:'小さ大き首なが', role:obigRole, hScale:5.4,
              svg:`<img class="tw-icon-img" src="${TW_OBIG_SPRITE.icon}">`,
-             sprite:TW_OBIG_SPRITE, lv:1 };
+             sprite:TW_OBIG_SPRITE, lv: kuucchiLvData(id).lv };
   }
   const k = KD.find(kk=>kk.id===id);
   if(!k) return null;
@@ -8473,7 +8488,7 @@ function showTowerSelect(){
     const dbg = document.createElement('div');
     dbg.className = 'bt-sel-item tw-deck-grid-item';
     dbg.dataset.id = bid;
-    dbg.innerHTML = `${def.svg}<div class="sel-lv">Lv.1</div><div class="sel-name">${def.name}</div><div class="tw-role-chip">${def.role.icon} ${def.role.label}</div>`;
+    dbg.innerHTML = `${def.svg}<div class="sel-lv">Lv.${kuucchiLvData(bid).lv}</div><div class="sel-name">${def.name}</div><div class="tw-role-chip">${def.role.icon} ${def.role.label}</div>`;
     dbg.onclick = ()=>toggleTowerDeck(bid);
     grid.appendChild(dbg);
   });
