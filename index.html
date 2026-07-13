@@ -250,18 +250,21 @@
     }
     .nb-sub-btn:active { transform:translateY(2px); box-shadow:0 1px 0 #5d4037; }
     .nb-sub-btn .sb-ic { font-size:20px; }
-    .nb-char { position:absolute; right:-24px; bottom:-22px; width:210px; z-index:1; cursor:pointer; }
+    .nb-char { position:absolute; right:-28px; bottom:-26px; width:236px; z-index:1; cursor:pointer; }
     .nb-char .mascot-wrap { width:100%; }
     .nb-char .mascot-wrap svg, .nb-char .mascot-wrap img { width:100%; height:auto; }
     .nb-char #mascot-start-pote { display:none; }
-    .nb-char .home-speech-bubble {
-      position:absolute; bottom:158px; right:2px; width:168px; z-index:2; margin:0;
-      background:#37474f; color:#fff; border:2px solid #eceff1; border-radius:14px; padding:9px 11px;
-      font-size:12px; font-weight:700; line-height:1.4; box-shadow:0 3px 8px rgba(0,0,0,.35);
+    /* 本家の吹き出し：切れずに全体表示（切れるのは猫だけ）。猫の上に浮かせ、
+       下向きのしっぽで猫を指す。nb-base2 の内側に完全に収める。 */
+    .nb-speech {
+      position:absolute; top:8px; right:10px; width:186px; z-index:4; margin:0; cursor:pointer;
+      background:#37474f; color:#fff; border:2.5px solid #eceff1; border-radius:16px; padding:10px 13px;
+      font-size:12.5px; font-weight:700; line-height:1.5; box-shadow:0 4px 10px rgba(0,0,0,.4);
     }
-    .nb-char .home-speech-bubble::after {
-      content:''; position:absolute; bottom:-11px; right:34px;
-      border:9px solid transparent; border-top-color:#37474f; border-bottom:0;
+    .nb-speech::after {
+      content:''; position:absolute; bottom:-13px; right:28px;
+      border:11px solid transparent; border-top-color:#37474f; border-bottom:0;
+      filter:drop-shadow(0 3px 2px rgba(0,0,0,.25));
     }
     /* 中央：クイズ・レアガチャ */
     .nb-center-row { display:flex; gap:8px; margin-bottom:11px; }
@@ -2446,8 +2449,8 @@
             <button class="nb-sub-btn" onclick="openMissions()"><span class="sb-ic">📋</span>ミッション</button>
           </div>
         </div>
+        <div class="nb-speech" id="home-speech" onclick="rollHomeSpeech()">きょうも いっしょに がんばろう！</div>
         <div class="nb-char" onclick="rollHomeSpeech()">
-          <div class="home-speech-bubble" id="home-speech">きょうも いっしょに がんばろう！</div>
           <div class="mascot-wrap" id="mascot-start"></div>
           <div class="mascot-wrap" id="mascot-start-pote"></div>
         </div>
@@ -2466,7 +2469,6 @@
 
     <!-- ========= クイズタブ ========= -->
     <div id="tab-panel-quiz" class="tab-panel">
-      <button class="tw-map-back" style="margin-bottom:8px" onclick="switchHomeTab('home')">◀ ホームへ</button>
       <!-- 学年えらび（一番上） -->
       <div class="grade-select-row" id="grade-select-row" style="margin-bottom:10px">
         <span class="grade-label">🎓 学年</span>
@@ -2524,6 +2526,7 @@
         <button class="count-btn" data-count="40" onclick="selectCount(40)">40</button>
       </div>
       <button class="start-btn" onclick="startQuiz()">📖 クイズ スタート！</button>
+      <button class="tw-map-back" style="margin-top:10px" onclick="switchHomeTab('home')">◀ ホームへ</button>
     </div>
 
     <!-- ========= バトルタブ ========= -->
@@ -2868,7 +2871,6 @@
 <!-- TOWER DEFENSE 日本列島マップ（ステージ選択） -->
 <div class="screen" id="screen-tower-map">
   <div class="tw-map-topbar">
-    <button class="tw-map-back" onclick="goHome()">◀ もどる</button>
     <div class="tw-map-title">🗾 にっぽん しんりゃくの たび</div>
     <div class="tw-map-prog" id="tw-map-prog"></div>
   </div>
@@ -3056,12 +3058,12 @@
     </div>
     <button class="tw-map-deploy" id="tw-map-deploy" onclick="twMapDeploy()" disabled>いざ 出陣！</button>
   </div>
+  <button class="tw-map-back" style="margin:8px auto 14px" onclick="goHome()">◀ ホームへ</button>
 </div>
 
 <!-- 侵略戦 パワーアップ画面 -->
 <div class="screen" id="screen-powerup">
   <div class="pu-topbar">
-    <button class="tw-map-back" onclick="goHome()">◀ もどる</button>
     <div class="pu-title">⚡ パワーアップ</div>
     <div class="pu-coins">✨ <span id="powerup-coins">0</span></div>
   </div>
@@ -3071,6 +3073,7 @@
   </button>
   <div class="pu-section-label">⚡ きちの きょうか</div>
   <div class="pu-list" id="powerup-list"></div>
+  <button class="tw-map-back" style="margin:4px auto 16px" onclick="goHome()">◀ ホームへ</button>
 </div>
 
 <!-- TOWER DEFENSE デッキ選択 -->
@@ -3894,6 +3897,10 @@ const KD = [
     ddeco:`<text x="38" y="14" font-size="16">💕</text>` },
   { id:'dino_kami',     name:'かみ小さ大きくびなが',        type:'かみ',     rarity:'ur',     char:'dino', dhue:-45, dsat:'1.6', dbri:'1.1',
     ddeco:`<polygon points="50,5 46,12 38,12 44,17 42,24 50,20 58,24 56,17 62,12 54,12" fill="#ffd600" stroke="#ff8f00" stroke-width="1.5"/><circle cx="50" cy="11" r="2.5" fill="#ff1744"/>` },
+  // ===== 手書きにゃんこ（一頭身ねこ・足だけ／貼付画像のデザインをそのまま使用） =====
+  { id:'tegaki_nyanko', name:'手書きにゃんこ', type:'てがき', rarity:'rare',
+    char:'img', imgSrc:'sprites/tegaki_nyanko.png' },
+
   // ===== くうっち侵略戦の常設キャラ（ガチャ＆育成対応・スプライト表示） =====
   { id:'tw_kuucchi_basic', name:'くうっち',            type:'くうっち',       rarity:'common', sprite:true, twdef:true, icon:'sprites/kuu_icon.png'  },
   { id:'tw_pote_basic',    name:'うでながぽてまよ',    type:'うでなが',       rarity:'common', sprite:true, twdef:true, icon:'sprites/pote_icon.png' },
@@ -4818,21 +4825,21 @@ function toggleMissionPanel() {
 
 // ===== ホームタブ（init前に宣言が必要） =====
 const HOME_SPEECHES = [
-  'きょうも いっしょに がんばろう！',
-  'れんしゅう すると つよく なるよ！',
-  'まいにち ちょっとずつ おぼえよう！',
-  'クイズに せいかいして コインを ゲット！',
-  'キャラを あつめて しんりゃくだ にゃ！',
-  'きょうは なんもん といた？',
-  'まちがっても だいじょうぶ！もう いちど！',
-  'がんばれ！きみなら できる にゃ！',
-  'にっぽんを ぜんぶ せいふくするにゃ！',
-  'クイズで けいけんちを ためよう！',
-  'ガチャで つよい なかまを さがそう！',
-  'パワーアップ すると もっと つよく なるにゃ！',
-  'おなかが すいたにゃ〜',
+  'きょうも べんきょう がんばろうにゃ！',
+  'まいにち ちょっとずつ おぼえようにゃ！',
+  'かんじを おぼえると かしこく なるにゃ！',
+  'クイズに ちょうせん してみようにゃ！',
+  'まちがっても だいじょうぶ！もう いちどにゃ！',
+  'がんばれ！きみなら できるにゃ！',
+  'きょうは なんもん とけるかな にゃ？',
+  'コツコツ つづけるのが いちばんにゃ！',
   'いっしょに べんきょう たのしいにゃ！',
-  'つぎの けん、せいふく できるかな？',
+  'あたらしい かんじ、おぼえられるかな にゃ？',
+  'よく できたにゃ！その ちょうし！',
+  'べんきょうした ぶん、つよく なるにゃ！',
+  'あきらめないで がんばるにゃ！',
+  'せいかい すると うれしいにゃ〜！',
+  'きょうの べんきょう、はじめるにゃ？',
 ];
 function updateHomeSpeech() {
   const el = document.getElementById('home-speech');
@@ -4914,7 +4921,8 @@ let playerGrade = parseInt(localStorage.getItem('kq_player_grade') || '1');
   initDailyMissions();
   checkBadges();
   updateEvent2Btn();
-  document.getElementById('mascot-start').innerHTML = kSVG(KD[0]);
+  // トップのくうっちは 綺麗な画像から（口いっぱいの くうっち）
+  document.getElementById('mascot-start').innerHTML = '<img src="sprites/kuu_mascot.png" alt="くうっち" style="width:100%;height:auto;display:block">';
   // ぽてまよ（ノーマル）を常に表示
   document.getElementById('mascot-start-pote').innerHTML = mSVG(MD[0]);
   document.getElementById('mascot-result').innerHTML = kSVG(KD[0]);
