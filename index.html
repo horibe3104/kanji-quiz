@@ -840,13 +840,8 @@
     @keyframes twRotate { 0%,100%{transform:rotate(0deg)} 50%{transform:rotate(-90deg)} }
     .tw-rotate-text { font-size:14px; font-weight:700; }
     .tw-game { height:100%; position:relative; }
-    @media (orientation:portrait) {
-      #screen-tower .tw-game    { display:none !important; }
-      #screen-tower .tw-rotate-hint { display:flex; }
-    }
-    @media (orientation:landscape) {
-      .tw-rotate-hint { display:none !important; }
-    }
+    /* 縦でも横でもプレイ可能に（回転ヒントは非表示） */
+    .tw-rotate-hint { display:none !important; }
     .tw-topbar {
       position:absolute; top:8px; left:10px; right:10px; z-index:10;
       display:flex; align-items:center; gap:8px;
