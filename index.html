@@ -177,29 +177,61 @@
     .tab-nav-btn:active { opacity:.7; }
     .tab-panel { display:none; }
     .tab-panel.active { display:block; }
-    /* ===== ホームのメニューハブ（本家風） ===== */
-    .home-loop { background:#fff3e0; border:2px solid #ffb74d; border-radius:14px; padding:7px 10px; margin-bottom:12px; }
-    .home-loop-title { font-size:11px; font-weight:900; color:#e65100; margin-bottom:4px; text-align:center; }
-    .home-loop-steps { display:flex; align-items:center; justify-content:center; gap:5px; font-size:13px; font-weight:900; color:#5d4037; flex-wrap:wrap; }
-    .home-loop-steps b { background:#fff; border-radius:8px; padding:3px 8px; border:1.5px solid #ffb74d; font-weight:900; }
-    .home-loop-steps .arw { color:#ff8f00; font-size:15px; }
-    .home-menu-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
-    .home-menu-tile {
-      border:none; border-radius:16px; padding:13px 8px; cursor:pointer; text-align:center; color:#fff;
-      background:linear-gradient(180deg,#7986cb,#5c6bc0); box-shadow:0 4px 0 #3949ab;
-      display:flex; flex-direction:column; align-items:center; gap:1px;
+    /* ===== ホーム＝ネコ基地風メニューハブ（緑唐草＋金ボタン） ===== */
+    #screen-start .card {
+      background-color:#4e9a5f;
+      background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27140%27%20height%3D%27140%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27rgba%28255%2C255%2C255%2C0.10%29%27%20stroke-width%3D%274%27%20stroke-linecap%3D%27round%27%3E%3Cpath%20d%3D%27M35%205%20q0%2030%2030%2030%20q30%200%2030%20-30%27/%3E%3Cpath%20d%3D%27M5%2070%20q30%200%2030%2030%20q0%2030%2030%2030%27/%3E%3Cpath%20d%3D%27M70%2070%20q0%2022%2022%2022%20q22%200%2022%2022%27/%3E%3Cpath%20d%3D%27M105%205%20q0%2020%2020%2020%27/%3E%3Ccircle%20cx%3D%2765%27%20cy%3D%2735%27%20r%3D%275%27/%3E%3Ccircle%20cx%3D%2735%27%20cy%3D%27100%27%20r%3D%275%27/%3E%3Ccircle%20cx%3D%2792%27%20cy%3D%2792%27%20r%3D%275%27/%3E%3C/g%3E%3C/svg%3E");
+      background-size:130px 130px;
+      border:3px solid #6d4c41;
     }
-    .home-menu-tile:active { transform:translateY(3px); box-shadow:0 1px 0 #3949ab; }
-    .home-menu-tile.primary { grid-column:1 / -1; background:linear-gradient(180deg,#ff8a50,#f4511e); box-shadow:0 5px 0 #bf360c; padding:16px; }
-    .home-menu-tile.gacha  { background:linear-gradient(180deg,#ba68c8,#8e24aa); box-shadow:0 4px 0 #6a1b9a; }
-    .home-menu-tile.quiz   { background:linear-gradient(180deg,#4db6ac,#00897b); box-shadow:0 4px 0 #00695c; }
-    .home-menu-tile.power  { background:linear-gradient(180deg,#ffb300,#fb8c00); box-shadow:0 4px 0 #e65100; }
-    .hm-icon { font-size:32px; line-height:1; }
-    .home-menu-tile.primary .hm-icon { font-size:44px; }
-    .hm-name { font-size:15px; font-weight:900; margin-top:2px; }
-    .home-menu-tile.primary .hm-name { font-size:21px; }
-    .hm-sub { font-size:10px; font-weight:700; opacity:.92; }
-    .home-menu-tile.primary .hm-sub { font-size:12px; }
+    /* あそびかたループ */
+    .home-loop { background:rgba(255,248,225,.92); border:2px solid #8d6e63; border-radius:12px; padding:6px 8px; margin-bottom:10px; }
+    .home-loop-title { font-size:11px; font-weight:900; color:#e65100; margin-bottom:3px; text-align:center; }
+    .home-loop-steps { display:flex; align-items:center; justify-content:center; gap:5px; font-size:13px; font-weight:900; color:#5d4037; flex-wrap:wrap; }
+    .home-loop-steps b { background:#fff; border-radius:8px; padding:2px 7px; border:1.5px solid #ffb74d; }
+    .home-loop-steps .arw { color:#ef6c00; font-size:15px; }
+    /* 金色ボタン（ネコ基地スタイル） */
+    .nb-btn {
+      display:flex; align-items:center; gap:10px; width:100%; box-sizing:border-box;
+      border:3px solid #6d4c41; border-radius:14px; padding:12px 14px; margin-bottom:10px; cursor:pointer;
+      background:linear-gradient(180deg,#ffe08a 0%,#ffc107 55%,#ffa000 100%);
+      box-shadow:0 4px 0 #5d4037, inset 0 1px 0 rgba(255,255,255,.6);
+      color:#4e342e; text-align:left;
+    }
+    .nb-btn:active { transform:translateY(3px); box-shadow:0 1px 0 #5d4037; }
+    .nb-btn .nb-ic { font-size:30px; flex-shrink:0; width:38px; text-align:center; }
+    .nb-btn .nb-tx { flex:1; }
+    .nb-btn .nb-name { font-size:19px; font-weight:900; letter-spacing:.5px; }
+    .nb-btn .nb-sub { font-size:11px; font-weight:700; opacity:.8; }
+    .nb-btn.primary {
+      background:linear-gradient(180deg,#ffd54f 0%,#ff9800 60%,#f57c00 100%);
+      padding:16px 14px;
+    }
+    .nb-btn.primary .nb-ic { font-size:40px; }
+    .nb-btn.primary .nb-name { font-size:24px; }
+    /* ガチャ行 */
+    .nb-gacha-row { display:flex; gap:8px; margin:2px 0 12px; }
+    .nb-gacha-btn {
+      flex:1; border:3px solid #33691e; border-radius:14px; padding:11px 6px; cursor:pointer;
+      background:linear-gradient(180deg,#aed581,#7cb342); box-shadow:0 4px 0 #33691e; color:#1b5e20;
+      font-weight:900; text-align:center; display:flex; flex-direction:column; align-items:center; gap:2px;
+    }
+    .nb-gacha-btn.rare { background:linear-gradient(180deg,#ffe082,#ffb300); border-color:#e65100; box-shadow:0 4px 0 #bf360c; color:#5d4037; }
+    .nb-gacha-btn:active { transform:translateY(3px); box-shadow:0 1px 0 #33691e; }
+    .nb-gacha-btn .g-ic { font-size:24px; }
+    .nb-gacha-btn .g-name { font-size:13px; }
+    .nb-gacha-btn .g-cost { font-size:10px; font-weight:700; opacity:.85; }
+    /* 小アイコンボタン行（メニュー/ミッション等） */
+    .nb-icon-row { display:flex; justify-content:space-around; gap:6px; margin-bottom:10px; }
+    .nb-icon-btn {
+      background:none; border:none; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px;
+      color:#fff8e1; font-size:11px; font-weight:900; text-shadow:0 1px 2px rgba(0,0,0,.4); flex:1;
+    }
+    .nb-icon-btn .ni-ic {
+      width:48px; height:48px; border-radius:50%; background:rgba(255,248,225,.95); border:2.5px solid #6d4c41;
+      display:flex; align-items:center; justify-content:center; font-size:24px; box-shadow:0 3px 0 #5d4037;
+    }
+    .nb-icon-btn:active .ni-ic { transform:translateY(2px); box-shadow:0 1px 0 #5d4037; }
     /* ===== 学年セレクター ===== */
     .grade-select-row {
       display:flex; align-items:center; gap:6px;
@@ -2343,37 +2375,39 @@
         <button class="grade-btn" data-grade="2" onclick="setPlayerGrade(2)">2年生</button>
         <button class="grade-btn" data-grade="3" onclick="setPlayerGrade(3)">3年生</button>
       </div>
-      <!-- あそびのながれ（本家風ループ） -->
+      <!-- あそびのながれ -->
       <div class="home-loop">
-        <div class="home-loop-title">🎮 あそびかた</div>
         <div class="home-loop-steps"><b>📚クイズ</b><span class="arw">▶</span><b>🎲ガチャ</b><span class="arw">▶</span><b>🗾しんりゃく</b></div>
       </div>
-      <!-- メインメニュー（ハブ） -->
-      <div class="home-menu-grid">
-        <button class="home-menu-tile primary" onclick="showTowerMap()">
-          <div class="hm-icon">🗾</div><div class="hm-name">しんりゃく</div><div class="hm-sub">にっぽんを せいふくせよ！</div>
+      <!-- メイン金ボタン（ネコ基地スタイル） -->
+      <button class="nb-btn primary" onclick="showTowerMap()">
+        <div class="nb-ic">🗾</div><div class="nb-tx"><div class="nb-name">しんりゃく かいし！！</div><div class="nb-sub">にっぽんを せいふくせよ</div></div>
+      </button>
+      <button class="nb-btn" onclick="switchHomeTab('quiz')">
+        <div class="nb-ic">📚</div><div class="nb-tx"><div class="nb-name">クイズ</div><div class="nb-sub">べんきょうして けいけんち・コインを ゲット</div></div>
+      </button>
+      <button class="nb-btn" onclick="showPowerup()">
+        <div class="nb-ic">⚡</div><div class="nb-tx"><div class="nb-name">パワーアップ</div><div class="nb-sub">けいけんちで つよくする</div></div>
+      </button>
+      <button class="nb-btn" onclick="showSodateru()">
+        <div class="nb-ic">⬆️</div><div class="nb-tx"><div class="nb-name">キャラクター いくせい</div><div class="nb-sub">なかまを レベルアップ</div></div>
+      </button>
+      <!-- ガチャ行 -->
+      <div class="nb-gacha-row">
+        <button class="nb-gacha-btn" onclick="showGacha()">
+          <div class="g-ic">🎲</div><div class="g-name">くうっちガチャ</div><div class="g-cost">🪙20まい</div>
         </button>
-        <button class="home-menu-tile quiz" onclick="switchHomeTab('quiz')">
-          <div class="hm-icon">📚</div><div class="hm-name">クイズ</div><div class="hm-sub">べんきょうで けいけんち</div>
+        <button class="nb-gacha-btn rare" onclick="showGacha()">
+          <div class="g-ic">🌟</div><div class="g-name">10連ガチャ</div><div class="g-cost">SR以上 かくてい</div>
         </button>
-        <button class="home-menu-tile gacha" onclick="showGacha()">
-          <div class="hm-icon">🎲</div><div class="hm-name">ガチャ</div><div class="hm-sub">なかまを あつめる</div>
-        </button>
-        <button class="home-menu-tile power" onclick="showPowerup()">
-          <div class="hm-icon">⚡</div><div class="hm-name">パワーアップ</div><div class="hm-sub">つよくする</div>
-        </button>
-        <button class="home-menu-tile" onclick="showSodateru()">
-          <div class="hm-icon">⬆️</div><div class="hm-name">そだてる</div><div class="hm-sub">レベルアップ</div>
-        </button>
-        <button class="home-menu-tile" onclick="showCollection()">
-          <div class="hm-icon">🎒</div><div class="hm-name">ずかん</div><div class="hm-sub">コレクション</div>
-        </button>
-        <button class="home-menu-tile" onclick="showBattleSelect()">
-          <div class="hm-icon">⚔️</div><div class="hm-name">くうっちバトル</div><div class="hm-sub">クイズで たたかう</div>
-        </button>
-        <button class="home-menu-tile" onclick="showMaze()">
-          <div class="hm-icon">🗺️</div><div class="hm-name">ボーナス迷路</div><div class="hm-sub">🗝️で ちょうせん</div>
-        </button>
+      </div>
+      <!-- 小アイコン（メニュー/図鑑/バトル/ミッション） -->
+      <div class="nb-icon-row">
+        <button class="nb-icon-btn" onclick="showCollection()"><div class="ni-ic">🎒</div>ずかん</button>
+        <button class="nb-icon-btn" onclick="showBattleSelect()"><div class="ni-ic">⚔️</div>バトル</button>
+        <button class="nb-icon-btn" onclick="showMaze()"><div class="ni-ic">🗺️</div>めいろ</button>
+        <button class="nb-icon-btn" onclick="showBadges()"><div class="ni-ic">🏅</div>バッジ</button>
+        <button class="nb-icon-btn" onclick="showSettings()"><div class="ni-ic">⚙️</div>せってい</button>
       </div>
       <button class="event-stage-btn" onclick="startEventQuiz()" style="display:none">🎌 イベント！　漢字チャレンジ①<br><span style="font-size:13px;font-weight:700;opacity:.9">全15問 ✦ 読みから漢字をえらぼう</span></button>
       <button id="event2-btn" class="event2-challenge-btn" onclick="startEventQuiz2()"></button>
@@ -2390,6 +2424,7 @@
 
     <!-- ========= クイズタブ ========= -->
     <div id="tab-panel-quiz" class="tab-panel">
+      <button class="tw-map-back" style="margin-bottom:8px" onclick="switchHomeTab('home')">◀ ホームへ</button>
       <div class="tab-section-title">📚 クイズをえらぼう</div>
       <div class="section-label" id="section-kanji">漢検１０級</div>
       <div class="mode-buttons" id="mode-group-kanji">
@@ -2468,21 +2503,7 @@
   </div>
 </div>
 
-<!-- ボトムタブバー（ホーム画面のみ表示） -->
-<div class="home-tab-bar" id="home-tab-bar">
-  <button class="tab-nav-btn active" data-tab="home" onclick="switchHomeTab('home')">
-    <span class="tab-icon">🏠</span>ホーム
-  </button>
-  <button class="tab-nav-btn" data-tab="quiz" onclick="switchHomeTab('quiz')">
-    <span class="tab-icon">📚</span>クイズ
-  </button>
-  <button class="tab-nav-btn" data-tab="battle" onclick="switchHomeTab('battle')">
-    <span class="tab-icon">⚔️</span>バトル
-  </button>
-  <button class="tab-nav-btn" data-tab="mypage" onclick="switchHomeTab('mypage')">
-    <span class="tab-icon">🎒</span>マイページ
-  </button>
-</div>
+<!-- ボトムタブは廃止（ホームをネコ基地風のメニューハブに統合） -->
 
 <!-- SETTINGS -->
 <div class="screen" id="screen-settings">
@@ -4785,8 +4806,6 @@ let playerGrade = parseInt(localStorage.getItem('kq_player_grade') || '1');
     const d = document.createElement('div'); d.className='gacha-deco-mini';
     d.innerHTML = kSVG(k); row.appendChild(d);
   });
-  // タブバー：ホーム画面が初期アクティブなので表示
-  document.getElementById('home-tab-bar').style.display = 'flex';
   // 学年ボタン初期状態
   setPlayerGrade(playerGrade);
   // ホームセリフ初期表示
