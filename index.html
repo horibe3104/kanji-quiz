@@ -4921,6 +4921,8 @@ let playerGrade = parseInt(localStorage.getItem('kq_player_grade') || '1');
   initDailyMissions();
   checkBadges();
   updateEvent2Btn();
+  // 侵略戦スプライトを先読み（この初期化ブロックはスプライト定義より前に走るので遅延実行）
+  setTimeout(()=>{ try{ preloadTwSprites(); }catch(e){} }, 0);
   // トップのくうっちは 綺麗な画像から（口いっぱいの くうっち）
   document.getElementById('mascot-start').innerHTML = '<img src="sprites/kuu_mascot.png" alt="くうっち" style="width:100%;height:auto;display:block">';
   // ぽてまよ（ノーマル）を常に表示
@@ -8997,6 +8999,23 @@ const TW_NYORO_SPRITE = {
   atk:  ['sprites/nyoro_atk1.png','sprites/nyoro_atk2.png'],
   dmg:  'sprites/nyoro_dmg.png',
 };
+// 全スプライトを事前ロード（登場した瞬間の未読込ブランクで「キャラが消える」問題を防ぐ）
+let _twPreloadCache = [];
+let _twPreloaded = false;
+function preloadTwSprites(){
+  if(_twPreloaded) return; _twPreloaded = true;
+  const sets = [TW_KUU_SPRITE, TW_FKUU_SPRITE, TW_BKUU_SPRITE, TW_KIMO_SPRITE,
+    TW_POTE_SPRITE, TW_POTE2_SPRITE, TW_METALPOTE_SPRITE, TW_OBIG_SPRITE,
+    TW_TEGAKI_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE];
+  const urls = new Set();
+  sets.forEach(sp=>{ if(!sp) return;
+    [sp.icon, sp.idle, sp.dmg].forEach(u=>u&&urls.add(u));
+    (sp.walk||[]).forEach(u=>u&&urls.add(u));
+    (sp.atk ||[]).forEach(u=>u&&urls.add(u));
+  });
+  urls.forEach(u=>{ const im = new Image(); im.decoding='async'; im.src = u; _twPreloadCache.push(im); });
+}
+
 // デッキIDからユニット定義を解決（常設キャラ or ガチャキャラ）
 function twUnitDef(id){
   if(id === TW_DEBUG_CAT_ID){
