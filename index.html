@@ -2454,15 +2454,6 @@
           <div class="g-ic">🌟</div><div class="g-name">レアガチャ</div><div class="g-cost">なかまを あつめる</div>
         </button>
       </div>
-      <div class="mission-section">
-        <button class="mission-toggle-btn" id="mission-toggle-btn" onclick="toggleMissionPanel()">
-          <span>📋 デイリーミッション</span>
-          <span class="mission-toggle-arrow">▼</span>
-        </button>
-        <div class="mission-panel" id="mission-panel">
-          <div id="mission-list"></div>
-        </div>
-      </div>
     </div>
 
     <!-- ========= クイズタブ ========= -->
@@ -4863,13 +4854,21 @@ function showMenuPopup(){
   ov.onclick = e=>{ if(e.target===ov) ov.remove(); };
   document.body.appendChild(ov);
 }
-// ミッションを開く
+// ミッション（デイリーミッション）をポップアップで開く
 function openMissions(){
-  const panel = document.getElementById('mission-panel');
-  const btn   = document.getElementById('mission-toggle-btn');
-  if(panel && !panel.classList.contains('open')){ panel.classList.add('open'); if(btn) btn.classList.add('open'); }
-  const sec = document.querySelector('.mission-section');
-  if(sec) sec.scrollIntoView({behavior:'smooth', block:'center'});
+  let ov = document.getElementById('mission-popup');
+  if(ov) ov.remove();
+  ov = document.createElement('div');
+  ov.id = 'mission-popup'; ov.className = 'hmp-overlay';
+  ov.innerHTML =
+    `<div class="hmp-box" style="width:min(92%,380px)">`+
+      `<div class="hmp-title">📋 デイリーミッション</div>`+
+      `<div id="mission-list" class="mission-panel open" style="max-height:60vh;overflow:auto"></div>`+
+      `<button class="hmp-close" onclick="document.getElementById('mission-popup').remove()">とじる</button>`+
+    `</div>`;
+  ov.onclick = e=>{ if(e.target===ov) ov.remove(); };
+  document.body.appendChild(ov);
+  renderMissionList();
 }
 let currentHomeTab = 'home';
 function switchHomeTab(tab) {
