@@ -239,6 +239,17 @@
       display:flex; align-items:center; justify-content:center; font-size:24px; box-shadow:0 3px 0 #5d4037;
     }
     .nb-icon-btn:active .ni-ic { transform:translateY(2px); box-shadow:0 1px 0 #5d4037; }
+    /* クイズ画面内の あそぶモード（バトル・迷路） */
+    .quiz-play-row { display:flex; gap:8px; margin-bottom:8px; }
+    .quiz-play-btn {
+      flex:1; border:none; border-radius:12px; padding:12px 6px; cursor:pointer; color:#fff;
+      font-size:14px; font-weight:900; display:flex; flex-direction:column; align-items:center; gap:3px;
+      background:linear-gradient(180deg,#ef5350,#e53935); box-shadow:0 4px 0 #b71c1c;
+    }
+    .quiz-play-btn.maze { background:linear-gradient(180deg,#7e57c2,#5e35b1); box-shadow:0 4px 0 #4527a0; }
+    .quiz-play-btn:active { transform:translateY(3px); box-shadow:0 1px 0 #b71c1c; }
+    .quiz-play-btn.maze:active { box-shadow:0 1px 0 #4527a0; }
+    .quiz-play-btn .qp-ic { font-size:24px; }
     /* ===== 学年セレクター ===== */
     .grade-select-row {
       display:flex; align-items:center; gap:6px;
@@ -1302,6 +1313,13 @@
     .pu-title { flex:1; text-align:center; font-size:17px; font-weight:900; color:#ffe082; text-shadow:0 2px 3px rgba(0,0,0,.5); }
     .pu-coins { font-size:13px; font-weight:900; color:#fff; background:rgba(0,0,0,.3); border:1.5px solid #ffca28; border-radius:12px; padding:3px 10px; flex-shrink:0; }
     .pu-hint { color:#b0bec5; font-size:12px; font-weight:700; margin:4px 0 8px; }
+    .pu-soda-btn {
+      width:min(96%,460px); box-sizing:border-box; margin:0 0 10px; padding:12px 14px; cursor:pointer;
+      border:2px solid #6a1b9a; border-radius:12px; font-size:15px; font-weight:900; color:#fff;
+      background:linear-gradient(180deg,#ab47bc,#8e24aa); box-shadow:0 4px 0 #4a148c; text-align:center;
+    }
+    .pu-soda-btn:active { transform:translateY(2px); box-shadow:0 2px 0 #4a148c; }
+    .pu-section-label { width:min(96%,460px); font-size:12px; font-weight:900; color:#90caf9; margin:2px 0 6px; text-align:left; }
     .gacha-seed-reward { display:inline-block; margin-top:6px; background:rgba(255,193,7,.18);
       border:1.5px solid #ffca28; border-radius:99px; padding:3px 12px; font-size:13px; font-weight:900; color:#ff8f00; }
     .pu-list { width:min(96%,460px); display:flex; flex-direction:column; gap:8px; padding:0 0 20px; }
@@ -2378,10 +2396,7 @@
             <div class="nb-ic">📚</div><div class="nb-tx"><div class="nb-name">クイズ</div><div class="nb-sub">けいけんち・コインを ゲット</div></div>
           </button>
           <button class="nb-btn" onclick="showPowerup()">
-            <div class="nb-ic">⚡</div><div class="nb-tx"><div class="nb-name">パワーアップ</div><div class="nb-sub">けいけんちで つよくする</div></div>
-          </button>
-          <button class="nb-btn" onclick="showSodateru()">
-            <div class="nb-ic">⬆️</div><div class="nb-tx"><div class="nb-name">そだてる</div><div class="nb-sub">なかまを レベルアップ</div></div>
+            <div class="nb-ic">⚡</div><div class="nb-tx"><div class="nb-name">パワーアップ</div><div class="nb-sub">キャラ・きちを つよくする</div></div>
           </button>
         </div>
         <div class="nb-right">
@@ -2395,8 +2410,6 @@
       <!-- 小アイコン（メニュー/図鑑/バトル/ミッション位置） -->
       <div class="nb-icon-row">
         <button class="nb-icon-btn" onclick="showCollection()"><div class="ni-ic">🎒</div>ずかん</button>
-        <button class="nb-icon-btn" onclick="showBattleSelect()"><div class="ni-ic">⚔️</div>バトル</button>
-        <button class="nb-icon-btn" onclick="showMaze()"><div class="ni-ic">🗺️</div>めいろ</button>
         <button class="nb-icon-btn" onclick="showBadges()"><div class="ni-ic">🏅</div>バッジ</button>
         <button class="nb-icon-btn" onclick="showSettings()"><div class="ni-ic">⚙️</div>せってい</button>
       </div>
@@ -2416,8 +2429,6 @@
         <button class="grade-btn" data-grade="2" onclick="setPlayerGrade(2)">2年生</button>
         <button class="grade-btn" data-grade="3" onclick="setPlayerGrade(3)">3年生</button>
       </div>
-      <button class="event-stage-btn" onclick="startEventQuiz()" style="display:none">🎌 イベント！　漢字チャレンジ①<br><span style="font-size:13px;font-weight:700;opacity:.9">全15問 ✦ 読みから漢字をえらぼう</span></button>
-      <button id="event2-btn" class="event2-challenge-btn" onclick="startEventQuiz2()"></button>
       <div class="mission-section">
         <button class="mission-toggle-btn" id="mission-toggle-btn" onclick="toggleMissionPanel()">
           <span>📋 デイリーミッション</span>
@@ -2432,7 +2443,14 @@
     <!-- ========= クイズタブ ========= -->
     <div id="tab-panel-quiz" class="tab-panel">
       <button class="tw-map-back" style="margin-bottom:8px" onclick="switchHomeTab('home')">◀ ホームへ</button>
-      <div class="tab-section-title">📚 クイズをえらぼう</div>
+      <!-- クイズであそぶモード（バトル・迷路・イベント） -->
+      <div class="quiz-play-row">
+        <button class="quiz-play-btn battle" onclick="showBattleSelect()"><span class="qp-ic">⚔️</span>くうっちバトル</button>
+        <button class="quiz-play-btn maze" onclick="showMaze()"><span class="qp-ic">🗺️</span>ボーナス迷路</button>
+      </div>
+      <button class="event-stage-btn" onclick="startEventQuiz()" style="display:none">🎌 イベント！　漢字チャレンジ①<br><span style="font-size:13px;font-weight:700;opacity:.9">全15問 ✦ 読みから漢字をえらぼう</span></button>
+      <button id="event2-btn" class="event2-challenge-btn" onclick="startEventQuiz2()"></button>
+      <div class="tab-section-title" style="margin-top:10px">📚 クイズをえらぼう</div>
       <div class="section-label" id="section-kanji">漢検１０級</div>
       <div class="mode-buttons" id="mode-group-kanji">
         <button class="mode-btn selected" data-mode="reading" onclick="selectMode('reading')"><span class="mode-icon">👂</span>読み方は？</button>
@@ -2710,7 +2728,7 @@
       </div>
       <button class="soda-back-inner-btn" onclick="sodaBack()">← くうっちをえらびなおす</button>
     </div>
-    <button class="gacha-back-btn" id="soda-home-btn" onclick="goHome()">← トップへ</button>
+    <button class="gacha-back-btn" id="soda-home-btn" onclick="showPowerup()">← パワーアップへ</button>
   </div>
 </div>
 
@@ -2739,7 +2757,7 @@
       <button class="soda-use-btn" id="soda-up-btn2" onclick="useExpStones()">✨ レベルアップ！</button>
       <button class="soda-back-btn" onclick="sodaBack()">← くうっちをえらびなおす</button>
     </div>
-    <button class="gacha-back-btn" id="soda-home-btn2" onclick="goHome()">← トップへ</button>
+    <button class="gacha-back-btn" id="soda-home-btn2" onclick="showPowerup()">← パワーアップへ</button>
   </div>
 </div>
 
@@ -3016,7 +3034,11 @@
     <div class="pu-title">⚡ パワーアップ</div>
     <div class="pu-coins">✨ <span id="powerup-coins">0</span></div>
   </div>
-  <div class="pu-hint">ガチャや バトルで もらえる ✨けいけんち で しんりゃくたいを つよくしよう！</div>
+  <div class="pu-hint">ガチャや バトルで もらえる ✨けいけんち で つよくしよう！</div>
+  <button class="pu-soda-btn" onclick="showSodateru()">
+    🐾 キャラを そだてる（レベルアップ）　▶
+  </button>
+  <div class="pu-section-label">⚡ きちの きょうか</div>
   <div class="pu-list" id="powerup-list"></div>
 </div>
 
