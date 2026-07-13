@@ -3767,8 +3767,8 @@ const KD = [
 <text x="74" y="-8" font-size="7" fill="#ffe57f" text-anchor="middle">✦</text>`, bot:'' },
 
   // ===== ザクバキくん 20種 =====
-  { id:'zaku_normal',   name:'ノーマルザクバキくん', type:'ノーマル',   rarity:'common',
-    char:'zakubaki', zbg1:'#fffde7', zbg2:'#fdd835', zbg3:'#f9a825', zlt:'#e65100', zlimb:'#fdd835' },
+  { id:'zaku_normal',   name:'ザクバキくん', type:'でんき',   rarity:'rare',
+    sprite:true, twdef:true, icon:'sprites/zaku_icon.png' },
   { id:'zaku_aka',      name:'あかザクバキくん',     type:'あか',       rarity:'common',
     char:'zakubaki', zbg1:'#ffcdd2', zbg2:'#ef5350', zbg3:'#b71c1c', zlt:'#ffab40', zlimb:'#ef5350' },
   { id:'zaku_ao',       name:'あおザクバキくん',     type:'あお',       rarity:'common',
@@ -4912,7 +4912,7 @@ let playerGrade = parseInt(localStorage.getItem('kq_player_grade') || '1');
   // 侵略戦の常設7キャラは最初から所持（自作の高品質キャラを最初から使えるように）。
   // ガチャでも排出され、入手するたびLvが上がる。図鑑・育成にも表示。
   ['tw_kuucchi_basic','tw_pote_basic','tw_pote_rush','tw_kimomayo',
-   'tw_kuucchi_bat','tw_kuucchi_fire','tw_obigkubinaga','tw_metal_potemayo','tegaki_nyanko'].forEach(tid=>{
+   'tw_kuucchi_bat','tw_kuucchi_fire','tw_obigkubinaga','tw_metal_potemayo','tegaki_nyanko','zaku_normal'].forEach(tid=>{
     if(!collection[tid]) collection[tid] = 1;
   });
   saveState();
@@ -8976,6 +8976,15 @@ const TW_TEGAKI_SPRITE = {
   atk:  ['sprites/tegaki_atk1.png','sprites/tegaki_atk2.png','sprites/tegaki_atk3.png'],
   dmg:  'sprites/tegaki_dmg.png',
 };
+// コマアニメ式：ザクバキくん（電撃・遠距離／モーション一覧から作成）
+const TW_ZAKU_ID = 'zaku_normal';
+const TW_ZAKU_SPRITE = {
+  icon: 'sprites/zaku_icon.png',
+  idle: 'sprites/zaku_idle.png',
+  walk: [1,2,3,4].map(i=>`sprites/zaku_walk${i}.png`),
+  atk:  ['sprites/zaku_atk1.png','sprites/zaku_atk2.png','sprites/zaku_atk3.png'],
+  dmg:  'sprites/zaku_dmg.png',
+};
 // コマアニメ式：わんこ（敵キャラ・右向きシート）3色バリエーション
 function _twMakeWankoSprite(prefix){
   return {
@@ -9006,7 +9015,7 @@ function preloadTwSprites(){
   if(_twPreloaded) return; _twPreloaded = true;
   const sets = [TW_KUU_SPRITE, TW_FKUU_SPRITE, TW_BKUU_SPRITE, TW_KIMO_SPRITE,
     TW_POTE_SPRITE, TW_POTE2_SPRITE, TW_METALPOTE_SPRITE, TW_OBIG_SPRITE,
-    TW_TEGAKI_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE];
+    TW_TEGAKI_SPRITE, TW_ZAKU_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE];
   const urls = new Set();
   sets.forEach(sp=>{ if(!sp) return;
     [sp.icon, sp.idle, sp.dmg].forEach(u=>u&&urls.add(u));
@@ -9083,6 +9092,13 @@ function twUnitDef(id){
     return { id, rarity:'rare', name:'手書きにゃんこ', role:tegakiRole,
              svg:`<img class="tw-icon-img" src="${TW_TEGAKI_SPRITE.icon}">`,
              sprite:TW_TEGAKI_SPRITE, lv: kuucchiLvData(id).lv };
+  }
+  if(id === TW_ZAKU_ID){
+    // 電撃：遠くの敵をビリビリ撃つ遠距離アタッカー
+    const zakuRole = { icon:'⚡', label:'でんげき', hpMul:0.9, atkMul:1.1, range:14, interval:1.5, area:false };
+    return { id, rarity:'rare', name:'ザクバキくん', role:zakuRole,
+             svg:`<img class="tw-icon-img" src="${TW_ZAKU_SPRITE.icon}">`,
+             sprite:TW_ZAKU_SPRITE, lv: kuucchiLvData(id).lv };
   }
   const k = KD.find(kk=>kk.id===id);
   if(!k) return null;
@@ -9423,7 +9439,7 @@ function showTowerSelect(){
   twDeckSelected = twDeckSelected.filter(id => (collection[id]||0)>0 || owned.some(k=>k.id===id));
 
   // 所持している侵略戦キャラ（常設7キャラは初期所持）
-  const ownedBuiltins = [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID, TW_KIMO_ID, TW_OBIG_ID, TW_METALPOTE_ID, TW_TEGAKI_ID]
+  const ownedBuiltins = [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID, TW_KIMO_ID, TW_OBIG_ID, TW_METALPOTE_ID, TW_TEGAKI_ID, TW_ZAKU_ID]
     .filter(bid => (collection[bid]||0) > 0);
   if(ownedBuiltins.length){
     const dbgHdr = document.createElement('div');
