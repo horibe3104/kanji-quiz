@@ -3897,9 +3897,9 @@ const KD = [
     ddeco:`<text x="38" y="14" font-size="16">💕</text>` },
   { id:'dino_kami',     name:'かみ小さ大きくびなが',        type:'かみ',     rarity:'ur',     char:'dino', dhue:-45, dsat:'1.6', dbri:'1.1',
     ddeco:`<polygon points="50,5 46,12 38,12 44,17 42,24 50,20 58,24 56,17 62,12 54,12" fill="#ffd600" stroke="#ff8f00" stroke-width="1.5"/><circle cx="50" cy="11" r="2.5" fill="#ff1744"/>` },
-  // ===== 手書きにゃんこ（一頭身ねこ・足だけ／貼付画像のデザインをそのまま使用） =====
+  // ===== 手書きにゃんこ（一頭身ねこ・足だけ／貼付画像のデザインをそのまま使用・連続噛み） =====
   { id:'tegaki_nyanko', name:'手書きにゃんこ', type:'てがき', rarity:'rare',
-    char:'img', imgSrc:'sprites/tegaki_nyanko.png' },
+    sprite:true, twdef:true, icon:'sprites/tegaki_icon.png' },
 
   // ===== くうっち侵略戦の常設キャラ（ガチャ＆育成対応・スプライト表示） =====
   { id:'tw_kuucchi_basic', name:'くうっち',            type:'くうっち',       rarity:'common', sprite:true, twdef:true, icon:'sprites/kuu_icon.png'  },
@@ -4825,21 +4825,21 @@ function toggleMissionPanel() {
 
 // ===== ホームタブ（init前に宣言が必要） =====
 const HOME_SPEECHES = [
-  'きょうも べんきょう がんばろうにゃ！',
-  'まいにち ちょっとずつ おぼえようにゃ！',
-  'かんじを おぼえると かしこく なるにゃ！',
-  'クイズに ちょうせん してみようにゃ！',
-  'まちがっても だいじょうぶ！もう いちどにゃ！',
-  'がんばれ！きみなら できるにゃ！',
-  'きょうは なんもん とけるかな にゃ？',
-  'コツコツ つづけるのが いちばんにゃ！',
-  'いっしょに べんきょう たのしいにゃ！',
-  'あたらしい かんじ、おぼえられるかな にゃ？',
-  'よく できたにゃ！その ちょうし！',
-  'べんきょうした ぶん、つよく なるにゃ！',
-  'あきらめないで がんばるにゃ！',
-  'せいかい すると うれしいにゃ〜！',
-  'きょうの べんきょう、はじめるにゃ？',
+  'きょうも べんきょう がんばろうぜ！',
+  'まいにち ちょっとずつ おぼえようぜ！',
+  'かんじを おぼえると かしこく なるぜ！',
+  'クイズに ちょうせん してみようぜ！',
+  'まちがっても だいじょうぶ！もう いちど いくぜ！',
+  'がんばれ！きみなら できるぜ！',
+  'きょうは なんもん とけるかな？',
+  'コツコツ つづけるのが いちばんだぜ！',
+  'いっしょに べんきょう たのしいぜ！',
+  'あたらしい かんじ、おぼえられるかな？',
+  'よく できたぜ！その ちょうし！',
+  'べんきょうした ぶん、つよく なるぜ！',
+  'あきらめないで がんばるぜ！',
+  'せいかい すると うれしいぜ！',
+  'きょうの べんきょう、はじめるぜ！',
 ];
 function updateHomeSpeech() {
   const el = document.getElementById('home-speech');
@@ -4912,7 +4912,7 @@ let playerGrade = parseInt(localStorage.getItem('kq_player_grade') || '1');
   // 侵略戦の常設7キャラは最初から所持（自作の高品質キャラを最初から使えるように）。
   // ガチャでも排出され、入手するたびLvが上がる。図鑑・育成にも表示。
   ['tw_kuucchi_basic','tw_pote_basic','tw_pote_rush','tw_kimomayo',
-   'tw_kuucchi_bat','tw_kuucchi_fire','tw_obigkubinaga','tw_metal_potemayo'].forEach(tid=>{
+   'tw_kuucchi_bat','tw_kuucchi_fire','tw_obigkubinaga','tw_metal_potemayo','tegaki_nyanko'].forEach(tid=>{
     if(!collection[tid]) collection[tid] = 1;
   });
   saveState();
@@ -8965,6 +8965,15 @@ const TW_OBIG_SPRITE = {
   atk:  ['sprites/obig_atk1.png','sprites/obig_atk2.png'],
   dmg:  'sprites/obig_dmg.png',
 };
+// コマアニメ式：手書きにゃんこ（連続噛み・貼付画像から作成）
+const TW_TEGAKI_ID = 'tegaki_nyanko';
+const TW_TEGAKI_SPRITE = {
+  icon: 'sprites/tegaki_icon.png',
+  idle: 'sprites/tegaki_idle.png',
+  walk: [1,2,3,4].map(i=>`sprites/tegaki_walk${i}.png`),
+  atk:  ['sprites/tegaki_atk1.png','sprites/tegaki_atk2.png','sprites/tegaki_atk3.png'],
+  dmg:  'sprites/tegaki_dmg.png',
+};
 // コマアニメ式：わんこ（敵キャラ・右向きシート）3色バリエーション
 function _twMakeWankoSprite(prefix){
   return {
@@ -9048,6 +9057,13 @@ function twUnitDef(id){
     return { id, rarity:'ur', name:'小さ大き首なが', role:obigRole, hScale:5.4,
              svg:`<img class="tw-icon-img" src="${TW_OBIG_SPRITE.icon}">`,
              sprite:TW_OBIG_SPRITE, lv: kuucchiLvData(id).lv };
+  }
+  if(id === TW_TEGAKI_ID){
+    // 連続噛み：すばやく何度も噛みつく近接アタッカー
+    const tegakiRole = { icon:'🐾', label:'れんぞくがみ', hpMul:1.0, atkMul:0.8, range:3, interval:0.7, area:false };
+    return { id, rarity:'rare', name:'手書きにゃんこ', role:tegakiRole,
+             svg:`<img class="tw-icon-img" src="${TW_TEGAKI_SPRITE.icon}">`,
+             sprite:TW_TEGAKI_SPRITE, lv: kuucchiLvData(id).lv };
   }
   const k = KD.find(kk=>kk.id===id);
   if(!k) return null;
