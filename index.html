@@ -1235,6 +1235,40 @@
     }
     .tw-map-deploy:disabled { filter:grayscale(.6) brightness(.9); cursor:not-allowed; }
     .tw-map-deploy:active:not(:disabled) { transform:translateY(2px); box-shadow:0 1px 0 #bf360c; }
+    /* ===== 侵略戦 パワーアップ画面（本家風） ===== */
+    #screen-powerup.active {
+      background:linear-gradient(180deg,#2b3a55 0%,#1f2a3f 100%);
+      display:flex; flex-direction:column; align-items:center; padding:0;
+      min-height:100vh; box-sizing:border-box;
+    }
+    .pu-topbar { width:100%; display:flex; align-items:center; gap:8px; padding:52px 12px 4px; box-sizing:border-box; }
+    .pu-title { flex:1; text-align:center; font-size:17px; font-weight:900; color:#ffe082; text-shadow:0 2px 3px rgba(0,0,0,.5); }
+    .pu-coins { font-size:13px; font-weight:900; color:#fff; background:rgba(0,0,0,.3); border:1.5px solid #ffca28; border-radius:12px; padding:3px 10px; flex-shrink:0; }
+    .pu-hint { color:#b0bec5; font-size:12px; font-weight:700; margin:4px 0 8px; }
+    .pu-list { width:min(96%,460px); display:flex; flex-direction:column; gap:8px; padding:0 0 20px; }
+    .pu-row {
+      display:flex; align-items:center; gap:10px; padding:9px 10px;
+      background:linear-gradient(180deg,#3a4a68,#2e3c56); border:2px solid #56688c; border-radius:12px;
+      box-shadow:0 2px 0 #1a2337;
+    }
+    .pu-icon { font-size:26px; width:40px; height:40px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+      background:rgba(0,0,0,.25); border-radius:10px; border:1.5px solid #56688c; }
+    .pu-info { flex:1; min-width:0; }
+    .pu-name { font-size:14px; font-weight:900; color:#fff; }
+    .pu-lv { font-size:11px; color:#90caf9; margin-left:4px; }
+    .pu-pips { display:flex; gap:2px; margin:3px 0; flex-wrap:wrap; }
+    .pu-pip { width:12px; height:6px; border-radius:2px; background:rgba(255,255,255,.18); }
+    .pu-pip.on { background:linear-gradient(90deg,#ffd54f,#ffb300); }
+    .pu-eff { font-size:10.5px; font-weight:700; color:#cfd8dc; }
+    .pu-eff .nx { color:#a5d6a7; }
+    .pu-btn {
+      flex-shrink:0; min-width:66px; padding:9px 8px; border:2px solid #2e7d32; border-radius:10px;
+      background:linear-gradient(180deg,#66bb6a,#43a047); color:#fff; font-size:13px; font-weight:900;
+      cursor:pointer; box-shadow:0 3px 0 #1b5e20; white-space:nowrap;
+    }
+    .pu-btn:active:not(:disabled){ transform:translateY(2px); box-shadow:0 1px 0 #1b5e20; }
+    .pu-btn:disabled { background:#546e7a; border-color:#37474f; box-shadow:0 3px 0 #263238; opacity:.7; cursor:not-allowed; }
+    .pu-btn.maxed { background:linear-gradient(180deg,#ffca28,#ffa000); border-color:#ff8f00; box-shadow:0 3px 0 #e65100; color:#4e342e; }
     /* くうっち砲：自拠点から敵拠点へ徐々に進む衝撃波の前線 */
     .tw-cannon-wave {
       position:absolute; top:6%; bottom:20%; width:9%; margin-left:-4.5%;
@@ -2377,6 +2411,7 @@
       <div class="mypage-grid">
         <button class="mypage-grid-btn" onclick="showCollection()">🎒<br><span>コレクション</span></button>
         <button class="mypage-grid-btn" onclick="showSodateru()">⬆️<br><span>そだてる</span></button>
+        <button class="mypage-grid-btn" onclick="showPowerup()">⚡<br><span>パワーアップ</span></button>
         <button class="mypage-grid-btn" onclick="showBadges()">🏅<br><span>バッジ</span></button>
         <button class="mypage-grid-btn" onclick="showSettings()">⚙️<br><span>せってい</span></button>
       </div>
@@ -2896,6 +2931,17 @@
     </div>
     <button class="tw-map-deploy" id="tw-map-deploy" onclick="twMapDeploy()" disabled>いざ 出陣！</button>
   </div>
+</div>
+
+<!-- 侵略戦 パワーアップ画面 -->
+<div class="screen" id="screen-powerup">
+  <div class="pu-topbar">
+    <button class="tw-map-back" onclick="goHome()">◀ もどる</button>
+    <div class="pu-title">⚡ パワーアップ</div>
+    <div class="pu-coins">🪙 <span id="powerup-coins">0</span></div>
+  </div>
+  <div class="pu-hint">コインをつかって しんりゃくたいを つよくしよう！</div>
+  <div class="pu-list" id="powerup-list"></div>
 </div>
 
 <!-- TOWER DEFENSE デッキ選択 -->
@@ -4732,6 +4778,7 @@ function _showScreenRaw(id) {
     'screen-collection':   'title',
     'screen-char-detail':  'title',
     'screen-sodateru':     'title',
+    'screen-powerup':      'title',
     'screen-maze':         'title',
     'screen-badges':       'title',
   };
@@ -8835,10 +8882,69 @@ function twTDStatsHTML(id){
     `<div class="cd-meter-row"><span class="cd-meter-label">👟 はやさ</span><div class="cd-meter-track"><div class="cd-meter-fill atk" style="width:${spdPct}%"></div></div><span class="cd-meter-num">${s.speed.toFixed(2)}</span></div>`+
     `<div class="cd-td-info">${s.icon} ${s.label}こうげき（${atkType}${flyTag}）／ 🪙コスト <b>${s.cost}</b> ／ ⏱️かんかく <b>${s.interval.toFixed(1)}秒</b></div>`;
 }
-const TW_CANNON_CHARGE_SEC = 25; // フルチャージまでの秒数
+const TW_CANNON_CHARGE_SEC = 25; // フルチャージまでの秒数（基本値）
 const TW_ENEMY_CASTLE_POS  = 8;   // 敵の城（左端）
 const TW_PLAYER_CASTLE_POS = 92;  // 自分の城（右端）
 const TW_PLAYER_CASTLE_HP  = 300;
+
+// ===== 侵略戦 パワーアップ（永続強化・コインで購入） =====
+let twUpg = JSON.parse(localStorage.getItem('kq_tw_upg') || '{}');
+function twUpgLv(k){ return twUpg[k] || 0; }
+const TW_UPGRADES = [
+  { key:'cannon_pow',  icon:'🎯', name:'くうっち砲パワー',   max:10, cost:l=>150+l*110, effect:l=>`いりょく +${l*15}%` },
+  { key:'cannon_chg',  icon:'⚡', name:'くうっち砲チャージ', max:10, cost:l=>150+l*110, effect:l=>`チャージ -${l}びょう` },
+  { key:'start_money', icon:'💰', name:'はじめの おかね',     max:10, cost:l=>120+l*90,  effect:l=>`+${l*20}円`   },
+  { key:'base_hp',     icon:'🏯', name:'きょてん たいりょく', max:10, cost:l=>120+l*100, effect:l=>`+${l*60}`    },
+  { key:'money_rate',  icon:'📈', name:'おかね アップ',       max:10, cost:l=>140+l*110, effect:l=>`しゅうにゅう +${l*8}%` },
+  { key:'cooldown',    icon:'⏱️', name:'さいせいさん たんしゅく', max:8, cost:l=>160+l*130, effect:l=>`さいせい -${l*5}%` },
+];
+// 強化の適用値
+function twCannonPowMul(){ return 1 + twUpgLv('cannon_pow')*0.15; }
+function twCannonChargeSec(){ return Math.max(10, TW_CANNON_CHARGE_SEC - twUpgLv('cannon_chg')); }
+function twStartMoney(){ return 80 + twUpgLv('start_money')*20; }
+function twBaseHP(){ return TW_PLAYER_CASTLE_HP + twUpgLv('base_hp')*60; }
+function twMoneyRateMul(){ return 1 + twUpgLv('money_rate')*0.08; }
+function twCooldownMul(){ return Math.max(0.4, 1 - twUpgLv('cooldown')*0.05); }
+function showPowerup(){
+  const list = document.getElementById('powerup-list');
+  list.innerHTML = '';
+  TW_UPGRADES.forEach(u=>{
+    const lv = twUpgLv(u.key);
+    const maxed = lv >= u.max;
+    const cost = maxed ? 0 : u.cost(lv);
+    const can = coins >= cost;
+    let pips = '';
+    for(let i=0;i<u.max;i++) pips += `<span class="pu-pip${i<lv?' on':''}"></span>`;
+    const nextEff = maxed ? '' : `　<span class="nx">▶ ${u.effect(lv+1)}</span>`;
+    const row = document.createElement('div');
+    row.className = 'pu-row';
+    row.innerHTML =
+      `<div class="pu-icon">${u.icon}</div>`+
+      `<div class="pu-info">`+
+        `<div class="pu-name">${u.name}<span class="pu-lv">Lv.${lv}/${u.max}</span></div>`+
+        `<div class="pu-pips">${pips}</div>`+
+        `<div class="pu-eff">${lv>0 ? u.effect(lv) : 'こうかなし'}${nextEff}</div>`+
+      `</div>`+
+      `<button class="pu-btn${maxed?' maxed':''}" ${(maxed||!can)?'disabled':''}>${maxed?'MAX':('🪙'+cost)}</button>`;
+    if(!maxed) row.querySelector('.pu-btn').onclick = ()=>twBuyUpgrade(u.key);
+    list.appendChild(row);
+  });
+  document.getElementById('powerup-coins').textContent = coins;
+  showScreen('screen-powerup');
+}
+function twBuyUpgrade(key){
+  const u = TW_UPGRADES.find(x=>x.key===key); if(!u) return;
+  const lv = twUpgLv(key); if(lv >= u.max) return;
+  const cost = u.cost(lv);
+  if(coins < cost){ showToast('コインが たりないよ！'); return; }
+  coins -= cost;
+  twUpg[key] = lv + 1;
+  localStorage.setItem('kq_tw_upg', JSON.stringify(twUpg));
+  saveState(); updateCoinBar();
+  playSound('correct');
+  launchConfetti && (lv+1===u.max) && launchConfetti();
+  showPowerup();
+}
 const TW_ENGAGE_RANGE      = 5;
 const TW_UNIT_FRONT_PCT    = 6;   // ユニット本体の見た目の幅ぶん（絵柄が城にめり込まないための余白）
 
@@ -9165,7 +9271,7 @@ function twUpdateStagePreview(){
   const stage = twSelectedStage || (twStageCleared + 1);
   document.getElementById('tw-stage-badge').textContent = `ステージ ${stage}`;
   document.getElementById('tw-start-title').textContent = `🐱 ステージ ${stage}`;
-  document.getElementById('tw-player-hp-num').textContent = TW_PLAYER_CASTLE_HP;
+  document.getElementById('tw-player-hp-num').textContent = twBaseHP();
   document.getElementById('tw-enemy-hp-num').textContent  = twEnemyCastleMaxFor(stage);
   document.getElementById('tw-money-num').textContent    = 80;
   document.getElementById('tw-money-cap').textContent    = TW_WALLET[0].cap;
@@ -9177,10 +9283,10 @@ function twUpdateStagePreview(){
 function startTowerDefense(){
   twStage           = twSelectedStage || (twStageCleared + 1);
   twActive          = true;
-  twPlayerCastleHP  = TW_PLAYER_CASTLE_HP;
+  twPlayerCastleHP  = twBaseHP();
   twEnemyCastleMax  = twEnemyCastleMaxFor(twStage);
   twEnemyCastleHP   = twEnemyCastleMax;
-  twMoney           = 80;
+  twMoney           = twStartMoney();
   twWalletLv        = 1;
   twUnits           = [];
   twDeckCooldowns   = {};
@@ -9322,7 +9428,7 @@ function twDeployUnit(id){
   if((twDeckCooldowns[id]||0) > 0) return;
   if(twMoney < rs.cost) return;
   twMoney -= rs.cost;
-  twDeckCooldowns[id] = rs.cooldown;
+  twDeckCooldowns[id] = rs.cooldown * twCooldownMul();
   playSound('deploy');
   updateTwMoneyUI();
 
@@ -9439,7 +9545,7 @@ function twTick(){
 
   // おかね収入
   const w = TW_WALLET[twWalletLv-1];
-  twMoney = Math.min(w.cap, twMoney + w.rate*0.1);
+  twMoney = Math.min(w.cap, twMoney + w.rate*0.1*twMoneyRateMul());
   updateTwMoneyUI();
   updateTwWalletUI();
 
@@ -9453,7 +9559,7 @@ function twTick(){
 
   // くうっち砲チャージ
   if(twCannonCharge < 100){
-    twCannonCharge = Math.min(100, twCannonCharge + 100*0.1/TW_CANNON_CHARGE_SEC);
+    twCannonCharge = Math.min(100, twCannonCharge + 100*0.1/twCannonChargeSec());
     updateTwCannonUI();
   }
 
@@ -9706,7 +9812,7 @@ function twFireCannon(){
   twCannonCharge = 0;
   updateTwCannonUI();
   playSound('cannon');
-  const dmg  = 25 + twStage*8;
+  const dmg  = Math.round((25 + twStage*8) * twCannonPowMul());
   const lane = document.getElementById('tw-lane');
 
   // 銃口フラッシュ（自拠点）
