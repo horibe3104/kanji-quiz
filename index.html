@@ -177,6 +177,29 @@
     .tab-nav-btn:active { opacity:.7; }
     .tab-panel { display:none; }
     .tab-panel.active { display:block; }
+    /* ===== ホームのメニューハブ（本家風） ===== */
+    .home-loop { background:#fff3e0; border:2px solid #ffb74d; border-radius:14px; padding:7px 10px; margin-bottom:12px; }
+    .home-loop-title { font-size:11px; font-weight:900; color:#e65100; margin-bottom:4px; text-align:center; }
+    .home-loop-steps { display:flex; align-items:center; justify-content:center; gap:5px; font-size:13px; font-weight:900; color:#5d4037; flex-wrap:wrap; }
+    .home-loop-steps b { background:#fff; border-radius:8px; padding:3px 8px; border:1.5px solid #ffb74d; font-weight:900; }
+    .home-loop-steps .arw { color:#ff8f00; font-size:15px; }
+    .home-menu-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
+    .home-menu-tile {
+      border:none; border-radius:16px; padding:13px 8px; cursor:pointer; text-align:center; color:#fff;
+      background:linear-gradient(180deg,#7986cb,#5c6bc0); box-shadow:0 4px 0 #3949ab;
+      display:flex; flex-direction:column; align-items:center; gap:1px;
+    }
+    .home-menu-tile:active { transform:translateY(3px); box-shadow:0 1px 0 #3949ab; }
+    .home-menu-tile.primary { grid-column:1 / -1; background:linear-gradient(180deg,#ff8a50,#f4511e); box-shadow:0 5px 0 #bf360c; padding:16px; }
+    .home-menu-tile.gacha  { background:linear-gradient(180deg,#ba68c8,#8e24aa); box-shadow:0 4px 0 #6a1b9a; }
+    .home-menu-tile.quiz   { background:linear-gradient(180deg,#4db6ac,#00897b); box-shadow:0 4px 0 #00695c; }
+    .home-menu-tile.power  { background:linear-gradient(180deg,#ffb300,#fb8c00); box-shadow:0 4px 0 #e65100; }
+    .hm-icon { font-size:32px; line-height:1; }
+    .home-menu-tile.primary .hm-icon { font-size:44px; }
+    .hm-name { font-size:15px; font-weight:900; margin-top:2px; }
+    .home-menu-tile.primary .hm-name { font-size:21px; }
+    .hm-sub { font-size:10px; font-weight:700; opacity:.92; }
+    .home-menu-tile.primary .hm-sub { font-size:12px; }
     /* ===== 学年セレクター ===== */
     .grade-select-row {
       display:flex; align-items:center; gap:6px;
@@ -2314,16 +2337,44 @@
           <div class="mascot-wrap bounce2" id="mascot-start-pote"></div>
         </div>
       </div>
-      <div class="game-title" style="margin-bottom:10px">🐾 くうっち<span class="battle">勉強</span>バトル！</div>
       <div class="grade-select-row" id="grade-select-row">
         <span class="grade-label">🎓 学年</span>
         <button class="grade-btn" data-grade="1" onclick="setPlayerGrade(1)">1年生</button>
         <button class="grade-btn" data-grade="2" onclick="setPlayerGrade(2)">2年生</button>
         <button class="grade-btn" data-grade="3" onclick="setPlayerGrade(3)">3年生</button>
       </div>
-      <button class="gacha-main-btn" id="gacha-main-btn" onclick="showGacha()" style="width:100%;margin-bottom:14px">
-        🎲 くじを 引く！<br><span class="gacha-cost-tag">🪙 20まい つかう</span>
-      </button>
+      <!-- あそびのながれ（本家風ループ） -->
+      <div class="home-loop">
+        <div class="home-loop-title">🎮 あそびかた</div>
+        <div class="home-loop-steps"><b>📚クイズ</b><span class="arw">▶</span><b>🎲ガチャ</b><span class="arw">▶</span><b>🗾しんりゃく</b></div>
+      </div>
+      <!-- メインメニュー（ハブ） -->
+      <div class="home-menu-grid">
+        <button class="home-menu-tile primary" onclick="showTowerMap()">
+          <div class="hm-icon">🗾</div><div class="hm-name">しんりゃく</div><div class="hm-sub">にっぽんを せいふくせよ！</div>
+        </button>
+        <button class="home-menu-tile quiz" onclick="switchHomeTab('quiz')">
+          <div class="hm-icon">📚</div><div class="hm-name">クイズ</div><div class="hm-sub">べんきょうで けいけんち</div>
+        </button>
+        <button class="home-menu-tile gacha" onclick="showGacha()">
+          <div class="hm-icon">🎲</div><div class="hm-name">ガチャ</div><div class="hm-sub">なかまを あつめる</div>
+        </button>
+        <button class="home-menu-tile power" onclick="showPowerup()">
+          <div class="hm-icon">⚡</div><div class="hm-name">パワーアップ</div><div class="hm-sub">つよくする</div>
+        </button>
+        <button class="home-menu-tile" onclick="showSodateru()">
+          <div class="hm-icon">⬆️</div><div class="hm-name">そだてる</div><div class="hm-sub">レベルアップ</div>
+        </button>
+        <button class="home-menu-tile" onclick="showCollection()">
+          <div class="hm-icon">🎒</div><div class="hm-name">ずかん</div><div class="hm-sub">コレクション</div>
+        </button>
+        <button class="home-menu-tile" onclick="showBattleSelect()">
+          <div class="hm-icon">⚔️</div><div class="hm-name">くうっちバトル</div><div class="hm-sub">クイズで たたかう</div>
+        </button>
+        <button class="home-menu-tile" onclick="showMaze()">
+          <div class="hm-icon">🗺️</div><div class="hm-name">ボーナス迷路</div><div class="hm-sub">🗝️で ちょうせん</div>
+        </button>
+      </div>
       <button class="event-stage-btn" onclick="startEventQuiz()" style="display:none">🎌 イベント！　漢字チャレンジ①<br><span style="font-size:13px;font-weight:700;opacity:.9">全15問 ✦ 読みから漢字をえらぼう</span></button>
       <button id="event2-btn" class="event2-challenge-btn" onclick="startEventQuiz2()"></button>
       <div class="mission-section">
@@ -4748,8 +4799,10 @@ function saveExpStones() { localStorage.setItem('kq_exps', expStones.toString())
 function updateExpBar()  { const el=document.getElementById('exp-stone-count'); if(el) el.textContent=expStones; }
 function updateCoinBar() { document.getElementById('coin-count').textContent = coins; }
 function updateGachaBtn() {
+  const btn = document.getElementById('gacha-main-btn');
+  if(!btn) return;   // ホームをハブ化してメインのくじボタンは廃止
   const hasTicket = (tickets.r||0) > 0 || (tickets.sr||0) > 0;
-  document.getElementById('gacha-main-btn').disabled = coins < GACHA_COST && !hasTicket;
+  btn.disabled = coins < GACHA_COST && !hasTicket;
 }
 
 function _showScreenRaw(id) {
