@@ -265,6 +265,13 @@
     }
     /* 中央：クイズ・レアガチャ */
     .nb-center-row { display:flex; gap:8px; margin-bottom:11px; }
+    /* ガチャボタンの チケット合計 バッジ */
+    .gacha-badge {
+      position:absolute; top:-8px; right:-8px; z-index:2; min-width:24px; height:24px; padding:0 5px;
+      box-sizing:border-box; border-radius:14px; background:#e53935; border:2.5px solid #fff;
+      color:#fff; font-size:13px; font-weight:900; display:flex; align-items:center; justify-content:center;
+      box-shadow:0 2px 4px rgba(0,0,0,.4); animation:twPinPulse 1.1s ease-in-out infinite;
+    }
     /* メニュー ポップアップ */
     .hmp-overlay { position:fixed; inset:0; z-index:120; background:rgba(0,0,0,.5); display:flex; align-items:center; justify-content:center; }
     .hmp-box { background:#fff8e1; border:3px solid #6d4c41; border-radius:16px; padding:16px; width:min(84%,300px); box-shadow:0 6px 0 #4e342e; }
@@ -2450,7 +2457,8 @@
         <button class="nb-gacha-btn" onclick="switchHomeTab('quiz')">
           <div class="g-ic">📚</div><div class="g-name">クイズ</div><div class="g-cost">けいけんち・コイン</div>
         </button>
-        <button class="nb-gacha-btn rare" onclick="showGacha()">
+        <button class="nb-gacha-btn rare" onclick="showGacha()" style="position:relative">
+          <div class="gacha-badge" id="gacha-ticket-badge" style="display:none">0</div>
           <div class="g-ic">🎲</div><div class="g-name">ガチャ</div><div class="g-cost">なかまを あつめる</div>
         </button>
       </div>
@@ -4605,6 +4613,13 @@ function updateTicketBar(){
   const elSR = document.getElementById('ticket-sr-count');
   if(elR)  elR.textContent  = tickets.r  || 0;
   if(elSR) elSR.textContent = tickets.sr || 0;
+  // ホームのガチャボタンに確定チケット合計数のバッジ
+  const badge = document.getElementById('gacha-ticket-badge');
+  if(badge){
+    const total = (tickets.r||0) + (tickets.sr||0);
+    badge.textContent = total;
+    badge.style.display = total > 0 ? 'flex' : 'none';
+  }
 }
 let selectedMode = 'reading', selectedCount = 10;
 let questions = [], currentIdx = 0, correctCount = 0, answered = false;
