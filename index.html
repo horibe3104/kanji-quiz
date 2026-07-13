@@ -2442,7 +2442,7 @@
             <div class="nb-ic">⚡</div><div class="nb-tx"><div class="nb-name">パワーアップ</div><div class="nb-sub">キャラ・きちを つよくする</div></div>
           </button>
           <button class="nb-btn" onclick="showDeckEdit()">
-            <div class="nb-ic">🧩</div><div class="nb-tx"><div class="nb-name">キャラクター編成</div><div class="nb-sub">しゅつげきメンバーを えらぶ</div></div>
+            <div class="nb-ic">🧩</div><div class="nb-tx"><div class="nb-name">キャラクターへんせい</div><div class="nb-sub">しゅつげきメンバーを えらぶ</div></div>
           </button>
           <div class="nb-sub-row">
             <button class="nb-sub-btn" onclick="showMenuPopup()"><span class="sb-ic">📖</span>メニュー</button>
@@ -2479,47 +2479,47 @@
       <!-- クイズであそぶモード（バトル・迷路・イベント） -->
       <div class="quiz-play-row">
         <button class="quiz-play-btn battle" onclick="showBattleSelect()"><span class="qp-ic">⚔️</span>くうっちバトル</button>
-        <button class="quiz-play-btn maze" onclick="showMaze()"><span class="qp-ic">🗺️</span>ボーナス迷路</button>
+        <button class="quiz-play-btn maze" onclick="showMaze()"><span class="qp-ic">🗺️</span>ボーナスめいろ</button>
       </div>
-      <button class="event-stage-btn" onclick="startEventQuiz()" style="display:none">🎌 イベント！　漢字チャレンジ①<br><span style="font-size:13px;font-weight:700;opacity:.9">全15問 ✦ 読みから漢字をえらぼう</span></button>
+      <button class="event-stage-btn" onclick="startEventQuiz()" style="display:none">🎌 イベント！　かんじチャレンジ①<br><span style="font-size:13px;font-weight:700;opacity:.9">ぜん15もん ✦ よみから かんじを えらぼう</span></button>
       <button id="event2-btn" class="event2-challenge-btn" onclick="startEventQuiz2()"></button>
       <div class="tab-section-title" style="margin-top:10px">📚 クイズをえらぼう</div>
-      <div class="section-label" id="section-kanji">漢検１０級</div>
+      <div class="section-label" id="section-kanji">かんけん10きゅう</div>
       <div class="mode-buttons" id="mode-group-kanji">
         <button class="mode-btn selected" data-mode="reading" onclick="selectMode('reading')"><span class="mode-icon">👂</span>読み方は？</button>
-        <button class="mode-btn" data-mode="writing" onclick="selectMode('writing')"><span class="mode-icon">📝</span>漢字は？</button>
+        <button class="mode-btn" data-mode="writing" onclick="selectMode('writing')"><span class="mode-icon">📝</span>かんじは？</button>
         <button class="mode-btn" data-mode="strokes" onclick="selectMode('strokes')"><span class="mode-icon">✏️</span>何画目？</button>
         <button class="mode-btn" data-mode="mixed" onclick="selectMode('mixed')"><span class="mode-icon">🌀</span>まぜこぜ</button>
       </div>
-      <div class="section-label" id="section-kanji2">📖 漢字（2年生）</div>
+      <div class="section-label" id="section-kanji2">📖 かんじ（2年生）</div>
       <div class="mode-buttons" id="mode-group-kanji2">
         <button class="mode-btn" data-mode="reading2" onclick="selectMode('reading2')"><span class="mode-icon">👂</span>読み方は？</button>
-        <button class="mode-btn" data-mode="writing2" onclick="selectMode('writing2')"><span class="mode-icon">📝</span>漢字は？</button>
+        <button class="mode-btn" data-mode="writing2" onclick="selectMode('writing2')"><span class="mode-icon">📝</span>かんじは？</button>
         <button class="mode-btn" data-mode="strokes2" onclick="selectMode('strokes2')"><span class="mode-icon">✏️</span>何画目？</button>
       </div>
-      <div class="section-label" id="section-kanji3">📖 漢字（3年生）</div>
+      <div class="section-label" id="section-kanji3">📖 かんじ（3年生）</div>
       <div class="mode-buttons" id="mode-group-kanji3">
         <button class="mode-btn" data-mode="reading3" onclick="selectMode('reading3')"><span class="mode-icon">👂</span>読み方は？</button>
-        <button class="mode-btn" data-mode="writing3" onclick="selectMode('writing3')"><span class="mode-icon">📝</span>漢字は？</button>
+        <button class="mode-btn" data-mode="writing3" onclick="selectMode('writing3')"><span class="mode-icon">📝</span>かんじは？</button>
         <button class="mode-btn" data-mode="strokes3" onclick="selectMode('strokes3')"><span class="mode-icon">✏️</span>何画目？</button>
       </div>
       <div class="section-label" id="section-math">計算</div>
       <div class="mode-buttons" id="mode-group-math">
         <button class="mode-btn" data-mode="plus"   onclick="selectMode('plus')"><span class="mode-icon">➕</span>足し算</button>
         <button class="mode-btn" data-mode="minus"  onclick="selectMode('minus')"><span class="mode-icon">➖</span>引き算</button>
-        <button class="mode-btn" data-mode="times"  onclick="selectMode('times')"><span class="mode-icon">✖️</span>掛け算</button>
-        <button class="mode-btn" data-mode="divide" onclick="selectMode('divide')"><span class="mode-icon">➗</span>割り算</button>
+        <button class="mode-btn" data-mode="times"  onclick="selectMode('times')"><span class="mode-icon">✖️</span>かけ算</button>
+        <button class="mode-btn" data-mode="divide" onclick="selectMode('divide')"><span class="mode-icon">➗</span>わり算</button>
       </div>
       <div class="section-label" id="section-english">🇬🇧 えいご</div>
       <div class="mode-buttons" id="mode-group-english">
         <button class="mode-btn" data-mode="alpha"   onclick="selectMode('alpha')"><span class="mode-icon">🔤</span>アルファベット</button>
-        <button class="mode-btn" data-mode="engword" onclick="selectMode('engword')"><span class="mode-icon">🌍</span>えいご単語</button>
+        <button class="mode-btn" data-mode="engword" onclick="selectMode('engword')"><span class="mode-icon">🌍</span>えいごたんご</button>
       </div>
       <div class="section-label" id="section-romaji">🔡 ローマ字</div>
       <div class="mode-buttons" id="mode-group-romaji">
         <button class="mode-btn" data-mode="romaji" onclick="selectMode('romaji')"><span class="mode-icon">🔡</span>ローマ字よみ書き</button>
       </div>
-      <div class="section-label">問いの数</div>
+      <div class="section-label">もんだいのかず</div>
       <div class="count-buttons">
         <button class="count-btn selected" data-count="10" onclick="selectCount(10)">10</button>
         <button class="count-btn" data-count="20" onclick="selectCount(20)">20</button>
@@ -2533,16 +2533,16 @@
     <div id="tab-panel-battle" class="tab-panel">
       <div class="tab-section-title">⚔️ バトル</div>
       <div class="battle-tab-card">
-        <div style="font-size:11px;font-weight:700;opacity:.8;margin-bottom:6px">クイズに正解してモンスターを倒せ！</div>
+        <div style="font-size:11px;font-weight:700;opacity:.8;margin-bottom:6px">クイズにせいかいしてモンスターをたおせ！</div>
         <div style="font-size:48px;margin:6px 0">🐾⚔️</div>
         <button class="battle-mode-btn" onclick="showBattleSelect()">⚔️ くうっちバトル！</button>
-        <div class="battle-tab-card-sub">コンボでダメージアップ！<br>まちがえると反撃を受けるぞ！</div>
+        <div class="battle-tab-card-sub">コンボでダメージアップ！<br>まちがえるとはんげきをうけるぞ！</div>
       </div>
-      <button class="maze-btn-home" id="maze-home-btn" onclick="showMaze()">🗺️ ボーナス迷路！&nbsp;&nbsp;🗝️ <span id="maze-key-home">0</span></button>
+      <button class="maze-btn-home" id="maze-home-btn" onclick="showMaze()">🗺️ ボーナスめいろ！&nbsp;&nbsp;🗝️ <span id="maze-key-home">0</span></button>
       <div class="battle-tab-card" style="margin-top:10px">
-        <div style="font-size:11px;font-weight:700;opacity:.8;margin-bottom:6px">おかねを ためて ユニットを出撃させ、てきの おしろを こわそう！</div>
+        <div style="font-size:11px;font-weight:700;opacity:.8;margin-bottom:6px">おかねを ためて ユニットをしゅつげきさせ、てきの おしろを こわそう！</div>
         <div style="font-size:48px;margin:6px 0">🐱🏰</div>
-        <button class="battle-mode-btn tower" onclick="showTowerMap()">🐱 くうっち侵略戦！</button>
+        <button class="battle-mode-btn tower" onclick="showTowerMap()">🐱 くうっちしんりゃくせん！</button>
         <div class="battle-tab-card-sub">ガチャで あつめた キャラで たたかえ！<br>スマホを よこにして あそんでね！</div>
       </div>
     </div>
@@ -2568,18 +2568,18 @@
 <div class="screen" id="screen-settings">
   <div class="card">
     <div class="settings-title">⚙️ せってい</div>
-    <div class="settings-desc">メニューに表示する問題の種類を えらんでね</div>
+    <div class="settings-desc">メニューに ひょうじするもんだいのしゅるいを えらんでね</div>
     <div id="settings-mode-list"></div>
     <div class="settings-data-section">
-      <div class="settings-group-label">💾 データ管理</div>
+      <div class="settings-group-label">💾 データかんり</div>
       <div class="settings-data-row">
         <button class="settings-data-btn export" onclick="exportData()">📤 書き出す</button>
         <label class="settings-data-btn import">
-          📥 読み込む
+          📥 よみこむ
           <input type="file" accept=".json" style="display:none" onchange="importData(event)">
         </label>
       </div>
-      <div class="settings-data-note">※ 別の端末やURLに移行するときに使用</div>
+      <div class="settings-data-note">※ べつの たんまつや URLに うつす ときに つかいます</div>
     </div>
     <button class="gacha-back-btn" style="margin-top:16px" onclick="goHome()">← もどる</button>
   </div>
@@ -2600,7 +2600,7 @@
   <div class="card">
     <div class="power-bar-wrap"><div class="power-bar-fill" id="progress-bar" style="width:0%"></div></div>
     <div class="progress-info">
-      <span class="progress-text" id="progress-text">1 / 10 問</span>
+      <span class="progress-text" id="progress-text">1 / 10 もん</span>
       <span class="streak-badge" id="streak-badge">🔥 <span id="streak-num">0</span>れんぞく！</span>
     </div>
     <div class="timer-wrap">
@@ -2611,15 +2611,15 @@
       <div id="timer-count">10</div>
     </div>
     <div id="fever-banner">🔥 FEVER!! コイン2ばい！</div>
-    <div class="score-pill" id="score-badge">⭐ 0問 正かい</div>
+    <div class="score-pill" id="score-badge">⭐ 0もん 正かい</div>
     <div class="question-type-label" id="q-type-label"></div>
-    <button id="eng-speak-btn" onclick="speakEng()">🔊 もう一度きく</button>
+    <button id="eng-speak-btn" onclick="speakEng()">🔊 もういちどきく</button>
     <div class="question-box">
       <div class="kanji-display"   id="q-kanji"   style="display:none"></div>
       <div class="reading-display" id="q-reading" style="display:none"></div>
     </div>
     <div class="choices" id="choices"></div>
-    <button id="quiz-next-btn" onclick="quizNext()">次へ ▶</button>
+    <button id="quiz-next-btn" onclick="quizNext()">つぎへ ▶</button>
     <button class="quiz-quit-btn" onclick="showQuitConfirm()">🏠 とちゅうでやめる</button>
   </div>
 </div>
@@ -2669,7 +2669,7 @@
     </div>
     <div class="result-btns">
       <button class="home-btn"  onclick="goHome()">🏠 トップへ</button>
-      <button class="retry-btn" onclick="startQuiz()">もう一度！⚔️</button>
+      <button class="retry-btn" onclick="startQuiz()">もういちど！⚔️</button>
     </div>
   </div>
 </div>
@@ -2684,15 +2684,15 @@
       <div class="gacha-box-wrap"><div class="gacha-box" id="gacha-box">❓</div></div>
       <div class="gacha-coin-now">今のコイン：🪙 <span id="gacha-coin-now">0</span> まい</div>
       <button class="gacha-pull-btn" id="gacha-pull-btn" onclick="doPull()">🎲 1回 引く！（🪙 20まい）</button>
-      <button class="gacha-pull-btn gacha-ten-btn" id="gacha-ten-btn" onclick="doTenPull()">✨ 10連！（🪙 200まい）<br><span class="gacha-cost-tag">SR以上 1体 かくてい！</span></button>
-      <button class="ticket-gacha-btn" id="ticket-gacha-btn-r" onclick="doTicketPullR()" style="display:none">🎫 激レア確定チケット（0まい）で ガチャ！</button>
-      <button class="ticket-gacha-btn ticket-sr-btn" id="ticket-gacha-btn-sr" onclick="doTicketPullSR()" style="display:none">🌟 超激レア確定チケット（0まい）で ガチャ！</button>
+      <button class="gacha-pull-btn gacha-ten-btn" id="gacha-ten-btn" onclick="doTenPull()">✨ 10れん！（🪙 200まい）<br><span class="gacha-cost-tag">SRいじょう 1たい かくてい！</span></button>
+      <button class="ticket-gacha-btn" id="ticket-gacha-btn-r" onclick="doTicketPullR()" style="display:none">🎫 げきレアかくていチケット（0まい）で ガチャ！</button>
+      <button class="ticket-gacha-btn ticket-sr-btn" id="ticket-gacha-btn-sr" onclick="doTicketPullSR()" style="display:none">🌟 ちょうげきレアかくていチケット（0まい）で ガチャ！</button>
       <button class="gacha-back-btn" onclick="goHome()">← もどる</button>
     </div>
     <div id="gacha-ten-result-state" style="display:none">
       <div class="gacha-ten-grid" id="gacha-ten-grid"></div>
       <button class="gacha-pull-btn" id="gacha-ten-again-btn" onclick="resetGacha()">もう一回！（🪙 20まい）</button>
-      <button class="gacha-pull-btn gacha-ten-btn" id="gacha-ten-again10-btn" onclick="doTenPull()">✨ もう一度 10連！（🪙 200まい）</button>
+      <button class="gacha-pull-btn gacha-ten-btn" id="gacha-ten-again10-btn" onclick="doTenPull()">✨ もういちど 10れん！（🪙 200まい）</button>
       <button class="gacha-back-btn" onclick="goHome()">← もどる</button>
     </div>
     <div id="gacha-result-state" style="display:none">
@@ -2713,8 +2713,8 @@
       <!-- 10連 順番確認ナビ -->
       <div id="ten-seq-nav" style="display:none; text-align:center;">
         <div id="ten-seq-counter" style="color:rgba(255,255,255,.5); font-size:14px; font-weight:900; letter-spacing:3px; margin-bottom:8px;">1 / 10</div>
-        <button class="gacha-pull-btn" id="ten-seq-next-btn" onclick="tenSeqNext()" style="margin-bottom:8px;">次へ ▶</button><br>
-        <button class="gacha-back-btn" onclick="tenSeqSkip()">スキップ →一覧</button>
+        <button class="gacha-pull-btn" id="ten-seq-next-btn" onclick="tenSeqNext()" style="margin-bottom:8px;">つぎへ ▶</button><br>
+        <button class="gacha-back-btn" onclick="tenSeqSkip()">スキップ →いちらん</button>
       </div>
     </div>
   </div>
@@ -2846,14 +2846,14 @@
     </div>
     <!-- 必殺技メーター -->
     <div class="bt-super-row">
-      <span class="bt-super-label">⚡必殺</span>
+      <span class="bt-super-label">⚡ひっさつ</span>
       <div class="bt-super-track"><div class="bt-super-fill" id="bt-super-fill" style="width:0%"></div></div>
       <span class="bt-super-count" id="bt-super-count">0/3</span>
     </div>
     <!-- アクション -->
     <div class="bt-action-row" id="bt-action-row">
       <button class="bt-action-btn bt-action-atk"   onclick="battleAttack()">⚔️<br>こうげき</button>
-      <button class="bt-action-btn bt-action-super"  id="bt-super-btn" onclick="battleSuper()" disabled>⚡<br>必殺技</button>
+      <button class="bt-action-btn bt-action-super"  id="bt-super-btn" onclick="battleSuper()" disabled>⚡<br>ひっさつわざ</button>
     </div>
     <!-- クイズパネル -->
     <div class="bt-quiz-panel" id="bt-quiz-panel" style="display:none">
@@ -3056,7 +3056,7 @@
       <div class="tw-map-stagename" id="tw-map-stagename">ステージを えらんでね</div>
       <div class="tw-map-stagesub" id="tw-map-stagesub">ピンを タップ！</div>
     </div>
-    <button class="tw-map-deploy" id="tw-map-deploy" onclick="twMapDeploy()" disabled>いざ 出陣！</button>
+    <button class="tw-map-deploy" id="tw-map-deploy" onclick="twMapDeploy()" disabled>いざ しゅつじん！</button>
   </div>
   <button class="tw-map-back" style="margin:8px auto 14px" onclick="goHome()">◀ ホームへ</button>
 </div>
@@ -3079,7 +3079,7 @@
 <!-- TOWER DEFENSE デッキ選択 -->
 <div class="screen" id="screen-tower-select">
   <div class="card">
-    <div class="bt-select-title">🐱 出撃メンバーをえらぼう！</div>
+    <div class="bt-select-title">🐱 しゅつげきメンバーをえらぼう！</div>
     <div class="bt-select-sub">さいだい10たいまで えらべるよ</div>
     <div class="bt-select-grid" id="tw-select-grid"></div>
     <button class="bt-start-btn" id="tw-deck-start-btn" onclick="confirmTowerDeck()" disabled>⚔️ しゅつげき じゅんび かんりょう！</button>
@@ -3112,8 +3112,8 @@
           <img class="tw-castle-img" src="sprites/castle_player.png" alt="">
         </div>
         <div class="tw-start-overlay" id="tw-start-overlay">
-          <div class="tw-start-title" id="tw-start-title">🐱 くうっち侵略戦！</div>
-          <div class="tw-start-desc">おかねを ためて ユニットを 出撃させよう！<br>ひだりにある てきの おしろを こわせば かち！</div>
+          <div class="tw-start-title" id="tw-start-title">🐱 くうっちしんりゃくせん！</div>
+          <div class="tw-start-desc">おかねを ためて ユニットを しゅつげきさせよう！<br>ひだりにある てきの おしろを こわせば かち！</div>
           <button class="tw-start-btn" onclick="startTowerDefense()">▶ スタート</button>
         </div>
       </div>
@@ -3167,7 +3167,7 @@
 <div class="screen" id="screen-maze">
   <div class="card" style="position:relative; overflow:hidden;">
     <div class="maze-title-row">
-      <div class="maze-title-txt">🗺️ ボーナス迷路</div>
+      <div class="maze-title-txt">🗺️ ボーナスめいろ</div>
       <div id="maze-stage-info" class="maze-stage-info">ステージ 1 / 7</div>
     </div>
     <div id="maze-dots" class="maze-dots"></div>
@@ -3237,7 +3237,7 @@
     <div class="event2-unlock-char" id="event2-unlock-char"></div>
     <div class="event2-unlock-name">メタルポテまよ</div>
     <div class="event2-unlock-desc">🛡 ぼうぎょりょく MAX 500！<br>どんな こうげきも びくともしない<br>でんせつの げんていキャラ！</div>
-    <button class="event2-unlock-close" onclick="closeEvent2Unlock()">✨ コレクションに追加！</button>
+    <button class="event2-unlock-close" onclick="closeEvent2Unlock()">✨ コレクションに ついか！</button>
   </div>
 </div>
 
@@ -3246,7 +3246,7 @@
   <div id="g-video-wrap">
     <img id="g-video" src="" alt="">
   </div>
-  <div id="g-special-banner"><div class="g-special-text">⚡ 超激レア 確定！ ⚡</div></div>
+  <div id="g-special-banner"><div class="g-special-text">⚡ ちょうげきレア かくてい！ ⚡</div></div>
   <!-- Phase 3: CSS/JSリビール（既存） -->
   <div id="g-dark"></div>
   <div id="g-orb"></div>
@@ -3907,7 +3907,7 @@ const KD = [
   { id:'tw_pote_rush',     name:'ぽてまよ',            type:'ぽてまよ',       rarity:'common', sprite:true, twdef:true, icon:'sprites/pote2_icon.png'},
   { id:'tw_kimomayo',      name:'キモマヨ',            type:'キモマヨ',       rarity:'common', sprite:true, twdef:true, icon:'sprites/kimo_icon.png' },
   { id:'tw_kuucchi_bat',   name:'コウモリくうっち',    type:'コウモリ',       rarity:'rare',   sprite:true, twdef:true, icon:'sprites/bkuu_icon.png' },
-  { id:'tw_kuucchi_fire',  name:'炎くうっち',          type:'炎',             rarity:'sr',     sprite:true, twdef:true, icon:'sprites/fkuu_icon.png' },
+  { id:'tw_kuucchi_fire',  name:'ほのおくうっち',          type:'ほのお',             rarity:'sr',     sprite:true, twdef:true, icon:'sprites/fkuu_icon.png' },
   { id:'tw_obigkubinaga',  name:'小さ大き首なが',      type:'首なが',         rarity:'ur',     sprite:true, twdef:true, icon:'sprites/obig_icon.png' },
   { id:'tw_metal_potemayo',name:'メタルぽてまよ',      type:'メタル',         rarity:'sr',     sprite:true, twdef:true, icon:'sprites/metalpote_icon.png' },
 ];
@@ -4085,7 +4085,7 @@ const ND = [
 KD.push(...MD);
 KD.push(...ND);
 
-const RARITY_LABELS = { common:'レア', rare:'激レア ⭐', sr:'超激レア ⭐⭐', ur:'伝説レア ⭐⭐⭐' };
+const RARITY_LABELS = { common:'レア', rare:'げきレア ⭐', sr:'ちょうげきレア ⭐⭐', ur:'でんせつレア ⭐⭐⭐' };
 const GACHA_COST = 20;
 
 // ===== KANJI DATA =====
@@ -4556,7 +4556,7 @@ const MILESTONES = {
   15: { msg:'Lv.15 たっせい！💫',  reward:{ coins:80,  exp:20  } },
   20: { msg:'Lv.20 たっせい！🔥',  reward:{ coins:100, exp:30  } },
   25: { msg:'Lv.25 たっせい！⚡',  reward:{ coins:150, exp:50  } },
-  30: { msg:'🏆 MAX レベル！\n進化できるようになった！', reward:{ coins:200, exp:100 } },
+  30: { msg:'🏆 MAX レベル！\nしんかできるようになった！', reward:{ coins:200, exp:100 } },
 };
 
 // ===== スキル定義 =====
@@ -4564,9 +4564,9 @@ const SKILL_DEFS = [
   { lv:5,  id:'skill_atk1',  name:'ちからのめざめ',    icon:'⚔️',  desc:'ATK +10%',                     effect:{ atkMul:0.10 } },
   { lv:10, id:'skill_def1',  name:'てっぺきのよろい',  icon:'🛡️',  desc:'DEF +15%',                     effect:{ defMul:0.15 } },
   { lv:15, id:'skill_hp1',   name:'せいめいりょく',    icon:'❤️',  desc:'HP +20%',                      effect:{ hpMul:0.20 } },
-  { lv:20, id:'skill_atk2',  name:'ひっさつのオーラ',  icon:'✨',  desc:'ATK +20% / 必殺倍率 +0.5',     effect:{ atkMul:0.20, specialMulBonus:0.5 } },
+  { lv:20, id:'skill_atk2',  name:'ひっさつのオーラ',  icon:'✨',  desc:'ATK +20% / ひっさつばいりつ +0.5',     effect:{ atkMul:0.20, specialMulBonus:0.5 } },
   { lv:25, id:'skill_def2',  name:'ぜったいぼうぎょ',  icon:'🏰',  desc:'DEF +25% / HP +10%',           effect:{ defMul:0.25, hpMul:0.10 } },
-  { lv:30, id:'skill_max',   name:'チャンピオンオーラ', icon:'👑',  desc:'全ステータス +30%',             effect:{ atkMul:0.30, defMul:0.30, hpMul:0.30 } },
+  { lv:30, id:'skill_max',   name:'チャンピオンオーラ', icon:'👑',  desc:'ぜんステータス +30%',             effect:{ atkMul:0.30, defMul:0.30, hpMul:0.30 } },
 ];
 
 // ===== 絆ステージ定義 =====
@@ -4581,7 +4581,7 @@ let _msQueue = [];
 let _msPendingReward = null;
 
 let floorClears = JSON.parse(localStorage.getItem('kq_floor_clears') || '[]');
-// イベント②：３年生の漢字まとめ① 累計正解数
+// イベント②：３年生の かんじまとめ① 累計正解数
 const EVENT2_GOAL = 1000;
 let event2TotalCorrect = parseInt(localStorage.getItem('kq_event2_correct') || '0');
 function saveEvent2Progress(){ localStorage.setItem('kq_event2_correct', event2TotalCorrect.toString()); }
@@ -4648,16 +4648,16 @@ let kqBadges = JSON.parse(localStorage.getItem('kq_badges') || '[]');
 let kqTotalCorrect = parseInt(localStorage.getItem('kq_total_correct_count') || '0');
 
 const BADGE_DEFS = [
-  { id:'first_correct', icon:'🌱', name:'はじめの一歩',    desc:'はじめて正解した！' },
-  { id:'correct100',    icon:'💯', name:'100もんマスター', desc:'合計100問 正解した！' },
-  { id:'correct500',    icon:'🏅', name:'500もんマスター', desc:'合計500問 正解した！' },
-  { id:'correct1000',   icon:'🏆', name:'1000もんマスター',desc:'合計1000問 正解した！' },
-  { id:'perfect',       icon:'⭐', name:'パーフェクト',     desc:'クイズで全問 正解した！' },
-  { id:'combo5',        icon:'🔥', name:'コンボキング',     desc:'バトルで5コンボ達成！' },
-  { id:'login7',        icon:'📅', name:'1しゅうかん ログイン', desc:'7日 連続ログイン！' },
+  { id:'first_correct', icon:'🌱', name:'はじめの一歩',    desc:'はじめてせいかいした！' },
+  { id:'correct100',    icon:'💯', name:'100もんマスター', desc:'合計100もん せいかいした！' },
+  { id:'correct500',    icon:'🏅', name:'500もんマスター', desc:'合計500もん せいかいした！' },
+  { id:'correct1000',   icon:'🏆', name:'1000もんマスター',desc:'合計1000もん せいかいした！' },
+  { id:'perfect',       icon:'⭐', name:'パーフェクト',     desc:'クイズで ぜんもん せいかいした！' },
+  { id:'combo5',        icon:'🔥', name:'コンボキング',     desc:'バトルで5コンボ たっせい！' },
+  { id:'login7',        icon:'📅', name:'1しゅうかん ログイン', desc:'7日 れんぞくログイン！' },
   { id:'fever',         icon:'🌈', name:'フィーバー！',     desc:'フィーバーモードになった！' },
-  { id:'score1000',     icon:'🎯', name:'スコアアタッカー', desc:'スコア1000点以上！' },
-  { id:'collect10',     icon:'🎒', name:'スーパーコレクター',desc:'キャラを10体 集めた！' },
+  { id:'score1000',     icon:'🎯', name:'スコアアタッカー', desc:'スコア1000点いじょう！' },
+  { id:'collect10',     icon:'🎒', name:'スーパーコレクター',desc:'キャラを10たい あつめた！' },
 ];
 
 function earnBadge(id) {
@@ -4711,8 +4711,8 @@ function showBadges() {
 
 // ===== Feature 2: デイリーミッション =====
 const MISSION_POOL = [
-  { id:'correct10',  label:'10問 せいかいしよう',      goal:10, reward:{type:'coins',amount:30} },
-  { id:'correct20',  label:'20問 せいかいしよう',      goal:20, reward:{type:'coins',amount:60} },
+  { id:'correct10',  label:'10もん せいかいしよう',      goal:10, reward:{type:'coins',amount:30} },
+  { id:'correct20',  label:'20もん せいかいしよう',      goal:20, reward:{type:'coins',amount:60} },
   { id:'play2',      label:'クイズを2かい プレイしよう', goal:2,  reward:{type:'coins',amount:40} },
   { id:'play3',      label:'クイズを3かい プレイしよう', goal:3,  reward:{type:'coins',amount:60} },
   { id:'combo3',     label:'バトルで3コンボ しよう',    goal:1,  reward:{type:'coins',amount:50} },
@@ -4809,7 +4809,7 @@ function renderMissionList() {
         `<div class="mission-reward-tag">${rewardLabel}</div>` +
         `<button class="mission-claim-btn${m.done?' claimed':''}" ` +
           `${m.done || !complete ? 'disabled' : `onclick="claimMission(${idx})"`}>` +
-          `${m.done ? '受取済' : complete ? 'うけとる' : 'まだ'}` +
+          `${m.done ? 'うけとりずみ' : complete ? 'うけとる' : 'まだ'}` +
         `</button>` +
       `</div>`;
     list.appendChild(div);
@@ -5012,22 +5012,22 @@ function showScreen(id){
 }
 /* ===== 設定：表示モード管理 ===== */
 const MODE_CONFIG = [
-  { mode:'reading',  label:'👂 読み方は？',      group:'kanji',   groupLabel:'📖 漢字' },
-  { mode:'writing',  label:'📝 漢字は？',         group:'kanji',   groupLabel:'📖 漢字' },
-  { mode:'strokes',  label:'✏️ 何画目？',         group:'kanji',   groupLabel:'📖 漢字' },
-  { mode:'mixed',    label:'🌀 まぜこぜ',         group:'kanji',   groupLabel:'📖 漢字' },
-  { mode:'reading2', label:'👂 読み方は？',       group:'kanji2',  groupLabel:'📖 漢字（2年）' },
-  { mode:'writing2', label:'📝 漢字は？',         group:'kanji2',  groupLabel:'📖 漢字（2年）' },
-  { mode:'strokes2', label:'✏️ 何画目？',         group:'kanji2',  groupLabel:'📖 漢字（2年）' },
-  { mode:'reading3', label:'👂 読み方は？',       group:'kanji3',  groupLabel:'📖 漢字（3年）' },
-  { mode:'writing3', label:'📝 漢字は？',         group:'kanji3',  groupLabel:'📖 漢字（3年）' },
-  { mode:'strokes3', label:'✏️ 何画目？',         group:'kanji3',  groupLabel:'📖 漢字（3年）' },
+  { mode:'reading',  label:'👂 読み方は？',      group:'kanji',   groupLabel:'📖 かんじ' },
+  { mode:'writing',  label:'📝 かんじは？',         group:'kanji',   groupLabel:'📖 かんじ' },
+  { mode:'strokes',  label:'✏️ 何画目？',         group:'kanji',   groupLabel:'📖 かんじ' },
+  { mode:'mixed',    label:'🌀 まぜこぜ',         group:'kanji',   groupLabel:'📖 かんじ' },
+  { mode:'reading2', label:'👂 読み方は？',       group:'kanji2',  groupLabel:'📖 かんじ（2年）' },
+  { mode:'writing2', label:'📝 かんじは？',         group:'kanji2',  groupLabel:'📖 かんじ（2年）' },
+  { mode:'strokes2', label:'✏️ 何画目？',         group:'kanji2',  groupLabel:'📖 かんじ（2年）' },
+  { mode:'reading3', label:'👂 読み方は？',       group:'kanji3',  groupLabel:'📖 かんじ（3年）' },
+  { mode:'writing3', label:'📝 かんじは？',         group:'kanji3',  groupLabel:'📖 かんじ（3年）' },
+  { mode:'strokes3', label:'✏️ 何画目？',         group:'kanji3',  groupLabel:'📖 かんじ（3年）' },
   { mode:'plus',     label:'➕ 足し算',           group:'math',    groupLabel:'🔢 計算' },
   { mode:'minus',    label:'➖ 引き算',           group:'math',    groupLabel:'🔢 計算' },
-  { mode:'times',    label:'✖️ 掛け算',           group:'math',    groupLabel:'🔢 計算' },
-  { mode:'divide',   label:'➗ 割り算',           group:'math',    groupLabel:'🔢 計算' },
+  { mode:'times',    label:'✖️ かけ算',           group:'math',    groupLabel:'🔢 計算' },
+  { mode:'divide',   label:'➗ わり算',           group:'math',    groupLabel:'🔢 計算' },
   { mode:'alpha',    label:'🔤 アルファベット',    group:'english', groupLabel:'🇬🇧 えいご' },
-  { mode:'engword',  label:'🌍 えいご単語',       group:'english', groupLabel:'🇬🇧 えいご' },
+  { mode:'engword',  label:'🌍 えいごたんご',       group:'english', groupLabel:'🇬🇧 えいご' },
   { mode:'romaji',   label:'🔡 ローマ字よみ書き', group:'romaji',  groupLabel:'🔡 ローマ字' },
 ];
 
@@ -5140,10 +5140,10 @@ function importData(e) {
       Object.keys(data).forEach(k => {
         if (k.startsWith('kq_')) { localStorage.setItem(k, data[k]); count++; }
       });
-      alert(`データを読み込みました（${count}項目）。ページを再読み込みします。`);
+      alert(`データを よみこみました（${count}こうもく）。ページを さいよみこみします。`);
       location.reload();
     } catch(err) {
-      alert('ファイルの読み込みに失敗しました。正しいファイルか確認してください。');
+      alert('ファイルの よみこみに しっぱいしました。ただしい ファイルか かくにんしてください。');
     }
   };
   reader.readAsText(file);
@@ -5156,8 +5156,8 @@ const LOGIN_REWARDS = [
   { coins:50,  exp:0,  ticket:null, icon:'🪙',  lbl:'×50' },
   { coins:0,   exp:10, ticket:null, icon:'✨',  lbl:'×10' },
   { coins:100, exp:0,  ticket:null, icon:'🪙',  lbl:'×100' },
-  { coins:0,   exp:0,  ticket:'r',  icon:'🎫',  lbl:'激レア' },
-  { coins:0,   exp:0,  ticket:'sr', icon:'🌟',  lbl:'超激レア' },
+  { coins:0,   exp:0,  ticket:'r',  icon:'🎫',  lbl:'げきレア' },
+  { coins:0,   exp:0,  ticket:'sr', icon:'🌟',  lbl:'ちょうげきレア' },
 ];
 
 function _todayStr() { return new Date().toISOString().slice(0,10); }
@@ -5189,8 +5189,8 @@ function _buildLoginBonusUI() {
   const parts = [];
   if (r.coins)            parts.push(`🪙 ×${r.coins}`);
   if (r.exp)              parts.push(`✨ ×${r.exp}`);
-  if (r.ticket === 'r')   parts.push('🎫 激レア確定チケット ×1');
-  if (r.ticket === 'sr')  parts.push('🌟 超激レア確定チケット ×1');
+  if (r.ticket === 'r')   parts.push('🎫 げきレアかくていチケット ×1');
+  if (r.ticket === 'sr')  parts.push('🌟 ちょうげきレアかくていチケット ×1');
   document.getElementById('lb-reward-box').innerHTML =
     `今日のボーナス<br><span class="lb-reward-val">${parts.join('　')}</span>`;
 }
@@ -5550,7 +5550,7 @@ function startEventQuiz() {
   renderQuestion();
 }
 
-// ===== イベント②：３年生の漢字まとめ① =====
+// ===== イベント②：３年生の かんじまとめ① =====
 const EVENT_STAGE_DATA_2 = [
   // ─── レベル1 ───
   { reading:'けん',        template:'□',          suffix:'大会',       correct:'県', choices:['県','運','有','区'] },
@@ -5622,16 +5622,16 @@ function updateEvent2Btn() {
     btn.innerHTML =
       `<div class="event2-char-wrap">${charSVG}</div>`+
       `<div class="event2-info">`+
-        `<div class="event2-title">📚 ３年生の漢字まとめ①</div>`+
-        `<div class="event2-unlocked-badge">✅ メタルポテまよ かいほう済み！</div>`+
-        `<div class="event2-prog-label">全15問 ✦ ３年生の漢字をえらぼう</div>`+
+        `<div class="event2-title">📚 ３年生の かんじまとめ①</div>`+
+        `<div class="event2-unlocked-badge">✅ メタルポテまよ かいほうずみ！</div>`+
+        `<div class="event2-prog-label">ぜん15もん ✦ ３年生の かんじを えらぼう</div>`+
       `</div>`;
   } else {
     btn.innerHTML =
       `<div class="event2-char-wrap">${charSVG}</div>`+
       `<div class="event2-info">`+
-        `<div class="event2-title">📚 ３年生の漢字まとめ①</div>`+
-        `<div class="event2-reward">🛡 げんてい「メタルポテまよ」を ゲットしよう！<br><span style="font-size:10px;color:#cfd8dc">ぼうぎょりょく MAX 500 超つよキャラ！</span></div>`+
+        `<div class="event2-title">📚 ３年生の かんじまとめ①</div>`+
+        `<div class="event2-reward">🛡 げんてい「メタルポテまよ」を ゲットしよう！<br><span style="font-size:10px;color:#cfd8dc">ぼうぎょりょく MAX 500 ちょうつよキャラ！</span></div>`+
         `<div class="event2-prog-track"><div class="event2-prog-fill" style="width:${pct}%"></div></div>`+
         `<div class="event2-prog-label">せいかい ${prog.toLocaleString()} / ${EVENT2_GOAL.toLocaleString()} もん</div>`+
       `</div>`;
@@ -5906,8 +5906,8 @@ function renderQuestion() {
 
   const q=questions[currentIdx], total=questions.length;
   document.getElementById('progress-bar').style.width = (currentIdx/total*100)+'%';
-  document.getElementById('progress-text').textContent = `${currentIdx+1} / ${total} 問`;
-  document.getElementById('score-badge').textContent   = `⭐ ${correctCount}問 正かい`;
+  document.getElementById('progress-text').textContent = `${currentIdx+1} / ${total} もん`;
+  document.getElementById('score-badge').textContent   = `⭐ ${correctCount}もん 正かい`;
   const sb = document.getElementById('streak-badge');
   if (streak>=3) { sb.classList.add('show'); document.getElementById('streak-num').textContent=streak; }
   else sb.classList.remove('show');
@@ -5917,7 +5917,7 @@ function renderQuestion() {
     document.getElementById('q-type-label').textContent='👂 読み方をえらんでね';
     kEl.className='kanji-display'; kEl.style.display='block'; kEl.textContent=q.kanji; rEl.style.display='none';
   } else if (q.type==='writing') {
-    document.getElementById('q-type-label').textContent='📝 漢字をえらんでね';
+    document.getElementById('q-type-label').textContent='📝 かんじをえらんでね';
     kEl.style.display='none'; rEl.style.display='block'; rEl.textContent=q.reading;
   } else if (q.type==='strokes-step') {
     document.getElementById('q-type-label').textContent='✏️ 赤い画は 何画目？';
@@ -5926,7 +5926,7 @@ function renderQuestion() {
     kEl.innerHTML=`<div class="stroke-quiz-row">${q.svg}<div class="stroke-full-kanji">${q.kanji}</div></div><div class="stroke-kanji-hint">「${q.kanji}」の ${q.total}画のうち</div>`;
     rEl.style.display='none';
   } else if(q.type==='math'){
-    const opLabel = {plus:'➕ 足し算',minus:'➖ 引き算',times:'✖️ 掛け算',divide:'➗ 割り算'}[q.op]||'🔢 計算';
+    const opLabel = {plus:'➕ 足し算',minus:'➖ 引き算',times:'✖️ かけ算',divide:'➗ わり算'}[q.op]||'🔢 計算';
     document.getElementById('q-type-label').textContent = opLabel + '　こたえは？';
     kEl.className='kanji-display math-display';
     kEl.style.display='block'; kEl.textContent=q.display; rEl.style.display='none';
@@ -5956,7 +5956,7 @@ function renderQuestion() {
     kEl.className='kanji-display romaji-roma-display';
     kEl.style.display='block'; kEl.textContent=q.roma; rEl.style.display='none';
   } else if(q.type==='event-writing'){
-    document.getElementById('q-type-label').textContent='📝 読みに合う　漢字をえらんでね';
+    document.getElementById('q-type-label').textContent='📝 読みに合う　かんじをえらんでね';
     kEl.className='kanji-display';
     kEl.style.display='block';
     const tplHtml = q.template.replace(/□/g,'<span class="event-blank">□</span>');
@@ -5965,7 +5965,7 @@ function renderQuestion() {
     rEl.style.display='none';
   } else {
     // 旧: strokes 合計（フォールバック）
-    document.getElementById('q-type-label').textContent='✏️ この漢字は 何画？';
+    document.getElementById('q-type-label').textContent='✏️ この かんじは 何画？';
     kEl.className='kanji-display';
     kEl.style.display='block'; kEl.textContent=q.kanji; rEl.style.display='none';
   }
@@ -6045,7 +6045,7 @@ function spawnCoinFloat(n) {
 function spawnKeyFloat() {
   const plays = Math.floor(keyFragments / 100);
   const el=document.createElement('div'); el.className='coin-float';
-  el.textContent=`🗝️ かけら100個！迷路 ${plays}回 プレイ可！`; el.style.right='8px'; el.style.top='40px';
+  el.textContent=`🗝️ かけら100こ！めいろ ${plays}回 プレイできる！`; el.style.right='8px'; el.style.top='40px';
   el.style.background='linear-gradient(135deg,#ff9800,#ffd600)';
   el.style.color='#4a2800'; el.style.padding='6px 14px'; el.style.fontSize='13px';
   document.body.appendChild(el); setTimeout(()=>el.remove(),2500);
@@ -6071,11 +6071,11 @@ function showResult() {
   activeQuizId = null;
   const total=questions.length, pct=Math.round(correctCount/total*100);
   let title, comment, kidx;
-  if(pct===100){ title='かんぺき！'; comment='全問 正かい！\nきみは 漢字王への道の 王者だ！'; kidx=8; launchConfetti(); }
-  else if(pct>=80){ title='すばらしい！'; comment='もうすこしで かんぺき！\nもう一度 チャレンジ！'; kidx=1; }
-  else if(pct>=60){ title='よくできた！'; comment='まちがえた ところを\nもう一度 読んでみよう！'; kidx=2; }
-  else if(pct>=40){ title='がんばれ！'; comment='毎日 少しずつ 練習 すれば\n強くなれる！'; kidx=3; }
-  else            { title='もっと練習！'; comment='くりかえし 練習 して\n漢字王への道 上位を 目指せ！'; kidx=0; }
+  if(pct===100){ title='かんぺき！'; comment='ぜんもん 正かい！\nきみは かんじ王への 道の おうじゃだ！'; kidx=8; launchConfetti(); }
+  else if(pct>=80){ title='すばらしい！'; comment='もうすこしで かんぺき！\nもういちど チャレンジ！'; kidx=1; }
+  else if(pct>=60){ title='よくできた！'; comment='まちがえた ところを\nもういちど 読んでみよう！'; kidx=2; }
+  else if(pct>=40){ title='がんばれ！'; comment='毎日 少しずつ れんしゅう すれば\n強くなれる！'; kidx=3; }
+  else            { title='もっと れんしゅう！'; comment='くりかえし れんしゅう して\nかんじ王への道 じょういを めざせ！'; kidx=0; }
 
   // Feature 2: ミッション更新（プレイ完了）
   updateMissionProgress('play', 1);
@@ -6240,7 +6240,7 @@ function _showTenItemResult(idx) {
   document.getElementById('ten-seq-nav').style.display = 'block';
   document.getElementById('ten-seq-counter').textContent = `${idx + 1} / 10`;
   document.getElementById('ten-seq-next-btn').textContent =
-    idx < _tenItems.length - 1 ? '次へ ▶' : '一覧を見る ▶';
+    idx < _tenItems.length - 1 ? 'つぎへ ▶' : 'いちらんを見る ▶';
 
   if(item.rarity==='ur'||item.rarity==='sr') launchConfetti();
 }
@@ -6331,12 +6331,12 @@ function updateTicketGachaBtn(){
   if(btnR){
     const cnt = tickets.r || 0;
     btnR.style.display   = cnt > 0 ? '' : 'none';
-    btnR.textContent     = `🎫 激レア確定チケット（${cnt}まい）で ガチャ！`;
+    btnR.textContent     = `🎫 げきレアかくていチケット（${cnt}まい）で ガチャ！`;
   }
   if(btnSR){
     const cnt = tickets.sr || 0;
     btnSR.style.display  = cnt > 0 ? '' : 'none';
-    btnSR.textContent    = `🌟 超激レア確定チケット（${cnt}まい）で ガチャ！`;
+    btnSR.textContent    = `🌟 ちょうげきレアかくていチケット（${cnt}まい）で ガチャ！`;
   }
 }
 
@@ -6841,7 +6841,7 @@ function showCutIn(sp){
   const div = document.createElement('div');
   div.className = 'bt-float-cutin';
   div.innerHTML = `<div class="bt-float-name" style="color:${col}">⚡ ${sp.name}</div>`
-                + `<div class="bt-float-mul">×${sp.mul.toFixed(1)} 倍</div>`;
+                + `<div class="bt-float-mul">×${sp.mul.toFixed(1)} ばい</div>`;
   card.appendChild(div);
   playSound('super');
   // スクリーンシェイク
@@ -7364,7 +7364,7 @@ function showCharDetail(id) {
   const spEl = document.getElementById('cd-special');
   if(sp){
     spEl.style.display='block';
-    spEl.innerHTML=`⚡ 必殺技：<b>${sp.name}</b><span class="cd-mul">×${sp.mul.toFixed(1)}</span>`;
+    spEl.innerHTML=`⚡ ひっさつわざ：<b>${sp.name}</b><span class="cd-mul">×${sp.mul.toFixed(1)}</span>`;
   } else {
     spEl.style.display='none';
   }
@@ -7636,7 +7636,7 @@ const KD_SPECIAL = {
 KD.forEach(k => {
   const sp = KD_SPECIAL[k.id];
   if(sp){ k.specialName = sp.name; k.specialMul = sp.mul; }
-  else  { k.specialName = '必殺アタック'; k.specialMul = 2.5; }
+  else  { k.specialName = 'ひっさつアタック'; k.specialMul = 2.5; }
 });
 
 // じゅくごシステムは廃止
@@ -7863,9 +7863,9 @@ let sodaSelectedId = null;
 
 const RARITY_ORDER  = ['ur','sr','rare','common'];
 const RARITY_INFO   = {
-  ur:     { label:'👑 伝説レア',   cls:'ur' },
-  sr:     { label:'✨ 超激レア',   cls:'sr' },
-  rare:   { label:'💎 激レア',     cls:'rare' },
+  ur:     { label:'👑 でんせつレア',   cls:'ur' },
+  sr:     { label:'✨ ちょうげきレア',   cls:'sr' },
+  rare:   { label:'💎 げきレア',     cls:'rare' },
   common: { label:'🌱 レア',       cls:'common' },
 };
 
@@ -7894,7 +7894,7 @@ function makeSodaItem(k){
       `<div class="soda-stat atk">⚔️<div class="mini-bar-track"><div class="mini-bar-fill atk" style="width:${atkPct}%"></div></div>${st.atk}</div>`+
       `<div class="soda-stat def">🛡️<div class="mini-bar-track"><div class="mini-bar-fill def" style="width:${defPct}%"></div></div>${st.def}</div>`+
       `<div class="soda-stat hp">❤️<div class="mini-bar-track"><div class="mini-bar-fill hp" style="width:${hpPct}%"></div></div>${st.hp}</div>`;
-    specialHTML = `<div class="soda-item-special">⚡${k.specialName||'必殺アタック'}<br>×${(k.specialMul||2.5).toFixed(1)}倍</div>`;
+    specialHTML = `<div class="soda-item-special">⚡${k.specialName||'ひっさつアタック'}<br>×${(k.specialMul||2.5).toFixed(1)}ばい</div>`;
   }
   div.innerHTML = `
     ${kSVG(k)}
@@ -7961,7 +7961,7 @@ function selectSodaKuucchi(id){
   const spRow = document.getElementById('soda-special-row');
   if(spRow){
     if(k.twdef){ const s=twTDStats(id); spRow.innerHTML = `${s.icon} <b>${s.label}</b> タイプ`; }
-    else spRow.innerHTML = `⚡ <b>${k.specialName}</b> &nbsp;×${(k.specialMul||2.5).toFixed(1)}倍`;
+    else spRow.innerHTML = `⚡ <b>${k.specialName}</b> &nbsp;×${(k.specialMul||2.5).toFixed(1)}ばい`;
   }
 
   const needed = expForLv(ld.lv) - ld.exp;
@@ -8001,7 +8001,7 @@ function selectSodaKuucchi(id){
   // 進化バッジ（名前の横）
   const nameEl = document.getElementById('soda-name');
   if(nameEl){
-    nameEl.innerHTML = k.name + (evolvedKuucchi[id] ? '<span class="evolved-badge">✨進化</span>' : '');
+    nameEl.innerHTML = k.name + (evolvedKuucchi[id] ? '<span class="evolved-badge">✨しんか</span>' : '');
   }
 
   // スキルセクション
@@ -8144,7 +8144,7 @@ function showNextMilestone(){
   if(ms.reward.exp)   rewardText += `✨ けいけんち +${ms.reward.exp}こ`;
   document.getElementById('ms-reward').textContent = rewardText;
   document.getElementById('ms-skill').textContent = unlockedSkill
-    ? `${unlockedSkill.icon} スキル解放：「${unlockedSkill.name}」（${unlockedSkill.desc}）`
+    ? `${unlockedSkill.icon} スキルかいほう：「${unlockedSkill.name}」（${unlockedSkill.desc}）`
     : '';
 
   _msPendingReward = { ms, msKey };
@@ -8239,7 +8239,7 @@ function showBattleSelect(){
           <div class="sel-stat def">🛡️<div class="mini-bar-track"><div class="mini-bar-fill def" style="width:${_def3}%"></div></div>${st.def}</div>
           <div class="sel-stat hp">❤️<div class="mini-bar-track"><div class="mini-bar-fill hp" style="width:${_hp3}%"></div></div>${st.hp}</div>
         </div>
-        <div class="sel-special">⚡${k.specialName||'必殺アタック'}<br>×${(k.specialMul||2.5).toFixed(1)}倍</div>`;
+        <div class="sel-special">⚡${k.specialName||'ひっさつアタック'}<br>×${(k.specialMul||2.5).toFixed(1)}ばい</div>`;
       div.onclick = ()=>toggleBtSel(k.id);
       grid.appendChild(div);
     });
@@ -8281,12 +8281,12 @@ function getFloorReward(floor){
     2:  { coins:80,  exp:10,  ticket:null, label:'🪙+80まい ✨+10こ' },
     3:  { coins:120, exp:20,  ticket:null, label:'🪙+120まい ✨+20こ' },
     4:  { coins:150, exp:30,  ticket:null, label:'🪙+150まい ✨+30こ' },
-    5:  { coins:0,   exp:0,   ticket:'r',  label:'🎫 激レア確定チケット×1' },
+    5:  { coins:0,   exp:0,   ticket:'r',  label:'🎫 げきレアかくていチケット×1' },
     6:  { coins:200, exp:50,  ticket:null, label:'🪙+200まい ✨+50こ' },
     7:  { coins:250, exp:70,  ticket:null, label:'🪙+250まい ✨+70こ' },
-    8:  { coins:0,   exp:0,   ticket:'sr', label:'🌟 超激レア確定チケット×1' },
+    8:  { coins:0,   exp:0,   ticket:'sr', label:'🌟 ちょうげきレアかくていチケット×1' },
     9:  { coins:300, exp:100, ticket:null, label:'🪙+300まい ✨+100こ' },
-    10: { coins:0,   exp:0,   ticket:'sr', label:'🌟 超激レア確定チケット×1' },
+    10: { coins:0,   exp:0,   ticket:'sr', label:'🌟 ちょうげきレアかくていチケット×1' },
   };
   return rewards[floor] || null;
 }
@@ -8409,7 +8409,7 @@ function battleSuper(){
     const bonusMul  = bestStats.specialMulBonus || 0;
     btCurrentSpecial = { name: bestK.specialName, mul: bestK.specialMul + bonusMul, atk: bestAtk, kuucchi: bestK };
   } else {
-    btCurrentSpecial = { name: '必殺アタック', mul: 3.0, atk: battleParty.reduce((s,k)=>s+getStats(k).atk,0)/battleParty.length, kuucchi: null };
+    btCurrentSpecial = { name: 'ひっさつアタック', mul: 3.0, atk: battleParty.reduce((s,k)=>s+getStats(k).atk,0)/battleParty.length, kuucchi: null };
   }
 
   showBtSuperQuiz();
@@ -8443,7 +8443,7 @@ function showBtSuperQuiz(){
   } else if (q.type === 'event-writing') {
     const tpl = q.template.replace(/□/g,'<span style="color:#e53935">□</span>');
     const sfx = q.suffix ? `<span style="color:#333">${q.suffix}</span>` : '';
-    qEl.innerHTML = `${spLabel}<div class="bt-quiz-label">📝 よみに合う漢字は？</div><div style="font-size:17px;font-weight:700;color:#7b1fa2;margin-bottom:2px">${q.reading}</div><div class="bt-quiz-big">${tpl}${sfx}</div>`;
+    qEl.innerHTML = `${spLabel}<div class="bt-quiz-label">📝 よみに合うかんじは？</div><div style="font-size:17px;font-weight:700;color:#7b1fa2;margin-bottom:2px">${q.reading}</div><div class="bt-quiz-big">${tpl}${sfx}</div>`;
   } else {
     qEl.innerHTML = `${spLabel}<div class="bt-quiz-label">${qTypeLabel}</div><div class="bt-quiz-big">${q.kanji}</div>`;
   }
@@ -8483,7 +8483,7 @@ function answerSuperQuiz(btn, answer, correct){
   document.querySelectorAll('.bt-choice').forEach(b=>{ b.disabled=true; if(b.textContent===correct) b.classList.add('correct'); });
   if(btn && answer!==correct) btn.classList.add('wrong');
   const hit = answer === correct;
-  const sp = btCurrentSpecial || { name:'必殺アタック', mul:3.0, atk: battleParty.reduce((s,k)=>s+getStats(k).atk,0)/battleParty.length };
+  const sp = btCurrentSpecial || { name:'ひっさつアタック', mul:3.0, atk: battleParty.reduce((s,k)=>s+getStats(k).atk,0)/battleParty.length };
   if(hit){
     playSound('correct');
     const dmg = Math.max(1, Math.round(sp.atk * sp.mul - btEnemy._bDef*0.2));
@@ -8738,7 +8738,7 @@ function battleWin(){
       if(fr.coins)  { coins += fr.coins;  saveState(); updateCoinBar(); }
       if(fr.exp)    { expStones += fr.exp; saveExpStones(); updateExpBar(); }
       if(fr.ticket) { tickets[fr.ticket] = (tickets[fr.ticket]||0)+1; saveTickets(); updateTicketBar(); }
-      firstClearHTML = `<div class="bt-end-first-clear">🎉 初回クリア報酬！<br>${fr.label}</div>`;
+      firstClearHTML = `<div class="bt-end-first-clear">🎉 はつクリア ごほうび！<br>${fr.label}</div>`;
     }
   }
 
@@ -8822,7 +8822,7 @@ function battleLose(){
     <div class="bt-end-sub">${btEnemy.name}に　${lostFloor}かいで　やられた！</div>
     <div class="bt-end-sub" style="font-size:12px;color:#bbb">✨ けいけんち +3こ</div>
     <div class="bt-end-sub" style="font-size:12px;color:#ef9a9a">1かいから　やりなおし！</div>
-    <button class="bt-end-btn" onclick="this.closest('.bt-end-overlay').remove();showBattleSelect()">🔄 もう一度！</button>
+    <button class="bt-end-btn" onclick="this.closest('.bt-end-overlay').remove();showBattleSelect()">🔄 もういちど！</button>
     <button class="bt-end-btn" style="background:#546e7a;margin-top:6px;font-size:14px" onclick="this.closest('.bt-end-overlay').remove();goHome()">🏠 もどる</button>
   `;
   document.body.appendChild(ov);
@@ -8928,7 +8928,7 @@ const TW_KUU_SPRITE = {
   atk:  ['sprites/kuu_atk1.png','sprites/kuu_atk2.png','sprites/kuu_atk3.png'],
   dmg:  'sprites/kuu_dmg.png',
 };
-// コマアニメ式：炎くうっち（ひをはく・高コスト）
+// コマアニメ式：ほのおくうっち（ひをはく・高コスト）
 const TW_FKUU_ID = 'tw_kuucchi_fire';
 const TW_FKUU_SPRITE = {
   icon: 'sprites/fkuu_icon.png',
@@ -9033,7 +9033,7 @@ function twUnitDef(id){
   if(id === TW_FKUU_ID){
     // ひをはく：射程内の敵をまとめて焼く範囲攻撃。超激レア級の高コスト
     const fireRole = { icon:'🔥', label:'ひをはく', hpMul:1.3, atkMul:1.0, range:13, interval:1.3, area:true };
-    return { id, rarity:'sr', name:'炎くうっち', role:fireRole,
+    return { id, rarity:'sr', name:'ほのおくうっち', role:fireRole,
              svg:`<img class="tw-icon-img" src="${TW_FKUU_SPRITE.icon}">`,
              sprite:TW_FKUU_SPRITE, lv: kuucchiLvData(id).lv };
   }
@@ -9103,7 +9103,7 @@ function twTDStatsHTML(id){
     `<div class="cd-meter-row"><span class="cd-meter-label">⚔️ こうげき</span><div class="cd-meter-track"><div class="cd-meter-fill atk" style="width:${atkPct}%"></div></div><span class="cd-meter-num">${s.atk}</span></div>`+
     `<div class="cd-meter-row"><span class="cd-meter-label">🎯 リーチ</span><div class="cd-meter-track"><div class="cd-meter-fill def" style="width:${rngPct}%"></div></div><span class="cd-meter-num">${s.range}</span></div>`+
     `<div class="cd-meter-row"><span class="cd-meter-label">👟 はやさ</span><div class="cd-meter-track"><div class="cd-meter-fill atk" style="width:${spdPct}%"></div></div><span class="cd-meter-num">${s.speed.toFixed(2)}</span></div>`+
-    `<div class="cd-td-info">${s.icon} ${s.label}こうげき（${atkType}${flyTag}）／ 🪙コスト <b>${s.cost}</b> ／ ⏱️かんかく <b>${s.interval.toFixed(1)}秒</b></div>`;
+    `<div class="cd-td-info">${s.icon} ${s.label}こうげき（${atkType}${flyTag}）／ 🪙コスト <b>${s.cost}</b> ／ ⏱️かんかく <b>${s.interval.toFixed(1)}びょう</b></div>`;
 }
 const TW_CANNON_CHARGE_SEC = 25; // フルチャージまでの秒数（基本値）
 const TW_ENEMY_CASTLE_POS  = 8;   // 敵の城（左端）
@@ -9114,8 +9114,8 @@ const TW_PLAYER_CASTLE_HP  = 300;
 let twUpg = JSON.parse(localStorage.getItem('kq_tw_upg') || '{}');
 function twUpgLv(k){ return twUpg[k] || 0; }
 const TW_UPGRADES = [
-  { key:'cannon_pow',  icon:'🎯', name:'くうっち砲パワー',   max:10, cost:l=>4+l*3, effect:l=>`いりょく +${l*15}%` },
-  { key:'cannon_chg',  icon:'⚡', name:'くうっち砲チャージ', max:10, cost:l=>4+l*3, effect:l=>`チャージ -${l}びょう` },
+  { key:'cannon_pow',  icon:'🎯', name:'くうっちほうパワー',   max:10, cost:l=>4+l*3, effect:l=>`いりょく +${l*15}%` },
+  { key:'cannon_chg',  icon:'⚡', name:'くうっちほうチャージ', max:10, cost:l=>4+l*3, effect:l=>`チャージ -${l}びょう` },
   { key:'start_money', icon:'💰', name:'はじめの おかね',     max:10, cost:l=>3+l*2, effect:l=>`+${l*20}円`   },
   { key:'base_hp',     icon:'🏯', name:'きょてん たいりょく', max:10, cost:l=>4+l*3, effect:l=>`+${l*60}`    },
   { key:'money_rate',  icon:'📈', name:'おかね アップ',       max:10, cost:l=>3+l*3, effect:l=>`しゅうにゅう +${l*8}%` },
@@ -9780,7 +9780,7 @@ function twTick(){
   });
   updateTwDeployButtons();
 
-  // くうっち砲チャージ
+  // くうっちほうチャージ
   if(twCannonCharge < 100){
     twCannonCharge = Math.min(100, twCannonCharge + 100*0.1/twCannonChargeSec());
     updateTwCannonUI();
@@ -10267,7 +10267,7 @@ function twShowEndOverlay(won){
     ov.innerHTML = `
       <div class="bt-end-title" style="color:white">やられた！</div>
       <div class="bt-end-sub">おしろが おちてしまった！</div>
-      <button class="bt-end-btn" onclick="this.closest('.bt-end-overlay').remove();showScreen('screen-tower');twResetOverlay();">🔄 もう一度！</button>
+      <button class="bt-end-btn" onclick="this.closest('.bt-end-overlay').remove();showScreen('screen-tower');twResetOverlay();">🔄 もういちど！</button>
       <button class="bt-end-btn" style="background:#546e7a;margin-top:6px;font-size:14px" onclick="this.closest('.bt-end-overlay').remove();goHome()">🏠 もどる</button>
     `;
     document.body.appendChild(ov);
@@ -10524,10 +10524,10 @@ const MAZE_STAGES = [
   { coins:0,   exp:5,   ticket:null, label:'✨ ×5' },
   { coins:50,  exp:0,   ticket:null, label:'🪙 ×50' },
   { coins:30,  exp:10,  ticket:null, label:'✨ ×10　🪙 ×30' },
-  { coins:0,   exp:0,   ticket:'r',  label:'🎫 激レア確定チケット' },
+  { coins:0,   exp:0,   ticket:'r',  label:'🎫 げきレアかくていチケット' },
   { coins:80,  exp:8,   ticket:null, label:'🪙 ×80　✨ ×8' },
-  { coins:0,   exp:0,   ticket:'sr', label:'🌟 超激レア確定チケット' },
-  { coins:0,   exp:0,   ticket:'sr', label:'🌟 超激レア確定チケット' },
+  { coins:0,   exp:0,   ticket:'sr', label:'🌟 ちょうげきレアかくていチケット' },
+  { coins:0,   exp:0,   ticket:'sr', label:'🌟 ちょうげきレアかくていチケット' },
 ];
 
 let mazeStage     = 0;
@@ -10577,7 +10577,7 @@ function showMaze() {
     ov.innerHTML = `
       <div class="bt-end-title" style="font-size:42px">🗝️</div>
       <div class="bt-end-sub" style="color:#fff;font-size:16px">かけらが 足りません！</div>
-      <div class="bt-end-sub" style="font-size:13px;color:#aaa;margin-top:4px">いま <b style="color:#ffd600">${keyFragments}/100</b> かけら（あと <b style="color:#ffd600">${next}問</b> 正解でプレイ可！）</div>
+      <div class="bt-end-sub" style="font-size:13px;color:#aaa;margin-top:4px">いま <b style="color:#ffd600">${keyFragments}/100</b> かけら（あと <b style="color:#ffd600">${next}もん</b> せいかいでプレイできる！）</div>
       <button class="bt-end-btn" style="margin-top:14px"
         onclick="this.closest('.bt-end-overlay').remove()">とじる</button>
     `;
@@ -10648,22 +10648,22 @@ function _renderMazeQ(q) {
     displayEl.className = 'maze-q-display';
     displayEl.textContent = q.kanji;
   } else if (q.type === 'writing') {
-    labelEl.textContent = '📝 漢字はどっち？';
+    labelEl.textContent = '📝 かんじはどっち？';
     displayEl.className = 'maze-q-display reading-disp';
     displayEl.textContent = q.reading;
   } else if (q.type === 'math') {
-    const opLabel = {plus:'➕ 足し算',minus:'➖ 引き算',times:'✖️ 掛け算'}[q.op] || '🔢 計算';
+    const opLabel = {plus:'➕ 足し算',minus:'➖ 引き算',times:'✖️ かけ算'}[q.op] || '🔢 計算';
     labelEl.textContent = opLabel + '　こたえはどっち？';
     displayEl.className = 'maze-q-display math-disp';
     displayEl.textContent = q.display;
   } else if (q.type === 'event-writing') {
-    labelEl.textContent = '📝 よみに合う漢字はどっち？';
+    labelEl.textContent = '📝 よみに合うかんじはどっち？';
     displayEl.className = 'maze-q-display';
     const tpl = q.template.replace(/□/g,'<span class="event-blank">□</span>');
     const sfx = q.suffix ? `<span style="color:#333">${q.suffix}</span>` : '';
     displayEl.innerHTML = `<div style="font-size:15px;color:#7b1fa2;font-weight:700;margin-bottom:2px">${q.reading}</div><div>${tpl}${sfx}</div>`;
   } else {
-    labelEl.textContent = '❓ どっちが正解？';
+    labelEl.textContent = '❓ どっちがせいかい？';
     displayEl.className = 'maze-q-display';
     displayEl.textContent = q.kanji || '';
   }
@@ -10821,7 +10821,7 @@ function _mazeEnd(won) {
     </div>
     ${rewardHTML}
     <button class="bt-end-btn" style="margin-top:10px"
-      onclick="this.closest('.bt-end-overlay').remove(); showMaze()">🔄 もう一度！</button>
+      onclick="this.closest('.bt-end-overlay').remove(); showMaze()">🔄 もういちど！</button>
     <button class="bt-end-btn" style="background:#546e7a;margin-top:6px;font-size:14px"
       onclick="this.closest('.bt-end-overlay').remove(); goHome()">🏠 もどる</button>
   `;
