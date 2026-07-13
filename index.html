@@ -239,6 +239,42 @@
       display:flex; align-items:center; justify-content:center; font-size:24px; box-shadow:0 3px 0 #5d4037;
     }
     .nb-icon-btn:active .ni-ic { transform:translateY(2px); box-shadow:0 1px 0 #5d4037; }
+    /* ネコ基地：左＝ボタン群、右下＝大きいくうっち（みきれる）＋吹き出し */
+    .nb-base2 { position:relative; min-height:300px; margin-bottom:8px; overflow:hidden; }
+    .nb-btns { width:58%; display:flex; flex-direction:column; gap:7px; position:relative; z-index:3; }
+    .nb-sub-row { display:flex; gap:7px; margin-top:1px; }
+    .nb-sub-btn {
+      flex:1; border:2.5px solid #6d4c41; border-radius:11px; padding:8px 4px; cursor:pointer;
+      background:linear-gradient(180deg,#fff3d6,#ffcc66); box-shadow:0 3px 0 #5d4037; color:#5d4037;
+      font-size:12px; font-weight:900; display:flex; flex-direction:column; align-items:center; gap:1px;
+    }
+    .nb-sub-btn:active { transform:translateY(2px); box-shadow:0 1px 0 #5d4037; }
+    .nb-sub-btn .sb-ic { font-size:20px; }
+    .nb-char { position:absolute; right:-24px; bottom:-22px; width:210px; z-index:1; cursor:pointer; }
+    .nb-char .mascot-wrap { width:100%; }
+    .nb-char .mascot-wrap svg, .nb-char .mascot-wrap img { width:100%; height:auto; }
+    .nb-char #mascot-start-pote { display:none; }
+    .nb-char .home-speech-bubble {
+      position:absolute; bottom:158px; right:2px; width:168px; z-index:2; margin:0;
+      background:#37474f; color:#fff; border:2px solid #eceff1; border-radius:14px; padding:9px 11px;
+      font-size:12px; font-weight:700; line-height:1.4; box-shadow:0 3px 8px rgba(0,0,0,.35);
+    }
+    .nb-char .home-speech-bubble::after {
+      content:''; position:absolute; bottom:-11px; right:34px;
+      border:9px solid transparent; border-top-color:#37474f; border-bottom:0;
+    }
+    /* 中央：クイズ・レアガチャ */
+    .nb-center-row { display:flex; gap:8px; margin-bottom:11px; }
+    /* メニュー ポップアップ */
+    .hmp-overlay { position:fixed; inset:0; z-index:120; background:rgba(0,0,0,.5); display:flex; align-items:center; justify-content:center; }
+    .hmp-box { background:#fff8e1; border:3px solid #6d4c41; border-radius:16px; padding:16px; width:min(84%,300px); box-shadow:0 6px 0 #4e342e; }
+    .hmp-title { font-size:16px; font-weight:900; color:#5d4037; text-align:center; margin-bottom:12px; }
+    .hmp-item { display:block; width:100%; box-sizing:border-box; margin-bottom:9px; padding:12px; cursor:pointer;
+      border:2px solid #8d6e63; border-radius:11px; background:linear-gradient(180deg,#ffe082,#ffc107); color:#4e342e;
+      font-size:14px; font-weight:900; box-shadow:0 3px 0 #5d4037; text-align:left; }
+    .hmp-item:active { transform:translateY(2px); box-shadow:0 1px 0 #5d4037; }
+    .hmp-close { display:block; width:100%; margin-top:4px; padding:10px; cursor:pointer; border:none; border-radius:11px;
+      background:#8d6e63; color:#fff8e1; font-size:13px; font-weight:900; }
     /* クイズ画面内の あそぶモード（バトル・迷路） */
     .quiz-play-row { display:flex; gap:8px; margin-bottom:8px; }
     .quiz-play-btn {
@@ -2386,48 +2422,37 @@
 
     <!-- ========= ホームタブ ========= -->
     <div id="tab-panel-home" class="tab-panel active">
-      <!-- ネコ基地レイアウト：左＝金ボタン、右＝キャラ＋吹き出し -->
-      <div class="nb-base">
-        <div class="nb-left">
+      <!-- ネコ基地レイアウト：左＝ボタン群、右下＝大きいくうっち＋吹き出し -->
+      <div class="nb-base2">
+        <div class="nb-btns">
           <button class="nb-btn primary" onclick="showTowerMap()">
             <div class="nb-ic">🗾</div><div class="nb-tx"><div class="nb-name">しんりゃく！</div><div class="nb-sub">にっぽんを せいふくせよ</div></div>
-          </button>
-          <button class="nb-btn" onclick="switchHomeTab('quiz')">
-            <div class="nb-ic">📚</div><div class="nb-tx"><div class="nb-name">クイズ</div><div class="nb-sub">けいけんち・コインを ゲット</div></div>
           </button>
           <button class="nb-btn" onclick="showPowerup()">
             <div class="nb-ic">⚡</div><div class="nb-tx"><div class="nb-name">パワーアップ</div><div class="nb-sub">キャラ・きちを つよくする</div></div>
           </button>
-        </div>
-        <div class="nb-right">
-          <div class="home-speech-bubble" id="home-speech">きょうも いっしょに がんばろう！</div>
-          <div class="home-chara-pair">
-            <div class="mascot-wrap" id="mascot-start"></div>
-            <div class="mascot-wrap bounce2" id="mascot-start-pote"></div>
+          <button class="nb-btn" onclick="showDeckEdit()">
+            <div class="nb-ic">🧩</div><div class="nb-tx"><div class="nb-name">キャラクター編成</div><div class="nb-sub">しゅつげきメンバーを えらぶ</div></div>
+          </button>
+          <div class="nb-sub-row">
+            <button class="nb-sub-btn" onclick="showMenuPopup()"><span class="sb-ic">📖</span>メニュー</button>
+            <button class="nb-sub-btn" onclick="openMissions()"><span class="sb-ic">📋</span>ミッション</button>
           </div>
         </div>
+        <div class="nb-char" onclick="rollHomeSpeech()">
+          <div class="home-speech-bubble" id="home-speech">きょうも いっしょに がんばろう！</div>
+          <div class="mascot-wrap" id="mascot-start"></div>
+          <div class="mascot-wrap" id="mascot-start-pote"></div>
+        </div>
       </div>
-      <!-- 小アイコン（メニュー/図鑑/バトル/ミッション位置） -->
-      <div class="nb-icon-row">
-        <button class="nb-icon-btn" onclick="showCollection()"><div class="ni-ic">🎒</div>ずかん</button>
-        <button class="nb-icon-btn" onclick="showBadges()"><div class="ni-ic">🏅</div>バッジ</button>
-        <button class="nb-icon-btn" onclick="showSettings()"><div class="ni-ic">⚙️</div>せってい</button>
-      </div>
-      <!-- ガチャ行（中央下） -->
-      <div class="nb-gacha-row">
-        <button class="nb-gacha-btn" onclick="showGacha()">
-          <div class="g-ic">🎲</div><div class="g-name">くうっちガチャ</div><div class="g-cost">🪙20まい</div>
+      <!-- 中央：クイズ・レアガチャ -->
+      <div class="nb-center-row">
+        <button class="nb-gacha-btn" onclick="switchHomeTab('quiz')">
+          <div class="g-ic">📚</div><div class="g-name">クイズ</div><div class="g-cost">けいけんち・コイン</div>
         </button>
         <button class="nb-gacha-btn rare" onclick="showGacha()">
-          <div class="g-ic">🌟</div><div class="g-name">10連ガチャ</div><div class="g-cost">SR以上 かくてい</div>
+          <div class="g-ic">🌟</div><div class="g-name">レアガチャ</div><div class="g-cost">なかまを あつめる</div>
         </button>
-      </div>
-      <!-- 学年えらび -->
-      <div class="grade-select-row" id="grade-select-row">
-        <span class="grade-label">🎓 学年</span>
-        <button class="grade-btn" data-grade="1" onclick="setPlayerGrade(1)">1年生</button>
-        <button class="grade-btn" data-grade="2" onclick="setPlayerGrade(2)">2年生</button>
-        <button class="grade-btn" data-grade="3" onclick="setPlayerGrade(3)">3年生</button>
       </div>
       <div class="mission-section">
         <button class="mission-toggle-btn" id="mission-toggle-btn" onclick="toggleMissionPanel()">
@@ -2450,6 +2475,12 @@
       </div>
       <button class="event-stage-btn" onclick="startEventQuiz()" style="display:none">🎌 イベント！　漢字チャレンジ①<br><span style="font-size:13px;font-weight:700;opacity:.9">全15問 ✦ 読みから漢字をえらぼう</span></button>
       <button id="event2-btn" class="event2-challenge-btn" onclick="startEventQuiz2()"></button>
+      <div class="grade-select-row" id="grade-select-row" style="margin-top:8px">
+        <span class="grade-label">🎓 学年</span>
+        <button class="grade-btn" data-grade="1" onclick="setPlayerGrade(1)">1年生</button>
+        <button class="grade-btn" data-grade="2" onclick="setPlayerGrade(2)">2年生</button>
+        <button class="grade-btn" data-grade="3" onclick="setPlayerGrade(3)">3年生</button>
+      </div>
       <div class="tab-section-title" style="margin-top:10px">📚 クイズをえらぼう</div>
       <div class="section-label" id="section-kanji">漢検１０級</div>
       <div class="mode-buttons" id="mode-group-kanji">
@@ -4783,11 +4814,18 @@ const HOME_SPEECHES = [
   'きょうも いっしょに がんばろう！',
   'れんしゅう すると つよく なるよ！',
   'まいにち ちょっとずつ おぼえよう！',
-  'クイズに せいかいして コインをゲット！',
-  'バトルで くうっちを そだてよう！',
+  'クイズに せいかいして コインを ゲット！',
+  'キャラを あつめて しんりゃくだ にゃ！',
   'きょうは なんもん といた？',
   'まちがっても だいじょうぶ！もう いちど！',
-  'がんばれ！きみなら できる！',
+  'がんばれ！きみなら できる にゃ！',
+  'にっぽんを ぜんぶ せいふくするにゃ！',
+  'クイズで けいけんちを ためよう！',
+  'ガチャで つよい なかまを さがそう！',
+  'パワーアップ すると もっと つよく なるにゃ！',
+  'おなかが すいたにゃ〜',
+  'いっしょに べんきょう たのしいにゃ！',
+  'つぎの けん、せいふく できるかな？',
 ];
 function updateHomeSpeech() {
   const el = document.getElementById('home-speech');
@@ -4796,6 +4834,42 @@ function updateHomeSpeech() {
   void el.offsetHeight;
   el.style.animation = '';
   el.textContent = HOME_SPEECHES[Math.floor(Math.random() * HOME_SPEECHES.length)];
+}
+// くうっちが吹き出しでランダムにしゃべる（タップ／定期）
+function rollHomeSpeech(){ updateHomeSpeech(); }
+setInterval(()=>{
+  const homePanel = document.getElementById('tab-panel-home');
+  const startScr  = document.getElementById('screen-start');
+  if(homePanel && homePanel.classList.contains('active') && startScr && startScr.classList.contains('active')){
+    updateHomeSpeech();
+  }
+}, 5000);
+// キャラクター編成（デッキ編集）
+function showDeckEdit(){ showTowerSelect(); }
+// メニュー（ずかん・バッジ・せってい）ポップアップ
+function showMenuPopup(){
+  let ov = document.getElementById('home-menu-popup');
+  if(ov) ov.remove();
+  ov = document.createElement('div');
+  ov.id = 'home-menu-popup'; ov.className = 'hmp-overlay';
+  ov.innerHTML =
+    `<div class="hmp-box">`+
+      `<div class="hmp-title">📖 メニュー</div>`+
+      `<button class="hmp-item" onclick="document.getElementById('home-menu-popup').remove();showCollection()">🎒 ずかん（コレクション）</button>`+
+      `<button class="hmp-item" onclick="document.getElementById('home-menu-popup').remove();showBadges()">🏅 バッジ</button>`+
+      `<button class="hmp-item" onclick="document.getElementById('home-menu-popup').remove();showSettings()">⚙️ せってい</button>`+
+      `<button class="hmp-close" onclick="document.getElementById('home-menu-popup').remove()">とじる</button>`+
+    `</div>`;
+  ov.onclick = e=>{ if(e.target===ov) ov.remove(); };
+  document.body.appendChild(ov);
+}
+// ミッションを開く
+function openMissions(){
+  const panel = document.getElementById('mission-panel');
+  const btn   = document.getElementById('mission-toggle-btn');
+  if(panel && !panel.classList.contains('open')){ panel.classList.add('open'); if(btn) btn.classList.add('open'); }
+  const sec = document.querySelector('.mission-section');
+  if(sec) sec.scrollIntoView({behavior:'smooth', block:'center'});
 }
 let currentHomeTab = 'home';
 function switchHomeTab(tab) {
