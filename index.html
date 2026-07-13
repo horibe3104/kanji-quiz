@@ -9404,7 +9404,7 @@ function showTowerSelect(){
   twDeckSelected = twDeckSelected.filter(id => (collection[id]||0)>0 || owned.some(k=>k.id===id));
 
   // 所持している侵略戦キャラ（常設7キャラは初期所持）
-  const ownedBuiltins = [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID, TW_KIMO_ID, TW_OBIG_ID, TW_METALPOTE_ID]
+  const ownedBuiltins = [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID, TW_KIMO_ID, TW_OBIG_ID, TW_METALPOTE_ID, TW_TEGAKI_ID]
     .filter(bid => (collection[bid]||0) > 0);
   if(ownedBuiltins.length){
     const dbgHdr = document.createElement('div');
