@@ -190,25 +190,32 @@
     .home-loop-steps { display:flex; align-items:center; justify-content:center; gap:5px; font-size:13px; font-weight:900; color:#5d4037; flex-wrap:wrap; }
     .home-loop-steps b { background:#fff; border-radius:8px; padding:2px 7px; border:1.5px solid #ffb74d; }
     .home-loop-steps .arw { color:#ef6c00; font-size:15px; }
+    /* ネコ基地レイアウト：左＝金ボタン縦積み＋小アイコン、右＝キャラ＋吹き出し */
+    .nb-base { display:flex; gap:9px; align-items:stretch; margin-bottom:9px; }
+    .nb-left { flex:1.45; min-width:0; display:flex; flex-direction:column; gap:8px; }
+    .nb-right { flex:1; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; }
+    .nb-right .home-speech-bubble { font-size:11px; padding:8px 10px; margin-bottom:4px; }
+    .nb-right .mascot-wrap { width:100%; max-width:150px; }
+    .nb-right .mascot-wrap svg, .nb-right .mascot-wrap img { width:100%; height:auto; }
     /* 金色ボタン（ネコ基地スタイル） */
     .nb-btn {
-      display:flex; align-items:center; gap:10px; width:100%; box-sizing:border-box;
-      border:3px solid #6d4c41; border-radius:14px; padding:12px 14px; margin-bottom:10px; cursor:pointer;
+      display:flex; align-items:center; gap:8px; width:100%; box-sizing:border-box;
+      border:3px solid #6d4c41; border-radius:13px; padding:10px 11px; cursor:pointer;
       background:linear-gradient(180deg,#ffe08a 0%,#ffc107 55%,#ffa000 100%);
       box-shadow:0 4px 0 #5d4037, inset 0 1px 0 rgba(255,255,255,.6);
       color:#4e342e; text-align:left;
     }
     .nb-btn:active { transform:translateY(3px); box-shadow:0 1px 0 #5d4037; }
-    .nb-btn .nb-ic { font-size:30px; flex-shrink:0; width:38px; text-align:center; }
-    .nb-btn .nb-tx { flex:1; }
-    .nb-btn .nb-name { font-size:19px; font-weight:900; letter-spacing:.5px; }
-    .nb-btn .nb-sub { font-size:11px; font-weight:700; opacity:.8; }
+    .nb-btn .nb-ic { font-size:26px; flex-shrink:0; width:32px; text-align:center; }
+    .nb-btn .nb-tx { flex:1; min-width:0; }
+    .nb-btn .nb-name { font-size:16px; font-weight:900; letter-spacing:.3px; }
+    .nb-btn .nb-sub { font-size:10px; font-weight:700; opacity:.8; line-height:1.25; }
     .nb-btn.primary {
       background:linear-gradient(180deg,#ffd54f 0%,#ff9800 60%,#f57c00 100%);
-      padding:16px 14px;
+      padding:13px 11px;
     }
-    .nb-btn.primary .nb-ic { font-size:40px; }
-    .nb-btn.primary .nb-name { font-size:24px; }
+    .nb-btn.primary .nb-ic { font-size:34px; }
+    .nb-btn.primary .nb-name { font-size:19px; }
     /* ガチャ行 */
     .nb-gacha-row { display:flex; gap:8px; margin:2px 0 12px; }
     .nb-gacha-btn {
@@ -2361,38 +2368,39 @@
 
     <!-- ========= ホームタブ ========= -->
     <div id="tab-panel-home" class="tab-panel active">
-      <!-- キャラクターエリア -->
-      <div class="home-chara-area">
-        <div class="home-speech-bubble" id="home-speech">きょうも いっしょに がんばろう！</div>
-        <div class="home-chara-pair">
-          <div class="mascot-wrap" id="mascot-start"></div>
-          <div class="mascot-wrap bounce2" id="mascot-start-pote"></div>
+      <!-- ネコ基地レイアウト：左＝金ボタン、右＝キャラ＋吹き出し -->
+      <div class="nb-base">
+        <div class="nb-left">
+          <button class="nb-btn primary" onclick="showTowerMap()">
+            <div class="nb-ic">🗾</div><div class="nb-tx"><div class="nb-name">しんりゃく！</div><div class="nb-sub">にっぽんを せいふくせよ</div></div>
+          </button>
+          <button class="nb-btn" onclick="switchHomeTab('quiz')">
+            <div class="nb-ic">📚</div><div class="nb-tx"><div class="nb-name">クイズ</div><div class="nb-sub">けいけんち・コインを ゲット</div></div>
+          </button>
+          <button class="nb-btn" onclick="showPowerup()">
+            <div class="nb-ic">⚡</div><div class="nb-tx"><div class="nb-name">パワーアップ</div><div class="nb-sub">けいけんちで つよくする</div></div>
+          </button>
+          <button class="nb-btn" onclick="showSodateru()">
+            <div class="nb-ic">⬆️</div><div class="nb-tx"><div class="nb-name">そだてる</div><div class="nb-sub">なかまを レベルアップ</div></div>
+          </button>
+        </div>
+        <div class="nb-right">
+          <div class="home-speech-bubble" id="home-speech">きょうも いっしょに がんばろう！</div>
+          <div class="home-chara-pair">
+            <div class="mascot-wrap" id="mascot-start"></div>
+            <div class="mascot-wrap bounce2" id="mascot-start-pote"></div>
+          </div>
         </div>
       </div>
-      <div class="grade-select-row" id="grade-select-row">
-        <span class="grade-label">🎓 学年</span>
-        <button class="grade-btn" data-grade="1" onclick="setPlayerGrade(1)">1年生</button>
-        <button class="grade-btn" data-grade="2" onclick="setPlayerGrade(2)">2年生</button>
-        <button class="grade-btn" data-grade="3" onclick="setPlayerGrade(3)">3年生</button>
+      <!-- 小アイコン（メニュー/図鑑/バトル/ミッション位置） -->
+      <div class="nb-icon-row">
+        <button class="nb-icon-btn" onclick="showCollection()"><div class="ni-ic">🎒</div>ずかん</button>
+        <button class="nb-icon-btn" onclick="showBattleSelect()"><div class="ni-ic">⚔️</div>バトル</button>
+        <button class="nb-icon-btn" onclick="showMaze()"><div class="ni-ic">🗺️</div>めいろ</button>
+        <button class="nb-icon-btn" onclick="showBadges()"><div class="ni-ic">🏅</div>バッジ</button>
+        <button class="nb-icon-btn" onclick="showSettings()"><div class="ni-ic">⚙️</div>せってい</button>
       </div>
-      <!-- あそびのながれ -->
-      <div class="home-loop">
-        <div class="home-loop-steps"><b>📚クイズ</b><span class="arw">▶</span><b>🎲ガチャ</b><span class="arw">▶</span><b>🗾しんりゃく</b></div>
-      </div>
-      <!-- メイン金ボタン（ネコ基地スタイル） -->
-      <button class="nb-btn primary" onclick="showTowerMap()">
-        <div class="nb-ic">🗾</div><div class="nb-tx"><div class="nb-name">しんりゃく かいし！！</div><div class="nb-sub">にっぽんを せいふくせよ</div></div>
-      </button>
-      <button class="nb-btn" onclick="switchHomeTab('quiz')">
-        <div class="nb-ic">📚</div><div class="nb-tx"><div class="nb-name">クイズ</div><div class="nb-sub">べんきょうして けいけんち・コインを ゲット</div></div>
-      </button>
-      <button class="nb-btn" onclick="showPowerup()">
-        <div class="nb-ic">⚡</div><div class="nb-tx"><div class="nb-name">パワーアップ</div><div class="nb-sub">けいけんちで つよくする</div></div>
-      </button>
-      <button class="nb-btn" onclick="showSodateru()">
-        <div class="nb-ic">⬆️</div><div class="nb-tx"><div class="nb-name">キャラクター いくせい</div><div class="nb-sub">なかまを レベルアップ</div></div>
-      </button>
-      <!-- ガチャ行 -->
+      <!-- ガチャ行（中央下） -->
       <div class="nb-gacha-row">
         <button class="nb-gacha-btn" onclick="showGacha()">
           <div class="g-ic">🎲</div><div class="g-name">くうっちガチャ</div><div class="g-cost">🪙20まい</div>
@@ -2401,13 +2409,12 @@
           <div class="g-ic">🌟</div><div class="g-name">10連ガチャ</div><div class="g-cost">SR以上 かくてい</div>
         </button>
       </div>
-      <!-- 小アイコン（メニュー/図鑑/バトル/ミッション） -->
-      <div class="nb-icon-row">
-        <button class="nb-icon-btn" onclick="showCollection()"><div class="ni-ic">🎒</div>ずかん</button>
-        <button class="nb-icon-btn" onclick="showBattleSelect()"><div class="ni-ic">⚔️</div>バトル</button>
-        <button class="nb-icon-btn" onclick="showMaze()"><div class="ni-ic">🗺️</div>めいろ</button>
-        <button class="nb-icon-btn" onclick="showBadges()"><div class="ni-ic">🏅</div>バッジ</button>
-        <button class="nb-icon-btn" onclick="showSettings()"><div class="ni-ic">⚙️</div>せってい</button>
+      <!-- 学年えらび -->
+      <div class="grade-select-row" id="grade-select-row">
+        <span class="grade-label">🎓 学年</span>
+        <button class="grade-btn" data-grade="1" onclick="setPlayerGrade(1)">1年生</button>
+        <button class="grade-btn" data-grade="2" onclick="setPlayerGrade(2)">2年生</button>
+        <button class="grade-btn" data-grade="3" onclick="setPlayerGrade(3)">3年生</button>
       </div>
       <button class="event-stage-btn" onclick="startEventQuiz()" style="display:none">🎌 イベント！　漢字チャレンジ①<br><span style="font-size:13px;font-weight:700;opacity:.9">全15問 ✦ 読みから漢字をえらぼう</span></button>
       <button id="event2-btn" class="event2-challenge-btn" onclick="startEventQuiz2()"></button>
