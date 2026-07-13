@@ -3727,6 +3727,7 @@ const KD = [
   { id:'tw_kuucchi_bat',   name:'コウモリくうっち',    type:'コウモリ',       rarity:'rare',   sprite:true, twdef:true, icon:'sprites/bkuu_icon.png' },
   { id:'tw_kuucchi_fire',  name:'炎くうっち',          type:'炎',             rarity:'sr',     sprite:true, twdef:true, icon:'sprites/fkuu_icon.png' },
   { id:'tw_obigkubinaga',  name:'小さ大き首なが',      type:'首なが',         rarity:'ur',     sprite:true, twdef:true, icon:'sprites/obig_icon.png' },
+  { id:'tw_metal_potemayo',name:'メタルぽてまよ',      type:'メタル',         rarity:'sr',     sprite:true, twdef:true, icon:'sprites/metalpote_icon.png' },
 ];
 
 // ===== ぽてまよ キャラクターデータ (50種) =====
@@ -4663,7 +4664,7 @@ let playerGrade = parseInt(localStorage.getItem('kq_player_grade') || '1');
   // 侵略戦の常設7キャラは最初から所持（自作の高品質キャラを最初から使えるように）。
   // ガチャでも排出され、入手するたびLvが上がる。図鑑・育成にも表示。
   ['tw_kuucchi_basic','tw_pote_basic','tw_pote_rush','tw_kimomayo',
-   'tw_kuucchi_bat','tw_kuucchi_fire','tw_obigkubinaga'].forEach(tid=>{
+   'tw_kuucchi_bat','tw_kuucchi_fire','tw_obigkubinaga','tw_metal_potemayo'].forEach(tid=>{
     if(!collection[tid]) collection[tid] = 1;
   });
   saveState();
@@ -8655,6 +8656,15 @@ const TW_POTE2_SPRITE = {
   atk:  ['sprites/pote2_atk1.png','sprites/pote2_atk2.png','sprites/pote2_atk3.png'],
   dmg:  'sprites/pote2_dmg.png',
 };
+// コマアニメ式：メタルぽてまよ（メタル属性・ダメージ激減の壁役）
+const TW_METALPOTE_ID = 'tw_metal_potemayo';
+const TW_METALPOTE_SPRITE = {
+  icon: 'sprites/metalpote_icon.png',
+  idle: 'sprites/metalpote_idle.png',
+  walk: ['sprites/metalpote_walk1.png','sprites/metalpote_walk2.png','sprites/metalpote_walk3.png','sprites/metalpote_walk4.png'],
+  atk:  ['sprites/metalpote_atk1.png','sprites/metalpote_atk2.png','sprites/metalpote_atk3.png'],
+  dmg:  'sprites/metalpote_dmg.png',
+};
 // コマアニメ式：くうっち（かみつき）
 const TW_KUU_ID = 'tw_kuucchi_basic';
 const TW_KUU_SPRITE = {
@@ -8742,6 +8752,13 @@ function twUnitDef(id){
     return { id, rarity:'common', name:'ぽてまよ', role:rushRole,
              svg:`<img class="tw-icon-img" src="${TW_POTE2_SPRITE.icon}">`,
              sprite:TW_POTE2_SPRITE, lv: kuucchiLvData(id).lv };
+  }
+  if(id === TW_METALPOTE_ID){
+    // メタル属性：ダメージを激減して受ける超耐久の壁役。HP・攻撃は控えめ・低速
+    const metalRole = { icon:'🛡️', label:'メタル', hpMul:0.7, atkMul:0.5, range:2, interval:1.3, area:false, speed:0.4, metal:true };
+    return { id, rarity:'sr', name:'メタルぽてまよ', role:metalRole,
+             svg:`<img class="tw-icon-img" src="${TW_METALPOTE_SPRITE.icon}">`,
+             sprite:TW_METALPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_KUU_ID){
     // かみつき：バランス型のちょい強め近接
@@ -9059,7 +9076,7 @@ function showTowerSelect(){
   twDeckSelected = twDeckSelected.filter(id => (collection[id]||0)>0 || owned.some(k=>k.id===id));
 
   // 所持している侵略戦キャラ（常設7キャラは初期所持）
-  const ownedBuiltins = [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID, TW_KIMO_ID, TW_OBIG_ID]
+  const ownedBuiltins = [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID, TW_KIMO_ID, TW_OBIG_ID, TW_METALPOTE_ID]
     .filter(bid => (collection[bid]||0) > 0);
   if(ownedBuiltins.length){
     const dbgHdr = document.createElement('div');
@@ -9317,7 +9334,7 @@ function twDeployUnit(id){
     hp, maxHp: hp,
     atk: Math.round(rs.baseAtk*lvMul*role.atkMul), speed: role.speed || rs.speed,
     range: role.range, interval: role.interval, area: role.area, atkTimer: 0.3,
-    kbThresholds: [hp*2/3, hp*1/3],
+    kbThresholds: [hp*2/3, hp*1/3], metal: !!role.metal,
     pos: TW_PLAYER_CASTLE_POS - 4, svg: def.svg, sprite: def.sprite||null,
   });
   twRenderUnits();
@@ -9587,6 +9604,8 @@ function twDeathAnim(u){
 
 let _twLastHitSnd = 0;
 function twHitUnit(o, dmg){
+  // メタル属性：ダメージを激減して受ける（超耐久の壁）
+  if(o.metal) dmg = Math.max(1, Math.round(dmg * 0.08));
   o.hp -= dmg;
   if(o.sprite) o.dmgUntil = performance.now() + 220;
   twHitSpark(o.pos);
