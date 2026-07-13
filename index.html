@@ -813,7 +813,7 @@
       border-radius:16px; font-size:18px; font-weight:900; cursor:pointer;
       border-bottom:4px solid rgba(0,0,0,.18); margin-top:4px;
     }
-    /* ===== TOWER DEFENSE デッキ選択 (くうっち防衛戦) ===== */
+    /* ===== TOWER DEFENSE デッキ選択 (くうっち侵略戦) ===== */
     .tw-deck-grid-item { position:relative; }
     .tw-deck-order {
       position:absolute; top:-7px; right:-7px; width:20px; height:20px;
@@ -2366,7 +2366,7 @@
       <div class="battle-tab-card" style="margin-top:10px">
         <div style="font-size:11px;font-weight:700;opacity:.8;margin-bottom:6px">おかねを ためて ユニットを出撃させ、てきの おしろを こわそう！</div>
         <div style="font-size:48px;margin:6px 0">🐱🏰</div>
-        <button class="battle-mode-btn tower" onclick="showTowerMap()">🐱 くうっち防衛戦！</button>
+        <button class="battle-mode-btn tower" onclick="showTowerMap()">🐱 くうっち侵略戦！</button>
         <div class="battle-tab-card-sub">ガチャで あつめた キャラで たたかえ！<br>スマホを よこにして あそんでね！</div>
       </div>
     </div>
@@ -2709,7 +2709,7 @@
 <div class="screen" id="screen-tower-map">
   <div class="tw-map-topbar">
     <button class="tw-map-back" onclick="goHome()">◀ もどる</button>
-    <div class="tw-map-title">🗾 にっぽん ぼうえいの たび</div>
+    <div class="tw-map-title">🗾 にっぽん しんりゃくの たび</div>
     <div class="tw-map-prog" id="tw-map-prog"></div>
   </div>
   <div class="tw-map-cards" id="tw-map-cards"></div>
@@ -2909,7 +2909,7 @@
   </div>
 </div>
 
-<!-- TOWER DEFENSE (くうっち防衛戦) -->
+<!-- TOWER DEFENSE (くうっち侵略戦) -->
 <div class="screen" id="screen-tower">
   <div class="card tw-card">
     <div class="tw-rotate-hint">
@@ -2934,7 +2934,7 @@
           <img class="tw-castle-img" src="sprites/castle_player.png" alt="">
         </div>
         <div class="tw-start-overlay" id="tw-start-overlay">
-          <div class="tw-start-title" id="tw-start-title">🐱 くうっち防衛戦！</div>
+          <div class="tw-start-title" id="tw-start-title">🐱 くうっち侵略戦！</div>
           <div class="tw-start-desc">おかねを ためて ユニットを 出撃させよう！<br>ひだりにある てきの おしろを こわせば かち！</div>
           <button class="tw-start-btn" onclick="startTowerDefense()">▶ スタート</button>
         </div>
@@ -3097,7 +3097,7 @@ window.addEventListener('popstate', () => {
 
 // ===== くうっち SVG GENERATOR =====
 function kSVG(p={}) {
-  // スプライト系キャラ（防衛戦の常設キャラ）は画像をSVGで包んで表示
+  // スプライト系キャラ（侵略戦の常設キャラ）は画像をSVGで包んで表示
   if(p && p.sprite && p.icon) return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="84" height="84"><image href="${p.icon}" x="0" y="0" width="100" height="100" preserveAspectRatio="xMidYMid meet"/></svg>`;
   // にゃんこキャラ（SVG+画像合成）
   if(p && p.char==='neko') return nSVG(p);
@@ -3719,7 +3719,7 @@ const KD = [
     ddeco:`<text x="38" y="14" font-size="16">💕</text>` },
   { id:'dino_kami',     name:'かみ小さ大きくびなが',        type:'かみ',     rarity:'ur',     char:'dino', dhue:-45, dsat:'1.6', dbri:'1.1',
     ddeco:`<polygon points="50,5 46,12 38,12 44,17 42,24 50,20 58,24 56,17 62,12 54,12" fill="#ffd600" stroke="#ff8f00" stroke-width="1.5"/><circle cx="50" cy="11" r="2.5" fill="#ff1744"/>` },
-  // ===== くうっち防衛戦の常設キャラ（ガチャ＆育成対応・スプライト表示） =====
+  // ===== くうっち侵略戦の常設キャラ（ガチャ＆育成対応・スプライト表示） =====
   { id:'tw_kuucchi_basic', name:'くうっち',            type:'くうっち',       rarity:'common', sprite:true, twdef:true, icon:'sprites/kuu_icon.png'  },
   { id:'tw_pote_basic',    name:'うでながぽてまよ',    type:'うでなが',       rarity:'common', sprite:true, twdef:true, icon:'sprites/pote_icon.png' },
   { id:'tw_pote_rush',     name:'ぽてまよ',            type:'ぽてまよ',       rarity:'common', sprite:true, twdef:true, icon:'sprites/pote2_icon.png'},
@@ -4660,7 +4660,7 @@ let playerGrade = parseInt(localStorage.getItem('kq_player_grade') || '1');
 
 // ===== INIT =====
 (function init() {
-  // 防衛戦キャラ：コモン4体は最初から所持（スターター）。レア以上(コウモリ/炎/首なが)は
+  // 侵略戦キャラ：コモン4体は最初から所持（スターター）。レア以上(コウモリ/炎/首なが)は
   // ガチャで入手する。所持キャラは図鑑・育成に表示され、ガチャ入手でLvが上がる。
   ['tw_kuucchi_basic','tw_pote_basic','tw_pote_rush','tw_kimomayo'].forEach(tid=>{
     if(!collection[tid]) collection[tid] = 1;
@@ -4710,7 +4710,7 @@ function _showScreenRaw(id) {
   // タブバー表示切り替え
   const tabBar = document.getElementById('home-tab-bar');
   if(tabBar) tabBar.style.display = (id === 'screen-start') ? 'flex' : 'none';
-  // タワー防衛戦は全画面レイアウトなので共通コインバーとBGMボタンは隠す
+  // タワー侵略戦は全画面レイアウトなので共通コインバーとBGMボタンは隠す
   const coinBar = document.getElementById('coin-bar');
   if(coinBar) coinBar.style.display = (id === 'screen-tower') ? 'none' : '';
   const bgmBtn = document.getElementById('bgm-btn');
@@ -7619,7 +7619,7 @@ function makeSodaItem(k){
   div.className = 'soda-item';
   let statsHTML, specialHTML;
   if(k.twdef){
-    // 防衛戦キャラは防衛戦の実数値を表示
+    // 侵略戦キャラは侵略戦の実数値を表示
     const s = twTDStats(k.id);
     const hpPct  = Math.min(100,Math.round(s.hp/320*100));
     const atkPct = Math.min(100,Math.round(s.atk/50*100));
@@ -7693,7 +7693,7 @@ function selectSodaKuucchi(id){
   const _hpPct2  = Math.min(100,Math.round(st.hp /1200*100));
   const _atkPct2 = Math.min(100,Math.round(st.atk/170 *100));
   const _defPct2 = Math.min(100,Math.round(st.def/130 *100));
-  // 防衛戦キャラは「防衛戦のうりょく」を表示（TD実数値）。それ以外は従来のクイズ用ステータス
+  // 侵略戦キャラは「侵略戦のうりょく」を表示（TD実数値）。それ以外は従来のクイズ用ステータス
   if(k.twdef){
     document.getElementById('soda-stats-txt').innerHTML = twTDStatsHTML(id);
   } else {
@@ -7752,7 +7752,7 @@ function selectSodaKuucchi(id){
   const skillSection = document.getElementById('soda-skill-section');
   const skillList = document.getElementById('soda-skill-list');
   if(skillSection && skillList){
-    // 防衛戦キャラはクイズ用スキルがTDに影響しないため非表示
+    // 侵略戦キャラはクイズ用スキルがTDに影響しないため非表示
     skillSection.style.display = k.twdef ? 'none' : 'block';
     skillList.innerHTML = '';
     if(!k.twdef) SKILL_DEFS.forEach(sk=>{
@@ -7769,7 +7769,7 @@ function selectSodaKuucchi(id){
     });
   }
 
-  // 絆ゲージ（防衛戦キャラはクイズ用の絆が無関係なので非表示）
+  // 絆ゲージ（侵略戦キャラはクイズ用の絆が無関係なので非表示）
   const bondSection = document.getElementById('soda-bond-section');
   if(bondSection && k.twdef){ bondSection.style.display = 'none'; }
   else if(bondSection){
@@ -8572,7 +8572,7 @@ function battleLose(){
   document.body.appendChild(ov);
 }
 
-// ===== くうっち防衛戦（タワーディフェンス） =====
+// ===== くうっち侵略戦（タワーディフェンス） =====
 const TW_RARITY_STATS = {
   common: { cost:60,  cooldown:2.0, speed:0.85, baseHp:16, baseAtk:4  },
   rare:   { cost:120, cooldown:3.2, speed:0.7,  baseHp:26, baseAtk:6  },
@@ -8782,7 +8782,7 @@ function twUnitDef(id){
   return { id, rarity:k.rarity, name:k.name||k.type, role:TW_ROLES[twRoleOf(k)], svg:kSVG(k), lv:getStats(k).lv };
 }
 
-// 防衛戦（TD）での実能力を算出。育成画面などで「防衛戦のうりょく」として表示する
+// 侵略戦（TD）での実能力を算出。育成画面などで「侵略戦のうりょく」として表示する
 function twTDStats(id){
   const def = twUnitDef(id);
   if(!def) return null;
@@ -8810,7 +8810,7 @@ function twTDStatsHTML(id){
   const spdPct = Math.min(100, Math.round(s.speed/1.4*100));
   const atkType = s.area ? 'はんい' : 'たんたい';
   const flyTag  = s.fly ? '／ ひこう ' : '';
-  return `<div class="cd-td-title">⚔️ ぼうえいせん のうりょく</div>`+
+  return `<div class="cd-td-title">⚔️ しんりゃくせん のうりょく</div>`+
     `<div class="cd-meter-row"><span class="cd-meter-label">❤️ HP</span><div class="cd-meter-track"><div class="cd-meter-fill hp" style="width:${hpPct}%"></div></div><span class="cd-meter-num">${s.hp}</span></div>`+
     `<div class="cd-meter-row"><span class="cd-meter-label">⚔️ こうげき</span><div class="cd-meter-track"><div class="cd-meter-fill atk" style="width:${atkPct}%"></div></div><span class="cd-meter-num">${s.atk}</span></div>`+
     `<div class="cd-meter-row"><span class="cd-meter-label">🎯 リーチ</span><div class="cd-meter-track"><div class="cd-meter-fill def" style="width:${rngPct}%"></div></div><span class="cd-meter-num">${s.range}</span></div>`+
@@ -9048,14 +9048,14 @@ function showTowerSelect(){
   // 所持しているキャラだけ編成可能（常設キャラもガチャ入手制）
   twDeckSelected = twDeckSelected.filter(id => (collection[id]||0)>0 || owned.some(k=>k.id===id));
 
-  // 所持している防衛戦キャラ（コモンはスターター、レア以上はガチャ入手）
+  // 所持している侵略戦キャラ（コモンはスターター、レア以上はガチャ入手）
   const ownedBuiltins = [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID, TW_KIMO_ID, TW_OBIG_ID]
     .filter(bid => (collection[bid]||0) > 0);
   if(ownedBuiltins.length){
     const dbgHdr = document.createElement('div');
     dbgHdr.className = 'soda-rarity-header common';
     dbgHdr.style.gridColumn = '1 / -1';
-    dbgHdr.textContent = '🐾 ぼうえいたいの なかま';
+    dbgHdr.textContent = '🐾 しんりゃくたいの なかま';
     grid.appendChild(dbgHdr);
     ownedBuiltins.forEach(bid=>{
       const def = twUnitDef(bid);
@@ -10065,7 +10065,7 @@ function playBGMLoop(){
       _schedMelody(ctx,master,bass,beat,'sawtooth',0.38,0.60);
 
     } else if(type === 'tower'){
-      // ── 防衛戦：コミカルな行進曲 Cメジャー BPM126 ──
+      // ── 侵略戦：コミカルな行進曲 Cメジャー BPM126 ──
       const beat=60/126;
       const master=ctx.createGain(); master.gain.value=0.20; master.connect(ctx.destination);
       // ブラス風メロディ
