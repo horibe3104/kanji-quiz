@@ -4660,9 +4660,10 @@ let playerGrade = parseInt(localStorage.getItem('kq_player_grade') || '1');
 
 // ===== INIT =====
 (function init() {
-  // 侵略戦キャラ：コモン4体は最初から所持（スターター）。レア以上(コウモリ/炎/首なが)は
-  // ガチャで入手する。所持キャラは図鑑・育成に表示され、ガチャ入手でLvが上がる。
-  ['tw_kuucchi_basic','tw_pote_basic','tw_pote_rush','tw_kimomayo'].forEach(tid=>{
+  // 侵略戦の常設7キャラは最初から所持（自作の高品質キャラを最初から使えるように）。
+  // ガチャでも排出され、入手するたびLvが上がる。図鑑・育成にも表示。
+  ['tw_kuucchi_basic','tw_pote_basic','tw_pote_rush','tw_kimomayo',
+   'tw_kuucchi_bat','tw_kuucchi_fire','tw_obigkubinaga'].forEach(tid=>{
     if(!collection[tid]) collection[tid] = 1;
   });
   saveState();
@@ -9057,7 +9058,7 @@ function showTowerSelect(){
   // 所持しているキャラだけ編成可能（常設キャラもガチャ入手制）
   twDeckSelected = twDeckSelected.filter(id => (collection[id]||0)>0 || owned.some(k=>k.id===id));
 
-  // 所持している侵略戦キャラ（コモンはスターター、レア以上はガチャ入手）
+  // 所持している侵略戦キャラ（常設7キャラは初期所持）
   const ownedBuiltins = [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID, TW_KIMO_ID, TW_OBIG_ID]
     .filter(bid => (collection[bid]||0) > 0);
   if(ownedBuiltins.length){
