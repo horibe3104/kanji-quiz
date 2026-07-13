@@ -1245,6 +1245,8 @@
     .pu-title { flex:1; text-align:center; font-size:17px; font-weight:900; color:#ffe082; text-shadow:0 2px 3px rgba(0,0,0,.5); }
     .pu-coins { font-size:13px; font-weight:900; color:#fff; background:rgba(0,0,0,.3); border:1.5px solid #ffca28; border-radius:12px; padding:3px 10px; flex-shrink:0; }
     .pu-hint { color:#b0bec5; font-size:12px; font-weight:700; margin:4px 0 8px; }
+    .gacha-seed-reward { display:inline-block; margin-top:6px; background:rgba(255,193,7,.18);
+      border:1.5px solid #ffca28; border-radius:99px; padding:3px 12px; font-size:13px; font-weight:900; color:#ff8f00; }
     .pu-list { width:min(96%,460px); display:flex; flex-direction:column; gap:8px; padding:0 0 20px; }
     .pu-row {
       display:flex; align-items:center; gap:10px; padding:9px 10px;
@@ -2938,9 +2940,9 @@
   <div class="pu-topbar">
     <button class="tw-map-back" onclick="goHome()">◀ もどる</button>
     <div class="pu-title">⚡ パワーアップ</div>
-    <div class="pu-coins">🪙 <span id="powerup-coins">0</span></div>
+    <div class="pu-coins">⚡ <span id="powerup-coins">0</span></div>
   </div>
-  <div class="pu-hint">コインをつかって しんりゃくたいを つよくしよう！</div>
+  <div class="pu-hint">ガチャで でる ⚡パワーのもと で しんりゃくたいを つよくしよう！</div>
   <div class="pu-list" id="powerup-list"></div>
 </div>
 
@@ -4398,6 +4400,16 @@ let coins          = parseInt(localStorage.getItem('kq_coins') || '0');
 let collection     = JSON.parse(localStorage.getItem('kq_collection') || '{}');
 let kuucchiLevels  = JSON.parse(localStorage.getItem('kq_levels')     || '{}');
 let expStones      = parseInt(localStorage.getItem('kq_exps') || '0');
+let powerSeeds     = parseInt(localStorage.getItem('kq_power_seeds') || '0'); // ⚡パワーのもと（ガチャ入手・強化に使用）
+function savePowerSeeds(){ localStorage.setItem('kq_power_seeds', powerSeeds); }
+// ガチャ1回ごとにレアリティに応じて⚡パワーのもとを付与
+const TW_SEED_REWARD = { common:1, rare:3, sr:8, ur:25 };
+function twAwardSeeds(item, isNew){
+  let n = TW_SEED_REWARD[item.rarity] || 1;
+  if(!isNew) n += Math.ceil(n*0.5);   // ダブりは少し多め（＋できる素材に）
+  powerSeeds += n; savePowerSeeds();
+  return n;
+}
 let evolvedKuucchi = JSON.parse(localStorage.getItem('kq_evolved')    || '{}');
 let bondData       = JSON.parse(localStorage.getItem('kq_bond')       || '{}');
 let milestoneClaimed = JSON.parse(localStorage.getItem('kq_milestone_claimed') || '{}');
@@ -5977,6 +5989,8 @@ function _startTenPull(items) {
   document.getElementById('gacha-pull-state').style.display = 'none';
   // コレクション更新前スナップショット（NEWバッジ用）
   const beforeColl = JSON.parse(JSON.stringify(collection));
+  // ⚡パワーのもとを付与（NEW判定は更新前スナップショットで）
+  items.forEach(item => twAwardSeeds(item, !beforeColl[item.id]));
   // 全アイテムをコレクションに一括追加
   items.forEach(item => { collection[item.id] = (collection[item.id]||0)+1; });
   saveState();
@@ -6672,6 +6686,7 @@ function rollGacha(forceMin) {
 }
 function showGachaResult(item) {
   const isNew=!collection[item.id];
+  const seeds=twAwardSeeds(item, isNew);
   collection[item.id]=(collection[item.id]||0)+1; saveState();
   document.getElementById('gacha-pull-state').style.display='none';
   document.getElementById('gacha-result-state').style.display='block';
@@ -6685,9 +6700,10 @@ function showGachaResult(item) {
   const badge=document.getElementById('gacha-rarity-badge');
   badge.className=`rarity-badge ${item.rarity}`; badge.textContent=RARITY_LABELS[item.rarity];
   document.getElementById('gacha-item-name').textContent=item.name;
-  document.getElementById('gacha-new-or-dup').innerHTML=isNew
+  document.getElementById('gacha-new-or-dup').innerHTML=(isNew
     ?'<span class="new-badge">✨ NEW！</span>'
-    :`<span class="dup-badge">×${collection[item.id]}かいめ</span>`;
+    :`<span class="dup-badge">×${collection[item.id]}かいめ</span>`)
+    +`<div class="gacha-seed-reward">⚡ パワーのもと ＋${seeds}</div>`;
   document.getElementById('gacha-again-btn').disabled=coins<GACHA_COST;
   if(item.rarity==='ur'||item.rarity==='sr') launchConfetti();
 }
@@ -8891,12 +8907,12 @@ const TW_PLAYER_CASTLE_HP  = 300;
 let twUpg = JSON.parse(localStorage.getItem('kq_tw_upg') || '{}');
 function twUpgLv(k){ return twUpg[k] || 0; }
 const TW_UPGRADES = [
-  { key:'cannon_pow',  icon:'🎯', name:'くうっち砲パワー',   max:10, cost:l=>150+l*110, effect:l=>`いりょく +${l*15}%` },
-  { key:'cannon_chg',  icon:'⚡', name:'くうっち砲チャージ', max:10, cost:l=>150+l*110, effect:l=>`チャージ -${l}びょう` },
-  { key:'start_money', icon:'💰', name:'はじめの おかね',     max:10, cost:l=>120+l*90,  effect:l=>`+${l*20}円`   },
-  { key:'base_hp',     icon:'🏯', name:'きょてん たいりょく', max:10, cost:l=>120+l*100, effect:l=>`+${l*60}`    },
-  { key:'money_rate',  icon:'📈', name:'おかね アップ',       max:10, cost:l=>140+l*110, effect:l=>`しゅうにゅう +${l*8}%` },
-  { key:'cooldown',    icon:'⏱️', name:'さいせいさん たんしゅく', max:8, cost:l=>160+l*130, effect:l=>`さいせい -${l*5}%` },
+  { key:'cannon_pow',  icon:'🎯', name:'くうっち砲パワー',   max:10, cost:l=>4+l*3, effect:l=>`いりょく +${l*15}%` },
+  { key:'cannon_chg',  icon:'⚡', name:'くうっち砲チャージ', max:10, cost:l=>4+l*3, effect:l=>`チャージ -${l}びょう` },
+  { key:'start_money', icon:'💰', name:'はじめの おかね',     max:10, cost:l=>3+l*2, effect:l=>`+${l*20}円`   },
+  { key:'base_hp',     icon:'🏯', name:'きょてん たいりょく', max:10, cost:l=>4+l*3, effect:l=>`+${l*60}`    },
+  { key:'money_rate',  icon:'📈', name:'おかね アップ',       max:10, cost:l=>3+l*3, effect:l=>`しゅうにゅう +${l*8}%` },
+  { key:'cooldown',    icon:'⏱️', name:'さいせいさん たんしゅく', max:8, cost:l=>5+l*4, effect:l=>`さいせい -${l*5}%` },
 ];
 // 強化の適用値
 function twCannonPowMul(){ return 1 + twUpgLv('cannon_pow')*0.15; }
@@ -8912,7 +8928,7 @@ function showPowerup(){
     const lv = twUpgLv(u.key);
     const maxed = lv >= u.max;
     const cost = maxed ? 0 : u.cost(lv);
-    const can = coins >= cost;
+    const can = powerSeeds >= cost;
     let pips = '';
     for(let i=0;i<u.max;i++) pips += `<span class="pu-pip${i<lv?' on':''}"></span>`;
     const nextEff = maxed ? '' : `　<span class="nx">▶ ${u.effect(lv+1)}</span>`;
@@ -8925,22 +8941,21 @@ function showPowerup(){
         `<div class="pu-pips">${pips}</div>`+
         `<div class="pu-eff">${lv>0 ? u.effect(lv) : 'こうかなし'}${nextEff}</div>`+
       `</div>`+
-      `<button class="pu-btn${maxed?' maxed':''}" ${(maxed||!can)?'disabled':''}>${maxed?'MAX':('🪙'+cost)}</button>`;
+      `<button class="pu-btn${maxed?' maxed':''}" ${(maxed||!can)?'disabled':''}>${maxed?'MAX':('＋ ⚡'+cost)}</button>`;
     if(!maxed) row.querySelector('.pu-btn').onclick = ()=>twBuyUpgrade(u.key);
     list.appendChild(row);
   });
-  document.getElementById('powerup-coins').textContent = coins;
+  document.getElementById('powerup-coins').textContent = powerSeeds;
   showScreen('screen-powerup');
 }
 function twBuyUpgrade(key){
   const u = TW_UPGRADES.find(x=>x.key===key); if(!u) return;
   const lv = twUpgLv(key); if(lv >= u.max) return;
   const cost = u.cost(lv);
-  if(coins < cost){ showToast('コインが たりないよ！'); return; }
-  coins -= cost;
+  if(powerSeeds < cost){ showToast('⚡パワーのもとが たりないよ！ガチャで あつめよう'); return; }
+  powerSeeds -= cost; savePowerSeeds();
   twUpg[key] = lv + 1;
   localStorage.setItem('kq_tw_upg', JSON.stringify(twUpg));
-  saveState(); updateCoinBar();
   playSound('correct');
   launchConfetti && (lv+1===u.max) && launchConfetti();
   showPowerup();
