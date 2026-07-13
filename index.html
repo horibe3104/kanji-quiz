@@ -2459,6 +2459,13 @@
     <!-- ========= クイズタブ ========= -->
     <div id="tab-panel-quiz" class="tab-panel">
       <button class="tw-map-back" style="margin-bottom:8px" onclick="switchHomeTab('home')">◀ ホームへ</button>
+      <!-- 学年えらび（一番上） -->
+      <div class="grade-select-row" id="grade-select-row" style="margin-bottom:10px">
+        <span class="grade-label">🎓 学年</span>
+        <button class="grade-btn" data-grade="1" onclick="setPlayerGrade(1)">1年生</button>
+        <button class="grade-btn" data-grade="2" onclick="setPlayerGrade(2)">2年生</button>
+        <button class="grade-btn" data-grade="3" onclick="setPlayerGrade(3)">3年生</button>
+      </div>
       <!-- クイズであそぶモード（バトル・迷路・イベント） -->
       <div class="quiz-play-row">
         <button class="quiz-play-btn battle" onclick="showBattleSelect()"><span class="qp-ic">⚔️</span>くうっちバトル</button>
@@ -2466,12 +2473,6 @@
       </div>
       <button class="event-stage-btn" onclick="startEventQuiz()" style="display:none">🎌 イベント！　漢字チャレンジ①<br><span style="font-size:13px;font-weight:700;opacity:.9">全15問 ✦ 読みから漢字をえらぼう</span></button>
       <button id="event2-btn" class="event2-challenge-btn" onclick="startEventQuiz2()"></button>
-      <div class="grade-select-row" id="grade-select-row" style="margin-top:8px">
-        <span class="grade-label">🎓 学年</span>
-        <button class="grade-btn" data-grade="1" onclick="setPlayerGrade(1)">1年生</button>
-        <button class="grade-btn" data-grade="2" onclick="setPlayerGrade(2)">2年生</button>
-        <button class="grade-btn" data-grade="3" onclick="setPlayerGrade(3)">3年生</button>
-      </div>
       <div class="tab-section-title" style="margin-top:10px">📚 クイズをえらぼう</div>
       <div class="section-label" id="section-kanji">漢検１０級</div>
       <div class="mode-buttons" id="mode-group-kanji">
