@@ -769,6 +769,15 @@
     }
     .tw-slot.empty .tw-slot-num { color:#bcaaa4; text-shadow:none; }
     .tw-slot-plus { font-size:22px; font-weight:900; color:#8d6e63; }
+    .tw-slot-cost {
+      position:absolute; bottom:0; left:0; right:0; z-index:2;
+      background:rgba(93,64,55,.82); color:#ffe082; font-size:9px; font-weight:900;
+      text-align:center; line-height:13px; letter-spacing:-.2px;
+    }
+    .tw-cost-chip {
+      margin-top:2px; display:inline-block; background:#5d4037; color:#ffe082;
+      font-size:10px; font-weight:900; padding:1px 7px; border-radius:9px;
+    }
     .tw-slot-x {
       position:absolute; top:0; right:0; width:16px; height:16px; z-index:3;
       background:#e53935; color:#fff; font-size:11px; font-weight:900; line-height:16px;
@@ -9510,7 +9519,7 @@ function showTowerSelect(){
       const dbg = document.createElement('div');
       dbg.className = 'bt-sel-item tw-deck-grid-item';
       dbg.dataset.id = bid;
-      dbg.innerHTML = `${def.svg}<div class="sel-lv">Lv.${kuucchiLvData(bid).lv}</div><div class="sel-name">${def.name}</div><div class="tw-role-chip">${def.role.icon} ${def.role.label}</div>`;
+      dbg.innerHTML = `${def.svg}<div class="sel-lv">Lv.${kuucchiLvData(bid).lv}</div><div class="sel-name">${def.name}</div><div class="tw-role-chip">${def.role.icon} ${def.role.label}</div><div class="tw-cost-chip">🪙 ${twTDStats(bid).cost}</div>`;
       dbg.onclick = ()=>toggleTowerDeck(bid);
       grid.appendChild(dbg);
     });
@@ -9542,6 +9551,7 @@ function showTowerSelect(){
         <div class="sel-lv">Lv.${st.lv}</div>
         <div class="sel-name">${k.type||k.name}</div>
         <div class="tw-role-chip">${role.icon} ${role.label}</div>
+        <div class="tw-cost-chip">🪙 ${twTDStats(k.id).cost}</div>
       `;
       div.onclick = ()=>toggleTowerDeck(k.id);
       grid.appendChild(div);
@@ -9589,7 +9599,8 @@ function renderTwSlots(){
     slot.className = 'tw-slot' + (id ? '' : ' empty');
     if(id){
       const def = twUnitDef(id);
-      slot.innerHTML = `<div class="tw-slot-num">${i+1}</div><div class="tw-slot-ic">${def ? def.svg : ''}</div><div class="tw-slot-x">×</div>`;
+      const st = twTDStats(id);
+      slot.innerHTML = `<div class="tw-slot-num">${i+1}</div><div class="tw-slot-ic">${def ? def.svg : ''}</div><div class="tw-slot-x">×</div><div class="tw-slot-cost">🪙${st ? st.cost : ''}</div>`;
       slot.title = def ? def.name : '';
       slot.onclick = ()=>toggleTowerDeck(id);   // タップで スロットから外す
     } else {
