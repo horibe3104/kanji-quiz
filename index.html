@@ -9791,7 +9791,7 @@ function twDeployUnit(id){
     atk: Math.round(rs.baseAtk*lvMul*role.atkMul), speed: role.speed || rs.speed,
     range: role.range, interval: role.interval, area: role.area, atkTimer: 0.3,
     kbThresholds: [hp*2/3, hp*1/3], metal: !!role.metal,
-    pos: TW_PLAYER_CASTLE_POS - 4, svg: def.svg, sprite: def.sprite||null,
+    pos: TW_PLAYER_CASTLE_POS, svg: def.svg, sprite: def.sprite||null,   // 自城の中央・前から出撃
   });
   twRenderUnits();
 }
@@ -9818,7 +9818,7 @@ function twSpawnEnemyUnit(){
     atk: Math.round(base.atk*scale), speed: base.speed,
     range: 2, interval: 1.1, area: false, atkTimer: 0.3,
     kbThresholds: [hp*2/3, hp*1/3],
-    pos: TW_ENEMY_CASTLE_POS + 4, svg: base.svg,
+    pos: TW_ENEMY_CASTLE_POS, svg: base.svg,   // 敵城の中央・前から出撃
     sprite: base.spriteRef === 'wanko' ? TW_WANKO_SPRITE
           : base.spriteRef === 'nyoro' ? TW_NYORO_SPRITE : null,
     bounty: Math.round(hp*0.8),
@@ -9836,7 +9836,7 @@ function twSpawnBoss(){
     atk: 10 + twStage*2, speed: 0.3,
     range: 6, interval: 1.6, area: true, atkTimer: 0.8,
     kbThresholds: [hp*3/4, hp*2/4, hp*1/4],
-    pos: TW_ENEMY_CASTLE_POS + 4, svg: m.svg,
+    pos: TW_ENEMY_CASTLE_POS, svg: m.svg,   // 敵城の中央・前から出撃
     bounty: 150 + twStage*30,
   });
   playSound('wrong');
