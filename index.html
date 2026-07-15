@@ -199,23 +199,23 @@
     .nb-right .mascot-wrap svg, .nb-right .mascot-wrap img { width:100%; height:auto; }
     /* 金色ボタン（ネコ基地スタイル） */
     .nb-btn {
-      display:flex; align-items:center; gap:8px; width:100%; box-sizing:border-box;
-      border:3px solid #6d4c41; border-radius:13px; padding:10px 11px; cursor:pointer;
+      display:flex; align-items:center; gap:6px; width:100%; box-sizing:border-box;
+      border:3px solid #6d4c41; border-radius:13px; padding:9px 8px; cursor:pointer;
       background:linear-gradient(180deg,#ffe08a 0%,#ffc107 55%,#ffa000 100%);
       box-shadow:0 4px 0 #5d4037, inset 0 1px 0 rgba(255,255,255,.6);
       color:#4e342e; text-align:left;
     }
     .nb-btn:active { transform:translateY(3px); box-shadow:0 1px 0 #5d4037; }
-    .nb-btn .nb-ic { font-size:26px; flex-shrink:0; width:32px; text-align:center; }
+    .nb-btn .nb-ic { font-size:22px; flex-shrink:0; width:26px; text-align:center; }
     .nb-btn .nb-tx { flex:1; min-width:0; }
-    .nb-btn .nb-name { font-size:16px; font-weight:900; letter-spacing:.3px; }
-    .nb-btn .nb-sub { font-size:10px; font-weight:700; opacity:.8; line-height:1.25; }
+    .nb-btn .nb-name { font-size:14px; font-weight:900; letter-spacing:0; line-height:1.15; }
+    .nb-btn .nb-sub { font-size:9px; font-weight:700; opacity:.8; line-height:1.2; }
     .nb-btn.primary {
       background:linear-gradient(180deg,#ffd54f 0%,#ff9800 60%,#f57c00 100%);
-      padding:13px 11px;
+      padding:11px 8px;
     }
-    .nb-btn.primary .nb-ic { font-size:34px; }
-    .nb-btn.primary .nb-name { font-size:19px; }
+    .nb-btn.primary .nb-ic { font-size:28px; }
+    .nb-btn.primary .nb-name { font-size:16px; }
     /* ガチャ行 */
     .nb-gacha-row { display:flex; gap:8px; margin:2px 0 12px; }
     .nb-gacha-btn {
@@ -239,10 +239,11 @@
       display:flex; align-items:center; justify-content:center; font-size:24px; box-shadow:0 3px 0 #5d4037;
     }
     .nb-icon-btn:active .ni-ic { transform:translateY(2px); box-shadow:0 1px 0 #5d4037; }
-    /* ネコ基地：左＝ボタン群、右下＝大きいくうっち（みきれる）＋吹き出し */
-    .nb-base2 { position:relative; min-height:300px; margin-bottom:8px; overflow:hidden; }
-    .nb-btns { width:58%; display:flex; flex-direction:column; gap:7px; position:relative; z-index:3; }
-    .nb-sub-row { display:flex; gap:7px; margin-top:1px; }
+    /* ネコ基地：左＝ボタン群、中央＝フスマ帯（引き手）、右下＝くうっち＋吹き出し */
+    .nb-base2 { position:relative; min-height:328px; margin-bottom:8px; overflow:hidden; pointer-events:none; }
+    .nb-base2 .nb-btns, .nb-base2 .nb-char, .nb-base2 .nb-speech { pointer-events:auto; }
+    .nb-btns { width:43%; display:flex; flex-direction:column; gap:12px; position:relative; z-index:3; }
+    .nb-sub-row { display:flex; gap:8px; margin-top:3px; }
     .nb-sub-btn {
       flex:1; border:2.5px solid #6d4c41; border-radius:11px; padding:8px 4px; cursor:pointer;
       background:linear-gradient(180deg,#fff3d6,#ffcc66); box-shadow:0 3px 0 #5d4037; color:#5d4037;
@@ -250,16 +251,16 @@
     }
     .nb-sub-btn:active { transform:translateY(2px); box-shadow:0 1px 0 #5d4037; }
     .nb-sub-btn .sb-ic { font-size:20px; }
-    .nb-char { position:absolute; right:-28px; bottom:-26px; width:236px; z-index:1; cursor:pointer; }
+    .nb-char { position:absolute; right:-46px; bottom:-30px; width:164px; z-index:1; cursor:pointer; }
     .nb-char .mascot-wrap { width:100%; }
     .nb-char .mascot-wrap svg, .nb-char .mascot-wrap img { width:100%; height:auto; }
     .nb-char #mascot-start-pote { display:none; }
     /* 本家の吹き出し：切れずに全体表示（切れるのは猫だけ）。猫の上に浮かせ、
        下向きのしっぽで猫を指す。nb-base2 の内側に完全に収める。 */
     .nb-speech {
-      position:absolute; top:8px; right:10px; width:186px; z-index:4; margin:0; cursor:pointer;
-      background:#37474f; color:#fff; border:2.5px solid #eceff1; border-radius:16px; padding:10px 13px;
-      font-size:12.5px; font-weight:700; line-height:1.5; box-shadow:0 4px 10px rgba(0,0,0,.4);
+      position:absolute; top:8px; right:8px; width:152px; z-index:4; margin:0; cursor:pointer;
+      background:#37474f; color:#fff; border:2.5px solid #eceff1; border-radius:16px; padding:9px 11px;
+      font-size:12px; font-weight:700; line-height:1.45; box-shadow:0 4px 10px rgba(0,0,0,.4);
     }
     .nb-speech::after {
       content:''; position:absolute; bottom:-13px; right:28px;
@@ -275,52 +276,48 @@
       color:#fff; font-size:13px; font-weight:900; display:flex; align-items:center; justify-content:center;
       box-shadow:0 2px 4px rgba(0,0,0,.4); animation:twPinPulse 1.1s ease-in-out infinite;
     }
-    /* ===== 唐草の襖 引き手（タップで開く）＆ 襖オープン演出 ===== */
-    .fusuma-pull {
-      position:absolute; z-index:5; width:38px; height:38px; border-radius:50%; cursor:pointer;
-      background:radial-gradient(circle at 38% 32%, #fafafa, #cfcfcf 45%, #8d8d8d 78%, #5a5a5a);
-      border:2px solid #616161; box-shadow:0 2px 5px rgba(0,0,0,.45), inset 0 0 7px rgba(0,0,0,.35);
-      display:flex; align-items:center; justify-content:center;
+    /* ===== 唐草の襖（背景）：指でスライドして少しだけ開くと 赤目ぽてまよが覗く ===== */
+    #tab-panel-home { position:relative; }
+    .fusuma-wrap {
+      position:absolute; inset:0; z-index:0; border-radius:16px; overflow:hidden;
+      pointer-events:none;   /* メニュー操作は邪魔しない。引き手だけ受け取る */
     }
-    .fusuma-pull::after { content:'❁'; font-size:17px; color:#6d5a4a; opacity:.75; }
-    .fusuma-pull:active { transform:scale(.92); }
-    .fusuma-pull.p1 { top:38%; right:30%; }
-    .fusuma-pull.p2 { top:38%; right:6%; }
-    #fusuma-overlay { position:fixed; inset:0; z-index:900; display:none; overflow:hidden; }
-    #fusuma-overlay.show { display:block; }
-    .fusuma-reveal {
-      position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center;
-      background:radial-gradient(circle at 50% 42%, #4a3b34 0%, #241a16 55%, #0c0705 100%);
+    .fusuma-back {
+      position:absolute; inset:0;
+      background:radial-gradient(circle at 66% 40%, #43332c 0%, #23190f 52%, #0b0705 100%);
     }
-    .creepy-pote { width:min(62vw,270px); filter:drop-shadow(0 0 18px rgba(255,23,68,.35));
-      animation:creepyBreath 2.4s ease-in-out infinite; }
-    @keyframes creepyBreath { 0%,100%{ transform:translateY(0) scale(1); } 50%{ transform:translateY(-7px) scale(1.035); } }
-    .creepy-eye { animation:creepyGlow 1.5s ease-in-out infinite; transform-origin:center; }
-    @keyframes creepyGlow { 0%,100%{ opacity:.85; } 50%{ opacity:1; } }
-    .fusuma-door {
-      position:absolute; top:0; bottom:0; width:50%; z-index:2;
+    .fusuma-back .cpote { position:absolute; filter:drop-shadow(0 0 11px rgba(255,23,68,.45));
+      animation:creepyBreath 2.6s ease-in-out infinite; }
+    @keyframes creepyBreath { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-5px); } }
+    .creepy-eye { animation:creepyGlow 1.4s ease-in-out infinite; }
+    @keyframes creepyGlow { 0%,100%{ opacity:.78; } 50%{ opacity:1; } }
+    .fusuma-panel {
+      position:absolute; top:0; bottom:0; will-change:transform;
       background-color:#4e9a5f;
       background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27140%27%20height%3D%27140%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27rgba%28255%2C255%2C255%2C0.10%29%27%20stroke-width%3D%274%27%20stroke-linecap%3D%27round%27%3E%3Cpath%20d%3D%27M35%205%20q0%2030%2030%2030%20q30%200%2030%20-30%27/%3E%3Cpath%20d%3D%27M5%2070%20q30%200%2030%2030%20q0%2030%2030%2030%27/%3E%3Cpath%20d%3D%27M70%2070%20q0%2022%2022%2022%20q22%200%2022%2022%27/%3E%3Cpath%20d%3D%27M105%205%20q0%2020%2020%2020%27/%3E%3Ccircle%20cx%3D%2765%27%20cy%3D%2735%27%20r%3D%275%27/%3E%3Ccircle%20cx%3D%2735%27%20cy%3D%27100%27%20r%3D%275%27/%3E%3Ccircle%20cx%3D%2792%27%20cy%3D%2792%27%20r%3D%275%27/%3E%3C/g%3E%3C/svg%3E");
       background-size:130px 130px;
-      transition:transform .75s cubic-bezier(.66,0,.34,1);
     }
-    .fusuma-door.fd-left  { left:0;  border-right:3px solid #2e5637; box-shadow:inset -8px 0 14px rgba(0,0,0,.3); }
-    .fusuma-door.fd-right { right:0; border-left:3px solid #2e5637;  box-shadow:inset  8px 0 14px rgba(0,0,0,.3); }
-    #fusuma-overlay.open .fd-left  { transform:translateX(-100%); }
-    #fusuma-overlay.open .fd-right { transform:translateX(100%); }
-    .fusuma-door .dp {
-      position:absolute; top:44%; width:40px; height:40px; border-radius:50%;
+    .fusuma-panel.fp-left  { left:0;  width:55%; z-index:1; border-right:2px solid #2e5637; box-shadow:inset -10px 0 16px rgba(0,0,0,.26); }
+    .fusuma-panel.fp-right { right:0; width:49%; z-index:2; border-left:2px solid #2e5637;  box-shadow:inset  10px 0 16px rgba(0,0,0,.26); }
+    .fusuma-pull {
+      position:absolute; top:42%; width:34px; height:34px; border-radius:50%;
       background:radial-gradient(circle at 38% 32%, #fafafa, #cfcfcf 45%, #8d8d8d 78%, #5a5a5a);
       border:2px solid #616161; box-shadow:0 2px 5px rgba(0,0,0,.45), inset 0 0 7px rgba(0,0,0,.35);
       display:flex; align-items:center; justify-content:center;
+      pointer-events:auto; cursor:grab; touch-action:none;
     }
-    .fusuma-door .dp::after { content:'❁'; font-size:18px; color:#6d5a4a; opacity:.75; }
-    .fd-left  .dp { right:16px; }
-    .fd-right .dp { left:16px; }
-    .fusuma-hint {
-      position:absolute; bottom:26px; left:0; right:0; z-index:3; text-align:center;
-      color:#ffcdd2; font-size:12px; font-weight:900; letter-spacing:1px; opacity:.85;
-      text-shadow:0 1px 4px rgba(0,0,0,.8); animation:creepyGlow 1.6s ease-in-out infinite;
+    .fusuma-pull::after { content:'❁'; font-size:16px; color:#6d5a4a; opacity:.75; }
+    .fp-left  .fusuma-pull { right:6px; }
+    .fp-right .fusuma-pull { left:6px; }
+    /* 横画面：本家のように広く使う（ホーム画面のみ幅を広げる） */
+    @media (orientation:landscape) and (min-width:700px) {
+      #screen-start.active { max-width:700px; }
+      #screen-start .nb-base2 { min-height:300px; }
+      #screen-start .nb-btn .nb-name { font-size:17px; }
+      #screen-start .nb-btn.primary .nb-name { font-size:20px; }
+      #screen-start .nb-btn .nb-sub { font-size:11px; }
+      #screen-start .nb-btn .nb-ic { font-size:26px; width:32px; }
+      #screen-start .nb-btn.primary .nb-ic { font-size:34px; }
     }
     /* メニュー ポップアップ */
     .hmp-overlay { position:fixed; inset:0; z-index:120; background:rgba(0,0,0,.5); display:flex; align-items:center; justify-content:center; }
@@ -2524,8 +2521,36 @@
 
     <!-- ========= ホームタブ ========= -->
     <div id="tab-panel-home" class="tab-panel active">
+      <!-- 唐草の襖（背景）：引き手を指でスライドすると 少し開いて 赤目ぽてまよが覗く -->
+      <div class="fusuma-wrap" id="fusuma-wrap">
+        <div class="fusuma-back">
+          <svg class="cpote" style="left:40%;top:30%;width:30%" viewBox="0 0 160 150" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(74,16)">
+              <ellipse cx="40" cy="55" rx="41" ry="39" fill="#cfc4c0" stroke="#140d0a" stroke-width="3"/>
+              <g class="creepy-eye">
+                <circle cx="26" cy="50" r="11" fill="#ff1744" opacity="0.3"/><circle cx="54" cy="50" r="11" fill="#ff1744" opacity="0.3"/>
+                <circle cx="26" cy="50" r="6" fill="#b71c1c"/><circle cx="54" cy="50" r="6" fill="#b71c1c"/>
+                <circle cx="26" cy="48" r="2.2" fill="#ff8a80"/><circle cx="54" cy="48" r="2.2" fill="#ff8a80"/>
+              </g>
+              <path d="M22 72 q6 -8 12 0 q6 8 12 0" fill="none" stroke="#140d0a" stroke-width="2.4" stroke-linecap="round"/>
+            </g>
+            <g transform="translate(2,42)">
+              <ellipse cx="46" cy="54" rx="45" ry="43" fill="#e0d6d2" stroke="#140d0a" stroke-width="3.2"/>
+              <g class="creepy-eye">
+                <circle cx="30" cy="49" r="14" fill="#ff1744" opacity="0.32"/><circle cx="62" cy="49" r="14" fill="#ff1744" opacity="0.32"/>
+                <circle cx="30" cy="49" r="7.5" fill="#b71c1c" stroke="#ff5252" stroke-width="1.5"/>
+                <circle cx="62" cy="49" r="7.5" fill="#b71c1c" stroke="#ff5252" stroke-width="1.5"/>
+                <circle cx="30" cy="46.5" r="2.6" fill="#ff8a80"/><circle cx="62" cy="46.5" r="2.6" fill="#ff8a80"/>
+              </g>
+              <path d="M31 73 q6 -9 13 0 q6 9 13 0" fill="none" stroke="#140d0a" stroke-width="3" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+        <div class="fusuma-panel fp-left"><div class="fusuma-pull" data-fusuma="1"></div></div>
+        <div class="fusuma-panel fp-right"><div class="fusuma-pull" data-fusuma="1"></div></div>
+      </div>
       <!-- ネコ基地レイアウト：左＝ボタン群、右下＝大きいくうっち＋吹き出し -->
-      <div class="nb-base2">
+      <div class="nb-base2" style="position:relative;z-index:2">
         <div class="nb-btns">
           <button class="nb-btn primary" onclick="showTowerMap()">
             <div class="nb-ic">🗾</div><div class="nb-tx"><div class="nb-name">しんりゃく！</div><div class="nb-sub">にっぽんを せいふくせよ</div></div>
@@ -2534,7 +2559,7 @@
             <div class="nb-ic">⚡</div><div class="nb-tx"><div class="nb-name">パワーアップ</div><div class="nb-sub">キャラ・きちを つよくする</div></div>
           </button>
           <button class="nb-btn" onclick="showDeckEdit()">
-            <div class="nb-ic">🧩</div><div class="nb-tx"><div class="nb-name">キャラクターへんせい</div><div class="nb-sub">しゅつげきメンバーを えらぶ</div></div>
+            <div class="nb-ic">🧩</div><div class="nb-tx"><div class="nb-name">キャラへんせい</div><div class="nb-sub">しゅつげきメンバー</div></div>
           </button>
           <div class="nb-sub-row">
             <button class="nb-sub-btn" onclick="showMenuPopup()"><span class="sb-ic">📖</span>メニュー</button>
@@ -2546,12 +2571,9 @@
           <div class="mascot-wrap" id="mascot-start"></div>
           <div class="mascot-wrap" id="mascot-start-pote"></div>
         </div>
-        <!-- 唐草の襖 引き手（タップで あける） -->
-        <div class="fusuma-pull p1" onclick="openFusuma()" title="ふすまを あける"></div>
-        <div class="fusuma-pull p2" onclick="openFusuma()" title="ふすまを あける"></div>
       </div>
       <!-- 中央：クイズ・レアガチャ -->
-      <div class="nb-center-row">
+      <div class="nb-center-row" style="position:relative;z-index:2">
         <button class="nb-gacha-btn" onclick="switchHomeTab('quiz')">
           <div class="g-ic">📚</div><div class="g-name">クイズ</div><div class="g-cost">けいけんち・コイン</div>
         </button>
@@ -2561,30 +2583,6 @@
         </button>
       </div>
 
-      <!-- 襖オープン演出：あけると 赤目の 不気味ぽてまよ -->
-      <div id="fusuma-overlay" onclick="closeFusuma()">
-        <div class="fusuma-reveal">
-          <svg class="creepy-pote" viewBox="0 0 220 210" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="110" cy="192" rx="70" ry="12" fill="rgba(0,0,0,0.45)"/>
-            <ellipse cx="34" cy="122" rx="16" ry="11" fill="#d7cdc9" stroke="#160f0c" stroke-width="4"/>
-            <ellipse cx="186" cy="122" rx="16" ry="11" fill="#d7cdc9" stroke="#160f0c" stroke-width="4"/>
-            <ellipse cx="110" cy="118" rx="82" ry="76" fill="#d7cdc9" stroke="#160f0c" stroke-width="4"/>
-            <path d="M32 138 a82 78 0 0 0 156 0 a82 58 0 0 1 -156 0 z" fill="rgba(0,0,0,0.15)"/>
-            <g class="creepy-eye">
-              <circle cx="80" cy="104" r="25" fill="#ff1744" opacity="0.30"/>
-              <circle cx="140" cy="104" r="25" fill="#ff1744" opacity="0.30"/>
-              <circle cx="80" cy="104" r="13" fill="#b71c1c" stroke="#ff5252" stroke-width="2.5"/>
-              <circle cx="140" cy="104" r="13" fill="#b71c1c" stroke="#ff5252" stroke-width="2.5"/>
-              <circle cx="80" cy="101" r="4.5" fill="#ff8a80"/>
-              <circle cx="140" cy="101" r="4.5" fill="#ff8a80"/>
-            </g>
-            <path d="M76 150 q7 -13 14 0 q7 13 14 0 q7 -13 14 0 q7 13 14 0" fill="none" stroke="#160f0c" stroke-width="3.5" stroke-linecap="round"/>
-          </svg>
-          <div class="fusuma-hint">・・・タップで とじる・・・</div>
-        </div>
-        <div class="fusuma-door fd-left"><div class="dp"></div></div>
-        <div class="fusuma-door fd-right"><div class="dp"></div></div>
-      </div>
     </div>
 
     <!-- ========= クイズタブ ========= -->
@@ -4978,24 +4976,35 @@ function updateHomeSpeech() {
 // くうっちが吹き出しでランダムにしゃべる（タップ／定期）
 function rollHomeSpeech(){ updateHomeSpeech(); }
 
-// 唐草の襖：引き手タップで 左右に開き、赤目の 不気味ぽてまよ が現れる
-function openFusuma(){
-  const ov = document.getElementById('fusuma-overlay');
-  if(!ov || ov.classList.contains('show')) return;
-  try{ playSound('pop'); }catch(e){}
-  ov.classList.add('show');
-  // closed → open のトランジションを効かせるため 次フレームで open を付与
-  requestAnimationFrame(()=>requestAnimationFrame(()=>ov.classList.add('open')));
-  clearTimeout(ov._closeTimer);
-  ov._closeTimer = setTimeout(closeFusuma, 3200);   // 少し見せてから 自動で閉じる
-}
-function closeFusuma(){
-  const ov = document.getElementById('fusuma-overlay');
-  if(!ov || !ov.classList.contains('show')) return;
-  clearTimeout(ov._closeTimer);
-  ov.classList.remove('open');                       // 襖を閉じる
-  setTimeout(()=>ov.classList.remove('show'), 800);  // 閉じ切ったら 非表示に
-}
+// 唐草の襖：引き手を指でスライドすると 少しだけ開いて 赤目ぽてまよが覗く（画面遷移なし）
+(function initFusumaSlide(){
+  const MAX = 64;   // 少しだけ開く（開きすぎない）
+  let dragging=false, side=1, startX=0, startGap=0, gap=0;
+  function els(){ return { l:document.querySelector('.fp-left'), r:document.querySelector('.fp-right') }; }
+  function apply(){
+    const {l,r}=els(); if(!l||!r) return;
+    l.style.transform = 'translateX(' + (-gap) + 'px)';
+    r.style.transform = 'translateX(' + gap + 'px)';
+  }
+  function px(e){ return (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX; }
+  document.addEventListener('pointerdown', function(e){
+    const pull = e.target.closest && e.target.closest('.fusuma-pull');
+    if(!pull) return;
+    dragging=true; startX=px(e); startGap=gap;
+    side = pull.parentNode.classList.contains('fp-left') ? -1 : 1;   // 左の引き手は左へ引くと開く
+    const {l,r}=els(); if(l){ l.style.transition='none'; r.style.transition='none'; }
+    e.preventDefault();
+  });
+  document.addEventListener('pointermove', function(e){
+    if(!dragging) return;
+    const openDelta = side===-1 ? -(px(e)-startX) : (px(e)-startX);
+    gap = Math.max(0, Math.min(MAX, startGap + openDelta));
+    apply();
+  });
+  document.addEventListener('pointerup', function(){ dragging=false; });   // 引いた位置で止まる
+  // ホームに戻るたび 襖は閉じておく
+  window.resetFusuma = function(){ gap=0; const {l,r}=els(); if(l){ l.style.transition=''; apply(); } };
+})();
 setInterval(()=>{
   const homePanel = document.getElementById('tab-panel-home');
   const startScr  = document.getElementById('screen-start');
