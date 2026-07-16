@@ -1126,6 +1126,11 @@
       transition:left .1s linear; z-index:3;   /* 拠点画像より前面に配置 */
     }
     .tw-unit.fly { bottom:38%; }
+    /* 拠点の中央から スッと出撃する演出（前面のまま 城から滑り出す） */
+    .tw-unit.tw-spawn-p { animation:twSpawnP .42s ease-out; }
+    .tw-unit.tw-spawn-e { animation:twSpawnE .42s ease-out; }
+    @keyframes twSpawnP { 0%{ transform:translateX(30px); opacity:0; } 55%{ opacity:1; } 100%{ transform:translateX(0); opacity:1; } }
+    @keyframes twSpawnE { 0%{ transform:translateX(-30px); opacity:0; } 55%{ opacity:1; } 100%{ transform:translateX(0); opacity:1; } }
     .tw-fly-shadow {
       position:absolute; bottom:30.5%; width:36px; height:9px; margin-left:7px;
       border-radius:50%; background:rgba(0,0,0,.3); z-index:0;
@@ -1255,6 +1260,13 @@
     .tw-cannon-btn.ready .tw-cannon-img-ready { display:block; }
     .tw-cannon-btn.ready .tw-cannon-fill { display:none; }
     @keyframes twCannonPulse { 50%{ box-shadow:0 0 14px #ff4081; } }
+    /* 押せるようになったら 薄く白く点滅（お財布レベル・くうっち砲） */
+    .tw-ready-blink { position:relative; }
+    .tw-ready-blink::after {
+      content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:6;
+      background:#fff; opacity:0; animation:twReadyBlink 1.05s ease-in-out infinite;
+    }
+    @keyframes twReadyBlink { 0%,100%{ opacity:0; } 50%{ opacity:.4; } }
     @keyframes twAtkLungeL { 0%{transform:translateX(0)} 35%{transform:translateX(-7px) rotate(-6deg)} 100%{transform:translateX(0)} }
     @keyframes twAtkLungeR { 0%{transform:translateX(0)} 35%{transform:translateX(7px) rotate(6deg)} 100%{transform:translateX(0)} }
     .tw-unit.tw-atk-l { animation:twAtkLungeL .3s ease-out; }
@@ -10302,6 +10314,7 @@ function updateTwCannonUI(){
   const ready = twActive && twCannonCharge >= 100;
   btn.disabled = !ready;
   btn.classList.toggle('ready', ready);
+  btn.classList.toggle('tw-ready-blink', ready);   // 押せるようになったら薄く白く点滅
 }
 
 function twFireCannon(){
@@ -10374,7 +10387,8 @@ function twRenderUnits(){
     if(!el){
       el = document.createElement('div');
       el.id = 'tw-u-'+u.uid;
-      el.className = 'tw-unit' + (u.boss ? ' boss' : '') + (u.fly ? ' fly' : '');
+      el.className = 'tw-unit' + (u.boss ? ' boss' : '') + (u.fly ? ' fly' : '')
+        + (u.side==='player' ? ' tw-spawn-p' : ' tw-spawn-e');   // 拠点の中央から出てくる出撃演出
       if(u.hScale && u.hScale !== 1) el.style.height = Math.round(50*u.hScale) + 'px';
       if(u.sprite){
         // シートの向き（既定は右向き）と進行方向が違うときだけ反転
@@ -10457,6 +10471,7 @@ function updateTwWalletUI(){
     document.getElementById('tw-wallet-cost').textContent = w.upCost + '円';
     btn.disabled = !twActive || twMoney < w.upCost;
   }
+  btn.classList.toggle('tw-ready-blink', !btn.disabled);   // 押せるようになったら薄く白く点滅
 }
 
 function twUpgradeWallet(){
