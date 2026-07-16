@@ -3889,11 +3889,14 @@ const KD = [
     char:'zakubaki', zbg1:'#e0f7fa', zbg2:'#00acc1', zbg3:'#006064', zlt:'#84ffff', zlimb:'#4dd0e1' },
   { id:'zaku_pink',     name:'ピンクザクバキくん',   type:'ピンク',     rarity:'common',
     char:'zakubaki', zbg1:'#fce4ec', zbg2:'#e91e63', zbg3:'#880e4f', zlt:'#ff80ab', zlimb:'#f48fb1' },
-  { id:'zaku_koori',    name:'こおりザクバキくん',   type:'こおり',     rarity:'rare',
-    char:'zakubaki', zbg1:'#e1f5fe', zbg2:'#81d4fa', zbg3:'#0288d1', zlt:'#e1f5fe', zlimb:'#81d4fa',
-    zdeco:`<polygon points="50,-19 47,-13 50,-7 53,-13" fill="#e1f5fe" stroke="#29b6f6" stroke-width="1.2"/>
-<polygon points="43,-17 40,-11 43,-7 46,-11" fill="#b3e5fc" stroke="#29b6f6" stroke-width="1"/>
-<polygon points="57,-17 60,-11 57,-7 54,-11" fill="#b3e5fc" stroke="#29b6f6" stroke-width="1"/>` },
+  { id:'zaku_koori',    name:'氷ザクバキくん',       type:'こおり',     rarity:'sr',
+    sprite:true, twdef:true, icon:'sprites/zkoori_icon.png' },
+  { id:'zaku_hikari',   name:'光ザクバキくん',       type:'ひかり',     rarity:'sr',
+    sprite:true, twdef:true, icon:'sprites/zhika_icon.png' },
+  { id:'zaku_yuusha',   name:'勇者ザクバキくん',     type:'ゆうしゃ',   rarity:'ur',
+    sprite:true, twdef:true, icon:'sprites/zyusha_icon.png' },
+  { id:'zaku_ninja',    name:'にんじゃザクバキくん', type:'にんじゃ',   rarity:'sr',
+    sprite:true, twdef:true, icon:'sprites/zninja_icon.png' },
   { id:'zaku_honoo',    name:'炎ザクバキくん',       type:'ほのお',     rarity:'sr',
     sprite:true, twdef:true, icon:'sprites/zhono_icon.png' },
   { id:'zaku_yami',     name:'闇ザクバキくん',       type:'やみ',       rarity:'sr',
@@ -3923,13 +3926,8 @@ const KD = [
     zdeco:`<polygon points="50,-21 46,-13 38,-13 44,-7 42,1 50,-4 58,1 56,-7 62,-13 54,-13" fill="#fff176" stroke="#ffd600" stroke-width="1.2"/>
 <text x="21" y="-5" font-size="9" text-anchor="middle" fill="#ffd600">⚡</text>
 <text x="79" y="-5" font-size="9" text-anchor="middle" fill="#ffd600">⚡</text>` },
-  { id:'zaku_kami',     name:'かみザクバキくん',     type:'かみ',       rarity:'ur',
-    char:'zakubaki', zbg1:'#fffde7', zbg2:'#fff9c4', zbg3:'#fff176', zlt:'#ff6f00', zlimb:'#ffffff', zst:'#e65100',
-    zdeco:`<polygon points="50,-22 47,-15 40,-15 46,-9 44,-2 50,-6 56,-2 54,-9 60,-15 53,-15" fill="#ffd600" stroke="#ff8f00" stroke-width="1.5"/>
-<circle cx="50" cy="-16" r="3" fill="#ff1744" stroke="#ff8f00" stroke-width="1"/>
-<text x="23" y="-5" font-size="9" text-anchor="middle" fill="#ffd600">✦</text>
-<text x="77" y="-5" font-size="9" text-anchor="middle" fill="#ffd600">✦</text>`,
-    zbody:`<circle cx="50" cy="30" r="34" fill="none" stroke="#ffd600" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"/>` },
+  { id:'zaku_kami',     name:'神ザクバキくん',       type:'かみ',       rarity:'ur',
+    sprite:true, twdef:true, icon:'sprites/zkami_icon.png' },
   // ─── うみちゃん (common 6種) ───────────────────────────────────────
   { id:'umi_normal',   name:'ノーマルうみちゃん',  type:'ノーマル', rarity:'common', char:'umi' },
   { id:'umi_ao',       name:'あおうみちゃん',       type:'あお',     rarity:'common', char:'umi', uhue:200 },
@@ -5046,7 +5044,8 @@ let playerGrade = parseInt(localStorage.getItem('kq_player_grade') || '1');
   // ガチャでも排出され、入手するたびLvが上がる。図鑑・育成にも表示。
   ['tw_kuucchi_basic','tw_pote_basic','tw_pote_rush','tw_kimomayo',
    'tw_kuucchi_bat','tw_kuucchi_fire','tw_obigkubinaga','tw_metal_potemayo','tegaki_nyanko','zaku_normal','kimoashi_pote',
-   'zaku_yami','zaku_honoo','zaku_ryuu'].forEach(tid=>{
+   'zaku_yami','zaku_honoo','zaku_ryuu',
+   'zaku_hikari','zaku_kami','zaku_yuusha','zaku_koori','zaku_ninja'].forEach(tid=>{
     if(!collection[tid]) collection[tid] = 1;
   });
   saveState();
@@ -9140,6 +9139,11 @@ function _twMakeZakuSprite(pre){
 const TW_ZYAMI_ID='zaku_yami',  TW_ZYAMI_SPRITE=_twMakeZakuSprite('zyami');
 const TW_ZHONO_ID='zaku_honoo', TW_ZHONO_SPRITE=_twMakeZakuSprite('zhono');
 const TW_ZDRAG_ID='zaku_ryuu',  TW_ZDRAG_SPRITE=_twMakeZakuSprite('zdrag');
+const TW_ZHIKA_ID='zaku_hikari',  TW_ZHIKA_SPRITE=_twMakeZakuSprite('zhika');
+const TW_ZKAMI_ID='zaku_kami',    TW_ZKAMI_SPRITE=_twMakeZakuSprite('zkami');
+const TW_ZYUSHA_ID='zaku_yuusha', TW_ZYUSHA_SPRITE=_twMakeZakuSprite('zyusha');
+const TW_ZKOORI_ID='zaku_koori',  TW_ZKOORI_SPRITE=_twMakeZakuSprite('zkoori');
+const TW_ZNINJA_ID='zaku_ninja',  TW_ZNINJA_SPRITE=_twMakeZakuSprite('zninja');
 // コマアニメ式：わんこ（敵キャラ・右向きシート）3色バリエーション
 function _twMakeWankoSprite(prefix){
   return {
@@ -9170,7 +9174,8 @@ function preloadTwSprites(){
   if(_twPreloaded) return; _twPreloaded = true;
   const sets = [TW_KUU_SPRITE, TW_FKUU_SPRITE, TW_BKUU_SPRITE, TW_KIMO_SPRITE,
     TW_POTE_SPRITE, TW_POTE2_SPRITE, TW_METALPOTE_SPRITE, TW_OBIG_SPRITE,
-    TW_TEGAKI_SPRITE, TW_ZAKU_SPRITE, TW_KMP_SPRITE, TW_ZYAMI_SPRITE, TW_ZHONO_SPRITE, TW_ZDRAG_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE];
+    TW_TEGAKI_SPRITE, TW_ZAKU_SPRITE, TW_KMP_SPRITE, TW_ZYAMI_SPRITE, TW_ZHONO_SPRITE, TW_ZDRAG_SPRITE,
+    TW_ZHIKA_SPRITE, TW_ZKAMI_SPRITE, TW_ZYUSHA_SPRITE, TW_ZKOORI_SPRITE, TW_ZNINJA_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE];
   const urls = new Set();
   sets.forEach(sp=>{ if(!sp) return;
     [sp.icon, sp.idle, sp.dmg].forEach(u=>u&&urls.add(u));
@@ -9282,6 +9287,31 @@ function twUnitDef(id){
     return { id, rarity:'ur', name:'ドラゴンザクバキくん', role,
              svg:`<img class="tw-icon-img" src="${TW_ZDRAG_SPRITE.icon}">`,
              sprite:TW_ZDRAG_SPRITE, lv: kuucchiLvData(id).lv };
+  }
+  if(id === TW_ZHIKA_ID){
+    const role = { icon:'✨', label:'ひかりキック', hpMul:1.2, atkMul:1.3, range:5, interval:1.1, area:false };
+    return { id, rarity:'sr', name:'光ザクバキくん', role,
+             svg:`<img class="tw-icon-img" src="${TW_ZHIKA_SPRITE.icon}">`, sprite:TW_ZHIKA_SPRITE, lv: kuucchiLvData(id).lv };
+  }
+  if(id === TW_ZKAMI_ID){
+    const role = { icon:'😇', label:'かみキック', hpMul:2.0, atkMul:1.8, range:5, interval:1.2, area:true };
+    return { id, rarity:'ur', name:'神ザクバキくん', role,
+             svg:`<img class="tw-icon-img" src="${TW_ZKAMI_SPRITE.icon}">`, sprite:TW_ZKAMI_SPRITE, lv: kuucchiLvData(id).lv };
+  }
+  if(id === TW_ZYUSHA_ID){
+    const role = { icon:'🗡️', label:'ゆうしゃキック', hpMul:1.7, atkMul:1.6, range:4, interval:1.15, area:false };
+    return { id, rarity:'ur', name:'勇者ザクバキくん', role,
+             svg:`<img class="tw-icon-img" src="${TW_ZYUSHA_SPRITE.icon}">`, sprite:TW_ZYUSHA_SPRITE, lv: kuucchiLvData(id).lv };
+  }
+  if(id === TW_ZKOORI_ID){
+    const role = { icon:'❄️', label:'こおりキック', hpMul:1.3, atkMul:1.0, range:5, interval:1.3, area:true };
+    return { id, rarity:'sr', name:'氷ザクバキくん', role,
+             svg:`<img class="tw-icon-img" src="${TW_ZKOORI_SPRITE.icon}">`, sprite:TW_ZKOORI_SPRITE, lv: kuucchiLvData(id).lv };
+  }
+  if(id === TW_ZNINJA_ID){
+    const role = { icon:'🥷', label:'にんじゃキック', hpMul:1.0, atkMul:1.2, range:4, interval:0.8, area:false };
+    return { id, rarity:'sr', name:'にんじゃザクバキくん', role,
+             svg:`<img class="tw-icon-img" src="${TW_ZNINJA_SPRITE.icon}">`, sprite:TW_ZNINJA_SPRITE, lv: kuucchiLvData(id).lv };
   }
   const k = KD.find(kk=>kk.id===id);
   if(!k) return null;
@@ -9622,7 +9652,8 @@ function showTowerSelect(){
   twDeckSelected = twDeckSelected.filter(id => (collection[id]||0)>0 || owned.some(k=>k.id===id));
 
   // 所持している侵略戦キャラ（常設7キャラは初期所持）
-  const ownedBuiltins = [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID, TW_KIMO_ID, TW_OBIG_ID, TW_METALPOTE_ID, TW_TEGAKI_ID, TW_ZAKU_ID, TW_KMP_ID, TW_ZYAMI_ID, TW_ZHONO_ID, TW_ZDRAG_ID]
+  const ownedBuiltins = [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID, TW_KIMO_ID, TW_OBIG_ID, TW_METALPOTE_ID, TW_TEGAKI_ID, TW_ZAKU_ID, TW_KMP_ID, TW_ZYAMI_ID, TW_ZHONO_ID, TW_ZDRAG_ID,
+   TW_ZHIKA_ID, TW_ZKAMI_ID, TW_ZYUSHA_ID, TW_ZKOORI_ID, TW_ZNINJA_ID]
     .filter(bid => (collection[bid]||0) > 0);
   if(ownedBuiltins.length){
     const dbgHdr = document.createElement('div');
