@@ -2524,27 +2524,8 @@
       <!-- 唐草の襖（背景）：引き手を指でスライドすると 少し開いて 赤目ぽてまよが覗く -->
       <div class="fusuma-wrap" id="fusuma-wrap">
         <div class="fusuma-back">
-          <svg class="cpote" style="left:40%;top:30%;width:30%" viewBox="0 0 160 150" xmlns="http://www.w3.org/2000/svg">
-            <g transform="translate(74,16)">
-              <ellipse cx="40" cy="55" rx="41" ry="39" fill="#cfc4c0" stroke="#140d0a" stroke-width="3"/>
-              <g class="creepy-eye">
-                <circle cx="26" cy="50" r="11" fill="#ff1744" opacity="0.3"/><circle cx="54" cy="50" r="11" fill="#ff1744" opacity="0.3"/>
-                <circle cx="26" cy="50" r="6" fill="#b71c1c"/><circle cx="54" cy="50" r="6" fill="#b71c1c"/>
-                <circle cx="26" cy="48" r="2.2" fill="#ff8a80"/><circle cx="54" cy="48" r="2.2" fill="#ff8a80"/>
-              </g>
-              <path d="M22 72 q6 -8 12 0 q6 8 12 0" fill="none" stroke="#140d0a" stroke-width="2.4" stroke-linecap="round"/>
-            </g>
-            <g transform="translate(2,42)">
-              <ellipse cx="46" cy="54" rx="45" ry="43" fill="#e0d6d2" stroke="#140d0a" stroke-width="3.2"/>
-              <g class="creepy-eye">
-                <circle cx="30" cy="49" r="14" fill="#ff1744" opacity="0.32"/><circle cx="62" cy="49" r="14" fill="#ff1744" opacity="0.32"/>
-                <circle cx="30" cy="49" r="7.5" fill="#b71c1c" stroke="#ff5252" stroke-width="1.5"/>
-                <circle cx="62" cy="49" r="7.5" fill="#b71c1c" stroke="#ff5252" stroke-width="1.5"/>
-                <circle cx="30" cy="46.5" r="2.6" fill="#ff8a80"/><circle cx="62" cy="46.5" r="2.6" fill="#ff8a80"/>
-              </g>
-              <path d="M31 73 q6 -9 13 0 q6 9 13 0" fill="none" stroke="#140d0a" stroke-width="3" stroke-linecap="round"/>
-            </g>
-          </svg>
+          <!-- スプラッシュのピンクぽてまよ(pote_idle)を元にした 赤目の不気味版 -->
+          <img class="cpote" src="sprites/creepy_pote.png" alt="" style="left:38%;top:34%;width:30%">
         </div>
         <div class="fusuma-panel fp-left"><div class="fusuma-pull" data-fusuma="1"></div></div>
         <div class="fusuma-panel fp-right"><div class="fusuma-pull" data-fusuma="1"></div></div>
@@ -5001,7 +4982,13 @@ function rollHomeSpeech(){ updateHomeSpeech(); }
     gap = Math.max(0, Math.min(MAX, startGap + openDelta));
     apply();
   });
-  document.addEventListener('pointerup', function(){ dragging=false; });   // 引いた位置で止まる
+  document.addEventListener('pointerup', function(){
+    if(!dragging) return;
+    dragging=false;
+    // 指を離したら 自動で閉じる（少し覗いて スッと閉まる）
+    const {l,r}=els(); if(l){ l.style.transition='transform .45s cubic-bezier(.5,0,.25,1)'; r.style.transition=l.style.transition; }
+    gap=0; apply();
+  });
   // ホームに戻るたび 襖は閉じておく
   window.resetFusuma = function(){ gap=0; const {l,r}=els(); if(l){ l.style.transition=''; apply(); } };
 })();
