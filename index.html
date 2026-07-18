@@ -1715,6 +1715,9 @@
     /* ローマ字問題表示 */
     .romaji-kana-display { font-size:88px !important; font-weight:900; color:#bf360c; letter-spacing:0; }
     .romaji-roma-display { font-size:56px !important; font-weight:900; color:#1565c0; letter-spacing:2px; font-family:monospace; }
+    /* ローマ字ことば（単語は長いので小さめ） */
+    .romajiword-kana-display { font-size:52px !important; font-weight:900; color:#bf360c; letter-spacing:1px; }
+    .romajiword-roma-display { font-size:40px !important; font-weight:900; color:#1565c0; letter-spacing:1px; font-family:monospace; }
     .alpha-display { font-size:88px !important; font-weight:900; color:#01579b; letter-spacing:0; }
     .engword-display { font-size:72px !important; line-height:1.1; }
     .engword-word-label { font-size:15px; font-weight:900; color:#455a64; margin-top:4px; letter-spacing:2px; }
@@ -2629,6 +2632,7 @@
       <div class="section-label" id="section-romaji">🔡 ローマ字</div>
       <div class="mode-buttons" id="mode-group-romaji">
         <button class="mode-btn" data-mode="romaji" onclick="selectMode('romaji')"><span class="mode-icon">🔡</span>ローマ字よみ書き</button>
+        <button class="mode-btn" data-mode="romajiword" onclick="selectMode('romajiword')"><span class="mode-icon">🔡</span>ローマ字で ことば</button>
       </div>
       <div class="section-label">もんだいのかず</div>
       <div class="count-buttons">
@@ -5176,6 +5180,7 @@ const MODE_CONFIG = [
   { mode:'alpha',    label:'🔤 アルファベット',    group:'english', groupLabel:'🇬🇧 えいご' },
   { mode:'engword',  label:'🌍 えいごたんご',       group:'english', groupLabel:'🇬🇧 えいご' },
   { mode:'romaji',   label:'🔡 ローマ字よみ書き', group:'romaji',  groupLabel:'🔡 ローマ字' },
+  { mode:'romajiword', label:'🔡 ローマ字で ことば', group:'romaji', groupLabel:'🔡 ローマ字' },
 ];
 
 let visibleModes = JSON.parse(localStorage.getItem('kq_visible_modes') || 'null') || {};
@@ -5561,6 +5566,27 @@ function buildRomajiQuestion(item) {
     // ローマ字 → ひらがな
     const others = ROMAJI_DATA.filter(r => r !== item).map(r => r.kana);
     return { type:'romaji-write', roma:item.roma, correct:item.kana, choices:shuffle([item.kana, ...pickRandom(others, 3)]) };
+  }
+}
+
+// ===== ローマ字ことばデータ（ひらがな単語 ⇄ ローマ字） =====
+const ROMAJI_WORD_DATA = [
+  {kana:'ねこ',roma:'neko'},   {kana:'いぬ',roma:'inu'},   {kana:'とり',roma:'tori'},   {kana:'さかな',roma:'sakana'},
+  {kana:'うさぎ',roma:'usagi'},{kana:'くま',roma:'kuma'},  {kana:'ぱんだ',roma:'panda'},{kana:'かめ',roma:'kame'},
+  {kana:'りんご',roma:'ringo'},{kana:'みかん',roma:'mikan'},{kana:'いちご',roma:'ichigo'},{kana:'すいか',roma:'suika'},
+  {kana:'ばなな',roma:'banana'},{kana:'とまと',roma:'tomato'},{kana:'めろん',roma:'meron'},{kana:'ぶどう',roma:'budou'},
+  {kana:'そら',roma:'sora'},   {kana:'うみ',roma:'umi'},   {kana:'やま',roma:'yama'},   {kana:'かわ',roma:'kawa'},
+  {kana:'はな',roma:'hana'},   {kana:'ほし',roma:'hoshi'}, {kana:'つき',roma:'tsuki'},  {kana:'ゆき',roma:'yuki'},
+  {kana:'くるま',roma:'kuruma'},{kana:'でんしゃ',roma:'densha'},{kana:'ふね',roma:'fune'},{kana:'じてんしゃ',roma:'jitensha'},
+  {kana:'がっこう',roma:'gakkou'},{kana:'ともだち',roma:'tomodachi'},{kana:'せんせい',roma:'sensei'},{kana:'えんぴつ',roma:'enpitsu'},
+];
+function buildRomajiWordQuestion(item) {
+  if (Math.random() < 0.5) {
+    const others = ROMAJI_WORD_DATA.filter(r => r !== item).map(r => r.roma);
+    return { type:'romajiword-read', kana:item.kana, correct:item.roma, choices:shuffle([item.roma, ...pickRandom(others, 3)]) };
+  } else {
+    const others = ROMAJI_WORD_DATA.filter(r => r !== item).map(r => r.kana);
+    return { type:'romajiword-write', roma:item.roma, correct:item.kana, choices:shuffle([item.kana, ...pickRandom(others, 3)]) };
   }
 }
 
@@ -5971,6 +5997,9 @@ function startQuiz() {
   } else if(selectedMode === 'romaji'){
     const pool = shuffle(ROMAJI_DATA).slice(0, Math.min(selectedCount, ROMAJI_DATA.length));
     questions_tmp = pool.map(r=>buildRomajiQuestion(r));
+  } else if(selectedMode === 'romajiword'){
+    const pool = shuffle(ROMAJI_WORD_DATA).slice(0, Math.min(selectedCount, ROMAJI_WORD_DATA.length));
+    questions_tmp = pool.map(r=>buildRomajiWordQuestion(r));
   } else {
     let kdata = KANJI_DATA;
     let bmode = selectedMode;
@@ -6101,6 +6130,14 @@ function renderQuestion() {
   } else if(q.type==='romaji-write'){
     document.getElementById('q-type-label').textContent='🔡 このローマ字は どの ひらがな？';
     kEl.className='kanji-display romaji-roma-display';
+    kEl.style.display='block'; kEl.textContent=q.roma; rEl.style.display='none';
+  } else if(q.type==='romajiword-read'){
+    document.getElementById('q-type-label').textContent='🔡 ローマ字で どう書く？';
+    kEl.className='kanji-display romajiword-kana-display';
+    kEl.style.display='block'; kEl.textContent=q.kana; rEl.style.display='none';
+  } else if(q.type==='romajiword-write'){
+    document.getElementById('q-type-label').textContent='🔡 このローマ字は どの ことば？';
+    kEl.className='kanji-display romajiword-roma-display';
     kEl.style.display='block'; kEl.textContent=q.roma; rEl.style.display='none';
   } else if(q.type==='event-writing'){
     document.getElementById('q-type-label').textContent='📝 読みに合う　かんじをえらんでね';
