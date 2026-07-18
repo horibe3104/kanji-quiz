@@ -4023,6 +4023,7 @@ const KD = [
   { id:'tw_metal_potemayo',name:'メタルぽてまよ',      type:'メタル',         rarity:'sr',     sprite:true, twdef:true, icon:'sprites/metalpote_icon.png' },
   { id:'tw_pote_honoo',    name:'炎ぽてまよ',          type:'ほのお',         rarity:'sr',     sprite:true, twdef:true, icon:'sprites/hopote_icon.png' },
   { id:'tw_pote_kaminari', name:'雷ぽてまよ',          type:'かみなり',       rarity:'sr',     sprite:true, twdef:true, icon:'sprites/kapote_icon.png' },
+  { id:'tw_pote_koori',    name:'氷ぽてまよ',          type:'こおり',         rarity:'sr',     sprite:true, twdef:true, icon:'sprites/kopote_icon.png' },
 ];
 
 // ===== ぽてまよ キャラクターデータ (50種) =====
@@ -5063,7 +5064,7 @@ let playerGrade = parseInt(localStorage.getItem('kq_player_grade') || '1');
   ['tw_kuucchi_basic','tw_pote_basic','tw_pote_rush','tw_kimomayo',
    'tw_kuucchi_bat','tw_kuucchi_fire','tw_obigkubinaga','tw_metal_potemayo','tegaki_nyanko','zaku_normal','kimoashi_pote',
    'zaku_yami','zaku_honoo','zaku_ryuu',
-   'zaku_hikari','zaku_kami','zaku_yuusha','zaku_koori','zaku_ninja','tw_pote_honoo','tw_pote_kaminari'].forEach(tid=>{
+   'zaku_hikari','zaku_kami','zaku_yuusha','zaku_koori','zaku_ninja','tw_pote_honoo','tw_pote_kaminari','tw_pote_koori'].forEach(tid=>{
     if(!collection[tid]) collection[tid] = 1;
   });
   saveState();
@@ -9199,6 +9200,8 @@ const TW_ZNINJA_ID='zaku_ninja',  TW_ZNINJA_SPRITE=_twMakeZakuSprite('zninja');
 const TW_HOPOTE_ID='tw_pote_honoo', TW_HOPOTE_SPRITE=_twMakeZakuSprite('hopote');
 // コマアニメ式：雷ぽてまよ（かみなりのこぶしを とばす 遠距離・高速）
 const TW_KAPOTE_ID='tw_pote_kaminari', TW_KAPOTE_SPRITE=_twMakeZakuSprite('kapote');
+// コマアニメ式：氷ぽてまよ（こおりのつぶてを とばす 遠距離・範囲・高耐久）
+const TW_KOPOTE_ID='tw_pote_koori', TW_KOPOTE_SPRITE=_twMakeZakuSprite('kopote');
 // コマアニメ式：わんこ（敵キャラ・右向きシート）3色バリエーション
 function _twMakeWankoSprite(prefix){
   return {
@@ -9230,7 +9233,7 @@ function preloadTwSprites(){
   const sets = [TW_KUU_SPRITE, TW_FKUU_SPRITE, TW_BKUU_SPRITE, TW_KIMO_SPRITE,
     TW_POTE_SPRITE, TW_POTE2_SPRITE, TW_METALPOTE_SPRITE, TW_OBIG_SPRITE,
     TW_TEGAKI_SPRITE, TW_ZAKU_SPRITE, TW_KMP_SPRITE, TW_ZYAMI_SPRITE, TW_ZHONO_SPRITE, TW_ZDRAG_SPRITE,
-    TW_ZHIKA_SPRITE, TW_ZKAMI_SPRITE, TW_ZYUSHA_SPRITE, TW_ZKOORI_SPRITE, TW_ZNINJA_SPRITE, TW_HOPOTE_SPRITE, TW_KAPOTE_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE];
+    TW_ZHIKA_SPRITE, TW_ZKAMI_SPRITE, TW_ZYUSHA_SPRITE, TW_ZKOORI_SPRITE, TW_ZNINJA_SPRITE, TW_HOPOTE_SPRITE, TW_KAPOTE_SPRITE, TW_KOPOTE_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE];
   const urls = new Set();
   sets.forEach(sp=>{ if(!sp) return;
     [sp.icon, sp.idle, sp.dmg].forEach(u=>u&&urls.add(u));
@@ -9379,6 +9382,12 @@ function twUnitDef(id){
     const role = { icon:'⚡', label:'かみなりパンチ', hpMul:1.1, atkMul:1.4, range:8, interval:1.0, area:false };
     return { id, rarity:'sr', name:'雷ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_KAPOTE_SPRITE.icon}">`, sprite:TW_KAPOTE_SPRITE, lv: kuucchiLvData(id).lv };
+  }
+  if(id === TW_KOPOTE_ID){
+    // こおりパンチ：こおりのつぶてで まとめて こうげきする 遠距離・範囲・高耐久
+    const role = { icon:'❄️', label:'こおりパンチ', hpMul:1.5, atkMul:0.9, range:6, interval:1.6, area:true };
+    return { id, rarity:'sr', name:'氷ぽてまよ', role,
+             svg:`<img class="tw-icon-img" src="${TW_KOPOTE_SPRITE.icon}">`, sprite:TW_KOPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   const k = KD.find(kk=>kk.id===id);
   if(!k) return null;
@@ -9720,7 +9729,7 @@ function showTowerSelect(){
 
   // 所持している侵略戦キャラ（常設7キャラは初期所持）
   const ownedBuiltins = [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID, TW_KIMO_ID, TW_OBIG_ID, TW_METALPOTE_ID, TW_TEGAKI_ID, TW_ZAKU_ID, TW_KMP_ID, TW_ZYAMI_ID, TW_ZHONO_ID, TW_ZDRAG_ID,
-   TW_ZHIKA_ID, TW_ZKAMI_ID, TW_ZYUSHA_ID, TW_ZKOORI_ID, TW_ZNINJA_ID, TW_HOPOTE_ID, TW_KAPOTE_ID]
+   TW_ZHIKA_ID, TW_ZKAMI_ID, TW_ZYUSHA_ID, TW_ZKOORI_ID, TW_ZNINJA_ID, TW_HOPOTE_ID, TW_KAPOTE_ID, TW_KOPOTE_ID]
     .filter(bid => (collection[bid]||0) > 0);
   if(ownedBuiltins.length){
     const dbgHdr = document.createElement('div');
