@@ -4025,6 +4025,7 @@ const KD = [
   { id:'tw_pote_kaminari', name:'雷ぽてまよ',          type:'かみなり',       rarity:'sr',     sprite:true, twdef:true, icon:'sprites/kapote_icon.png' },
   { id:'tw_pote_koori',    name:'氷ぽてまよ',          type:'こおり',         rarity:'sr',     sprite:true, twdef:true, icon:'sprites/kopote_icon.png' },
   { id:'tw_pote_mizu',     name:'水ぽてまよ',          type:'みず',           rarity:'sr',     sprite:true, twdef:true, icon:'sprites/mzpote_icon.png' },
+  { id:'tw_pote_kusa',     name:'草ぽてまよ',          type:'くさ',           rarity:'sr',     sprite:true, twdef:true, icon:'sprites/kspote_icon.png' },
 ];
 
 // ===== ぽてまよ キャラクターデータ (50種) =====
@@ -5065,7 +5066,7 @@ let playerGrade = parseInt(localStorage.getItem('kq_player_grade') || '1');
   ['tw_kuucchi_basic','tw_pote_basic','tw_pote_rush','tw_kimomayo',
    'tw_kuucchi_bat','tw_kuucchi_fire','tw_obigkubinaga','tw_metal_potemayo','tegaki_nyanko','zaku_normal','kimoashi_pote',
    'zaku_yami','zaku_honoo','zaku_ryuu',
-   'zaku_hikari','zaku_kami','zaku_yuusha','zaku_koori','zaku_ninja','tw_pote_honoo','tw_pote_kaminari','tw_pote_koori','tw_pote_mizu'].forEach(tid=>{
+   'zaku_hikari','zaku_kami','zaku_yuusha','zaku_koori','zaku_ninja','tw_pote_honoo','tw_pote_kaminari','tw_pote_koori','tw_pote_mizu','tw_pote_kusa'].forEach(tid=>{
     if(!collection[tid]) collection[tid] = 1;
   });
   saveState();
@@ -9205,6 +9206,8 @@ const TW_KAPOTE_ID='tw_pote_kaminari', TW_KAPOTE_SPRITE=_twMakeZakuSprite('kapot
 const TW_KOPOTE_ID='tw_pote_koori', TW_KOPOTE_SPRITE=_twMakeZakuSprite('kopote');
 // コマアニメ式：水ぽてまよ（みずだまを とばす 遠距離・範囲）
 const TW_MZPOTE_ID='tw_pote_mizu', TW_MZPOTE_SPRITE=_twMakeZakuSprite('mzpote');
+// コマアニメ式：草ぽてまよ（このはを とばす 遠距離・範囲）
+const TW_KSPOTE_ID='tw_pote_kusa', TW_KSPOTE_SPRITE=_twMakeZakuSprite('kspote');
 // コマアニメ式：わんこ（敵キャラ・右向きシート）3色バリエーション
 function _twMakeWankoSprite(prefix){
   return {
@@ -9236,7 +9239,7 @@ function preloadTwSprites(){
   const sets = [TW_KUU_SPRITE, TW_FKUU_SPRITE, TW_BKUU_SPRITE, TW_KIMO_SPRITE,
     TW_POTE_SPRITE, TW_POTE2_SPRITE, TW_METALPOTE_SPRITE, TW_OBIG_SPRITE,
     TW_TEGAKI_SPRITE, TW_ZAKU_SPRITE, TW_KMP_SPRITE, TW_ZYAMI_SPRITE, TW_ZHONO_SPRITE, TW_ZDRAG_SPRITE,
-    TW_ZHIKA_SPRITE, TW_ZKAMI_SPRITE, TW_ZYUSHA_SPRITE, TW_ZKOORI_SPRITE, TW_ZNINJA_SPRITE, TW_HOPOTE_SPRITE, TW_KAPOTE_SPRITE, TW_KOPOTE_SPRITE, TW_MZPOTE_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE];
+    TW_ZHIKA_SPRITE, TW_ZKAMI_SPRITE, TW_ZYUSHA_SPRITE, TW_ZKOORI_SPRITE, TW_ZNINJA_SPRITE, TW_HOPOTE_SPRITE, TW_KAPOTE_SPRITE, TW_KOPOTE_SPRITE, TW_MZPOTE_SPRITE, TW_KSPOTE_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE];
   const urls = new Set();
   sets.forEach(sp=>{ if(!sp) return;
     [sp.icon, sp.idle, sp.dmg].forEach(u=>u&&urls.add(u));
@@ -9397,6 +9400,12 @@ function twUnitDef(id){
     const role = { icon:'💧', label:'みずパンチ', hpMul:1.3, atkMul:1.1, range:7, interval:1.3, area:true };
     return { id, rarity:'sr', name:'水ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_MZPOTE_SPRITE.icon}">`, sprite:TW_MZPOTE_SPRITE, lv: kuucchiLvData(id).lv };
+  }
+  if(id === TW_KSPOTE_ID){
+    // くさパンチ：このはを とばして まとめて こうげきする 遠距離・範囲
+    const role = { icon:'🌿', label:'くさパンチ', hpMul:1.4, atkMul:1.0, range:7, interval:1.4, area:true };
+    return { id, rarity:'sr', name:'草ぽてまよ', role,
+             svg:`<img class="tw-icon-img" src="${TW_KSPOTE_SPRITE.icon}">`, sprite:TW_KSPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   const k = KD.find(kk=>kk.id===id);
   if(!k) return null;
@@ -9738,7 +9747,7 @@ function showTowerSelect(){
 
   // 所持している侵略戦キャラ（常設7キャラは初期所持）
   const ownedBuiltins = [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID, TW_KIMO_ID, TW_OBIG_ID, TW_METALPOTE_ID, TW_TEGAKI_ID, TW_ZAKU_ID, TW_KMP_ID, TW_ZYAMI_ID, TW_ZHONO_ID, TW_ZDRAG_ID,
-   TW_ZHIKA_ID, TW_ZKAMI_ID, TW_ZYUSHA_ID, TW_ZKOORI_ID, TW_ZNINJA_ID, TW_HOPOTE_ID, TW_KAPOTE_ID, TW_KOPOTE_ID, TW_MZPOTE_ID]
+   TW_ZHIKA_ID, TW_ZKAMI_ID, TW_ZYUSHA_ID, TW_ZKOORI_ID, TW_ZNINJA_ID, TW_HOPOTE_ID, TW_KAPOTE_ID, TW_KOPOTE_ID, TW_MZPOTE_ID, TW_KSPOTE_ID]
     .filter(bid => (collection[bid]||0) > 0);
   if(ownedBuiltins.length){
     const dbgHdr = document.createElement('div');
