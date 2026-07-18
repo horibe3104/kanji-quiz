@@ -4028,6 +4028,7 @@ const KD = [
   { id:'tw_pote_kusa',     name:'草ぽてまよ',          type:'くさ',           rarity:'sr',     sprite:true, twdef:true, icon:'sprites/kspote_icon.png' },
   { id:'tw_pote_iwa',      name:'岩ぽてまよ',          type:'いわ',           rarity:'sr',     sprite:true, twdef:true, icon:'sprites/iwpote_icon.png' },
   { id:'tw_pote_doku',     name:'毒ぽてまよ',          type:'どく',           rarity:'sr',     sprite:true, twdef:true, icon:'sprites/dkpote_icon.png' },
+  { id:'tw_pote_hagane',   name:'鋼ぽてまよ',          type:'はがね',         rarity:'sr',     sprite:true, twdef:true, icon:'sprites/hgpote_icon.png' },
 ];
 
 // ===== ぽてまよ キャラクターデータ (50種) =====
@@ -5068,7 +5069,7 @@ let playerGrade = parseInt(localStorage.getItem('kq_player_grade') || '1');
   ['tw_kuucchi_basic','tw_pote_basic','tw_pote_rush','tw_kimomayo',
    'tw_kuucchi_bat','tw_kuucchi_fire','tw_obigkubinaga','tw_metal_potemayo','tegaki_nyanko','zaku_normal','kimoashi_pote',
    'zaku_yami','zaku_honoo','zaku_ryuu',
-   'zaku_hikari','zaku_kami','zaku_yuusha','zaku_koori','zaku_ninja','tw_pote_honoo','tw_pote_kaminari','tw_pote_koori','tw_pote_mizu','tw_pote_kusa','tw_pote_iwa','tw_pote_doku'].forEach(tid=>{
+   'zaku_hikari','zaku_kami','zaku_yuusha','zaku_koori','zaku_ninja','tw_pote_honoo','tw_pote_kaminari','tw_pote_koori','tw_pote_mizu','tw_pote_kusa','tw_pote_iwa','tw_pote_doku','tw_pote_hagane'].forEach(tid=>{
     if(!collection[tid]) collection[tid] = 1;
   });
   saveState();
@@ -9214,6 +9215,8 @@ const TW_KSPOTE_ID='tw_pote_kusa', TW_KSPOTE_SPRITE=_twMakeZakuSprite('kspote');
 const TW_IWPOTE_ID='tw_pote_iwa', TW_IWPOTE_SPRITE=_twMakeZakuSprite('iwpote');
 // コマアニメ式：毒ぽてまよ（どくのしゃれこうべを とばす 遠距離・範囲）
 const TW_DKPOTE_ID='tw_pote_doku', TW_DKPOTE_SPRITE=_twMakeZakuSprite('dkpote');
+// コマアニメ式：鋼ぽてまよ（はがねのやを とばす 遠距離・単体・超高耐久）
+const TW_HGPOTE_ID='tw_pote_hagane', TW_HGPOTE_SPRITE=_twMakeZakuSprite('hgpote');
 // コマアニメ式：わんこ（敵キャラ・右向きシート）3色バリエーション
 function _twMakeWankoSprite(prefix){
   return {
@@ -9245,7 +9248,7 @@ function preloadTwSprites(){
   const sets = [TW_KUU_SPRITE, TW_FKUU_SPRITE, TW_BKUU_SPRITE, TW_KIMO_SPRITE,
     TW_POTE_SPRITE, TW_POTE2_SPRITE, TW_METALPOTE_SPRITE, TW_OBIG_SPRITE,
     TW_TEGAKI_SPRITE, TW_ZAKU_SPRITE, TW_KMP_SPRITE, TW_ZYAMI_SPRITE, TW_ZHONO_SPRITE, TW_ZDRAG_SPRITE,
-    TW_ZHIKA_SPRITE, TW_ZKAMI_SPRITE, TW_ZYUSHA_SPRITE, TW_ZKOORI_SPRITE, TW_ZNINJA_SPRITE, TW_HOPOTE_SPRITE, TW_KAPOTE_SPRITE, TW_KOPOTE_SPRITE, TW_MZPOTE_SPRITE, TW_KSPOTE_SPRITE, TW_IWPOTE_SPRITE, TW_DKPOTE_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE];
+    TW_ZHIKA_SPRITE, TW_ZKAMI_SPRITE, TW_ZYUSHA_SPRITE, TW_ZKOORI_SPRITE, TW_ZNINJA_SPRITE, TW_HOPOTE_SPRITE, TW_KAPOTE_SPRITE, TW_KOPOTE_SPRITE, TW_MZPOTE_SPRITE, TW_KSPOTE_SPRITE, TW_IWPOTE_SPRITE, TW_DKPOTE_SPRITE, TW_HGPOTE_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE];
   const urls = new Set();
   sets.forEach(sp=>{ if(!sp) return;
     [sp.icon, sp.idle, sp.dmg].forEach(u=>u&&urls.add(u));
@@ -9424,6 +9427,12 @@ function twUnitDef(id){
     const role = { icon:'☠️', label:'どくパンチ', hpMul:1.2, atkMul:1.3, range:7, interval:1.3, area:true };
     return { id, rarity:'sr', name:'毒ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_DKPOTE_SPRITE.icon}">`, sprite:TW_DKPOTE_SPRITE, lv: kuucchiLvData(id).lv };
+  }
+  if(id === TW_HGPOTE_ID){
+    // はがねパンチ：はがねのやを とばす 遠距離・単体・超高耐久のかべ役
+    const role = { icon:'⚙️', label:'はがねパンチ', hpMul:1.9, atkMul:1.2, range:5, interval:1.5, area:false };
+    return { id, rarity:'sr', name:'鋼ぽてまよ', role,
+             svg:`<img class="tw-icon-img" src="${TW_HGPOTE_SPRITE.icon}">`, sprite:TW_HGPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   const k = KD.find(kk=>kk.id===id);
   if(!k) return null;
@@ -9765,7 +9774,7 @@ function showTowerSelect(){
 
   // 所持している侵略戦キャラ（常設7キャラは初期所持）
   const ownedBuiltins = [TW_KUU_ID, TW_FKUU_ID, TW_BKUU_ID, TW_POTE2_ID, TW_POTE_ID, TW_KIMO_ID, TW_OBIG_ID, TW_METALPOTE_ID, TW_TEGAKI_ID, TW_ZAKU_ID, TW_KMP_ID, TW_ZYAMI_ID, TW_ZHONO_ID, TW_ZDRAG_ID,
-   TW_ZHIKA_ID, TW_ZKAMI_ID, TW_ZYUSHA_ID, TW_ZKOORI_ID, TW_ZNINJA_ID, TW_HOPOTE_ID, TW_KAPOTE_ID, TW_KOPOTE_ID, TW_MZPOTE_ID, TW_KSPOTE_ID, TW_IWPOTE_ID, TW_DKPOTE_ID]
+   TW_ZHIKA_ID, TW_ZKAMI_ID, TW_ZYUSHA_ID, TW_ZKOORI_ID, TW_ZNINJA_ID, TW_HOPOTE_ID, TW_KAPOTE_ID, TW_KOPOTE_ID, TW_MZPOTE_ID, TW_KSPOTE_ID, TW_IWPOTE_ID, TW_DKPOTE_ID, TW_HGPOTE_ID]
     .filter(bid => (collection[bid]||0) > 0);
   if(ownedBuiltins.length){
     const dbgHdr = document.createElement('div');
