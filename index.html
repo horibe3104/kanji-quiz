@@ -9041,6 +9041,9 @@ const TW_ENEMY_TYPES = [
   // にょろ：素早く群れる軽量アタッカー（わんこより速く・脆い）
   { id:'nyoro',       minStage:2, hp:13,  atk:5,  speed:0.78, name:'にょろ', svg:'', spriteRef:'nyoro' },
   { id:'nyoro_tough', minStage:5, hp:32,  atk:9,  speed:0.66, name:'にょろ', svg:'', spriteRef:'nyoro' },
+  // やつ：3匹で群れる小さな虫（軽量・そこそこ速い）
+  { id:'yatsu',       minStage:2, hp:22,  atk:6,  speed:0.62, name:'やつ', svg:'', spriteRef:'yatsu' },
+  { id:'yatsu_tough', minStage:6, hp:48,  atk:11, speed:0.56, name:'やつ', svg:'', spriteRef:'yatsu' },
 ];
 // カオル君（'kaoru'）はスプライト製のボス。twSpawnBoss で特別扱いする
 const TW_BOSS_IDS = ['kaoru','wolf','orc','skeleton','witch','troll'];
@@ -9262,6 +9265,8 @@ const TW_NYORO_SPRITE = {
 };
 // コマアニメ式：カオル君（敵キャラ。緑バック動画から抽出した叫ぶ生首。右向き）
 const TW_KAORU_SPRITE = _twMakeWankoSprite('kaoru');
+// コマアニメ式：やつ（敵キャラ。緑バック動画から抽出した3匹の群れ虫。右向き）
+const TW_YATSU_SPRITE = _twMakeWankoSprite('yatsu');
 // 全スプライトを事前ロード（登場した瞬間の未読込ブランクで「キャラが消える」問題を防ぐ）
 let _twPreloadCache = [];
 let _twPreloaded = false;
@@ -9270,7 +9275,7 @@ function preloadTwSprites(){
   const sets = [TW_KUU_SPRITE, TW_FKUU_SPRITE, TW_BKUU_SPRITE, TW_KIMO_SPRITE,
     TW_POTE_SPRITE, TW_POTE2_SPRITE, TW_METALPOTE_SPRITE, TW_OBIG_SPRITE,
     TW_TEGAKI_SPRITE, TW_ZAKU_SPRITE, TW_KMP_SPRITE, TW_ZYAMI_SPRITE, TW_ZHONO_SPRITE, TW_ZDRAG_SPRITE,
-    TW_ZHIKA_SPRITE, TW_ZKAMI_SPRITE, TW_ZYUSHA_SPRITE, TW_ZKOORI_SPRITE, TW_ZNINJA_SPRITE, TW_HOPOTE_SPRITE, TW_KAPOTE_SPRITE, TW_KOPOTE_SPRITE, TW_MZPOTE_SPRITE, TW_KSPOTE_SPRITE, TW_IWPOTE_SPRITE, TW_DKPOTE_SPRITE, TW_HGPOTE_SPRITE, TW_AKPOTE_SPRITE, TW_FTPOTE_SPRITE, TW_DMPOTE_SPRITE, TW_ANPOTE_SPRITE, TW_BTPOTE_SPRITE, TW_YUPOTE_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE, TW_KAORU_SPRITE];
+    TW_ZHIKA_SPRITE, TW_ZKAMI_SPRITE, TW_ZYUSHA_SPRITE, TW_ZKOORI_SPRITE, TW_ZNINJA_SPRITE, TW_HOPOTE_SPRITE, TW_KAPOTE_SPRITE, TW_KOPOTE_SPRITE, TW_MZPOTE_SPRITE, TW_KSPOTE_SPRITE, TW_IWPOTE_SPRITE, TW_DKPOTE_SPRITE, TW_HGPOTE_SPRITE, TW_AKPOTE_SPRITE, TW_FTPOTE_SPRITE, TW_DMPOTE_SPRITE, TW_ANPOTE_SPRITE, TW_BTPOTE_SPRITE, TW_YUPOTE_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE, TW_KAORU_SPRITE, TW_YATSU_SPRITE];
   const urls = new Set();
   sets.forEach(sp=>{ if(!sp) return;
     [sp.icon, sp.idle, sp.dmg].forEach(u=>u&&urls.add(u));
@@ -10162,7 +10167,8 @@ function twSpawnEnemyUnit(){
     pos: twCastleSpawnPos('enemy'), svg: base.svg,   // 敵城の中央・前から出撃
     sprite: base.spriteRef === 'wanko' ? TW_WANKO_SPRITE
           : base.spriteRef === 'nyoro' ? TW_NYORO_SPRITE
-          : base.spriteRef === 'kaoru' ? TW_KAORU_SPRITE : null,
+          : base.spriteRef === 'kaoru' ? TW_KAORU_SPRITE
+          : base.spriteRef === 'yatsu' ? TW_YATSU_SPRITE : null,
     bounty: Math.round(hp*0.8),
   });
   twRenderUnits();
