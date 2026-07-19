@@ -9041,11 +9041,9 @@ const TW_ENEMY_TYPES = [
   // にょろ：素早く群れる軽量アタッカー（わんこより速く・脆い）
   { id:'nyoro',       minStage:2, hp:13,  atk:5,  speed:0.78, name:'にょろ', svg:'', spriteRef:'nyoro' },
   { id:'nyoro_tough', minStage:5, hp:32,  atk:9,  speed:0.66, name:'にょろ', svg:'', spriteRef:'nyoro' },
-  // カオル君：叫ぶ生首の不気味なアタッカー（重量級）
-  { id:'kaoru',       minStage:3, hp:52,  atk:10, speed:0.5,  name:'カオル君', svg:'', spriteRef:'kaoru' },
-  { id:'kaoru_tough', minStage:7, hp:95,  atk:16, speed:0.44, name:'カオル君', svg:'', spriteRef:'kaoru' },
 ];
-const TW_BOSS_IDS = ['wolf','orc','skeleton','witch','troll'];
+// カオル君（'kaoru'）はスプライト製のボス。twSpawnBoss で特別扱いする
+const TW_BOSS_IDS = ['kaoru','wolf','orc','skeleton','witch','troll'];
 const TW_WALLET = [
   { cap:250,  rate:18, upCost:80   },
   { cap:400,  rate:24, upCost:150  },
@@ -10172,15 +10170,18 @@ function twSpawnEnemyUnit(){
 
 function twSpawnBoss(){
   const id = TW_BOSS_IDS[(twStage-1) % TW_BOSS_IDS.length];
-  const m  = MONSTERS.find(mm=>mm.id===id);
+  const isKaoru = (id === 'kaoru');   // スプライト製ボス
+  const m  = isKaoru ? null : MONSTERS.find(mm=>mm.id===id);
   const hp = 120 + twStage*70;
   twUnits.push({
-    uid: ++twUnitSeq, side:'enemy', name:m.name, boss:true,
+    uid: ++twUnitSeq, side:'enemy', name: isKaoru ? 'カオル君' : m.name, boss:true,
     hp, maxHp: hp,
     atk: 10 + twStage*2, speed: 0.3,
     range: 6, interval: 1.6, area: true, atkTimer: 0.8,
     kbThresholds: [hp*3/4, hp*2/4, hp*1/4],
-    pos: twCastleSpawnPos('enemy'), svg: m.svg,   // 敵城の中央・前から出撃
+    pos: twCastleSpawnPos('enemy'),   // 敵城の中央・前から出撃
+    svg: isKaoru ? `<img class="tw-icon-img" src="${TW_KAORU_SPRITE.icon}">` : m.svg,
+    sprite: isKaoru ? TW_KAORU_SPRITE : null,
     bounty: 150 + twStage*30,
   });
   playSound('wrong');
