@@ -9054,8 +9054,8 @@ const TW_ENEMY_TYPES = [
   { id:'mee',         minStage:2, hp:38,  atk:8,  speed:0.52, name:'めえめえ', svg:'', spriteRef:'mee' },
   { id:'mee_tough',   minStage:6, hp:72,  atk:13, speed:0.48, name:'めえめえ', svg:'', spriteRef:'mee' },
 ];
-// カオル君（'kaoru'）はスプライト製のボス。twSpawnBoss で特別扱いする
-const TW_BOSS_IDS = ['kaoru','wolf','orc','skeleton','witch','troll'];
+// 'kaoru'・'paon' はスプライト製ボス（TW_SPRITE_BOSSES）。それ以外はSVGボス
+const TW_BOSS_IDS = ['kaoru','paon','wolf','orc','skeleton','witch','troll'];
 const TW_WALLET = [
   { cap:250,  rate:18, upCost:80   },
   { cap:400,  rate:24, upCost:150  },
@@ -9290,6 +9290,13 @@ const TW_GORI_SPRITE = {
 };
 // コマアニメ式：めえめえ（敵キャラ。緑バック動画から抽出した白ヒツジ。右向き）
 const TW_MEE_SPRITE = _twMakeWankoSprite('mee');
+// コマアニメ式：パオン（スプライト製ボス。緑バック動画から抽出した白いゾウ。右向き）
+const TW_PAON_SPRITE = _twMakeWankoSprite('paon');
+// スプライト製ボスの登録表（idごとに 表示名とスプライトを紐づけ。従来のSVGボスと併存）
+const TW_SPRITE_BOSSES = {
+  kaoru: { name:'カオル君', sprite: TW_KAORU_SPRITE },
+  paon:  { name:'パオン',   sprite: TW_PAON_SPRITE },
+};
 // 全スプライトを事前ロード（登場した瞬間の未読込ブランクで「キャラが消える」問題を防ぐ）
 let _twPreloadCache = [];
 let _twPreloaded = false;
@@ -9298,7 +9305,7 @@ function preloadTwSprites(){
   const sets = [TW_KUU_SPRITE, TW_FKUU_SPRITE, TW_BKUU_SPRITE, TW_KIMO_SPRITE,
     TW_POTE_SPRITE, TW_POTE2_SPRITE, TW_METALPOTE_SPRITE, TW_OBIG_SPRITE,
     TW_TEGAKI_SPRITE, TW_ZAKU_SPRITE, TW_KMP_SPRITE, TW_ZYAMI_SPRITE, TW_ZHONO_SPRITE, TW_ZDRAG_SPRITE,
-    TW_ZHIKA_SPRITE, TW_ZKAMI_SPRITE, TW_ZYUSHA_SPRITE, TW_ZKOORI_SPRITE, TW_ZNINJA_SPRITE, TW_HOPOTE_SPRITE, TW_KAPOTE_SPRITE, TW_KOPOTE_SPRITE, TW_MZPOTE_SPRITE, TW_KSPOTE_SPRITE, TW_IWPOTE_SPRITE, TW_DKPOTE_SPRITE, TW_HGPOTE_SPRITE, TW_AKPOTE_SPRITE, TW_FTPOTE_SPRITE, TW_DMPOTE_SPRITE, TW_ANPOTE_SPRITE, TW_BTPOTE_SPRITE, TW_YUPOTE_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE, TW_KAORU_SPRITE, TW_HAMA_SPRITE, TW_PEN_SPRITE, TW_GORI_SPRITE, TW_MEE_SPRITE];
+    TW_ZHIKA_SPRITE, TW_ZKAMI_SPRITE, TW_ZYUSHA_SPRITE, TW_ZKOORI_SPRITE, TW_ZNINJA_SPRITE, TW_HOPOTE_SPRITE, TW_KAPOTE_SPRITE, TW_KOPOTE_SPRITE, TW_MZPOTE_SPRITE, TW_KSPOTE_SPRITE, TW_IWPOTE_SPRITE, TW_DKPOTE_SPRITE, TW_HGPOTE_SPRITE, TW_AKPOTE_SPRITE, TW_FTPOTE_SPRITE, TW_DMPOTE_SPRITE, TW_ANPOTE_SPRITE, TW_BTPOTE_SPRITE, TW_YUPOTE_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE, TW_KAORU_SPRITE, TW_HAMA_SPRITE, TW_PEN_SPRITE, TW_GORI_SPRITE, TW_MEE_SPRITE, TW_PAON_SPRITE];
   const urls = new Set();
   sets.forEach(sp=>{ if(!sp) return;
     [sp.icon, sp.idle, sp.dmg].forEach(u=>u&&urls.add(u));
@@ -10202,18 +10209,18 @@ function twSpawnEnemyUnit(){
 
 function twSpawnBoss(){
   const id = TW_BOSS_IDS[(twStage-1) % TW_BOSS_IDS.length];
-  const isKaoru = (id === 'kaoru');   // スプライト製ボス
-  const m  = isKaoru ? null : MONSTERS.find(mm=>mm.id===id);
+  const sb = TW_SPRITE_BOSSES[id];   // スプライト製ボスなら定義あり
+  const m  = sb ? null : MONSTERS.find(mm=>mm.id===id);
   const hp = 120 + twStage*70;
   twUnits.push({
-    uid: ++twUnitSeq, side:'enemy', name: isKaoru ? 'カオル君' : m.name, boss:true,
+    uid: ++twUnitSeq, side:'enemy', name: sb ? sb.name : m.name, boss:true,
     hp, maxHp: hp,
     atk: 10 + twStage*2, speed: 0.3,
     range: 6, interval: 1.6, area: true, atkTimer: 0.8,
     kbThresholds: [hp*3/4, hp*2/4, hp*1/4],
     pos: twCastleSpawnPos('enemy'),   // 敵城の中央・前から出撃
-    svg: isKaoru ? `<img class="tw-icon-img" src="${TW_KAORU_SPRITE.icon}">` : m.svg,
-    sprite: isKaoru ? TW_KAORU_SPRITE : null,
+    svg: sb ? `<img class="tw-icon-img" src="${sb.sprite.icon}">` : m.svg,
+    sprite: sb ? sb.sprite : null,
     bounty: 150 + twStage*30,
   });
   playSound('wrong');
