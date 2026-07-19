@@ -9044,6 +9044,9 @@ const TW_ENEMY_TYPES = [
   // はまちゃん：体力・パワー自慢のカバ（重量級・タフ）
   { id:'hama',        minStage:3, hp:70,  atk:12, speed:0.42, name:'はまちゃん', svg:'', spriteRef:'hama' },
   { id:'hama_tough',  minStage:7, hp:130, atk:19, speed:0.38, name:'はまちゃん', svg:'', spriteRef:'hama' },
+  // ペンちゃん：カンフー修行中のペンギン（素早い近接アタッカー）
+  { id:'pen',         minStage:4, hp:42,  atk:10, speed:0.66, name:'ペンちゃん', svg:'', spriteRef:'pen' },
+  { id:'pen_tough',   minStage:8, hp:78,  atk:16, speed:0.6,  name:'ペンちゃん', svg:'', spriteRef:'pen' },
 ];
 // カオル君（'kaoru'）はスプライト製のボス。twSpawnBoss で特別扱いする
 const TW_BOSS_IDS = ['kaoru','wolf','orc','skeleton','witch','troll'];
@@ -9267,6 +9270,8 @@ const TW_NYORO_SPRITE = {
 const TW_KAORU_SPRITE = _twMakeWankoSprite('kaoru');
 // コマアニメ式：はまちゃん（敵キャラ。緑バック動画から抽出した白いカバ。右向き）
 const TW_HAMA_SPRITE = _twMakeWankoSprite('hama');
+// コマアニメ式：ペンちゃん（敵キャラ。緑バック動画から抽出したカンフーペンギン。右向き）
+const TW_PEN_SPRITE = _twMakeWankoSprite('pen');
 // 全スプライトを事前ロード（登場した瞬間の未読込ブランクで「キャラが消える」問題を防ぐ）
 let _twPreloadCache = [];
 let _twPreloaded = false;
@@ -9275,7 +9280,7 @@ function preloadTwSprites(){
   const sets = [TW_KUU_SPRITE, TW_FKUU_SPRITE, TW_BKUU_SPRITE, TW_KIMO_SPRITE,
     TW_POTE_SPRITE, TW_POTE2_SPRITE, TW_METALPOTE_SPRITE, TW_OBIG_SPRITE,
     TW_TEGAKI_SPRITE, TW_ZAKU_SPRITE, TW_KMP_SPRITE, TW_ZYAMI_SPRITE, TW_ZHONO_SPRITE, TW_ZDRAG_SPRITE,
-    TW_ZHIKA_SPRITE, TW_ZKAMI_SPRITE, TW_ZYUSHA_SPRITE, TW_ZKOORI_SPRITE, TW_ZNINJA_SPRITE, TW_HOPOTE_SPRITE, TW_KAPOTE_SPRITE, TW_KOPOTE_SPRITE, TW_MZPOTE_SPRITE, TW_KSPOTE_SPRITE, TW_IWPOTE_SPRITE, TW_DKPOTE_SPRITE, TW_HGPOTE_SPRITE, TW_AKPOTE_SPRITE, TW_FTPOTE_SPRITE, TW_DMPOTE_SPRITE, TW_ANPOTE_SPRITE, TW_BTPOTE_SPRITE, TW_YUPOTE_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE, TW_KAORU_SPRITE, TW_HAMA_SPRITE];
+    TW_ZHIKA_SPRITE, TW_ZKAMI_SPRITE, TW_ZYUSHA_SPRITE, TW_ZKOORI_SPRITE, TW_ZNINJA_SPRITE, TW_HOPOTE_SPRITE, TW_KAPOTE_SPRITE, TW_KOPOTE_SPRITE, TW_MZPOTE_SPRITE, TW_KSPOTE_SPRITE, TW_IWPOTE_SPRITE, TW_DKPOTE_SPRITE, TW_HGPOTE_SPRITE, TW_AKPOTE_SPRITE, TW_FTPOTE_SPRITE, TW_DMPOTE_SPRITE, TW_ANPOTE_SPRITE, TW_BTPOTE_SPRITE, TW_YUPOTE_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE, TW_KAORU_SPRITE, TW_HAMA_SPRITE, TW_PEN_SPRITE];
   const urls = new Set();
   sets.forEach(sp=>{ if(!sp) return;
     [sp.icon, sp.idle, sp.dmg].forEach(u=>u&&urls.add(u));
@@ -10168,7 +10173,8 @@ function twSpawnEnemyUnit(){
     sprite: base.spriteRef === 'wanko' ? TW_WANKO_SPRITE
           : base.spriteRef === 'nyoro' ? TW_NYORO_SPRITE
           : base.spriteRef === 'kaoru' ? TW_KAORU_SPRITE
-          : base.spriteRef === 'hama' ? TW_HAMA_SPRITE : null,
+          : base.spriteRef === 'hama' ? TW_HAMA_SPRITE
+          : base.spriteRef === 'pen' ? TW_PEN_SPRITE : null,
     bounty: Math.round(hp*0.8),
   });
   twRenderUnits();
