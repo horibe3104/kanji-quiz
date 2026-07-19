@@ -9047,6 +9047,9 @@ const TW_ENEMY_TYPES = [
   // ペンちゃん：カンフー修行中のペンギン（素早い近接アタッカー）
   { id:'pen',         minStage:4, hp:42,  atk:10, speed:0.66, name:'ペンちゃん', svg:'', spriteRef:'pen' },
   { id:'pen_tough',   minStage:8, hp:78,  atk:16, speed:0.6,  name:'ペンちゃん', svg:'', spriteRef:'pen' },
+  // ゴリさん：動物園を追放された強面ゴリラ（超重量級・高火力・遅い）
+  { id:'gori',        minStage:5, hp:100, atk:16, speed:0.4,  name:'ゴリさん', svg:'', spriteRef:'gori' },
+  { id:'gori_tough',  minStage:9, hp:180, atk:24, speed:0.36, name:'ゴリさん', svg:'', spriteRef:'gori' },
 ];
 // カオル君（'kaoru'）はスプライト製のボス。twSpawnBoss で特別扱いする
 const TW_BOSS_IDS = ['kaoru','wolf','orc','skeleton','witch','troll'];
@@ -9272,6 +9275,16 @@ const TW_KAORU_SPRITE = _twMakeWankoSprite('kaoru');
 const TW_HAMA_SPRITE = _twMakeWankoSprite('hama');
 // コマアニメ式：ペンちゃん（敵キャラ。緑バック動画から抽出したカンフーペンギン。右向き）
 const TW_PEN_SPRITE = _twMakeWankoSprite('pen');
+// コマアニメ式：ゴリさん（敵キャラ。緑バック動画から抽出した強面ゴリラ）
+// 元絵は左向きなので facing:'left'（敵＝右進行で反転され、顔が進行方向を向く）
+const TW_GORI_SPRITE = {
+  facing: 'left',
+  icon: 'sprites/gori_icon.png',
+  idle: 'sprites/gori_idle.png',
+  walk: [1,2,3,4].map(i=>`sprites/gori_walk${i}.png`),
+  atk:  [1,2,3].map(i=>`sprites/gori_atk${i}.png`),
+  dmg:  'sprites/gori_dmg.png',
+};
 // 全スプライトを事前ロード（登場した瞬間の未読込ブランクで「キャラが消える」問題を防ぐ）
 let _twPreloadCache = [];
 let _twPreloaded = false;
@@ -9280,7 +9293,7 @@ function preloadTwSprites(){
   const sets = [TW_KUU_SPRITE, TW_FKUU_SPRITE, TW_BKUU_SPRITE, TW_KIMO_SPRITE,
     TW_POTE_SPRITE, TW_POTE2_SPRITE, TW_METALPOTE_SPRITE, TW_OBIG_SPRITE,
     TW_TEGAKI_SPRITE, TW_ZAKU_SPRITE, TW_KMP_SPRITE, TW_ZYAMI_SPRITE, TW_ZHONO_SPRITE, TW_ZDRAG_SPRITE,
-    TW_ZHIKA_SPRITE, TW_ZKAMI_SPRITE, TW_ZYUSHA_SPRITE, TW_ZKOORI_SPRITE, TW_ZNINJA_SPRITE, TW_HOPOTE_SPRITE, TW_KAPOTE_SPRITE, TW_KOPOTE_SPRITE, TW_MZPOTE_SPRITE, TW_KSPOTE_SPRITE, TW_IWPOTE_SPRITE, TW_DKPOTE_SPRITE, TW_HGPOTE_SPRITE, TW_AKPOTE_SPRITE, TW_FTPOTE_SPRITE, TW_DMPOTE_SPRITE, TW_ANPOTE_SPRITE, TW_BTPOTE_SPRITE, TW_YUPOTE_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE, TW_KAORU_SPRITE, TW_HAMA_SPRITE, TW_PEN_SPRITE];
+    TW_ZHIKA_SPRITE, TW_ZKAMI_SPRITE, TW_ZYUSHA_SPRITE, TW_ZKOORI_SPRITE, TW_ZNINJA_SPRITE, TW_HOPOTE_SPRITE, TW_KAPOTE_SPRITE, TW_KOPOTE_SPRITE, TW_MZPOTE_SPRITE, TW_KSPOTE_SPRITE, TW_IWPOTE_SPRITE, TW_DKPOTE_SPRITE, TW_HGPOTE_SPRITE, TW_AKPOTE_SPRITE, TW_FTPOTE_SPRITE, TW_DMPOTE_SPRITE, TW_ANPOTE_SPRITE, TW_BTPOTE_SPRITE, TW_YUPOTE_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE, TW_KAORU_SPRITE, TW_HAMA_SPRITE, TW_PEN_SPRITE, TW_GORI_SPRITE];
   const urls = new Set();
   sets.forEach(sp=>{ if(!sp) return;
     [sp.icon, sp.idle, sp.dmg].forEach(u=>u&&urls.add(u));
@@ -10174,7 +10187,8 @@ function twSpawnEnemyUnit(){
           : base.spriteRef === 'nyoro' ? TW_NYORO_SPRITE
           : base.spriteRef === 'kaoru' ? TW_KAORU_SPRITE
           : base.spriteRef === 'hama' ? TW_HAMA_SPRITE
-          : base.spriteRef === 'pen' ? TW_PEN_SPRITE : null,
+          : base.spriteRef === 'pen' ? TW_PEN_SPRITE
+          : base.spriteRef === 'gori' ? TW_GORI_SPRITE : null,
     bounty: Math.round(hp*0.8),
   });
   twRenderUnits();
