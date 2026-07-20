@@ -9282,9 +9282,9 @@ const TW_HAMA_SPRITE = _twMakeWankoSprite('hama');
 // コマアニメ式：ペンちゃん（敵キャラ。緑バック動画から抽出したカンフーペンギン。右向き）
 const TW_PEN_SPRITE = _twMakeWankoSprite('pen');
 // コマアニメ式：ゴリさん（敵キャラ。緑バック動画から抽出した強面ゴリラ）
-// 元絵は左向きなので facing:'left'（敵＝右進行で反転され、顔が進行方向を向く）
+// 元絵は顔が右向きなので facing:'right'（敵＝右進行で反転なし、顔が進行方向を向く）
 const TW_GORI_SPRITE = {
-  facing: 'left',
+  facing: 'right',
   icon: 'sprites/gori_icon.png',
   idle: 'sprites/gori_idle.png',
   walk: [1,2,3,4].map(i=>`sprites/gori_walk${i}.png`),
