@@ -2794,21 +2794,21 @@
 <div class="screen" id="screen-gacha">
   <div class="card">
     <div class="gacha-title">🎰 ガチャ！</div>
-    <div class="gacha-sub">メダル 20まいで チャレンジ！</div>
+    <div class="gacha-sub">メダル 50まいで チャレンジ！</div>
     <div class="gacha-deco-row" id="gacha-deco-row"></div>
     <div id="gacha-pull-state">
       <div class="gacha-box-wrap"><div class="gacha-box" id="gacha-box">❓</div></div>
       <div class="gacha-coin-now">今のコイン：🪙 <span id="gacha-coin-now">0</span> まい</div>
-      <button class="gacha-pull-btn" id="gacha-pull-btn" onclick="doPull()">🎲 1回 引く！（🪙 20まい）</button>
-      <button class="gacha-pull-btn gacha-ten-btn" id="gacha-ten-btn" onclick="doTenPull()">✨ 10れん！（🪙 200まい）<br><span class="gacha-cost-tag">SRいじょう 1たい かくてい！</span></button>
+      <button class="gacha-pull-btn" id="gacha-pull-btn" onclick="doPull()">🎲 1回 引く！（🪙 50まい）</button>
+      <button class="gacha-pull-btn gacha-ten-btn" id="gacha-ten-btn" onclick="doTenPull()">✨ 10れん！（🪙 450まい）<br><span class="gacha-cost-tag">SRいじょう 1たい かくてい！</span></button>
       <button class="ticket-gacha-btn" id="ticket-gacha-btn-r" onclick="doTicketPullR()" style="display:none">🎫 げきレアかくていチケット（0まい）で ガチャ！</button>
       <button class="ticket-gacha-btn ticket-sr-btn" id="ticket-gacha-btn-sr" onclick="doTicketPullSR()" style="display:none">🌟 ちょうげきレアかくていチケット（0まい）で ガチャ！</button>
       <button class="gacha-back-btn" onclick="goHome()">← もどる</button>
     </div>
     <div id="gacha-ten-result-state" style="display:none">
       <div class="gacha-ten-grid" id="gacha-ten-grid"></div>
-      <button class="gacha-pull-btn" id="gacha-ten-again-btn" onclick="resetGacha()">もう一回！（🪙 20まい）</button>
-      <button class="gacha-pull-btn gacha-ten-btn" id="gacha-ten-again10-btn" onclick="doTenPull()">✨ もういちど 10れん！（🪙 200まい）</button>
+      <button class="gacha-pull-btn" id="gacha-ten-again-btn" onclick="resetGacha()">もう一回！（🪙 50まい）</button>
+      <button class="gacha-pull-btn gacha-ten-btn" id="gacha-ten-again10-btn" onclick="doTenPull()">✨ もういちど 10れん！（🪙 450まい）</button>
       <button class="gacha-back-btn" onclick="goHome()">← もどる</button>
     </div>
     <div id="gacha-result-state" style="display:none">
@@ -2823,7 +2823,7 @@
       </div>
       <!-- 通常1回引きのボタン -->
       <div id="gacha-single-nav">
-        <button class="gacha-pull-btn" id="gacha-again-btn" onclick="resetGacha()">もう一回！（🪙 20まい）</button>
+        <button class="gacha-pull-btn" id="gacha-again-btn" onclick="resetGacha()">もう一回！（🪙 50まい）</button>
         <button class="gacha-back-btn" onclick="goHome()">← もどる</button>
       </div>
       <!-- 10連 順番確認ナビ -->
@@ -4045,6 +4045,9 @@ const SHOW_SVG_ALLIES = false;
 function allyVisible(k){ return !!(SHOW_SVG_ALLIES || (k && k.sprite)); }
 const KD_FIRST_SPRITE = KD.find(k => k.sprite) || KD[0];
 
+// ボーナスめいろを一旦非表示（入口ボタン・かけら告知を隠す）。true で復活。
+const SHOW_MAZE = false;
+
 // ===== ぽてまよ キャラクターデータ (50種) =====
 const MD = [
   // ===== レア (common) 25種 =====
@@ -4219,7 +4222,7 @@ KD.push(...MD);
 KD.push(...ND);
 
 const RARITY_LABELS = { common:'レア', rare:'げきレア ⭐', sr:'ちょうげきレア ⭐⭐', ur:'でんせつレア ⭐⭐⭐' };
-const GACHA_COST = 20;
+const GACHA_COST = 50;
 
 // ===== KANJI DATA =====
 const KANJI_DATA = [
@@ -5094,6 +5097,11 @@ let playerGrade = parseInt(localStorage.getItem('kq_player_grade') || '1');
   updateEvent2Btn();
   // 侵略戦スプライトを先読み（この初期化ブロックはスプライト定義より前に走るので遅延実行）
   setTimeout(()=>{ try{ preloadTwSprites(); }catch(e){} }, 0);
+  // ボーナスめいろを非表示（入口ボタンを隠す）
+  if(!SHOW_MAZE){
+    const mh=document.getElementById('maze-home-btn'); if(mh) mh.style.display='none';
+    document.querySelectorAll('.quiz-play-btn.maze').forEach(bt=>bt.style.display='none');
+  }
   // トップのくうっちは 綺麗な画像から（口いっぱいの くうっち）
   document.getElementById('mascot-start').innerHTML = '<img src="sprites/kuu_mascot.png" alt="くうっち" style="width:100%;height:auto;display:block">';
   // ぽてまよ（ノーマル）を常に表示
@@ -6202,7 +6210,7 @@ function handleAnswer(choice, btn) {
       earnBadge('fever');
       updateMissionProgress('fever', 1);
     }
-    const bonus = (streak>=5?3:streak>=3?2:1) * (feverMode ? 2 : 1);
+    const bonus = (streak>=5?2:1) * (feverMode ? 2 : 1);
     coins+=bonus; quizCoinsEarned+=bonus;
     // Feature 10: スコア計算
     const speedBonus = Math.round(timerLeft * 5);
@@ -6219,7 +6227,7 @@ function handleAnswer(choice, btn) {
     // かけら +1（毎回）、100個で迷路プレイ可
     keyFragments++;
     saveKeyFragments(); updateMazeKeyBar();
-    if(keyFragments % 100 === 0){
+    if(SHOW_MAZE && keyFragments % 100 === 0){
       spawnKeyFloat();
     }
   } else {
@@ -6289,7 +6297,7 @@ function showResult() {
 
   // Feature 4: パーフェクトクリアボーナス
   if (pct === 100) {
-    coins += 50; quizCoinsEarned += 50; saveState(); updateCoinBar();
+    coins += 20; quizCoinsEarned += 20; saveState(); updateCoinBar();
     tickets.r += 1; saveTickets(); updateTicketBar();
     updateMissionProgress('perfect', 1);
     earnBadge('perfect');
@@ -6333,7 +6341,7 @@ function _finishShowResult(title, comment, kidx, pct, total) {
   document.getElementById('result-pct').textContent     = `正かいりつ ${pct}%`;
   document.getElementById('result-comment').textContent = comment;
   document.getElementById('coins-earned-amount').textContent = `🪙 ${quizCoinsEarned} まい もらったよ！`;
-  document.getElementById('coins-total-hint').textContent    = `今のコイン：🪙 ${coins} まい（くじは 20まいから）`;
+  document.getElementById('coins-total-hint').textContent    = `今のコイン：🪙 ${coins} まい（くじは 50まいから）`;
 
   // Feature 10: スコア表示
   const scoreVal = document.getElementById('result-quiz-score-val');
@@ -6359,7 +6367,7 @@ function _finishShowResult(title, comment, kidx, pct, total) {
 
 // ===== GACHA =====
 function showGacha() { resetGachaUI(); showScreen('screen-gacha'); }
-const GACHA_TEN_COST = 200;
+const GACHA_TEN_COST = 450;
 
 function resetGachaUI() {
   document.getElementById('gacha-pull-state').style.display='block';
@@ -6510,7 +6518,7 @@ function doPull() {
 
   const animRoll=Math.random()*100;
   let animType='normal', forceMin=null;
-  if(animRoll<5) { animType='special'; forceMin='sr'; }  // 5%: 超激レア以上確定
+  if(animRoll<2) { animType='special'; forceMin='sr'; }  // 5%: 超激レア以上確定
 
   const item=rollGacha(forceMin);
   playGachaAnimation(animType, item);
@@ -7074,9 +7082,9 @@ function rollGacha(forceMin) {
     rarity = 'ur';
   } else {
     // 通常ガチャ
-    if(r<0.3)       rarity='ur';
-    else if(r<5.3)  rarity='sr';
-    else if(r<30.3) rarity='rare';
+    if(r<0.15)      rarity='ur';
+    else if(r<3.15) rarity='sr';
+    else if(r<45)   rarity='rare';
     else            rarity='common';
   }
   const pool=KD.filter(k=>k.rarity===rarity && allyVisible(k));
