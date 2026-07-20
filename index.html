@@ -4038,6 +4038,13 @@ const KD = [
   { id:'tw_pote_yuusha',   name:'勇者ぽてまよ',        type:'ゆうしゃ',       rarity:'ur',     sprite:true, twdef:true, icon:'sprites/yupote_icon.png' },
 ];
 
+// ===== 味方キャラの表示ポリシー =====
+// SVG(手描き)の味方を一旦すべて非表示にし、スプライト(スプラッシュ産)の高クオリティ
+// キャラだけを ガチャ排出・図鑑・編成・育成 で表示する。復活させたいときは true に戻すだけ。
+const SHOW_SVG_ALLIES = false;
+function allyVisible(k){ return !!(SHOW_SVG_ALLIES || (k && k.sprite)); }
+const KD_FIRST_SPRITE = KD.find(k => k.sprite) || KD[0];
+
 // ===== ぽてまよ キャラクターデータ (50種) =====
 const MD = [
   // ===== レア (common) 25種 =====
@@ -4813,7 +4820,7 @@ function checkBadges() {
   if (kqTotalCorrect >= 100)  earnBadge('correct100');
   if (kqTotalCorrect >= 500)  earnBadge('correct500');
   if (kqTotalCorrect >= 1000) earnBadge('correct1000');
-  const owned = KD ? KD.filter(k => (collection[k.id] || 0) > 0).length : 0;
+  const owned = KD ? KD.filter(k => (collection[k.id] || 0) > 0 && allyVisible(k)).length : 0;
   if (owned >= 10) earnBadge('collect10');
 }
 
@@ -5091,10 +5098,11 @@ let playerGrade = parseInt(localStorage.getItem('kq_player_grade') || '1');
   document.getElementById('mascot-start').innerHTML = '<img src="sprites/kuu_mascot.png" alt="くうっち" style="width:100%;height:auto;display:block">';
   // ぽてまよ（ノーマル）を常に表示
   document.getElementById('mascot-start-pote').innerHTML = mSVG(MD[0]);
-  document.getElementById('mascot-result').innerHTML = kSVG(KD[0]);
-  // gacha deco: 3 mini kuucchi
+  document.getElementById('mascot-result').innerHTML = kSVG(KD_FIRST_SPRITE);
+  // gacha deco: 3 mini kuucchi（スプライトの味方から）
   const row = document.getElementById('gacha-deco-row');
-  [KD[2], KD[0], KD[3]].forEach(k => {
+  const _deco = KD.filter(k=>k.sprite);
+  [_deco[1]||_deco[0], _deco[0], _deco[2]||_deco[0]].forEach(k => {
     const d = document.createElement('div'); d.className='gacha-deco-mini';
     d.innerHTML = kSVG(k); row.appendChild(d);
   });
@@ -6317,7 +6325,7 @@ function _showPerfectOverlay(callback) {
 
 function _finishShowResult(title, comment, kidx, pct, total) {
   const mw=document.getElementById('mascot-result');
-  mw.innerHTML=kSVG(KD[kidx]);
+  mw.innerHTML=kSVG(allyVisible(KD[kidx]) ? KD[kidx] : KD_FIRST_SPRITE);
   mw.className='result-mascot-wrap'+(pct===100?' celebrate':pct<40?' sad':'');
 
   document.getElementById('result-title').textContent   = title;
@@ -7071,7 +7079,8 @@ function rollGacha(forceMin) {
     else if(r<30.3) rarity='rare';
     else            rarity='common';
   }
-  const pool=KD.filter(k=>k.rarity===rarity);
+  const pool=KD.filter(k=>k.rarity===rarity && allyVisible(k));
+  if(!pool.length) return KD_FIRST_SPRITE;   // 念のためのフォールバック
   return pool[Math.floor(Math.random()*pool.length)];
 }
 function showGachaResult(item) {
@@ -7100,11 +7109,11 @@ function showGachaResult(item) {
 
 // ===== COLLECTION =====
 function showCollection() {
-  const tot=KD.length, got=Object.keys(collection).length;
+  const tot=KD.filter(allyVisible).length, got=KD.filter(k=>allyVisible(k) && (collection[k.id]||0)>0).length;
   document.getElementById('collection-stats').textContent=`${got} / ${tot} しゅるい あつめたよ！`;
   const body=document.getElementById('collection-body'); body.innerHTML='';
   ['ur','sr','rare','common'].forEach(rarity=>{
-    const items=KD.filter(i=>i.rarity===rarity);
+    const items=KD.filter(i=>i.rarity===rarity && allyVisible(i));
     const sec=document.createElement('div'); sec.className='rarity-section';
     const lrow=document.createElement('div'); lrow.className='rarity-label-row';
     lrow.innerHTML=`<span class="rarity-dot ${rarity}"></span>${RARITY_LABELS[rarity]}`;
@@ -8114,7 +8123,7 @@ function showSodateru(){
   document.getElementById('soda-detail').style.display = 'none';
   document.getElementById('soda-home-btn').style.display = '';
 
-  const owned = KD.filter(k=>(collection[k.id]||0)>0);
+  const owned = KD.filter(k=>(collection[k.id]||0)>0 && allyVisible(k));
   if(owned.length===0){
     grid.innerHTML='<div class="soda-empty">まず ガチャで くうっちを ゲットしよう！🎲</div>';
     showScreen('screen-sodateru'); return;
@@ -8408,7 +8417,7 @@ function showBattleSelect(){
   if(badge) badge.textContent = `🗺️ ${btFloor}かいめ`;
   renderFloorDots('bt-floor-dots', 'bt-floor-dot');
 
-  const owned = KD.filter(k=>(collection[k.id]||0)>0 && (k.kanji || k.char==='mochi' || k.char==='neko'));
+  const owned = KD.filter(k=>(collection[k.id]||0)>0 && allyVisible(k));
   if(owned.length===0){
     grid.innerHTML='<div class="bt-no-kuucchi">まず ガチャで くうっちや ぽてまよや にゃんこを ゲットしよう！🎲</div>';
     showScreen('screen-battle-select'); return;
@@ -9880,7 +9889,7 @@ function showTowerSelect(){
   const grid = document.getElementById('tw-select-grid');
   grid.innerHTML = '';
   document.getElementById('tw-deck-start-btn').disabled = true;
-  const owned = KD.filter(k=>(collection[k.id]||0)>0 && (k.kanji || k.char==='mochi' || k.char==='neko'));
+  const owned = SHOW_SVG_ALLIES ? KD.filter(k=>(collection[k.id]||0)>0 && (k.kanji || k.char==='mochi' || k.char==='neko') && !k.sprite) : [];
   // 所持しているキャラだけ編成可能（常設キャラもガチャ入手制）
   twDeckSelected = twDeckSelected.filter(id => (collection[id]||0)>0 || owned.some(k=>k.id===id));
 
@@ -9905,7 +9914,7 @@ function showTowerSelect(){
     });
   }
 
-  if(owned.length===0){
+  if(owned.length===0 && ownedBuiltins.length===0){
     const note = document.createElement('div');
     note.className = 'bt-no-kuucchi';
     note.style.gridColumn = '1 / -1';
@@ -11165,9 +11174,9 @@ function _renderMaze() {
 
   // キャラクター
   const ownedId  = Object.keys(collection).find(id =>
-    collection[id] > 0 && KD.find(k => k.id === id && k.char !== 'neko' && k.char !== 'mochi')
+    collection[id] > 0 && KD.find(k => k.id === id && allyVisible(k))
   );
-  const charItem = KD.find(k => k.id === ownedId) || KD[0];
+  const charItem = KD.find(k => k.id === ownedId) || KD_FIRST_SPRITE;
   const charEl   = document.getElementById('maze-char');
   charEl.innerHTML = kSVG(charItem).replace(/width="84" height="84"/g, 'width="52" height="52"');
   charEl.className = 'maze-char-pos';
