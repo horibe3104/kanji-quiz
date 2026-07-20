@@ -9054,8 +9054,8 @@ const TW_ENEMY_TYPES = [
   { id:'mee',         minStage:2, hp:38,  atk:8,  speed:0.52, name:'めえめえ', svg:'', spriteRef:'mee' },
   { id:'mee_tough',   minStage:6, hp:72,  atk:13, speed:0.48, name:'めえめえ', svg:'', spriteRef:'mee' },
 ];
-// 'kaoru'・'paon'・'kanga'・'kuma' はスプライト製ボス（TW_SPRITE_BOSSES）。それ以外はSVGボス
-const TW_BOSS_IDS = ['kaoru','paon','kanga','kuma','wolf','orc','skeleton','witch','troll'];
+// ボスは全てスプライト製（TW_SPRITE_BOSSES）。SVGボス（wolf等）は廃止
+const TW_BOSS_IDS = ['kaoru','paon','kanga','kuma'];
 const TW_WALLET = [
   { cap:250,  rate:18, upCost:80   },
   { cap:400,  rate:24, upCost:150  },
