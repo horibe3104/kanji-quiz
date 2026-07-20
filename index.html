@@ -223,7 +223,7 @@
       background:linear-gradient(180deg,#aed581,#7cb342); box-shadow:0 4px 0 #33691e; color:#1b5e20;
       font-weight:900; text-align:center; display:flex; flex-direction:column; align-items:center; gap:2px;
     }
-    .nb-gacha-btn.rare { background:linear-gradient(180deg,#ffe082,#ffb300); border-color:#e65100; box-shadow:0 4px 0 #bf360c; color:#5d4037; }
+    .nb-gacha-btn.gekirea { background:linear-gradient(180deg,#ffe082,#ffb300); border-color:#e65100; box-shadow:0 4px 0 #bf360c; color:#5d4037; }
     .nb-gacha-btn:active { transform:translateY(3px); box-shadow:0 1px 0 #33691e; }
     .nb-gacha-btn .g-ic { font-size:24px; }
     .nb-gacha-btn .g-name { font-size:13px; }
@@ -578,9 +578,9 @@
     .gacha-back-btn { width:100%; padding:11px; background:#f5f5f5; color:#546e7a; border:none; border-bottom:3px solid #cfd8dc; border-radius:14px; font-size:14px; font-weight:700; cursor:pointer; }
     .gacha-ten-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:5px; margin-bottom:12px; }
     .gacha-ten-card { border-radius:10px; padding:4px; text-align:center; border:3px solid #bdbdbd; background:#f5f5f5; position:relative; }
-    .gacha-ten-card.rare { background:#e3f2fd; border-color:#2196f3; }
-    .gacha-ten-card.sr { background:#f3e5f5; border-color:#9c27b0; }
-    .gacha-ten-card.ur { background:linear-gradient(135deg,#fff9c4,#ffe0b2); border-color:#ff9800; box-shadow:0 0 8px rgba(255,152,0,.5); }
+    .gacha-ten-card.gekirea { background:#e3f2fd; border-color:#2196f3; }
+    .gacha-ten-card.chougeki { background:#f3e5f5; border-color:#9c27b0; }
+    .gacha-ten-card.densetsu { background:linear-gradient(135deg,#fff9c4,#ffe0b2); border-color:#ff9800; box-shadow:0 0 8px rgba(255,152,0,.5); }
     .gacha-ten-card svg { width:100%; height:auto; display:block; }
     .gacha-ten-name { font-size:9px; font-weight:700; color:#37474f; margin-top:2px; line-height:1.1; }
     .gacha-ten-new { position:absolute; top:2px; right:2px; background:#ff5722; color:#fff; font-size:7px; font-weight:900; border-radius:4px; padding:1px 3px; }
@@ -594,18 +594,18 @@
       animation:revealPop .5s cubic-bezier(.34,1.56,.64,1) forwards;
     }
     .gacha-result-box svg { width:100%; height:100%; }
-    .gacha-result-box.common { background:#f5f5f5; border:4px solid #bdbdbd; box-shadow:0 4px 0 #9e9e9e; }
-    .gacha-result-box.rare   { background:#e3f2fd; border:4px solid #2196f3; box-shadow:0 4px 0 #1565c0; }
-    .gacha-result-box.sr     { background:#f3e5f5; border:4px solid #9c27b0; box-shadow:0 4px 0 #6a1b9a; }
-    .gacha-result-box.ur     { background:linear-gradient(135deg,#fff9c4,#ffe0b2); border:4px solid #ff9800; box-shadow:0 4px 0 #e65100, 0 0 30px rgba(255,152,0,.6); }
+    .gacha-result-box.rare { background:#f5f5f5; border:4px solid #bdbdbd; box-shadow:0 4px 0 #9e9e9e; }
+    .gacha-result-box.gekirea   { background:#e3f2fd; border:4px solid #2196f3; box-shadow:0 4px 0 #1565c0; }
+    .gacha-result-box.chougeki     { background:#f3e5f5; border:4px solid #9c27b0; box-shadow:0 4px 0 #6a1b9a; }
+    .gacha-result-box.densetsu     { background:linear-gradient(135deg,#fff9c4,#ffe0b2); border:4px solid #ff9800; box-shadow:0 4px 0 #e65100, 0 0 30px rgba(255,152,0,.6); }
     @keyframes revealPop { 0%{transform:scale(0) rotate(-20deg);opacity:0} 100%{transform:scale(1) rotate(0);opacity:1} }
     .ur-shimmer { position:absolute; inset:0; border-radius:16px; pointer-events:none; background:linear-gradient(120deg,transparent 0%,rgba(255,255,255,.8) 50%,transparent 100%); background-size:200% 100%; animation:shimmer 1.5s infinite; }
     @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
     .rarity-badge { display:inline-block; border-radius:99px; padding:4px 14px; font-size:13px; font-weight:900; margin-bottom:4px; }
-    .rarity-badge.common{background:#eee;color:#757575}
-    .rarity-badge.rare  {background:#e3f2fd;color:#1565c0}
-    .rarity-badge.sr    {background:#f3e5f5;color:#6a1b9a}
-    .rarity-badge.ur    {background:linear-gradient(135deg,#fff176,#ffd600);color:#e65100}
+    .rarity-badge.rare{background:#eee;color:#757575}
+    .rarity-badge.gekirea  {background:#e3f2fd;color:#1565c0}
+    .rarity-badge.chougeki    {background:#f3e5f5;color:#6a1b9a}
+    .rarity-badge.densetsu    {background:linear-gradient(135deg,#fff176,#ffd600);color:#e65100}
     .gacha-item-name { font-size:20px; font-weight:900; color:#1a237e; margin-bottom:6px; }
     .new-badge { display:inline-block; background:linear-gradient(135deg,#f44336,#ff9800); color:white; border-radius:99px; padding:4px 12px; font-size:12px; font-weight:900; margin-bottom:12px; animation:newBadgePop .5s ease-out; }
     @keyframes newBadgePop { 0%{transform:scale(0)} 80%{transform:scale(1.1)} 100%{transform:scale(1)} }
@@ -617,14 +617,14 @@
     .rarity-section { margin-bottom:10px; }
     .rarity-label-row { font-size:11px; font-weight:900; color:#90a4ae; text-align:left; margin-bottom:5px; display:flex; align-items:center; gap:5px; text-transform:uppercase; }
     .rarity-dot { width:9px; height:9px; border-radius:50%; }
-    .rarity-dot.common{background:#9e9e9e} .rarity-dot.rare{background:#2196f3} .rarity-dot.sr{background:#9c27b0} .rarity-dot.ur{background:#ff9800}
+    .rarity-dot.rare{background:#9e9e9e} .rarity-dot.gekirea{background:#2196f3} .rarity-dot.chougeki{background:#9c27b0} .rarity-dot.densetsu{background:#ff9800}
     .collection-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:7px; }
     .coll-item { border-radius:11px; padding:6px 3px; text-align:center; border:3px solid transparent; position:relative; }
     .coll-item svg { width:100%; height:auto; display:block; }
-    .coll-item.common.collected{background:#f5f5f5;border-color:#bdbdbd}
-    .coll-item.rare.collected  {background:#e3f2fd;border-color:#2196f3}
-    .coll-item.sr.collected    {background:#f3e5f5;border-color:#9c27b0}
-    .coll-item.ur.collected    {background:#fff3e0;border-color:#ff9800}
+    .coll-item.rare.collected{background:#f5f5f5;border-color:#bdbdbd}
+    .coll-item.gekirea.collected  {background:#e3f2fd;border-color:#2196f3}
+    .coll-item.chougeki.collected    {background:#f3e5f5;border-color:#9c27b0}
+    .coll-item.densetsu.collected    {background:#fff3e0;border-color:#ff9800}
     .coll-item.not-collected   {background:#fafafa;border-color:#eee;}
     .coll-unknown { font-size:34px; font-weight:900; color:#bdbdbd; height:60px; display:flex; align-items:center; justify-content:center; }
     .coll-name { font-size:9px; font-weight:700; color:#546e7a; margin-top:2px; display:block; }
@@ -707,10 +707,10 @@
 
     #g-card-box { border-radius:16px; padding:16px; position:relative; overflow:hidden; }
     #g-card-box svg { width:160px; height:auto; display:block; margin:0 auto; }
-    #g-card-box.common { background:#1a1830; border:3px solid #8a80aa; box-shadow:0 0 28px rgba(138,128,170,.9); }
-    #g-card-box.rare   { background:#08102a; border:3px solid #4488ff; box-shadow:0 0 36px rgba(68,136,255,1),0 0 72px rgba(68,136,255,.4); }
-    #g-card-box.sr     { background:#180828; border:3px solid #cc44ff; box-shadow:0 0 44px rgba(204,68,255,1),0 0 90px rgba(204,68,255,.6); }
-    #g-card-box.ur     { background:#18100a; border:3px solid #ffd700; box-shadow:0 0 52px rgba(255,215,0,1),0 0 110px rgba(255,150,0,.7); animation:gUrPulse 1.2s ease-in-out infinite alternate; }
+    #g-card-box.rare { background:#1a1830; border:3px solid #8a80aa; box-shadow:0 0 28px rgba(138,128,170,.9); }
+    #g-card-box.gekirea   { background:#08102a; border:3px solid #4488ff; box-shadow:0 0 36px rgba(68,136,255,1),0 0 72px rgba(68,136,255,.4); }
+    #g-card-box.chougeki     { background:#180828; border:3px solid #cc44ff; box-shadow:0 0 44px rgba(204,68,255,1),0 0 90px rgba(204,68,255,.6); }
+    #g-card-box.densetsu     { background:#18100a; border:3px solid #ffd700; box-shadow:0 0 52px rgba(255,215,0,1),0 0 110px rgba(255,150,0,.7); animation:gUrPulse 1.2s ease-in-out infinite alternate; }
     @keyframes gUrPulse { from{box-shadow:0 0 52px rgba(255,215,0,1),0 0 110px rgba(255,150,0,.7)} to{box-shadow:0 0 72px rgba(255,215,0,1),0 0 150px rgba(255,200,0,.9)} }
 
     .g-card-shine { position:absolute; inset:0; border-radius:13px; pointer-events:none;
@@ -1587,10 +1587,10 @@
       font-size:11px; font-weight:900; color:#fff;
       padding:3px 10px; border-radius:6px; margin:8px 0 5px;
     }
-    .soda-rarity-header.common { background:#9e9e9e; }
-    .soda-rarity-header.rare   { background:#1e88e5; }
-    .soda-rarity-header.sr     { background:#8e24aa; }
-    .soda-rarity-header.ur     { background:linear-gradient(90deg,#ff8f00,#fdd835); color:#4a2700; }
+    .soda-rarity-header.rare { background:#9e9e9e; }
+    .soda-rarity-header.gekirea   { background:#1e88e5; }
+    .soda-rarity-header.chougeki     { background:#8e24aa; }
+    .soda-rarity-header.densetsu     { background:linear-gradient(90deg,#ff8f00,#fdd835); color:#4a2700; }
     .soda-items-grid {
       display:grid; grid-template-columns:repeat(3,1fr); gap:7px;
       margin-bottom:4px;
@@ -2043,10 +2043,10 @@
       grid-column:1 / -1; font-size:11px; font-weight:900;
       padding:3px 8px; border-radius:6px; margin-top:3px; text-align:left;
     }
-    .gacha-ten-rarity-hdr.common { background:#9e9e9e; color:#fff; }
-    .gacha-ten-rarity-hdr.rare   { background:#2196f3; color:#fff; }
-    .gacha-ten-rarity-hdr.sr     { background:#9c27b0; color:#fff; }
-    .gacha-ten-rarity-hdr.ur     { background:linear-gradient(90deg,#ff9800,#ffd600); color:#4a2800; }
+    .gacha-ten-rarity-hdr.rare { background:#9e9e9e; color:#fff; }
+    .gacha-ten-rarity-hdr.gekirea   { background:#2196f3; color:#fff; }
+    .gacha-ten-rarity-hdr.chougeki     { background:#9c27b0; color:#fff; }
+    .gacha-ten-rarity-hdr.densetsu     { background:linear-gradient(90deg,#ff9800,#ffd600); color:#4a2800; }
 
     /* 10連 順番確認オーバーレイ */
     /* 初回クリア報酬 */
@@ -2063,10 +2063,10 @@
     .coll-item.collected:hover { transform:translateY(-3px); box-shadow:0 6px 16px rgba(0,0,0,.14); }
     .char-detail-card { padding:0 0 16px 0; overflow:hidden; }
     .char-detail-banner { padding:10px 16px; text-align:center; font-weight:900; font-size:15px; }
-    .char-detail-banner.common { background:#9e9e9e; color:#fff; }
-    .char-detail-banner.rare   { background:#2196f3; color:#fff; }
-    .char-detail-banner.sr     { background:#9c27b0; color:#fff; }
-    .char-detail-banner.ur     { background:linear-gradient(135deg,#ff9800,#ffd600); color:#4a2800; }
+    .char-detail-banner.rare { background:#9e9e9e; color:#fff; }
+    .char-detail-banner.gekirea   { background:#2196f3; color:#fff; }
+    .char-detail-banner.chougeki     { background:#9c27b0; color:#fff; }
+    .char-detail-banner.densetsu     { background:linear-gradient(135deg,#ff9800,#ffd600); color:#4a2800; }
     .char-detail-svg-wrap { width:160px; height:160px; margin:20px auto 8px; display:flex; align-items:center; justify-content:center; }
     .char-detail-svg-wrap svg { width:100%; height:auto; display:block; }
     .char-detail-svg-wrap img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
@@ -2574,7 +2574,7 @@
         <button class="nb-gacha-btn" onclick="switchHomeTab('quiz')">
           <div class="g-ic">📚</div><div class="g-name">クイズ</div><div class="g-cost">XP・コイン</div>
         </button>
-        <button class="nb-gacha-btn rare" onclick="showGacha()" style="position:relative">
+        <button class="nb-gacha-btn gekirea" onclick="showGacha()" style="position:relative">
           <div class="gacha-badge" id="gacha-ticket-badge" style="display:none">0</div>
           <div class="g-ic">🎲</div><div class="g-name">ガチャ</div><div class="g-cost">なかまを あつめる</div>
         </button>
@@ -2801,8 +2801,8 @@
       <div class="gacha-coin-now">今のコイン：🪙 <span id="gacha-coin-now">0</span> まい</div>
       <button class="gacha-pull-btn" id="gacha-pull-btn" onclick="doPull()">🎲 1回 引く！（🪙 50まい）</button>
       <button class="gacha-pull-btn gacha-ten-btn" id="gacha-ten-btn" onclick="doTenPull()">✨ 10れん！（🪙 450まい）<br><span class="gacha-cost-tag">SRいじょう 1たい かくてい！</span></button>
-      <button class="ticket-gacha-btn" id="ticket-gacha-btn-r" onclick="doTicketPullR()" style="display:none">🎫 げきレアかくていチケット（0まい）で ガチャ！</button>
-      <button class="ticket-gacha-btn ticket-sr-btn" id="ticket-gacha-btn-sr" onclick="doTicketPullSR()" style="display:none">🌟 ちょうげきレアかくていチケット（0まい）で ガチャ！</button>
+      <button class="ticket-gacha-btn" id="ticket-gacha-btn-r" onclick="doTicketPullR()" style="display:none">🎫 激レアかくていチケット（0まい）で ガチャ！</button>
+      <button class="ticket-gacha-btn ticket-sr-btn" id="ticket-gacha-btn-sr" onclick="doTicketPullSR()" style="display:none">🌟 超激レアかくていチケット（0まい）で ガチャ！</button>
       <button class="gacha-back-btn" onclick="goHome()">← もどる</button>
     </div>
     <div id="gacha-ten-result-state" style="display:none">
@@ -3365,7 +3365,7 @@
   <div id="g-video-wrap">
     <img id="g-video" src="" alt="">
   </div>
-  <div id="g-special-banner"><div class="g-special-text">⚡ ちょうげきレア かくてい！ ⚡</div></div>
+  <div id="g-special-banner"><div class="g-special-text">⚡ 超激レア かくてい！ ⚡</div></div>
   <!-- Phase 3: CSS/JSリビール（既存） -->
   <div id="g-dark"></div>
   <div id="g-orb"></div>
@@ -3548,33 +3548,33 @@ function zSVG({
 // ===== くうっち 10 TYPES =====
 const KD = [
   // ===== レア (common) 25種 =====
-  { id:'normal',  name:'ノーマルくうっち', type:'ノーマル', rarity:'common',
+  { id:'normal',  name:'ノーマルくうっち', type:'ノーマル', rarity:'rare',
     bg:'#e8e8e8', st:'#9e9e9e', pu:'#424242', top:'', bot:'' },
-  { id:'denki',   name:'でんきくうっち',   type:'でんき',   rarity:'common',
+  { id:'denki',   name:'でんきくうっち',   type:'でんき',   rarity:'rare',
     bg:'#fff9c4', st:'#f9a825', pu:'#e65100',
     top:`<polygon points="52,-20 44,0 53,-3 45,14" fill="#ffd600" stroke="#ff8f00" stroke-width="1.5"/>
 <circle cx="28" cy="-5" r="2" fill="#fff176"/><circle cx="72" cy="-5" r="2" fill="#fff176"/>
 <line x1="20" y1="-8" x2="30" y2="0" stroke="#ffd600" stroke-width="2"/>
 <line x1="80" y1="-8" x2="70" y2="0" stroke="#ffd600" stroke-width="2"/>`, bot:'' },
-  { id:'tsuchi',  name:'つちくうっち',     type:'つち',     rarity:'common',
+  { id:'tsuchi',  name:'つちくうっち',     type:'つち',     rarity:'rare',
     bg:'#a1887f', st:'#5d4037', pu:'#3e2723',
     top:`<circle cx="30" cy="-2" r="5" fill="#795548"/>
 <circle cx="70" cy="-4" r="4" fill="#6d4c41"/>
 <circle cx="50" cy="-14" r="4.5" fill="#8d6e63"/>
 <circle cx="17" cy="6" r="3" fill="#795548"/>
 <circle cx="83" cy="4" r="3.5" fill="#6d4c41"/>`, bot:'' },
-  { id:'ishi',    name:'いしくうっち',     type:'いし',     rarity:'common',
+  { id:'ishi',    name:'いしくうっち',     type:'いし',     rarity:'rare',
     bg:'#b0bec5', st:'#546e7a', pu:'#37474f',
     top:`<path d="M38,-16 L50,-20 L62,-16 L58,-6 L50,-2 L42,-6Z" fill="#90a4ae" stroke="#546e7a" stroke-width="1.5"/>
 <line x1="48" y1="-18" x2="45" y2="-4" stroke="#607d8b" stroke-width="1"/>
 <circle cx="24" cy="2" r="4" fill="#90a4ae" stroke="#546e7a" stroke-width="1"/>
 <circle cx="77" cy="0" r="3" fill="#90a4ae" stroke="#546e7a" stroke-width="1"/>`, bot:'' },
-  { id:'kaze',    name:'かぜくうっち',     type:'かぜ',     rarity:'common',
+  { id:'kaze',    name:'かぜくうっち',     type:'かぜ',     rarity:'rare',
     bg:'#e0f7fa', st:'#00acc1', pu:'#006064',
     top:`<path d="M12,4 Q32,-14 52,-8 Q72,-2 82,8" fill="none" stroke="#80deea" stroke-width="3.5" stroke-linecap="round"/>
 <path d="M18,12 Q36,-6 56,0 Q76,6 86,16" fill="none" stroke="#b2ebf2" stroke-width="2.5" stroke-linecap="round"/>
 <path d="M8,-6 Q28,-18 48,-14 Q68,-10 78,0" fill="none" stroke="#e0f7fa" stroke-width="2" stroke-linecap="round"/>`, bot:'' },
-  { id:'hi',      name:'ひくうっち',       type:'ひ',       rarity:'common',
+  { id:'hi',      name:'ひくうっち',       type:'ひ',       rarity:'rare',
     bg:'#ffcc02', st:'#ff8f00', pu:'#e65100',
     top:`<circle cx="50" cy="-10" r="10" fill="#ffca28" stroke="#ff8f00" stroke-width="2"/>
 <line x1="50" y1="-22" x2="50" y2="-20" stroke="#ff8f00" stroke-width="2.5" stroke-linecap="round"/>
@@ -3582,18 +3582,18 @@ const KD = [
 <line x1="72" y1="-10" x2="70" y2="-10" stroke="#ff8f00" stroke-width="2" stroke-linecap="round"/>
 <line x1="37" y1="-19" x2="39" y2="-17" stroke="#ff8f00" stroke-width="2" stroke-linecap="round"/>
 <line x1="28" y1="-10" x2="30" y2="-10" stroke="#ff8f00" stroke-width="2" stroke-linecap="round"/>`, bot:'' },
-  { id:'tsuki',   name:'つきくうっち',     type:'つき',     rarity:'common',
+  { id:'tsuki',   name:'つきくうっち',     type:'つき',     rarity:'rare',
     bg:'#fff9c4', st:'#f9a825', pu:'#f57f17',
     top:`<circle cx="50" cy="-10" r="12" fill="#fff176" stroke="#f9a825" stroke-width="1.5"/>
 <circle cx="43" cy="-14" r="2.5" fill="none" stroke="#f9a825" stroke-width="1" opacity="0.5"/>
 <circle cx="57" cy="-6" r="1.8" fill="none" stroke="#f9a825" stroke-width="0.8" opacity="0.4"/>
 <circle cx="46" cy="-4" r="1.2" fill="#f9a825" opacity="0.3"/>`, bot:'' },
-  { id:'tane',    name:'たねくうっち',     type:'たね',     rarity:'common',
+  { id:'tane',    name:'たねくうっち',     type:'たね',     rarity:'rare',
     bg:'#c8e6c9', st:'#388e3c', pu:'#1b5e20',
     top:`<ellipse cx="50" cy="-10" rx="7" ry="11" fill="#a5d6a7" stroke="#388e3c" stroke-width="1.5"/>
 <path d="M50,-20 Q58,-12 50,0 Q42,-12 50,-20" fill="#81c784"/>
 <line x1="50" y1="-18" x2="50" y2="-2" stroke="#388e3c" stroke-width="1.2"/>`, bot:'' },
-  { id:'suna',    name:'すなくうっち',     type:'すな',     rarity:'common',
+  { id:'suna',    name:'すなくうっち',     type:'すな',     rarity:'rare',
     bg:'#ffe082', st:'#ff8f00', pu:'#e65100',
     top:`<circle cx="30" cy="-6" r="3.5" fill="#ffd54f" opacity="0.85"/>
 <circle cx="50" cy="-16" r="4.5" fill="#ffca28" opacity="0.9"/>
@@ -3602,14 +3602,14 @@ const KD = [
 <circle cx="80" cy="2" r="2" fill="#ffd54f" opacity="0.7"/>
 <circle cx="42" cy="-10" r="2" fill="#ffe082" opacity="0.8"/>
 <circle cx="62" cy="-12" r="2.5" fill="#ffe082" opacity="0.8"/>`, bot:'' },
-  { id:'kumo',    name:'くもくうっち',     type:'くも',     rarity:'common',
+  { id:'kumo',    name:'くもくうっち',     type:'くも',     rarity:'rare',
     bg:'#eceff1', st:'#90a4ae', pu:'#546e7a',
     top:`<ellipse cx="50" cy="-14" rx="18" ry="12" fill="#eceff1" stroke="#cfd8dc" stroke-width="1.5"/>
 <ellipse cx="33" cy="-8" rx="12" ry="9" fill="#cfd8dc" opacity="0.9"/>
 <ellipse cx="68" cy="-8" rx="12" ry="9" fill="#cfd8dc" opacity="0.9"/>
 <ellipse cx="20" cy="-2" rx="8" ry="7" fill="#b0bec5" opacity="0.8"/>
 <ellipse cx="80" cy="-2" rx="8" ry="7" fill="#b0bec5" opacity="0.8"/>`, bot:'' },
-  { id:'yuki',    name:'ゆきくうっち',     type:'ゆき',     rarity:'common',
+  { id:'yuki',    name:'ゆきくうっち',     type:'ゆき',     rarity:'rare',
     bg:'#e3f2fd', st:'#64b5f6', pu:'#1565c0',
     top:`<line x1="50" y1="-20" x2="50" y2="0" stroke="#bbdefb" stroke-width="2.5" stroke-linecap="round"/>
 <line x1="38" y1="-16" x2="62" y2="-4" stroke="#bbdefb" stroke-width="2" stroke-linecap="round"/>
@@ -3617,14 +3617,14 @@ const KD = [
 <circle cx="50" cy="-10" r="3" fill="#e3f2fd" stroke="#90caf9" stroke-width="1.5"/>
 <circle cx="22" cy="4" r="2.5" fill="#bbdefb"/>
 <circle cx="78" cy="2" r="2" fill="#bbdefb"/>`, bot:'' },
-  { id:'ame',     name:'あめくうっち',     type:'あめ',     rarity:'common',
+  { id:'ame',     name:'あめくうっち',     type:'あめ',     rarity:'rare',
     bg:'#90caf9', st:'#1565c0', pu:'#0d47a1',
     top:`<ellipse cx="50" cy="-12" rx="24" ry="10" fill="#64b5f6" opacity="0.9"/>
 <line x1="30" y1="4" x2="27" y2="14" stroke="#bbdefb" stroke-width="2" stroke-linecap="round"/>
 <line x1="44" y1="2" x2="41" y2="12" stroke="#bbdefb" stroke-width="2" stroke-linecap="round"/>
 <line x1="56" y1="2" x2="53" y2="12" stroke="#bbdefb" stroke-width="2" stroke-linecap="round"/>
 <line x1="70" y1="4" x2="67" y2="14" stroke="#bbdefb" stroke-width="2" stroke-linecap="round"/>`, bot:'' },
-  { id:'mushi',   name:'むしくうっち',     type:'むし',     rarity:'common',
+  { id:'mushi',   name:'むしくうっち',     type:'むし',     rarity:'rare',
     bg:'#69f0ae', st:'#00c853', pu:'#1b5e20',
     top:`<circle cx="30" cy="-2" r="7" fill="#b9f6ca" stroke="#00c853" stroke-width="1.5"/>
 <circle cx="70" cy="-2" r="7" fill="#b9f6ca" stroke="#00c853" stroke-width="1.5"/>
@@ -3632,7 +3632,7 @@ const KD = [
 <line x1="75" y1="-8" x2="86" y2="-18" stroke="#00c853" stroke-width="1.5" stroke-linecap="round"/>
 <circle cx="13" cy="-19" r="2.5" fill="#b9f6ca"/>
 <circle cx="87" cy="-19" r="2.5" fill="#b9f6ca"/>`, bot:'' },
-  { id:'hana',    name:'はなくうっち',     type:'はな',     rarity:'common',
+  { id:'hana',    name:'はなくうっち',     type:'はな',     rarity:'rare',
     bg:'#f8bbd0', st:'#e91e63', pu:'#880e4f',
     top:`<circle cx="50" cy="-10" r="6" fill="#f48fb1"/>
 <ellipse cx="50" cy="-20" rx="4.5" ry="6" fill="#f06292"/>
@@ -3640,86 +3640,86 @@ const KD = [
 <ellipse cx="58" cy="-5" rx="4.5" ry="6" fill="#f06292" transform="rotate(72,58,-5)"/>
 <ellipse cx="42" cy="-5" rx="4.5" ry="6" fill="#f06292" transform="rotate(-72,42,-5)"/>
 <ellipse cx="40" cy="-16" rx="4.5" ry="6" fill="#f06292" transform="rotate(-36,40,-16)"/>`, bot:'' },
-  { id:'ninja',   name:'にんじゃくうっち', type:'にんじゃ', rarity:'common',
+  { id:'ninja',   name:'にんじゃくうっち', type:'にんじゃ', rarity:'rare',
     bg:'#37474f', st:'#263238', pu:'#ff1744',
     top:`<rect x="14" y="6" width="72" height="10" rx="5" fill="#b71c1c"/>
 <line x1="86" y1="6" x2="100" y2="-4" stroke="#b71c1c" stroke-width="3" stroke-linecap="round"/>
 <line x1="86" y1="16" x2="102" y2="14" stroke="#b71c1c" stroke-width="2.5" stroke-linecap="round"/>
 <path d="M22,-2 Q30,-14 38,-2" fill="none" stroke="#546e7a" stroke-width="2"/>
 <path d="M62,-2 Q70,-14 78,-2" fill="none" stroke="#546e7a" stroke-width="2"/>`, bot:'' },
-  { id:'oni',     name:'おにくうっち',     type:'おに',     rarity:'common',
+  { id:'oni',     name:'おにくうっち',     type:'おに',     rarity:'rare',
     bg:'#ef5350', st:'#b71c1c', pu:'#ff8f00',
     top:`<path d="M28,16 Q22,-4 30,-18 Q34,-8 36,14 L28,16" fill="#e53935" stroke="#b71c1c" stroke-width="1.2"/>
 <path d="M72,16 Q78,-4 70,-18 Q66,-8 64,14 L72,16" fill="#e53935" stroke="#b71c1c" stroke-width="1.2"/>
 <circle cx="30" cy="-17" r="4.5" fill="#ffccbc"/>
 <circle cx="70" cy="-17" r="4.5" fill="#ffccbc"/>`, bot:'' },
-  { id:'mahou',   name:'まほうくうっち',   type:'まほう',   rarity:'common',
+  { id:'mahou',   name:'まほうくうっち',   type:'まほう',   rarity:'rare',
     bg:'#ce93d8', st:'#7b1fa2', pu:'#4a148c',
     top:`<line x1="72" y1="14" x2="28" y2="-18" stroke="#e1bee7" stroke-width="2.5" stroke-linecap="round"/>
 <circle cx="26" cy="-19" r="5" fill="#ea80fc" stroke="#ce93d8" stroke-width="1.5"/>
 <text x="50" y="-12" font-size="8" fill="#ea80fc" text-anchor="middle">✦</text>
 <text x="26" y="4" font-size="6" fill="#e040fb" text-anchor="middle">★</text>
 <text x="75" y="-6" font-size="6" fill="#e040fb" text-anchor="middle">★</text>`, bot:'' },
-  { id:'kinoko',  name:'きのこくうっち',   type:'きのこ',   rarity:'common',
+  { id:'kinoko',  name:'きのこくうっち',   type:'きのこ',   rarity:'rare',
     bg:'#ff8a80', st:'#d32f2f', pu:'#b71c1c',
     top:`<ellipse cx="50" cy="-6" rx="32" ry="18" fill="#ef5350"/>
 <circle cx="35" cy="-10" r="5.5" fill="#ffcdd2" opacity="0.9"/>
 <circle cx="55" cy="-17" r="6" fill="#ffcdd2" opacity="0.9"/>
 <circle cx="70" cy="-6" r="4.5" fill="#ffcdd2" opacity="0.9"/>
 <circle cx="26" cy="-2" r="3.5" fill="#ffcdd2" opacity="0.85"/>`, bot:'' },
-  { id:'mizutama',name:'みずたまくうっち', type:'みずたま', rarity:'common',
+  { id:'mizutama',name:'みずたまくうっち', type:'みずたま', rarity:'rare',
     bg:'#81d4fa', st:'#0288d1', pu:'#01579b',
     top:`<path d="M50,-20 Q62,-6 56,8 Q50,14 44,8 Q38,-6 50,-20" fill="#b3e5fc" stroke="#0288d1" stroke-width="1.5"/>
 <ellipse cx="43" cy="-6" rx="4" ry="6" fill="#e1f5fe" opacity="0.8" transform="rotate(-20,43,-6)"/>`, bot:'' },
-  { id:'hinrin',  name:'ひのりんくうっち', type:'ひのりん', rarity:'common',
+  { id:'hinrin',  name:'ひのりんくうっち', type:'ひのりん', rarity:'rare',
     bg:'#ffab40', st:'#e65100', pu:'#bf360c',
     top:`<path d="M50,-20 Q56,-10 52,-2 Q50,2 48,-2 Q44,-10 50,-20" fill="#ff8f00"/>
 <path d="M36,-14 Q42,-4 38,4 Q36,6 34,4 Q30,-4 36,-14" fill="#ff8f00"/>
 <path d="M64,-14 Q70,-4 66,4 Q64,6 62,4 Q58,-4 64,-14" fill="#ff8f00"/>`, bot:'' },
-  { id:'mori',    name:'もりくうっち',     type:'もり',     rarity:'common',
+  { id:'mori',    name:'もりくうっち',     type:'もり',     rarity:'rare',
     bg:'#4caf50', st:'#1b5e20', pu:'#33691e',
     top:`<polygon points="50,-20 35,4 65,4" fill="#2e7d32"/>
 <polygon points="42,-2 28,16 56,16" fill="#388e3c"/>
 <polygon points="58,-2 44,16 72,16" fill="#388e3c"/>
 <rect x="46" y="14" width="8" height="6" fill="#5d4037"/>`, bot:'' },
-  { id:'shiro',   name:'しろくうっち',     type:'しろ',     rarity:'common',
+  { id:'shiro',   name:'しろくうっち',     type:'しろ',     rarity:'rare',
     bg:'#fafafa', st:'#bdbdbd', pu:'#757575',
     top:`<circle cx="50" cy="-10" r="12" fill="white" stroke="#e0e0e0" stroke-width="2"/>
 <text x="50" y="-5" font-size="12" fill="#eeeeee" text-anchor="middle">☆</text>
 <circle cx="26" cy="-2" r="3.5" fill="white" stroke="#e0e0e0" stroke-width="1.5"/>
 <circle cx="74" cy="-4" r="3" fill="white" stroke="#e0e0e0" stroke-width="1.5"/>`, bot:'' },
-  { id:'aka',     name:'あかくうっち',     type:'あか',     rarity:'common',
+  { id:'aka',     name:'あかくうっち',     type:'あか',     rarity:'rare',
     bg:'#e53935', st:'#b71c1c', pu:'#d50000',
     top:`<path d="M32,-14 L50,-22 L68,-14 L62,-4 L50,2 L38,-4Z" fill="#ef5350" stroke="#b71c1c" stroke-width="1.5"/>
 <circle cx="50" cy="-10" r="4" fill="#ffcdd2"/>`, bot:'' },
-  { id:'ao',      name:'あおくうっち',     type:'あお',     rarity:'common',
+  { id:'ao',      name:'あおくうっち',     type:'あお',     rarity:'rare',
     bg:'#1e88e5', st:'#0d47a1', pu:'#82b1ff',
     top:`<path d="M20,8 Q36,-14 50,-16 Q64,-14 80,8" fill="none" stroke="#90caf9" stroke-width="3" stroke-linecap="round"/>
 <path d="M26,14 Q40,-4 50,-6 Q60,-4 74,14" fill="none" stroke="#64b5f6" stroke-width="2.5" stroke-linecap="round"/>
 <circle cx="50" cy="-14" r="4" fill="#90caf9"/>`, bot:'' },
-  { id:'ki',      name:'きくうっち',       type:'き',       rarity:'common',
+  { id:'ki',      name:'きくうっち',       type:'き',       rarity:'rare',
     bg:'#fdd835', st:'#f57f17', pu:'#e65100',
     top:`<polygon points="50,-22 54,-12 64,-12 57,-6 60,4 50,-2 40,4 43,-6 36,-12 46,-12" fill="#ffee58" stroke="#f9a825" stroke-width="1.5"/>`, bot:'' },
 
   // ===== 激レア (rare) 15種 =====
-  { id:'honoo',   name:'ほのおくうっち',   type:'ほのお',   rarity:'rare',
+  { id:'honoo',   name:'ほのおくうっち',   type:'ほのお',   rarity:'gekirea',
     bg:'#ff7043', st:'#bf360c', pu:'#b71c1c',
     top:`<polygon points="10,18 19,-4 28,18 37,-12 46,18 50,-20 54,18 63,-12 72,18 81,-4 90,18" fill="#ff9800"/>
 <polygon points="14,18 22,4 30,18 38,-4 46,18 50,-8 54,18 62,-4 70,18 78,4 86,18" fill="#ff5722"/>
 <polygon points="20,18 28,10 36,18 44,4 50,0 56,4 60,18 68,10 76,18 84,10" fill="#ffd600" opacity="0.9"/>`, bot:'' },
-  { id:'mizu',    name:'みずくうっち',     type:'みず',     rarity:'rare',
+  { id:'mizu',    name:'みずくうっち',     type:'みず',     rarity:'gekirea',
     bg:'#29b6f6', st:'#0277bd', pu:'#01579b',
     top:`<ellipse cx="15" cy="2" rx="8" ry="12" fill="#81d4fa" transform="rotate(-20,15,8)" opacity="0.9"/>
 <ellipse cx="50" cy="-12" rx="9" ry="13" fill="#4fc3f7" opacity="0.9"/>
 <ellipse cx="85" cy="2" rx="8" ry="12" fill="#81d4fa" transform="rotate(20,85,8)" opacity="0.9"/>
 <circle cx="50" cy="-11" r="3" fill="#b3e5fc"/>`, bot:'' },
-  { id:'kusa',    name:'くさくうっち',     type:'くさ',     rarity:'rare',
+  { id:'kusa',    name:'くさくうっち',     type:'くさ',     rarity:'gekirea',
     bg:'#66bb6a', st:'#2e7d32', pu:'#1b5e20',
     top:`<path d="M50,-18 Q64,-6 56,14 Q50,8 44,14 Q36,-6 50,-18" fill="#4caf50" stroke="#2e7d32" stroke-width="1.5"/>
 <line x1="50" y1="-16" x2="50" y2="13" stroke="#2e7d32" stroke-width="1.5"/>
 <path d="M30,10 Q40,-2 44,12 Q38,14 30,10" fill="#81c784" stroke="#388e3c" stroke-width="1"/>
 <path d="M70,10 Q60,-2 56,12 Q62,14 70,10" fill="#81c784" stroke="#388e3c" stroke-width="1"/>`, bot:'' },
-  { id:'koori',   name:'こおりくうっち',   type:'こおり',   rarity:'rare',
+  { id:'koori',   name:'こおりくうっち',   type:'こおり',   rarity:'gekirea',
     bg:'#b3e5fc', st:'#0288d1', pu:'#01579b',
     top:`<line x1="50" y1="-20" x2="50" y2="16" stroke="#e1f5fe" stroke-width="3.5"/>
 <line x1="29" y1="-12" x2="71" y2="8" stroke="#e1f5fe" stroke-width="3"/>
@@ -3729,49 +3729,49 @@ const KD = [
 <line x1="50" y1="-4" x2="38" y2="6" stroke="#b3e5fc" stroke-width="2"/>
 <line x1="50" y1="-4" x2="62" y2="6" stroke="#b3e5fc" stroke-width="2"/>
 <circle cx="50" cy="-4" r="5" fill="#e1f5fe"/>`, bot:'' },
-  { id:'kaminari',name:'かみなりくうっち', type:'かみなり', rarity:'rare',
+  { id:'kaminari',name:'かみなりくうっち', type:'かみなり', rarity:'gekirea',
     bg:'#fff176', st:'#f57f17', pu:'#4a148c',
     top:`<path d="M56,-22 L41,-2 L53,-2 L39,18" fill="none" stroke="#ffd600" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M56,-22 L41,-2 L53,-2 L39,18" fill="#fff9c4" opacity="0.4"/>
 <circle cx="20" cy="-8" r="2.5" fill="#ffe57f"/>
 <circle cx="82" cy="-12" r="2" fill="#ffe57f"/>
 <circle cx="86" cy="2" r="1.8" fill="#ffe57f"/>`, bot:'' },
-  { id:'jishin',  name:'じしんくうっち',   type:'じしん',   rarity:'rare',
+  { id:'jishin',  name:'じしんくうっち',   type:'じしん',   rarity:'gekirea',
     bg:'#d7ccc8', st:'#4e342e', pu:'#3e2723',
     top:`<path d="M10,14 L26,4 L36,12 L50,0 L64,10 L76,2 L90,12" fill="none" stroke="#8d6e63" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M14,6 L30,-2 L42,8 L54,-4 L66,6 L80,-2" fill="none" stroke="#6d4c41" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="50" cy="-14" r="5" fill="#bcaaa4" stroke="#4e342e" stroke-width="1.5"/>`, bot:'' },
-  { id:'tatsumaki',name:'たつまきくうっち',type:'たつまき', rarity:'rare',
+  { id:'tatsumaki',name:'たつまきくうっち',type:'たつまき', rarity:'gekirea',
     bg:'#b0bec5', st:'#37474f', pu:'#263238',
     top:`<ellipse cx="50" cy="-10" rx="20" ry="14" fill="none" stroke="#78909c" stroke-width="2.5"/>
 <ellipse cx="50" cy="-10" rx="13" ry="9" fill="none" stroke="#90a4ae" stroke-width="2"/>
 <ellipse cx="50" cy="-10" rx="6" ry="4" fill="#b0bec5" stroke="#78909c" stroke-width="1.5"/>
 <path d="M30,0 Q50,-26 70,-4" fill="none" stroke="#607d8b" stroke-width="2" stroke-linecap="round"/>`, bot:'' },
-  { id:'umi',     name:'うみくうっち',     type:'うみ',     rarity:'rare',
+  { id:'umi',     name:'うみくうっち',     type:'うみ',     rarity:'gekirea',
     bg:'#1565c0', st:'#0d47a1', pu:'#e3f2fd',
     top:`<path d="M10,10 Q25,-4 40,6 Q55,-8 70,4 Q85,-4 90,10" fill="none" stroke="#42a5f5" stroke-width="2.5" stroke-linecap="round"/>
 <circle cx="22" cy="-4" r="3" fill="none" stroke="#90caf9" stroke-width="1.5"/>
 <circle cx="50" cy="-14" r="4" fill="none" stroke="#90caf9" stroke-width="1.5"/>
 <circle cx="78" cy="-6" r="2.5" fill="none" stroke="#90caf9" stroke-width="1.5"/>`, bot:'' },
-  { id:'magma',   name:'まぐまくうっち',   type:'まぐま',   rarity:'rare',
+  { id:'magma',   name:'まぐまくうっち',   type:'まぐま',   rarity:'gekirea',
     bg:'#bf360c', st:'#870000', pu:'#ff6d00',
     top:`<path d="M22,16 Q20,6 24,-2 Q28,4 26,14 L22,16" fill="#e64a19"/>
 <path d="M38,16 Q34,4 38,-6 Q42,2 40,14 L38,16" fill="#f4511e"/>
 <path d="M52,14 Q48,2 52,-8 Q56,0 56,12 L52,14" fill="#e64a19"/>
 <path d="M66,16 Q62,4 66,-6 Q70,2 68,14 L66,16" fill="#f4511e"/>
 <circle cx="50" cy="-12" r="5" fill="#ff6d00" opacity="0.9"/>`, bot:'' },
-  { id:'kouri',   name:'こうりくうっち',   type:'こうり',   rarity:'rare',
+  { id:'kouri',   name:'こうりくうっち',   type:'こうり',   rarity:'gekirea',
     bg:'#e0f7fa', st:'#00838f', pu:'#006064',
     top:`<path d="M50,-20 L38,-8 L22,-4 L34,6 L32,18 L50,12 L68,18 L66,6 L78,-4 L62,-8Z" fill="#b2ebf2" stroke="#00838f" stroke-width="1.5" opacity="0.9"/>
 <line x1="50" y1="-20" x2="50" y2="12" stroke="#e0f7fa" stroke-width="1"/>
 <line x1="22" y1="-4" x2="78" y2="-4" stroke="#e0f7fa" stroke-width="1"/>`, bot:'' },
-  { id:'kemuri',  name:'けむりくうっち',   type:'けむり',   rarity:'rare',
+  { id:'kemuri',  name:'けむりくうっち',   type:'けむり',   rarity:'gekirea',
     bg:'#9e9e9e', st:'#424242', pu:'#212121',
     top:`<ellipse cx="30" cy="-4" rx="12" ry="10" fill="#bdbdbd" opacity="0.75"/>
 <ellipse cx="52" cy="-14" rx="14" ry="11" fill="#eeeeee" opacity="0.85"/>
 <ellipse cx="72" cy="-4" rx="11" ry="9" fill="#bdbdbd" opacity="0.75"/>
 <ellipse cx="42" cy="-2" rx="10" ry="8" fill="#e0e0e0" opacity="0.7"/>`, bot:'' },
-  { id:'shinkai', name:'しんかいくうっち', type:'しんかい', rarity:'rare',
+  { id:'shinkai', name:'しんかいくうっち', type:'しんかい', rarity:'gekirea',
     bg:'#0a1628', st:'#1565c0', pu:'#64b5f6',
     top:`<circle cx="24" cy="-4" r="2.5" fill="#00b0ff" opacity="0.85"/>
 <circle cx="50" cy="-16" r="3.5" fill="#40c4ff" opacity="0.9"/>
@@ -3779,20 +3779,20 @@ const KD = [
 <circle cx="38" cy="-12" r="1.5" fill="#64b5f6" opacity="0.8"/>
 <circle cx="64" cy="-14" r="1.8" fill="#64b5f6" opacity="0.8"/>
 <path d="M14,8 Q32,-6 50,-10 Q68,-6 86,8" fill="none" stroke="#1565c0" stroke-width="2" opacity="0.8"/>`, bot:'' },
-  { id:'fuu',     name:'ふうくうっち',     type:'ふう',     rarity:'rare',
+  { id:'fuu',     name:'ふうくうっち',     type:'ふう',     rarity:'gekirea',
     bg:'#80cbc4', st:'#00695c', pu:'#004d40',
     top:`<path d="M12,-4 Q32,-18 52,-10 Q72,-2 86,8" fill="none" stroke="#e0f2f1" stroke-width="3.5" stroke-linecap="round"/>
 <path d="M8,6 Q28,-8 50,-4 Q72,0 90,12" fill="none" stroke="#b2dfdb" stroke-width="2.5" stroke-linecap="round"/>
 <circle cx="12" cy="-6" r="3.5" fill="#e0f2f1"/>
 <circle cx="90" cy="10" r="2.5" fill="#b2dfdb"/>`, bot:'' },
-  { id:'hoshi',   name:'ほしくうっち',     type:'ほし',     rarity:'rare',
+  { id:'hoshi',   name:'ほしくうっち',     type:'ほし',     rarity:'gekirea',
     bg:'#311b92', st:'#4527a0', pu:'#ede7f6',
     top:`<text x="50" y="-10" font-size="16" fill="#ffe57f" text-anchor="middle">★</text>
 <text x="24" y="-4" font-size="10" fill="#fff9c4" text-anchor="middle">★</text>
 <text x="76" y="-6" font-size="10" fill="#fff9c4" text-anchor="middle">★</text>
 <text x="36" y="-18" font-size="7" fill="#ffe082" text-anchor="middle">✦</text>
 <text x="64" y="-16" font-size="7" fill="#ffe082" text-anchor="middle">✦</text>`, bot:'' },
-  { id:'sango',   name:'さんごくうっち',   type:'さんご',   rarity:'rare',
+  { id:'sango',   name:'さんごくうっち',   type:'さんご',   rarity:'gekirea',
     bg:'#ff8a65', st:'#d84315', pu:'#bf360c',
     top:`<path d="M50,-20 L50,-4" stroke="#ff7043" stroke-width="3.5" stroke-linecap="round"/>
 <path d="M50,-14 L40,-6" stroke="#ff7043" stroke-width="3" stroke-linecap="round"/>
@@ -3806,7 +3806,7 @@ const KD = [
 <circle cx="60" cy="-5" r="2" fill="#ffccbc"/>`, bot:'' },
 
   // ===== 超激レア (sr) 7種 =====
-  { id:'yami',    name:'やみくうっち',     type:'やみ',     rarity:'sr',
+  { id:'yami',    name:'やみくうっち',     type:'やみ',     rarity:'chougeki',
     bg:'#4a148c', st:'#7b1fa2', pu:'#ea80fc',
     top:`<path d="M25,18 Q14,5 17,-4 Q23,2 26,14 L25,18" fill="#6a1b9a"/>
 <path d="M37,17 Q30,5 32,-2 Q38,4 39,15 L37,17" fill="#7b1fa2"/>
@@ -3815,41 +3815,41 @@ const KD = [
 <text x="50" y="-7" font-size="11" fill="#e040fb" text-anchor="middle">✦</text>
 <text x="22" y="-2" font-size="7" fill="#ce93d8" text-anchor="middle">✦</text>
 <text x="78" y="-2" font-size="7" fill="#ce93d8" text-anchor="middle">✦</text>`, bot:'' },
-  { id:'yousei',  name:'ようせいくうっち', type:'ようせい', rarity:'sr',
+  { id:'yousei',  name:'ようせいくうっち', type:'ようせい', rarity:'chougeki',
     bg:'#f48fb1', st:'#c2185b', pu:'#880e4f',
     top:`<path d="M10,36 Q-6,20 2,6 Q18,14 10,36" fill="#fce4ec" stroke="#f48fb1" stroke-width="1.5" opacity="0.9"/>
 <path d="M90,36 Q106,20 98,6 Q82,14 90,36" fill="#fce4ec" stroke="#f48fb1" stroke-width="1.5" opacity="0.9"/>
 <text x="50" y="-4" font-size="12" fill="#e91e63" text-anchor="middle">♥</text>
 <text x="30" y="4" font-size="8" fill="#f06292" text-anchor="middle">♥</text>
 <text x="70" y="4" font-size="8" fill="#f06292" text-anchor="middle">♥</text>`, bot:'' },
-  { id:'honoryuu',name:'ほのおりゅうくうっち',type:'ほのおりゅう',rarity:'sr',
+  { id:'honoryuu',name:'ほのおりゅうくうっち',type:'ほのおりゅう',rarity:'chougeki',
     bg:'#d50000', st:'#870000', pu:'#ff6d00',
     top:`<path d="M4,32 Q-6,14 6,-4 Q16,8 10,30 L4,32" fill="#c62828"/>
 <path d="M96,32 Q106,14 94,-4 Q84,8 90,30 L96,32" fill="#c62828"/>
 <path d="M10,24 Q0,8 10,-6 Q18,4 14,22 L10,24" fill="#e53935" opacity="0.8"/>
 <path d="M90,24 Q100,8 90,-6 Q82,4 86,22 L90,24" fill="#e53935" opacity="0.8"/>
 <polygon points="50,-22 44,-6 53,-8 46,10" fill="#ff6d00" stroke="#ff3d00" stroke-width="1"/>`, bot:'' },
-  { id:'kooriki', name:'こおりきくうっち', type:'こおりき', rarity:'sr',
+  { id:'kooriki', name:'こおりきくうっち', type:'こおりき', rarity:'chougeki',
     bg:'#b3e5fc', st:'#0277bd', pu:'#01579b',
     top:`<polygon points="50,-22 42,-14 26,-12 38,-4 34,8 50,0 66,8 62,-4 74,-12 58,-14" fill="#81d4fa" stroke="#0288d1" stroke-width="1.5"/>
 <line x1="50" y1="-22" x2="50" y2="0" stroke="#e1f5fe" stroke-width="1.5"/>
 <line x1="26" y1="-12" x2="74" y2="-12" stroke="#e1f5fe" stroke-width="1"/>
 <circle cx="50" cy="-8" r="4" fill="#e1f5fe" stroke="#0288d1" stroke-width="1.5"/>`, bot:'' },
-  { id:'raijin',  name:'らいじんくうっち', type:'らいじん', rarity:'sr',
+  { id:'raijin',  name:'らいじんくうっち', type:'らいじん', rarity:'chougeki',
     bg:'#f57f17', st:'#e65100', pu:'#4a148c',
     top:`<circle cx="50" cy="-8" r="14" fill="#ffca28" opacity="0.35" stroke="#ffd600" stroke-width="2"/>
 <path d="M55,-22 L43,-6 L55,-6 L43,12" fill="#fff176" stroke="#ff8f00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="24" cy="-4" r="3" fill="#ffe57f"/>
 <circle cx="76" cy="-6" r="2.5" fill="#ffe57f"/>
 <circle cx="20" cy="-16" r="2" fill="#fff176"/>`, bot:'' },
-  { id:'suijin',  name:'すいじんくうっち', type:'すいじん', rarity:'sr',
+  { id:'suijin',  name:'すいじんくうっち', type:'すいじん', rarity:'chougeki',
     bg:'#006064', st:'#004d40', pu:'#e0f7fa',
     top:`<path d="M50,-20 Q74,0 66,18 Q58,10 50,14 Q42,10 34,18 Q26,0 50,-20" fill="#00838f" opacity="0.85"/>
 <path d="M50,-12 Q64,2 58,16 Q54,10 50,12 Q46,10 42,16 Q36,2 50,-12" fill="#00bcd4" opacity="0.8"/>
 <circle cx="50" cy="-4" r="5" fill="#b2ebf2"/>
 <circle cx="30" cy="-10" r="2.5" fill="#80deea" opacity="0.8"/>
 <circle cx="70" cy="-10" r="2.5" fill="#80deea" opacity="0.8"/>`, bot:'' },
-  { id:'mononoke',name:'もののけくうっち', type:'もののけ', rarity:'sr',
+  { id:'mononoke',name:'もののけくうっち', type:'もののけ', rarity:'chougeki',
     bg:'#e1bee7', st:'#4a148c', pu:'#6a1b9a',
     top:`<path d="M26,20 Q10,8 14,-6 Q22,4 22,18 L26,20" fill="#ce93d8" opacity="0.75"/>
 <path d="M38,20 Q28,6 30,-6 Q38,4 38,18 L38,20" fill="#ba68c8" opacity="0.8"/>
@@ -3859,14 +3859,14 @@ const KD = [
 <text x="50" y="-8" font-size="10" fill="#9c27b0" text-anchor="middle">⊕</text>`, bot:'' },
 
   // ===== 伝説レア (ur) 3種 =====
-  { id:'kami',    name:'かみくうっち',     type:'かみ',     rarity:'ur',
+  { id:'kami',    name:'かみくうっち',     type:'かみ',     rarity:'densetsu',
     bg:'#ffd700', st:'#ff8f00', pu:'#e65100',
     top:`<ellipse cx="50" cy="-8" rx="23" ry="6" fill="none" stroke="#fff9c4" stroke-width="4"/>
 <ellipse cx="50" cy="-8" rx="23" ry="6" fill="none" stroke="#ffd700" stroke-width="2.5"/>
 <polygon points="38,-10 41,-20 45,-12 50,-22 55,-12 59,-20 62,-10 38,-10" fill="#ffd700" stroke="#ff8f00" stroke-width="1"/>
 <circle cx="30" cy="-14" r="2.5" fill="#fff9c4" opacity="0.9"/>
 <circle cx="70" cy="-14" r="2.5" fill="#fff9c4" opacity="0.9"/>`, bot:'' },
-  { id:'ryuu',    name:'りゅうくうっち',   type:'りゅう',   rarity:'ur',
+  { id:'ryuu',    name:'りゅうくうっち',   type:'りゅう',   rarity:'densetsu',
     bg:'#546e7a', st:'#263238', pu:'#ff1744',
     top:`<path d="M28,18 Q19,6 21,-4 Q27,3 29,14 L28,18" fill="#607d8b"/>
 <path d="M38,16 Q34,5 36,-2 Q40,4 41,14 L38,16" fill="#78909c"/>
@@ -3876,7 +3876,7 @@ const KD = [
 <path d="M36,58 Q41,52 46,58" fill="none" stroke="#263238" stroke-width="1.5"/>
 <path d="M54,58 Q59,52 64,58" fill="none" stroke="#263238" stroke-width="1.5"/>
 <path d="M70,52 Q75,46 80,52" fill="none" stroke="#263238" stroke-width="1.5"/>` },
-  { id:'shinwa',  name:'しんわくうっち',   type:'しんわ',   rarity:'ur',
+  { id:'shinwa',  name:'しんわくうっち',   type:'しんわ',   rarity:'densetsu',
     bg:'#ffd700', st:'#ff8f00', pu:'#ffffff',
     top:`<path d="M30,16 Q14,-2 20,-14 Q28,-2 26,14 L30,16" fill="#ffcc02" opacity="0.85"/>
 <path d="M70,16 Q86,-2 80,-14 Q72,-2 74,14 L70,16" fill="#ffcc02" opacity="0.85"/>
@@ -3886,156 +3886,156 @@ const KD = [
 <text x="74" y="-8" font-size="7" fill="#ffe57f" text-anchor="middle">✦</text>`, bot:'' },
 
   // ===== ザクバキくん 20種 =====
-  { id:'zaku_normal',   name:'ザクバキくん', type:'でんき',   rarity:'rare',
+  { id:'zaku_normal',   name:'ザクバキくん', type:'でんき',   rarity:'gekirea',
     sprite:true, twdef:true, icon:'sprites/zaku_icon.png' },
-  { id:'zaku_aka',      name:'あかザクバキくん',     type:'あか',       rarity:'common',
+  { id:'zaku_aka',      name:'あかザクバキくん',     type:'あか',       rarity:'rare',
     char:'zakubaki', zbg1:'#ffcdd2', zbg2:'#ef5350', zbg3:'#b71c1c', zlt:'#ffab40', zlimb:'#ef5350' },
-  { id:'zaku_ao',       name:'あおザクバキくん',     type:'あお',       rarity:'common',
+  { id:'zaku_ao',       name:'あおザクバキくん',     type:'あお',       rarity:'rare',
     char:'zakubaki', zbg1:'#e3f2fd', zbg2:'#1e88e5', zbg3:'#0d47a1', zlt:'#80d8ff', zlimb:'#64b5f6' },
-  { id:'zaku_midori',   name:'みどりザクバキくん',   type:'みどり',     rarity:'common',
+  { id:'zaku_midori',   name:'みどりザクバキくん',   type:'みどり',     rarity:'rare',
     char:'zakubaki', zbg1:'#e8f5e9', zbg2:'#43a047', zbg3:'#1b5e20', zlt:'#ccff90', zlimb:'#81c784' },
-  { id:'zaku_murasaki', name:'むらさきザクバキくん', type:'むらさき',   rarity:'common',
+  { id:'zaku_murasaki', name:'むらさきザクバキくん', type:'むらさき',   rarity:'rare',
     char:'zakubaki', zbg1:'#f3e5f5', zbg2:'#8e24aa', zbg3:'#4a148c', zlt:'#ea80fc', zlimb:'#ce93d8' },
-  { id:'zaku_orange',   name:'オレンジザクバキくん', type:'オレンジ',   rarity:'common',
+  { id:'zaku_orange',   name:'オレンジザクバキくん', type:'オレンジ',   rarity:'rare',
     char:'zakubaki', zbg1:'#fff3e0', zbg2:'#fb8c00', zbg3:'#e65100', zlt:'#ffd180', zlimb:'#ffb74d' },
-  { id:'zaku_shiro',    name:'しろザクバキくん',     type:'しろ',       rarity:'common',
+  { id:'zaku_shiro',    name:'しろザクバキくん',     type:'しろ',       rarity:'rare',
     char:'zakubaki', zbg1:'#ffffff', zbg2:'#eceff1', zbg3:'#b0bec5', zlt:'#78909c', zlimb:'#eceff1' },
-  { id:'zaku_kuro',     name:'くろザクバキくん',     type:'くろ',       rarity:'common',
+  { id:'zaku_kuro',     name:'くろザクバキくん',     type:'くろ',       rarity:'rare',
     char:'zakubaki', zbg1:'#616161', zbg2:'#212121', zbg3:'#000000', zlt:'#ffd600', zlimb:'#fdd835', zst:'#757575' },
-  { id:'zaku_mizu',     name:'みずいろザクバキくん', type:'みずいろ',   rarity:'common',
+  { id:'zaku_mizu',     name:'みずいろザクバキくん', type:'みずいろ',   rarity:'rare',
     char:'zakubaki', zbg1:'#e0f7fa', zbg2:'#00acc1', zbg3:'#006064', zlt:'#84ffff', zlimb:'#4dd0e1' },
-  { id:'zaku_pink',     name:'ピンクザクバキくん',   type:'ピンク',     rarity:'common',
+  { id:'zaku_pink',     name:'ピンクザクバキくん',   type:'ピンク',     rarity:'rare',
     char:'zakubaki', zbg1:'#fce4ec', zbg2:'#e91e63', zbg3:'#880e4f', zlt:'#ff80ab', zlimb:'#f48fb1' },
-  { id:'zaku_koori',    name:'氷ザクバキくん',       type:'こおり',     rarity:'sr',
+  { id:'zaku_koori',    name:'氷ザクバキくん',       type:'こおり',     rarity:'chougeki',
     sprite:true, twdef:true, icon:'sprites/zkoori_icon.png' },
-  { id:'zaku_hikari',   name:'光ザクバキくん',       type:'ひかり',     rarity:'sr',
+  { id:'zaku_hikari',   name:'光ザクバキくん',       type:'ひかり',     rarity:'chougeki',
     sprite:true, twdef:true, icon:'sprites/zhika_icon.png' },
-  { id:'zaku_yuusha',   name:'勇者ザクバキくん',     type:'ゆうしゃ',   rarity:'ur',
+  { id:'zaku_yuusha',   name:'勇者ザクバキくん',     type:'ゆうしゃ',   rarity:'densetsu',
     sprite:true, twdef:true, icon:'sprites/zyusha_icon.png' },
-  { id:'zaku_ninja',    name:'にんじゃザクバキくん', type:'にんじゃ',   rarity:'sr',
+  { id:'zaku_ninja',    name:'にんじゃザクバキくん', type:'にんじゃ',   rarity:'chougeki',
     sprite:true, twdef:true, icon:'sprites/zninja_icon.png' },
-  { id:'zaku_honoo',    name:'炎ザクバキくん',       type:'ほのお',     rarity:'sr',
+  { id:'zaku_honoo',    name:'炎ザクバキくん',       type:'ほのお',     rarity:'chougeki',
     sprite:true, twdef:true, icon:'sprites/zhono_icon.png' },
-  { id:'zaku_yami',     name:'闇ザクバキくん',       type:'やみ',       rarity:'sr',
+  { id:'zaku_yami',     name:'闇ザクバキくん',       type:'やみ',       rarity:'chougeki',
     sprite:true, twdef:true, icon:'sprites/zyami_icon.png' },
-  { id:'zaku_hoshi',    name:'ほしザクバキくん',     type:'ほし',       rarity:'rare',
+  { id:'zaku_hoshi',    name:'ほしザクバキくん',     type:'ほし',       rarity:'gekirea',
     char:'zakubaki', zbg1:'#1a237e', zbg2:'#283593', zbg3:'#0d1b5e', zlt:'#ffd600', zlimb:'#ffd600', zst:'#9fa8da',
     zdeco:`<text x="50" y="-13" font-size="13" text-anchor="middle" fill="#ffd600">★</text>
 <text x="30" y="-7" font-size="7" text-anchor="middle" fill="#fff176">✦</text>
 <text x="70" y="-7" font-size="7" text-anchor="middle" fill="#fff176">✦</text>` },
-  { id:'zaku_doku',     name:'どくザクバキくん',     type:'どく',       rarity:'rare',
+  { id:'zaku_doku',     name:'どくザクバキくん',     type:'どく',       rarity:'gekirea',
     char:'zakubaki', zbg1:'#f1f8e9', zbg2:'#558b2f', zbg3:'#1b5e20', zlt:'#ea80fc', zlimb:'#c6ff00',
     zdeco:`<circle cx="50" cy="-13" r="5.5" fill="#c6ff00" opacity="0.75" stroke="#76ff03" stroke-width="1.2"/>
 <text x="50" y="-10" font-size="7" text-anchor="middle" fill="#1b5e20">☠</text>` },
-  { id:'zaku_jishin',   name:'じしんザクバキくん',   type:'じしん',     rarity:'rare',
+  { id:'zaku_jishin',   name:'じしんザクバキくん',   type:'じしん',     rarity:'gekirea',
     char:'zakubaki', zbg1:'#d7ccc8', zbg2:'#8d6e63', zbg3:'#3e2723', zlt:'#ffca28', zlimb:'#a1887f',
     zdeco:`<polyline points="28,-19 38,-22 50,-17 62,-22 72,-19" fill="none" stroke="#8d6e63" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>` },
-  { id:'zaku_ouja',     name:'おうじゃザクバキくん', type:'おうじゃ',   rarity:'sr',
+  { id:'zaku_ouja',     name:'おうじゃザクバキくん', type:'おうじゃ',   rarity:'chougeki',
     char:'zakubaki', zbg1:'#fff8e1', zbg2:'#ffd54f', zbg3:'#ff8f00', zlt:'#ffffff', zlimb:'#ffd54f',
     zdeco:`<polygon points="50,-21 44,-10 36,-10 43,-4 40,4 50,-2 60,4 57,-4 64,-10 56,-10" fill="#ffd600" stroke="#ff8f00" stroke-width="1.5"/>
 <circle cx="50" cy="-13" r="3" fill="#ff1744"/>
 <circle cx="42" cy="-7" r="2" fill="#2196f3"/>
 <circle cx="58" cy="-7" r="2" fill="#4caf50"/>` },
-  { id:'zaku_ryuu',     name:'ドラゴンザクバキくん', type:'りゅう',     rarity:'ur',
+  { id:'zaku_ryuu',     name:'ドラゴンザクバキくん', type:'りゅう',     rarity:'densetsu',
     sprite:true, twdef:true, icon:'sprites/zdrag_icon.png' },
-  { id:'zaku_densetsu', name:'でんせつザクバキくん', type:'でんせつ',   rarity:'sr',
+  { id:'zaku_densetsu', name:'でんせつザクバキくん', type:'でんせつ',   rarity:'chougeki',
     char:'zakubaki', zbg1:'#fff9c4', zbg2:'#ffca28', zbg3:'#ff6f00', zlt:'#ffffff', zlimb:'#ffffff', zst:'#4a148c',
     zdeco:`<polygon points="50,-21 46,-13 38,-13 44,-7 42,1 50,-4 58,1 56,-7 62,-13 54,-13" fill="#fff176" stroke="#ffd600" stroke-width="1.2"/>
 <text x="21" y="-5" font-size="9" text-anchor="middle" fill="#ffd600">⚡</text>
 <text x="79" y="-5" font-size="9" text-anchor="middle" fill="#ffd600">⚡</text>` },
-  { id:'zaku_kami',     name:'神ザクバキくん',       type:'かみ',       rarity:'ur',
+  { id:'zaku_kami',     name:'神ザクバキくん',       type:'かみ',       rarity:'densetsu',
     sprite:true, twdef:true, icon:'sprites/zkami_icon.png' },
   // ─── うみちゃん (common 6種) ───────────────────────────────────────
-  { id:'umi_normal',   name:'ノーマルうみちゃん',  type:'ノーマル', rarity:'common', char:'umi' },
-  { id:'umi_ao',       name:'あおうみちゃん',       type:'あお',     rarity:'common', char:'umi', uhue:200 },
-  { id:'umi_midori',   name:'みどりうみちゃん',     type:'みどり',   rarity:'common', char:'umi', uhue:130 },
-  { id:'umi_ki',       name:'きうみちゃん',         type:'き',       rarity:'common', char:'umi', uhue:-80 },
-  { id:'umi_shiro',    name:'しろうみちゃん',       type:'しろ',     rarity:'common', char:'umi', usat:'0' },
-  { id:'umi_murasaki', name:'むらさきうみちゃん',   type:'むらさき', rarity:'common', char:'umi', uhue:260 },
+  { id:'umi_normal',   name:'ノーマルうみちゃん',  type:'ノーマル', rarity:'rare', char:'umi' },
+  { id:'umi_ao',       name:'あおうみちゃん',       type:'あお',     rarity:'rare', char:'umi', uhue:200 },
+  { id:'umi_midori',   name:'みどりうみちゃん',     type:'みどり',   rarity:'rare', char:'umi', uhue:130 },
+  { id:'umi_ki',       name:'きうみちゃん',         type:'き',       rarity:'rare', char:'umi', uhue:-80 },
+  { id:'umi_shiro',    name:'しろうみちゃん',       type:'しろ',     rarity:'rare', char:'umi', usat:'0' },
+  { id:'umi_murasaki', name:'むらさきうみちゃん',   type:'むらさき', rarity:'rare', char:'umi', uhue:260 },
   // ─── うみちゃん (rare 3種) ─────────────────────────────────────────
-  { id:'umi_kuro',     name:'くろうみちゃん',       type:'くろ',     rarity:'rare',   char:'umi', ubri:'0.28' },
-  { id:'umi_sakura',   name:'さくらうみちゃん',     type:'さくら',   rarity:'rare',   char:'umi', uhue:-20, usat:'0.7',
+  { id:'umi_kuro',     name:'くろうみちゃん',       type:'くろ',     rarity:'gekirea',   char:'umi', ubri:'0.28' },
+  { id:'umi_sakura',   name:'さくらうみちゃん',     type:'さくら',   rarity:'gekirea',   char:'umi', uhue:-20, usat:'0.7',
     udeco:`<text x="12" y="18" font-size="14">🌸</text><text x="75" y="18" font-size="14">🌸</text>` },
-  { id:'umi_hoshi',    name:'ほしうみちゃん',       type:'ほし',     rarity:'rare',   char:'umi', uhue:180,
+  { id:'umi_hoshi',    name:'ほしうみちゃん',       type:'ほし',     rarity:'gekirea',   char:'umi', uhue:180,
     udeco:`<text x="40" y="15" font-size="16">⭐</text>` },
   // ─── うみちゃん (SR 1種) ────────────────────────────────────────────
-  { id:'umi_kami',     name:'かみうみちゃん',       type:'かみ',     rarity:'sr',     char:'umi', uhue:-40, usat:'1.3',
+  { id:'umi_kami',     name:'かみうみちゃん',       type:'かみ',     rarity:'chougeki',     char:'umi', uhue:-40, usat:'1.3',
     udeco:`<polygon points="50,8 46,15 38,15 44,20 42,28 50,23 58,28 56,20 62,15 54,15" fill="#ffd600" stroke="#ff8f00" stroke-width="1.5"/><circle cx="50" cy="14" r="3" fill="#ff1744"/>` },
   // ─── るみちゃん (common 6種) ───────────────────────────────────────
-  { id:'rumi_normal',   name:'ノーマルるみちゃん',  type:'ノーマル', rarity:'common', char:'rumi' },
-  { id:'rumi_ao',       name:'あおるみちゃん',       type:'あお',     rarity:'common', char:'rumi', rhue:60 },
-  { id:'rumi_ki',       name:'きるみちゃん',         type:'き',       rarity:'common', char:'rumi', rhue:-60 },
-  { id:'rumi_aka',      name:'あかるみちゃん',       type:'あか',     rarity:'common', char:'rumi', rhue:150 },
-  { id:'rumi_shiro',    name:'しろるみちゃん',       type:'しろ',     rarity:'common', char:'rumi', rsat:'0' },
-  { id:'rumi_murasaki', name:'むらさきるみちゃん',   type:'むらさき', rarity:'common', char:'rumi', rhue:220 },
+  { id:'rumi_normal',   name:'ノーマルるみちゃん',  type:'ノーマル', rarity:'rare', char:'rumi' },
+  { id:'rumi_ao',       name:'あおるみちゃん',       type:'あお',     rarity:'rare', char:'rumi', rhue:60 },
+  { id:'rumi_ki',       name:'きるみちゃん',         type:'き',       rarity:'rare', char:'rumi', rhue:-60 },
+  { id:'rumi_aka',      name:'あかるみちゃん',       type:'あか',     rarity:'rare', char:'rumi', rhue:150 },
+  { id:'rumi_shiro',    name:'しろるみちゃん',       type:'しろ',     rarity:'rare', char:'rumi', rsat:'0' },
+  { id:'rumi_murasaki', name:'むらさきるみちゃん',   type:'むらさき', rarity:'rare', char:'rumi', rhue:220 },
   // ─── るみちゃん (rare 3種) ─────────────────────────────────────────
-  { id:'rumi_kuro',     name:'くろるみちゃん',       type:'くろ',     rarity:'rare',   char:'rumi', rbri:'0.28' },
-  { id:'rumi_hoshi',    name:'ほしるみちゃん',       type:'ほし',     rarity:'rare',   char:'rumi', rhue:240,
+  { id:'rumi_kuro',     name:'くろるみちゃん',       type:'くろ',     rarity:'gekirea',   char:'rumi', rbri:'0.28' },
+  { id:'rumi_hoshi',    name:'ほしるみちゃん',       type:'ほし',     rarity:'gekirea',   char:'rumi', rhue:240,
     rdeco:`<text x="40" y="10" font-size="14">⭐</text>` },
-  { id:'rumi_yuki',     name:'ゆきるみちゃん',       type:'ゆき',     rarity:'rare',   char:'rumi', rsat:'0.2', rbri:'1.15',
+  { id:'rumi_yuki',     name:'ゆきるみちゃん',       type:'ゆき',     rarity:'gekirea',   char:'rumi', rsat:'0.2', rbri:'1.15',
     rdeco:`<text x="40" y="10" font-size="14">❄️</text>` },
   // ─── るみちゃん (SR 1種) ────────────────────────────────────────────
-  { id:'rumi_kami',     name:'かみるみちゃん',       type:'かみ',     rarity:'sr',     char:'rumi', rhue:-50, rsat:'1.2',
+  { id:'rumi_kami',     name:'かみるみちゃん',       type:'かみ',     rarity:'chougeki',     char:'rumi', rhue:-50, rsat:'1.2',
     rdeco:`<polygon points="50,5 46,12 38,12 44,17 42,24 50,20 58,24 56,17 62,12 54,12" fill="#ffd600" stroke="#ff8f00" stroke-width="1.5"/><circle cx="50" cy="11" r="2.5" fill="#ff1744"/>` },
   // ─── くびながちゃん (小さ大きくびなが) ─────────────────────────────
-  { id:'dino_normal',   name:'ノーマル小さ大きくびなが',   type:'ノーマル', rarity:'common', char:'dino' },
-  { id:'dino_ao',       name:'あお小さ大きくびなが',        type:'あお',     rarity:'common', char:'dino', dhue:120 },
-  { id:'dino_aka',      name:'あか小さ大きくびなが',        type:'あか',     rarity:'common', char:'dino', dhue:240 },
-  { id:'dino_ki',       name:'き小さ大きくびなが',          type:'き',       rarity:'common', char:'dino', dhue:-60 },
-  { id:'dino_murasaki', name:'むらさき小さ大きくびなが',    type:'むらさき', rarity:'common', char:'dino', dhue:155 },
-  { id:'dino_pink',     name:'ぴんく小さ大きくびなが',      type:'ぴんく',   rarity:'common', char:'dino', dhue:180, dsat:'0.8' },
-  { id:'dino_orange',   name:'おれんじ小さ大きくびなが',    type:'おれんじ', rarity:'common', char:'dino', dhue:-50 },
-  { id:'dino_mizuiro',  name:'みずいろ小さ大きくびなが',    type:'みずいろ', rarity:'common', char:'dino', dhue:65 },
-  { id:'dino_shiro',    name:'しろ小さ大きくびなが',        type:'しろ',     rarity:'common', char:'dino', dsat:'0' },
-  { id:'dino_chairo',   name:'ちゃいろ小さ大きくびなが',    type:'ちゃいろ', rarity:'common', char:'dino', dhue:-100, dsat:'0.55' },
-  { id:'dino_kuro',     name:'くろ小さ大きくびなが',        type:'くろ',     rarity:'rare',   char:'dino', dbri:'0.28' },
-  { id:'dino_kiniro',   name:'きんいろ小さ大きくびなが',    type:'きんいろ', rarity:'rare',   char:'dino', dhue:-65, dsat:'2.0', dbri:'1.05' },
-  { id:'dino_sakura',   name:'さくら小さ大きくびなが',      type:'さくら',   rarity:'rare',   char:'dino', dhue:185, dsat:'0.7',
+  { id:'dino_normal',   name:'ノーマル小さ大きくびなが',   type:'ノーマル', rarity:'rare', char:'dino' },
+  { id:'dino_ao',       name:'あお小さ大きくびなが',        type:'あお',     rarity:'rare', char:'dino', dhue:120 },
+  { id:'dino_aka',      name:'あか小さ大きくびなが',        type:'あか',     rarity:'rare', char:'dino', dhue:240 },
+  { id:'dino_ki',       name:'き小さ大きくびなが',          type:'き',       rarity:'rare', char:'dino', dhue:-60 },
+  { id:'dino_murasaki', name:'むらさき小さ大きくびなが',    type:'むらさき', rarity:'rare', char:'dino', dhue:155 },
+  { id:'dino_pink',     name:'ぴんく小さ大きくびなが',      type:'ぴんく',   rarity:'rare', char:'dino', dhue:180, dsat:'0.8' },
+  { id:'dino_orange',   name:'おれんじ小さ大きくびなが',    type:'おれんじ', rarity:'rare', char:'dino', dhue:-50 },
+  { id:'dino_mizuiro',  name:'みずいろ小さ大きくびなが',    type:'みずいろ', rarity:'rare', char:'dino', dhue:65 },
+  { id:'dino_shiro',    name:'しろ小さ大きくびなが',        type:'しろ',     rarity:'rare', char:'dino', dsat:'0' },
+  { id:'dino_chairo',   name:'ちゃいろ小さ大きくびなが',    type:'ちゃいろ', rarity:'rare', char:'dino', dhue:-100, dsat:'0.55' },
+  { id:'dino_kuro',     name:'くろ小さ大きくびなが',        type:'くろ',     rarity:'gekirea',   char:'dino', dbri:'0.28' },
+  { id:'dino_kiniro',   name:'きんいろ小さ大きくびなが',    type:'きんいろ', rarity:'gekirea',   char:'dino', dhue:-65, dsat:'2.0', dbri:'1.05' },
+  { id:'dino_sakura',   name:'さくら小さ大きくびなが',      type:'さくら',   rarity:'gekirea',   char:'dino', dhue:185, dsat:'0.7',
     ddeco:`<text x="10" y="18" font-size="14">🌸</text><text x="74" y="18" font-size="14">🌸</text>` },
-  { id:'dino_hoshi',    name:'ほし小さ大きくびなが',        type:'ほし',     rarity:'rare',   char:'dino', dhue:110, dbri:'1.05',
+  { id:'dino_hoshi',    name:'ほし小さ大きくびなが',        type:'ほし',     rarity:'gekirea',   char:'dino', dhue:110, dbri:'1.05',
     ddeco:`<text x="40" y="14" font-size="15">⭐</text>` },
-  { id:'dino_yuki',     name:'ゆき小さ大きくびなが',        type:'ゆき',     rarity:'rare',   char:'dino', dsat:'0.1', dbri:'1.2',
+  { id:'dino_yuki',     name:'ゆき小さ大きくびなが',        type:'ゆき',     rarity:'gekirea',   char:'dino', dsat:'0.1', dbri:'1.2',
     ddeco:`<text x="40" y="14" font-size="15">❄️</text>` },
-  { id:'dino_niji',     name:'にじ小さ大きくびなが',        type:'にじ',     rarity:'rare',   char:'dino',
+  { id:'dino_niji',     name:'にじ小さ大きくびなが',        type:'にじ',     rarity:'gekirea',   char:'dino',
     ddeco:`<text x="35" y="14" font-size="18">🌈</text>` },
-  { id:'dino_dragon',   name:'ドラゴン小さ大きくびなが',    type:'ドラゴン', rarity:'sr',     char:'dino', dhue:235, dsat:'2.0',
+  { id:'dino_dragon',   name:'ドラゴン小さ大きくびなが',    type:'ドラゴン', rarity:'chougeki',     char:'dino', dhue:235, dsat:'2.0',
     ddeco:`<text x="8" y="20" font-size="16">🔥</text><text x="74" y="20" font-size="16">🔥</text>` },
-  { id:'dino_ginga',    name:'ぎんが小さ大きくびなが',      type:'ぎんが',   rarity:'sr',     char:'dino', dhue:225, dbri:'0.35',
+  { id:'dino_ginga',    name:'ぎんが小さ大きくびなが',      type:'ぎんが',   rarity:'chougeki',     char:'dino', dhue:225, dbri:'0.35',
     ddeco:`<text x="8" y="18" font-size="12">✨</text><text x="78" y="18" font-size="12">✨</text><text x="43" y="12" font-size="12">⭐</text>` },
-  { id:'dino_mama',     name:'まま小さ大きくびなが',        type:'まま',     rarity:'sr',     char:'dino',
+  { id:'dino_mama',     name:'まま小さ大きくびなが',        type:'まま',     rarity:'chougeki',     char:'dino',
     ddeco:`<text x="38" y="14" font-size="16">💕</text>` },
-  { id:'dino_kami',     name:'かみ小さ大きくびなが',        type:'かみ',     rarity:'ur',     char:'dino', dhue:-45, dsat:'1.6', dbri:'1.1',
+  { id:'dino_kami',     name:'かみ小さ大きくびなが',        type:'かみ',     rarity:'densetsu',     char:'dino', dhue:-45, dsat:'1.6', dbri:'1.1',
     ddeco:`<polygon points="50,5 46,12 38,12 44,17 42,24 50,20 58,24 56,17 62,12 54,12" fill="#ffd600" stroke="#ff8f00" stroke-width="1.5"/><circle cx="50" cy="11" r="2.5" fill="#ff1744"/>` },
   // ===== 手書きにゃんこ（一頭身ねこ・足だけ／貼付画像のデザインをそのまま使用・連続噛み） =====
-  { id:'tegaki_nyanko', name:'手書きにゃんこ', type:'てがき', rarity:'rare',
+  { id:'tegaki_nyanko', name:'手書きにゃんこ', type:'てがき', rarity:'gekirea',
     sprite:true, twdef:true, icon:'sprites/tegaki_icon.png' },
   // ===== キモ足ぽて（マッチョぽてまよ・足だけ／貼付画像から・キック） =====
-  { id:'kimoashi_pote', name:'キモ足ぽて', type:'マッチョ', rarity:'rare',
+  { id:'kimoashi_pote', name:'キモ足ぽて', type:'マッチョ', rarity:'gekirea',
     sprite:true, twdef:true, icon:'sprites/kmp_icon.png' },
 
   // ===== くうっち侵略戦の常設キャラ（ガチャ＆育成対応・スプライト表示） =====
-  { id:'tw_kuucchi_basic', name:'くうっち',            type:'くうっち',       rarity:'common', sprite:true, twdef:true, icon:'sprites/kuu_icon.png'  },
-  { id:'tw_pote_basic',    name:'うでながぽてまよ',    type:'うでなが',       rarity:'common', sprite:true, twdef:true, icon:'sprites/pote_icon.png' },
-  { id:'tw_pote_rush',     name:'ぽてまよ',            type:'ぽてまよ',       rarity:'common', sprite:true, twdef:true, icon:'sprites/pote2_icon.png'},
-  { id:'tw_kimomayo',      name:'キモマヨ',            type:'キモマヨ',       rarity:'common', sprite:true, twdef:true, icon:'sprites/kimo_icon.png' },
-  { id:'tw_kuucchi_bat',   name:'コウモリくうっち',    type:'コウモリ',       rarity:'rare',   sprite:true, twdef:true, icon:'sprites/bkuu_icon.png' },
-  { id:'tw_kuucchi_fire',  name:'ほのおくうっち',          type:'ほのお',             rarity:'sr',     sprite:true, twdef:true, icon:'sprites/fkuu_icon.png' },
-  { id:'tw_obigkubinaga',  name:'小さ大き首なが',      type:'首なが',         rarity:'ur',     sprite:true, twdef:true, icon:'sprites/obig_icon.png' },
-  { id:'tw_metal_potemayo',name:'メタルぽてまよ',      type:'メタル',         rarity:'sr',     sprite:true, twdef:true, icon:'sprites/metalpote_icon.png' },
-  { id:'tw_pote_honoo',    name:'炎ぽてまよ',          type:'ほのお',         rarity:'sr',     sprite:true, twdef:true, icon:'sprites/hopote_icon.png' },
-  { id:'tw_pote_kaminari', name:'雷ぽてまよ',          type:'かみなり',       rarity:'sr',     sprite:true, twdef:true, icon:'sprites/kapote_icon.png' },
-  { id:'tw_pote_koori',    name:'氷ぽてまよ',          type:'こおり',         rarity:'sr',     sprite:true, twdef:true, icon:'sprites/kopote_icon.png' },
-  { id:'tw_pote_mizu',     name:'水ぽてまよ',          type:'みず',           rarity:'sr',     sprite:true, twdef:true, icon:'sprites/mzpote_icon.png' },
-  { id:'tw_pote_kusa',     name:'草ぽてまよ',          type:'くさ',           rarity:'sr',     sprite:true, twdef:true, icon:'sprites/kspote_icon.png' },
-  { id:'tw_pote_iwa',      name:'岩ぽてまよ',          type:'いわ',           rarity:'sr',     sprite:true, twdef:true, icon:'sprites/iwpote_icon.png' },
-  { id:'tw_pote_doku',     name:'毒ぽてまよ',          type:'どく',           rarity:'sr',     sprite:true, twdef:true, icon:'sprites/dkpote_icon.png' },
-  { id:'tw_pote_hagane',   name:'鋼ぽてまよ',          type:'はがね',         rarity:'sr',     sprite:true, twdef:true, icon:'sprites/hgpote_icon.png' },
-  { id:'tw_pote_aku',      name:'悪ぽてまよ',          type:'あく',           rarity:'ur',     sprite:true, twdef:true, icon:'sprites/akpote_icon.png' },
-  { id:'tw_pote_kakutou',  name:'格闘ぽてまよ',        type:'かくとう',       rarity:'sr',     sprite:true, twdef:true, icon:'sprites/ftpote_icon.png' },
-  { id:'tw_pote_akuma',    name:'悪魔ぽてまよ',        type:'あくま',         rarity:'ur',     sprite:true, twdef:true, icon:'sprites/dmpote_icon.png' },
-  { id:'tw_pote_tenshi',   name:'天使ぽてまよ',        type:'てんし',         rarity:'ur',     sprite:true, twdef:true, icon:'sprites/anpote_icon.png' },
-  { id:'tw_pote_koumori',  name:'コウモリぽてまよ',    type:'コウモリ',       rarity:'sr',     sprite:true, twdef:true, icon:'sprites/btpote_icon.png' },
-  { id:'tw_pote_yuusha',   name:'勇者ぽてまよ',        type:'ゆうしゃ',       rarity:'ur',     sprite:true, twdef:true, icon:'sprites/yupote_icon.png' },
+  { id:'tw_kuucchi_basic', name:'くうっち',            type:'くうっち',       rarity:'rare', sprite:true, twdef:true, icon:'sprites/kuu_icon.png'  },
+  { id:'tw_pote_basic',    name:'うでながぽてまよ',    type:'うでなが',       rarity:'rare', sprite:true, twdef:true, icon:'sprites/pote_icon.png' },
+  { id:'tw_pote_rush',     name:'ぽてまよ',            type:'ぽてまよ',       rarity:'rare', sprite:true, twdef:true, icon:'sprites/pote2_icon.png'},
+  { id:'tw_kimomayo',      name:'キモマヨ',            type:'キモマヨ',       rarity:'rare', sprite:true, twdef:true, icon:'sprites/kimo_icon.png' },
+  { id:'tw_kuucchi_bat',   name:'コウモリくうっち',    type:'コウモリ',       rarity:'gekirea',   sprite:true, twdef:true, icon:'sprites/bkuu_icon.png' },
+  { id:'tw_kuucchi_fire',  name:'ほのおくうっち',          type:'ほのお',             rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/fkuu_icon.png' },
+  { id:'tw_obigkubinaga',  name:'小さ大き首なが',      type:'首なが',         rarity:'densetsu',     sprite:true, twdef:true, icon:'sprites/obig_icon.png' },
+  { id:'tw_metal_potemayo',name:'メタルぽてまよ',      type:'メタル',         rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/metalpote_icon.png' },
+  { id:'tw_pote_honoo',    name:'炎ぽてまよ',          type:'ほのお',         rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/hopote_icon.png' },
+  { id:'tw_pote_kaminari', name:'雷ぽてまよ',          type:'かみなり',       rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/kapote_icon.png' },
+  { id:'tw_pote_koori',    name:'氷ぽてまよ',          type:'こおり',         rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/kopote_icon.png' },
+  { id:'tw_pote_mizu',     name:'水ぽてまよ',          type:'みず',           rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/mzpote_icon.png' },
+  { id:'tw_pote_kusa',     name:'草ぽてまよ',          type:'くさ',           rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/kspote_icon.png' },
+  { id:'tw_pote_iwa',      name:'岩ぽてまよ',          type:'いわ',           rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/iwpote_icon.png' },
+  { id:'tw_pote_doku',     name:'毒ぽてまよ',          type:'どく',           rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/dkpote_icon.png' },
+  { id:'tw_pote_hagane',   name:'鋼ぽてまよ',          type:'はがね',         rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/hgpote_icon.png' },
+  { id:'tw_pote_aku',      name:'悪ぽてまよ',          type:'あく',           rarity:'densetsu',     sprite:true, twdef:true, icon:'sprites/akpote_icon.png' },
+  { id:'tw_pote_kakutou',  name:'格闘ぽてまよ',        type:'かくとう',       rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/ftpote_icon.png' },
+  { id:'tw_pote_akuma',    name:'悪魔ぽてまよ',        type:'あくま',         rarity:'densetsu',     sprite:true, twdef:true, icon:'sprites/dmpote_icon.png' },
+  { id:'tw_pote_tenshi',   name:'天使ぽてまよ',        type:'てんし',         rarity:'densetsu',     sprite:true, twdef:true, icon:'sprites/anpote_icon.png' },
+  { id:'tw_pote_koumori',  name:'コウモリぽてまよ',    type:'コウモリ',       rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/btpote_icon.png' },
+  { id:'tw_pote_yuusha',   name:'勇者ぽてまよ',        type:'ゆうしゃ',       rarity:'densetsu',     sprite:true, twdef:true, icon:'sprites/yupote_icon.png' },
 ];
 
 // ===== 味方キャラの表示ポリシー =====
@@ -4051,108 +4051,108 @@ const SHOW_MAZE = false;
 // ===== ぽてまよ キャラクターデータ (50種) =====
 const MD = [
   // ===== レア (common) 25種 =====
-  { id:'mc_normal',   name:'ノーマルぽてまよ', type:'ノーマル',  rarity:'common', char:'mochi', mc:'#f48fb1', mo:'#757575', me:'n',  mm:'n'  },
-  { id:'mc_aka',      name:'あかぽてまよ',     type:'あか',      rarity:'common', char:'mochi', mc:'#ef5350', mo:'#b71c1c', me:'n',  mm:'n'  },
-  { id:'mc_daidai',   name:'だいだいぽてまよ', type:'だいだい',  rarity:'common', char:'mochi', mc:'#ff7043', mo:'#bf360c', me:'h',  mm:'sm' },
-  { id:'mc_ki',       name:'きぽてまよ',       type:'き',        rarity:'common', char:'mochi', mc:'#fdd835', mo:'#f57f17', me:'h',  mm:'sm' },
-  { id:'mc_midori',   name:'みどりぽてまよ',   type:'みどり',    rarity:'common', char:'mochi', mc:'#66bb6a', mo:'#2e7d32', me:'n',  mm:'n'  },
-  { id:'mc_ao',       name:'あおぽてまよ',     type:'あお',      rarity:'common', char:'mochi', mc:'#42a5f5', mo:'#1565c0', me:'n',  mm:'n'  },
-  { id:'mc_murasaki', name:'むらさきぽてまよ', type:'むらさき',  rarity:'common', char:'mochi', mc:'#ab47bc', mo:'#6a1b9a', me:'n',  mm:'n'  },
-  { id:'mc_shiro',    name:'しろぽてまよ',     type:'しろ',      rarity:'common', char:'mochi', mc:'#f5f5f5', mo:'#9e9e9e', me:'d',  mm:'n'  },
-  { id:'mc_kuro',     name:'くろぽてまよ',     type:'くろ',      rarity:'common', char:'mochi', mc:'#546e7a', mo:'#263238', me:'sp', mm:'n'  },
-  { id:'mc_mizu',     name:'みずいろぽてまよ', type:'みずいろ',  rarity:'common', char:'mochi', mc:'#80deea', mo:'#006064', me:'n',  mm:'n'  },
-  { id:'mc_mori',     name:'もりぽてまよ',     type:'もり',      rarity:'common', char:'mochi', mc:'#43a047', mo:'#1b5e20', me:'n',  mm:'n',
+  { id:'mc_normal',   name:'ノーマルぽてまよ', type:'ノーマル',  rarity:'rare', char:'mochi', mc:'#f48fb1', mo:'#757575', me:'n',  mm:'n'  },
+  { id:'mc_aka',      name:'あかぽてまよ',     type:'あか',      rarity:'rare', char:'mochi', mc:'#ef5350', mo:'#b71c1c', me:'n',  mm:'n'  },
+  { id:'mc_daidai',   name:'だいだいぽてまよ', type:'だいだい',  rarity:'rare', char:'mochi', mc:'#ff7043', mo:'#bf360c', me:'h',  mm:'sm' },
+  { id:'mc_ki',       name:'きぽてまよ',       type:'き',        rarity:'rare', char:'mochi', mc:'#fdd835', mo:'#f57f17', me:'h',  mm:'sm' },
+  { id:'mc_midori',   name:'みどりぽてまよ',   type:'みどり',    rarity:'rare', char:'mochi', mc:'#66bb6a', mo:'#2e7d32', me:'n',  mm:'n'  },
+  { id:'mc_ao',       name:'あおぽてまよ',     type:'あお',      rarity:'rare', char:'mochi', mc:'#42a5f5', mo:'#1565c0', me:'n',  mm:'n'  },
+  { id:'mc_murasaki', name:'むらさきぽてまよ', type:'むらさき',  rarity:'rare', char:'mochi', mc:'#ab47bc', mo:'#6a1b9a', me:'n',  mm:'n'  },
+  { id:'mc_shiro',    name:'しろぽてまよ',     type:'しろ',      rarity:'rare', char:'mochi', mc:'#f5f5f5', mo:'#9e9e9e', me:'d',  mm:'n'  },
+  { id:'mc_kuro',     name:'くろぽてまよ',     type:'くろ',      rarity:'rare', char:'mochi', mc:'#546e7a', mo:'#263238', me:'sp', mm:'n'  },
+  { id:'mc_mizu',     name:'みずいろぽてまよ', type:'みずいろ',  rarity:'rare', char:'mochi', mc:'#80deea', mo:'#006064', me:'n',  mm:'n'  },
+  { id:'mc_mori',     name:'もりぽてまよ',     type:'もり',      rarity:'rare', char:'mochi', mc:'#43a047', mo:'#1b5e20', me:'n',  mm:'n',
     mt:`<ellipse cx="50" cy="-4" rx="8" ry="12" fill="#66bb6a" stroke="#388e3c" stroke-width="1.5" transform="rotate(-20,50,-4)"/><line x1="50" y1="-16" x2="50" y2="4" stroke="#388e3c" stroke-width="1.5"/>` },
-  { id:'mc_yuki',     name:'ゆきぽてまよ',     type:'ゆき',      rarity:'common', char:'mochi', mc:'#eceff1', mo:'#90a4ae', me:'sl', mm:'n',
+  { id:'mc_yuki',     name:'ゆきぽてまよ',     type:'ゆき',      rarity:'rare', char:'mochi', mc:'#eceff1', mo:'#90a4ae', me:'sl', mm:'n',
     mt:`<text x="50" y="-1" font-size="18" text-anchor="middle" fill="#b3e5fc" opacity=".9">❄</text>` },
-  { id:'mc_hana',     name:'はなぽてまよ',     type:'はな',      rarity:'common', char:'mochi', mc:'#f06292', mo:'#ad1457', me:'h',  mm:'sm',
+  { id:'mc_hana',     name:'はなぽてまよ',     type:'はな',      rarity:'rare', char:'mochi', mc:'#f06292', mo:'#ad1457', me:'h',  mm:'sm',
     mt:`<circle cx="50" cy="-8" r="5" fill="#f48fb1"/><circle cx="50" cy="-15" r="4" fill="white"/><circle cx="43" cy="-12" r="4" fill="white"/><circle cx="57" cy="-12" r="4" fill="white"/><circle cx="43" cy="-4" r="4" fill="white"/><circle cx="57" cy="-4" r="4" fill="white"/>` },
-  { id:'mc_hoshi',    name:'ほしぽてまよ',     type:'ほし',      rarity:'common', char:'mochi', mc:'#fff176', mo:'#f9a825', me:'h',  mm:'sm',
+  { id:'mc_hoshi',    name:'ほしぽてまよ',     type:'ほし',      rarity:'rare', char:'mochi', mc:'#fff176', mo:'#f9a825', me:'h',  mm:'sm',
     mt:`<polygon points="50,-16 53,-8 61,-8 55,-2 57,6 50,1 43,6 45,-2 39,-8 47,-8" fill="#ffd600" stroke="#ff8f00" stroke-width="1"/>` },
-  { id:'mc_tsuki',    name:'つきぽてまよ',     type:'つき',      rarity:'common', char:'mochi', mc:'#fff9c4', mo:'#f9a825', me:'sl', mm:'n',
+  { id:'mc_tsuki',    name:'つきぽてまよ',     type:'つき',      rarity:'rare', char:'mochi', mc:'#fff9c4', mo:'#f9a825', me:'sl', mm:'n',
     mt:`<path d="M38,-14 Q55,-22 62,-8 Q50,-4 38,-14Z" fill="#fff176" stroke="#f9a825" stroke-width="1"/>` },
-  { id:'mc_niji',     name:'にじぽてまよ',     type:'にじ',      rarity:'common', char:'mochi', mc:'#f8bbd0', mo:'#757575', me:'h',  mm:'sm',
+  { id:'mc_niji',     name:'にじぽてまよ',     type:'にじ',      rarity:'rare', char:'mochi', mc:'#f8bbd0', mo:'#757575', me:'h',  mm:'sm',
     mt:`<path d="M16,4 Q32,-10 50,-12 Q68,-10 84,4" fill="none" stroke="#e53935" stroke-width="2.5" stroke-linecap="round" opacity=".8"/><path d="M20,8 Q36,-6 50,-8 Q64,-6 80,8" fill="none" stroke="#ff9800" stroke-width="2" stroke-linecap="round" opacity=".8"/><path d="M24,12 Q38,-2 50,-4 Q62,-2 76,12" fill="none" stroke="#fdd835" stroke-width="2" stroke-linecap="round" opacity=".7"/>` },
-  { id:'mc_sakura',   name:'さくらぽてまよ',   type:'さくら',    rarity:'common', char:'mochi', mc:'#fce4ec', mo:'#f48fb1', me:'h',  mm:'sm',
+  { id:'mc_sakura',   name:'さくらぽてまよ',   type:'さくら',    rarity:'rare', char:'mochi', mc:'#fce4ec', mo:'#f48fb1', me:'h',  mm:'sm',
     mt:`<path d="M42,-14 Q50,-22 58,-14 Q54,-6 50,-8 Q46,-6 42,-14Z" fill="#f8bbd0"/><path d="M34,-8 Q26,-16 34,-20 Q40,-14 38,-10 Q36,-8 34,-8Z" fill="#f8bbd0"/><path d="M66,-8 Q74,-16 66,-20 Q60,-14 62,-10 Q64,-8 66,-8Z" fill="#f8bbd0"/>` },
-  { id:'mc_umi',      name:'うみぽてまよ',     type:'うみ',      rarity:'common', char:'mochi', mc:'#26c6da', mo:'#006064', me:'n',  mm:'n',
+  { id:'mc_umi',      name:'うみぽてまよ',     type:'うみ',      rarity:'rare', char:'mochi', mc:'#26c6da', mo:'#006064', me:'n',  mm:'n',
     mt:`<path d="M12,4 Q28,-8 44,0 Q56,6 68,-2 Q80,-8 90,2" fill="none" stroke="#80deea" stroke-width="3" stroke-linecap="round" opacity=".8"/>` },
-  { id:'mc_sora',     name:'そらぽてまよ',     type:'そら',      rarity:'common', char:'mochi', mc:'#b3e5fc', mo:'#0277bd', me:'n',  mm:'n',
+  { id:'mc_sora',     name:'そらぽてまよ',     type:'そら',      rarity:'rare', char:'mochi', mc:'#b3e5fc', mo:'#0277bd', me:'n',  mm:'n',
     mt:`<ellipse cx="50" cy="-10" rx="16" ry="10" fill="white" opacity=".85"/><ellipse cx="37" cy="-7" rx="10" ry="7" fill="white" opacity=".85"/><ellipse cx="64" cy="-8" rx="9" ry="6" fill="white" opacity=".85"/>` },
-  { id:'mc_yakimochi',name:'やきぽてまよ',     type:'やきもち',  rarity:'common', char:'mochi', mc:'#ff8a65', mo:'#bf360c', me:'a',  mm:'n',
+  { id:'mc_yakimochi',name:'やきぽてまよ',     type:'やきもち',  rarity:'rare', char:'mochi', mc:'#ff8a65', mo:'#bf360c', me:'a',  mm:'n',
     mx:`<path d="M30,56 Q33,52 36,56" fill="none" stroke="#ff8a65" stroke-width="1.5" opacity=".5"/><path d="M56,56 Q59,52 62,56" fill="none" stroke="#ff8a65" stroke-width="1.5" opacity=".5"/>` },
-  { id:'mc_hi',       name:'ひぽてまよ',       type:'ひ',        rarity:'common', char:'mochi', mc:'#ef5350', mo:'#b71c1c', me:'a',  mm:'op',
+  { id:'mc_hi',       name:'ひぽてまよ',       type:'ひ',        rarity:'rare', char:'mochi', mc:'#ef5350', mo:'#b71c1c', me:'a',  mm:'op',
     mt:`<path d="M40,4 Q44,-10 46,2 Q50,-14 50,-4 Q54,-14 54,2 Q56,-10 60,4" fill="none" stroke="#ff5722" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>` },
-  { id:'mc_koori',    name:'こおりぽてまよ',   type:'こおり',    rarity:'common', char:'mochi', mc:'#e3f2fd', mo:'#0288d1', me:'sl', mm:'n',
+  { id:'mc_koori',    name:'こおりぽてまよ',   type:'こおり',    rarity:'rare', char:'mochi', mc:'#e3f2fd', mo:'#0288d1', me:'sl', mm:'n',
     mt:`<line x1="50" y1="-6" x2="50" y2="-18" stroke="#b3e5fc" stroke-width="2"/><line x1="42" y1="-10" x2="58" y2="-10" stroke="#b3e5fc" stroke-width="2"/><line x1="44" y1="-6" x2="56" y2="-14" stroke="#b3e5fc" stroke-width="1.5" opacity=".7"/><line x1="56" y1="-6" x2="44" y2="-14" stroke="#b3e5fc" stroke-width="1.5" opacity=".7"/>` },
-  { id:'mc_kaminari', name:'かみなりぽてまよ', type:'かみなり',  rarity:'common', char:'mochi', mc:'#fdd835', mo:'#f57f17', me:'op', mm:'op',
+  { id:'mc_kaminari', name:'かみなりぽてまよ', type:'かみなり',  rarity:'rare', char:'mochi', mc:'#fdd835', mo:'#f57f17', me:'op', mm:'op',
     mt:`<polygon points="54,-20 48,-6 53,-9 46,6" fill="#ffd600" stroke="#ff8f00" stroke-width="1.5"/>` },
-  { id:'mc_kusa',     name:'くさぽてまよ',     type:'くさ',      rarity:'common', char:'mochi', mc:'#a5d6a7', mo:'#388e3c', me:'h',  mm:'sm',
+  { id:'mc_kusa',     name:'くさぽてまよ',     type:'くさ',      rarity:'rare', char:'mochi', mc:'#a5d6a7', mo:'#388e3c', me:'h',  mm:'sm',
     mt:`<ellipse cx="50" cy="-12" rx="6" ry="9" fill="#a5d6a7" stroke="#388e3c" stroke-width="1.5"/><path d="M50,-20 Q56,-14 50,-4 Q44,-14 50,-20" fill="#81c784"/><line x1="50" y1="-18" x2="50" y2="-2" stroke="#388e3c" stroke-width="1.2"/>` },
-  { id:'mc_beni',     name:'べにぽてまよ',     type:'べに',      rarity:'common', char:'mochi', mc:'#e91e63', mo:'#880e4f', me:'n',  mm:'n'  },
+  { id:'mc_beni',     name:'べにぽてまよ',     type:'べに',      rarity:'rare', char:'mochi', mc:'#e91e63', mo:'#880e4f', me:'n',  mm:'n'  },
 
   // ===== 激レア (rare) 15種 =====
-  { id:'mc_oni',      name:'おにぽてまよ',     type:'おに',      rarity:'rare',   char:'mochi', mc:'#ef5350', mo:'#7f0000', me:'a',  mm:'op',
+  { id:'mc_oni',      name:'おにぽてまよ',     type:'おに',      rarity:'gekirea',   char:'mochi', mc:'#ef5350', mo:'#7f0000', me:'a',  mm:'op',
     mt:`<ellipse cx="34" cy="-3" rx="5" ry="11" fill="#ef9a9a" stroke="#c62828" stroke-width="1.5" transform="rotate(-14,34,-3)"/><ellipse cx="66" cy="-3" rx="5" ry="11" fill="#ef9a9a" stroke="#c62828" stroke-width="1.5" transform="rotate(14,66,-3)"/>`,
     mx:`<rect x="38" y="62" width="4" height="8" rx="1.5" fill="white"/><rect x="51" y="61" width="4" height="9" rx="1.5" fill="white"/>` },
-  { id:'mc_tenshi',   name:'てんしぽてまよ',   type:'てんし',    rarity:'rare',   char:'mochi', mc:'#fffde7', mo:'#f9a825', me:'h',  mm:'sm',
+  { id:'mc_tenshi',   name:'てんしぽてまよ',   type:'てんし',    rarity:'gekirea',   char:'mochi', mc:'#fffde7', mo:'#f9a825', me:'h',  mm:'sm',
     mt:`<ellipse cx="50" cy="-5" rx="18" ry="5" fill="none" stroke="#ffd600" stroke-width="3.5" opacity=".9"/><ellipse cx="18" cy="28" rx="12" ry="7" fill="white" opacity=".6" transform="rotate(-30,18,28)"/><ellipse cx="82" cy="28" rx="12" ry="7" fill="white" opacity=".6" transform="rotate(30,82,28)"/>` },
-  { id:'mc_mahou',    name:'まほうぽてまよ',   type:'まほう',    rarity:'rare',   char:'mochi', mc:'#ce93d8', mo:'#6a1b9a', me:'sp', mm:'n',
+  { id:'mc_mahou',    name:'まほうぽてまよ',   type:'まほう',    rarity:'gekirea',   char:'mochi', mc:'#ce93d8', mo:'#6a1b9a', me:'sp', mm:'n',
     mt:`<line x1="80" y1="8" x2="90" y2="-10" stroke="#7b1fa2" stroke-width="2.5" stroke-linecap="round"/><polygon points="90,-10 86,-18 94,-18" fill="#ffd600"/><circle cx="90" cy="-10" r="4" fill="#e040fb" opacity=".7"/>` },
-  { id:'mc_nami',     name:'なみぽてまよ',     type:'なみ',      rarity:'rare',   char:'mochi', mc:'#1e88e5', mo:'#0d47a1', me:'n',  mm:'n',
+  { id:'mc_nami',     name:'なみぽてまよ',     type:'なみ',      rarity:'gekirea',   char:'mochi', mc:'#1e88e5', mo:'#0d47a1', me:'n',  mm:'n',
     mt:`<path d="M10,6 Q22,-8 36,0 Q48,8 60,-2 Q72,-10 88,2" fill="none" stroke="#90caf9" stroke-width="3.5" stroke-linecap="round"/><path d="M8,12 Q20,0 34,6 Q46,12 58,2 Q70,-4 86,8" fill="none" stroke="#42a5f5" stroke-width="2" stroke-linecap="round" opacity=".6"/>` },
-  { id:'mc_kazan',    name:'かざんぽてまよ',   type:'かざん',    rarity:'rare',   char:'mochi', mc:'#ff5722', mo:'#bf360c', me:'a',  mm:'op',
+  { id:'mc_kazan',    name:'かざんぽてまよ',   type:'かざん',    rarity:'gekirea',   char:'mochi', mc:'#ff5722', mo:'#bf360c', me:'a',  mm:'op',
     mt:`<path d="M36,6 Q40,-10 44,0 Q48,-14 50,-6 Q52,-14 56,0 Q60,-10 64,6" fill="#ffcc02" stroke="#ff6d00" stroke-width="1" stroke-linecap="round"/>` },
-  { id:'mc_kinko',    name:'きんこうぽてまよ', type:'きんこう',  rarity:'rare',   char:'mochi', mc:'#ffd700', mo:'#e65100', me:'h',  mm:'sm',
+  { id:'mc_kinko',    name:'きんこうぽてまよ', type:'きんこう',  rarity:'gekirea',   char:'mochi', mc:'#ffd700', mo:'#e65100', me:'h',  mm:'sm',
     mt:`<circle cx="50" cy="-8" r="8" fill="#ffd700" stroke="#ff8f00" stroke-width="2"/><circle cx="50" cy="-8" r="5" fill="#ffca28"/><text x="50" y="-5" font-size="7" text-anchor="middle" fill="#e65100">★</text>` },
-  { id:'mc_gin',      name:'ぎんぽてまよ',     type:'ぎん',      rarity:'rare',   char:'mochi', mc:'#cfd8dc', mo:'#546e7a', me:'sp', mm:'n',
+  { id:'mc_gin',      name:'ぎんぽてまよ',     type:'ぎん',      rarity:'gekirea',   char:'mochi', mc:'#cfd8dc', mo:'#546e7a', me:'sp', mm:'n',
     mt:`<circle cx="50" cy="-8" r="8" fill="#b0bec5" stroke="#78909c" stroke-width="2"/><circle cx="50" cy="-8" r="5" fill="#eceff1"/><text x="50" y="-5" font-size="7" text-anchor="middle" fill="#546e7a">✦</text>` },
-  { id:'mc_yasha',    name:'やしゃぽてまよ',   type:'やしゃ',    rarity:'rare',   char:'mochi', mc:'#7b1fa2', mo:'#4a148c', me:'a',  mm:'op',
+  { id:'mc_yasha',    name:'やしゃぽてまよ',   type:'やしゃ',    rarity:'gekirea',   char:'mochi', mc:'#7b1fa2', mo:'#4a148c', me:'a',  mm:'op',
     mt:`<path d="M26,30 Q18,22 20,12 Q24,16 22,26 L26,30" fill="#6a1b9a" opacity=".7"/><path d="M74,30 Q82,22 80,12 Q76,16 78,26 L74,30" fill="#6a1b9a" opacity=".7"/>`,
     mx:`<rect x="38" y="62" width="3" height="8" rx="1" fill="#e1bee7"/><rect x="51" y="61" width="3.5" height="9" rx="1" fill="#e1bee7"/>` },
-  { id:'mc_honoo',    name:'ほのおぽてまよ',   type:'ほのお',    rarity:'rare',   char:'mochi', mc:'#ff3d00', mo:'#870000', me:'a',  mm:'op',
+  { id:'mc_honoo',    name:'ほのおぽてまよ',   type:'ほのお',    rarity:'gekirea',   char:'mochi', mc:'#ff3d00', mo:'#870000', me:'a',  mm:'op',
     mt:`<path d="M30,8 Q34,-8 38,2 Q42,-14 44,-4 Q48,-18 50,-8 Q52,-18 56,-4 Q58,-14 62,2 Q66,-8 70,8" fill="none" stroke="#ffd600" stroke-width="2.5" stroke-linecap="round"/>` },
-  { id:'mc_anya',     name:'あんやぽてまよ',   type:'あんや',    rarity:'rare',   char:'mochi', mc:'#1a237e', mo:'#0d1117', me:'sp', mm:'n',
+  { id:'mc_anya',     name:'あんやぽてまよ',   type:'あんや',    rarity:'gekirea',   char:'mochi', mc:'#1a237e', mo:'#0d1117', me:'sp', mm:'n',
     mx:`<circle cx="26" cy="42" r="3" fill="#5c6bc0" opacity=".4"/><circle cx="24" cy="52" r="2" fill="#3f51b5" opacity=".3"/>` },
-  { id:'mc_seirei',   name:'せいれいぽてまよ', type:'せいれい',  rarity:'rare',   char:'mochi', mc:'#b2ebf2', mo:'#006064', me:'d',  mm:'n',
+  { id:'mc_seirei',   name:'せいれいぽてまよ', type:'せいれい',  rarity:'gekirea',   char:'mochi', mc:'#b2ebf2', mo:'#006064', me:'d',  mm:'n',
     mt:`<circle cx="50" cy="-8" r="7" fill="#e0f7fa" opacity=".7" stroke="#80deea" stroke-width="1.5"/><circle cx="40" cy="-14" r="4" fill="#b2ebf2" opacity=".5"/><circle cx="60" cy="-12" r="3.5" fill="#b2ebf2" opacity=".5"/>` },
-  { id:'mc_maou2',    name:'まおうぽてまよ',   type:'まおう',    rarity:'rare',   char:'mochi', mc:'#4a148c', mo:'#1a0030', me:'sp', mm:'op',
+  { id:'mc_maou2',    name:'まおうぽてまよ',   type:'まおう',    rarity:'gekirea',   char:'mochi', mc:'#4a148c', mo:'#1a0030', me:'sp', mm:'op',
     mt:`<path d="M34,-2 L36,-14 L44,-6 L50,-16 L56,-6 L64,-14 L66,-2Z" fill="#7b1fa2" stroke="#4a148c" stroke-width="1.5"/><circle cx="40" cy="-10" r="2.5" fill="#f44336"/><circle cx="50" cy="-12" r="2.5" fill="#ffd600"/><circle cx="60" cy="-10" r="2.5" fill="#f44336"/>` },
-  { id:'mc_meifuku',  name:'めいふくぽてまよ', type:'めいふく',  rarity:'rare',   char:'mochi', mc:'#e8eaf6', mo:'#7986cb', me:'sl', mm:'sa',
+  { id:'mc_meifuku',  name:'めいふくぽてまよ', type:'めいふく',  rarity:'gekirea',   char:'mochi', mc:'#e8eaf6', mo:'#7986cb', me:'sl', mm:'sa',
     mt:`<path d="M40,4 Q46,-6 50,-4 Q54,-6 60,4" fill="none" stroke="#c5cae9" stroke-width="2" stroke-linecap="round" opacity=".7"/>` },
-  { id:'mc_ame',      name:'あめぽてまよ',     type:'あめ',      rarity:'rare',   char:'mochi', mc:'#5c6bc0', mo:'#283593', me:'sa', mm:'sa',
+  { id:'mc_ame',      name:'あめぽてまよ',     type:'あめ',      rarity:'gekirea',   char:'mochi', mc:'#5c6bc0', mo:'#283593', me:'sa', mm:'sa',
     mt:`<path d="M26,-4 L24,4" stroke="#90caf9" stroke-width="2" stroke-linecap="round"/><path d="M38,-8 L36,0" stroke="#90caf9" stroke-width="2" stroke-linecap="round"/><path d="M50,-10 L48,-2" stroke="#90caf9" stroke-width="2" stroke-linecap="round"/><path d="M62,-8 L60,0" stroke="#90caf9" stroke-width="2" stroke-linecap="round"/><path d="M74,-4 L72,4" stroke="#90caf9" stroke-width="2" stroke-linecap="round"/>` },
-  { id:'mc_takibi',   name:'たきびぽてまよ',   type:'たきび',    rarity:'rare',   char:'mochi', mc:'#ff6d00', mo:'#bf360c', me:'h',  mm:'sm',
+  { id:'mc_takibi',   name:'たきびぽてまよ',   type:'たきび',    rarity:'gekirea',   char:'mochi', mc:'#ff6d00', mo:'#bf360c', me:'h',  mm:'sm',
     mt:`<line x1="46" y1="6" x2="44" y2="-12" stroke="#795548" stroke-width="3" stroke-linecap="round"/><line x1="50" y1="6" x2="50" y2="-14" stroke="#6d4c41" stroke-width="3.5" stroke-linecap="round"/><line x1="54" y1="6" x2="56" y2="-12" stroke="#795548" stroke-width="3" stroke-linecap="round"/><path d="M46,-4 Q50,-16 54,-4 Q50,-10 46,-4" fill="#ffd600" opacity=".9"/><path d="M47,-2 Q50,-12 53,-2 Q50,-8 47,-2" fill="#ff9800" opacity=".8"/>` },
 
   // ===== 超激レア (SR) 7種 =====
-  { id:'mc_houou',    name:'ほうおうぽてまよ', type:'ほうおう',  rarity:'sr',     char:'mochi', mc:'#ff6f00', mo:'#bf360c', me:'sp', mm:'op',
+  { id:'mc_houou',    name:'ほうおうぽてまよ', type:'ほうおう',  rarity:'chougeki',     char:'mochi', mc:'#ff6f00', mo:'#bf360c', me:'sp', mm:'op',
     mt:`<path d="M30,12 Q20,-2 24,-14 Q32,-4 28,8 L30,12" fill="#ffd600" opacity=".9"/><path d="M38,10 Q30,-2 34,-12 Q40,-4 38,8 L38,10" fill="#ff8f00" opacity=".85"/><path d="M70,12 Q80,-2 76,-14 Q68,-4 72,8 L70,12" fill="#ffd600" opacity=".9"/><path d="M62,10 Q70,-2 66,-12 Q60,-4 62,8 L62,10" fill="#ff8f00" opacity=".85"/><path d="M38,4 Q50,-18 62,4 Q52,-10 50,-6 Q48,-10 38,4" fill="#ffd600"/>` },
-  { id:'mc_kurayami', name:'くらやみぽてまよ', type:'くらやみ',  rarity:'sr',     char:'mochi', mc:'#212121', mo:'#000000', me:'sp', mm:'n',
+  { id:'mc_kurayami', name:'くらやみぽてまよ', type:'くらやみ',  rarity:'chougeki',     char:'mochi', mc:'#212121', mo:'#000000', me:'sp', mm:'n',
     mt:`<circle cx="30" cy="10" r="3.5" fill="#7c4dff" opacity=".5"/><circle cx="70" cy="8" r="3" fill="#7c4dff" opacity=".5"/><circle cx="50" cy="2" r="4" fill="#7c4dff" opacity=".4"/>` },
-  { id:'mc_megami',   name:'めがみぽてまよ',   type:'めがみ',    rarity:'sr',     char:'mochi', mc:'#fff8e1', mo:'#ffa000', me:'sp', mm:'sm',
+  { id:'mc_megami',   name:'めがみぽてまよ',   type:'めがみ',    rarity:'chougeki',     char:'mochi', mc:'#fff8e1', mo:'#ffa000', me:'sp', mm:'sm',
     mt:`<ellipse cx="50" cy="-5" rx="20" ry="5" fill="none" stroke="#ffd600" stroke-width="4"/><polygon points="50,-20 46,-12 36,-10 44,-4 41,6 50,0 59,6 56,-4 64,-10 54,-12" fill="#ffd700" stroke="#ffa000" stroke-width="1.5"/><circle cx="50" cy="-14" r="4.5" fill="#fff9c4" stroke="#ffd600" stroke-width="1.5"/>` },
-  { id:'mc_akuma',    name:'あくまぽてまよ',   type:'あくま',    rarity:'sr',     char:'mochi', mc:'#b71c1c', mo:'#7f0000', me:'a',  mm:'op',
+  { id:'mc_akuma',    name:'あくまぽてまよ',   type:'あくま',    rarity:'chougeki',     char:'mochi', mc:'#b71c1c', mo:'#7f0000', me:'a',  mm:'op',
     mt:`<ellipse cx="34" cy="-2" rx="6" ry="12" fill="#c62828" stroke="#7f0000" stroke-width="1.5" transform="rotate(-16,34,-2)"/><ellipse cx="66" cy="-2" rx="6" ry="12" fill="#c62828" stroke="#7f0000" stroke-width="1.5" transform="rotate(16,66,-2)"/>`,
     mx:`<path d="M14,48 Q10,38 16,30 Q16,42 14,48" fill="#b71c1c" opacity=".65"/><path d="M86,48 Q90,38 84,30 Q84,42 86,48" fill="#b71c1c" opacity=".65"/>` },
-  { id:'mc_kinki',    name:'きんきぽてまよ',   type:'きんき',    rarity:'sr',     char:'mochi', mc:'#ffd700', mo:'#e65100', me:'sp', mm:'sm',
+  { id:'mc_kinki',    name:'きんきぽてまよ',   type:'きんき',    rarity:'chougeki',     char:'mochi', mc:'#ffd700', mo:'#e65100', me:'sp', mm:'sm',
     mt:`<polygon points="50,-22 46,-12 36,-12 44,-6 41,4 50,-2 59,4 56,-6 64,-12 54,-12" fill="#ffd700" stroke="#ff8f00" stroke-width="1.5"/><circle cx="18" cy="14" r="3" fill="#ffd700" opacity=".7"/><circle cx="82" cy="12" r="2.5" fill="#ffd700" opacity=".7"/>` },
-  { id:'mc_tenkuu',   name:'てんくうぽてまよ', type:'てんくう',  rarity:'sr',     char:'mochi', mc:'#1565c0', mo:'#0d1117', me:'sp', mm:'n',
+  { id:'mc_tenkuu',   name:'てんくうぽてまよ', type:'てんくう',  rarity:'chougeki',     char:'mochi', mc:'#1565c0', mo:'#0d1117', me:'sp', mm:'n',
     mt:`<path d="M28,14 Q18,2 22,-10 Q28,0 26,12 L28,14" fill="#42a5f5" opacity=".8"/><path d="M38,12 Q30,2 34,-8 Q38,0 38,10 L38,12" fill="#64b5f6" opacity=".7"/><path d="M72,14 Q82,2 78,-10 Q72,0 74,12 L72,14" fill="#42a5f5" opacity=".8"/><path d="M62,12 Q70,2 66,-8 Q62,0 62,10 L62,12" fill="#64b5f6" opacity=".7"/>` },
-  { id:'mc_shinryuu', name:'しんりゅうぽてまよ',type:'しんりゅう',rarity:'sr',    char:'mochi', mc:'#2e7d32', mo:'#1b5e20', me:'sp', mm:'op',
+  { id:'mc_shinryuu', name:'しんりゅうぽてまよ',type:'しんりゅう',rarity:'chougeki',    char:'mochi', mc:'#2e7d32', mo:'#1b5e20', me:'sp', mm:'op',
     mt:`<path d="M28,16 Q20,4 22,-6 Q28,2 26,14 L28,16" fill="#558b2f"/><path d="M36,14 Q28,4 32,-4 Q36,2 36,12 L36,14" fill="#7cb342"/><path d="M72,16 Q80,4 78,-6 Q72,2 74,14 L72,16" fill="#558b2f"/><path d="M64,14 Q72,4 68,-4 Q64,2 64,12 L64,14" fill="#7cb342"/><path d="M40,4 Q50,-14 60,4 Q52,-8 50,-4 Q48,-8 40,4" fill="#8bc34a"/>` },
 
   // ===== 伝説レア (UR) 3種 =====
-  { id:'mc_shinsei',  name:'しんせいぽてまよ', type:'しんせい',  rarity:'ur',     char:'mochi', mc:'#fffde7', mo:'#f9a825', me:'sp', mm:'sm',
+  { id:'mc_shinsei',  name:'しんせいぽてまよ', type:'しんせい',  rarity:'densetsu',     char:'mochi', mc:'#fffde7', mo:'#f9a825', me:'sp', mm:'sm',
     mt:`<ellipse cx="50" cy="-6" rx="24" ry="6" fill="none" stroke="#fff9c4" stroke-width="4"/><ellipse cx="50" cy="-6" rx="24" ry="6" fill="none" stroke="#ffd700" stroke-width="2.5"/><polygon points="50,-22 46,-12 36,-12 44,-6 41,4 50,-2 59,4 56,-6 64,-12 54,-12" fill="#ffd700" stroke="#ff8f00" stroke-width="1.5"/><circle cx="50" cy="-14" r="5" fill="#fff9c4" stroke="#ffd700" stroke-width="1.5"/><circle cx="20" cy="14" r="3" fill="#ffd700" opacity=".7"/><path d="M20,14 L18,6 M20,14 L28,14 M20,14 L14,20" stroke="#ffd700" stroke-width="1.5" stroke-linecap="round" opacity=".8"/><circle cx="80" cy="12" r="3" fill="#ffd700" opacity=".7"/><path d="M80,12 L78,4 M80,12 L88,12 M80,12 L74,18" stroke="#ffd700" stroke-width="1.5" stroke-linecap="round" opacity=".8"/>` },
-  { id:'mc_enma',     name:'えんまぽてまよ',   type:'えんま',    rarity:'ur',     char:'mochi', mc:'#b71c1c', mo:'#000000', me:'a',  mm:'op',
+  { id:'mc_enma',     name:'えんまぽてまよ',   type:'えんま',    rarity:'densetsu',     char:'mochi', mc:'#b71c1c', mo:'#000000', me:'a',  mm:'op',
     mt:`<path d="M34,-2 L36,-14 L44,-6 L50,-16 L56,-6 L64,-14 L66,-2Z" fill="#d32f2f" stroke="#7f0000" stroke-width="2"/><circle cx="38" cy="-10" r="3" fill="#ffd600"/><circle cx="50" cy="-12" r="3.5" fill="#ffd600"/><circle cx="62" cy="-10" r="3" fill="#ffd600"/><ellipse cx="34" cy="4" rx="6" ry="12" fill="#c62828" stroke="#7f0000" stroke-width="1.5" transform="rotate(-16,34,4)"/><ellipse cx="66" cy="4" rx="6" ry="12" fill="#c62828" stroke="#7f0000" stroke-width="1.5" transform="rotate(16,66,4)"/>`,
     mx:`<path d="M12,46 Q8,34 14,24 Q14,38 12,46" fill="#9a0007" opacity=".65"/><path d="M88,46 Q92,34 86,24 Q86,38 88,46" fill="#9a0007" opacity=".65"/>` },
-  { id:'mc_souzou',   name:'そうぞうぽてまよ', type:'そうぞう',  rarity:'ur',     char:'mochi', mc:'#f8bbd0', mo:'#757575', me:'sp', mm:'sm',
+  { id:'mc_souzou',   name:'そうぞうぽてまよ', type:'そうぞう',  rarity:'densetsu',     char:'mochi', mc:'#f8bbd0', mo:'#757575', me:'sp', mm:'sm',
     mt:`<path d="M28,10 Q20,-2 24,-14 Q30,-2 28,8 L28,10" fill="#ffd700" opacity=".85"/><path d="M36,8 Q28,0 32,-10 Q36,0 36,6 L36,8" fill="#ff9800" opacity=".8"/><path d="M72,10 Q80,-2 76,-14 Q70,-2 72,8 L72,10" fill="#ffd700" opacity=".85"/><path d="M64,8 Q72,0 68,-10 Q64,0 64,6 L64,8" fill="#ff9800" opacity=".8"/><path d="M42,4 Q50,-18 58,4 Q52,-10 50,-6 Q48,-10 42,4" fill="#ffd700"/>`,
     mx:`<circle cx="20" cy="36" r="3" fill="#e040fb" opacity=".3"/><circle cx="80" cy="34" r="3" fill="#e040fb" opacity=".3"/><circle cx="26" cy="52" r="2" fill="#42a5f5" opacity=".25"/>` },
   // ===== 限定 UR：メタルポテまよ =====
-  { id:'metal_potemayo', name:'メタルポテまよ', type:'メタル', rarity:'ur', char:'mochi',
+  { id:'metal_potemayo', name:'メタルポテまよ', type:'メタル', rarity:'densetsu', char:'mochi',
     mc:'#b0bec5', mo:'#546e7a', me:'a', mm:'sm', limited:true,
     fixedStats:{hp:300, atk:10, def:500},
     mt:`<rect x="28" y="-16" width="44" height="12" rx="5" fill="#78909c" stroke="#455a64" stroke-width="1.5"/><rect x="34" y="-25" width="32" height="11" rx="4" fill="#90a4ae" stroke="#546e7a" stroke-width="1.5"/><circle cx="40" cy="-20" r="2.5" fill="#eceff1"/><circle cx="50" cy="-20" r="2.5" fill="#eceff1"/><circle cx="60" cy="-20" r="2.5" fill="#eceff1"/><path d="M36,-23 Q44,-29 54,-23" stroke="rgba(255,255,255,.7)" stroke-width="2" fill="none"/>`,
@@ -4162,66 +4162,66 @@ const MD = [
 // ===== にゃんこ 25種 =====
 const ND = [
   // ─── コモン 10種 ───────────────────────────────
-  { id:'nyanko',         name:'にゃんこ',           type:'ノーマル', rarity:'common', char:'neko', nt:'' },
-  { id:'nyanko_hana',    name:'はなにゃんこ',       type:'はな',     rarity:'common', char:'neko',
+  { id:'nyanko',         name:'にゃんこ',           type:'ノーマル', rarity:'rare', char:'neko', nt:'' },
+  { id:'nyanko_hana',    name:'はなにゃんこ',       type:'はな',     rarity:'rare', char:'neko',
     nt:`<path d="M42,-14 Q50,-22 58,-14 Q54,-6 50,-8 Q46,-6 42,-14Z" fill="#f8bbd0"/><path d="M34,-8 Q26,-16 34,-20 Q40,-14 38,-10Z" fill="#f8bbd0"/><path d="M66,-8 Q74,-16 66,-20 Q60,-14 62,-10Z" fill="#f8bbd0"/>` },
-  { id:'nyanko_yuki',    name:'ゆきにゃんこ',       type:'ゆき',     rarity:'common', char:'neko',
+  { id:'nyanko_yuki',    name:'ゆきにゃんこ',       type:'ゆき',     rarity:'rare', char:'neko',
     nt:`<text x="50" y="-1" font-size="20" text-anchor="middle" fill="#b3e5fc">❄</text>` },
-  { id:'nyanko_hoshi',   name:'ほしにゃんこ',       type:'こほし',   rarity:'common', char:'neko',
+  { id:'nyanko_hoshi',   name:'ほしにゃんこ',       type:'こほし',   rarity:'rare', char:'neko',
     nt:`<polygon points="50,-18 53,-10 61,-10 55,-4 57,4 50,-1 43,4 45,-4 39,-10 47,-10" fill="#ffd600" stroke="#ff8f00" stroke-width="1"/>` },
-  { id:'nyanko_me',      name:'はっぱにゃんこ',     type:'め',       rarity:'common', char:'neko',
+  { id:'nyanko_me',      name:'はっぱにゃんこ',     type:'め',       rarity:'rare', char:'neko',
     nt:`<ellipse cx="50" cy="-4" rx="8" ry="12" fill="#66bb6a" stroke="#388e3c" stroke-width="1.5" transform="rotate(-20,50,-4)"/>` },
-  { id:'nyanko_kumo',    name:'くもにゃんこ',       type:'くも',     rarity:'common', char:'neko',
+  { id:'nyanko_kumo',    name:'くもにゃんこ',       type:'くも',     rarity:'rare', char:'neko',
     nt:`<ellipse cx="50" cy="-10" rx="16" ry="10" fill="white" opacity=".9"/><ellipse cx="37" cy="-7" rx="10" ry="7" fill="white" opacity=".9"/><ellipse cx="64" cy="-8" rx="9" ry="6" fill="white" opacity=".9"/>` },
-  { id:'nyanko_nami',    name:'なみにゃんこ',       type:'なみ',     rarity:'common', char:'neko',
+  { id:'nyanko_nami',    name:'なみにゃんこ',       type:'なみ',     rarity:'rare', char:'neko',
     nt:`<path d="M10,6 Q22,-8 36,0 Q48,8 60,-2 Q72,-10 88,2" fill="none" stroke="#80deea" stroke-width="3.5" stroke-linecap="round"/>` },
-  { id:'nyanko_kibana',  name:'きばなにゃんこ',     type:'きばな',   rarity:'common', char:'neko',
+  { id:'nyanko_kibana',  name:'きばなにゃんこ',     type:'きばな',   rarity:'rare', char:'neko',
     nt:`<path d="M38,-14 Q55,-22 62,-8 Q50,-4 38,-14Z" fill="#fff176" stroke="#f9a825" stroke-width="1"/>` },
-  { id:'nyanko_ribbon',  name:'リボンにゃんこ',     type:'リボン',   rarity:'common', char:'neko',
+  { id:'nyanko_ribbon',  name:'リボンにゃんこ',     type:'リボン',   rarity:'rare', char:'neko',
     nt:`<path d="M30,-4 Q20,-14 28,-20 Q36,-12 34,-6Z" fill="#f48fb1" stroke="#e91e63" stroke-width="1"/><path d="M70,-4 Q80,-14 72,-20 Q64,-12 66,-6Z" fill="#f48fb1" stroke="#e91e63" stroke-width="1"/><circle cx="50" cy="-8" r="6" fill="#f48fb1" stroke="#e91e63" stroke-width="1.5"/>` },
-  { id:'nyanko_tane',    name:'たねにゃんこ',       type:'たね',     rarity:'common', char:'neko',
+  { id:'nyanko_tane',    name:'たねにゃんこ',       type:'たね',     rarity:'rare', char:'neko',
     nt:`<ellipse cx="50" cy="-12" rx="6" ry="9" fill="#a5d6a7" stroke="#388e3c" stroke-width="1.5"/><path d="M50,-20 Q56,-14 50,-4 Q44,-14 50,-20" fill="#81c784"/>` },
 
   // ─── レア 8種 ─────────────────────────────────
-  { id:'nyanko_kaminari',name:'カミナリにゃんこ',   type:'かみなり', rarity:'rare', char:'neko',
+  { id:'nyanko_kaminari',name:'カミナリにゃんこ',   type:'かみなり', rarity:'gekirea', char:'neko',
     nt:`<polygon points="54,-22 48,-8 53,-11 46,4" fill="#ffd600" stroke="#ff8f00" stroke-width="1.5"/>` },
-  { id:'nyanko_niji',    name:'にじにゃんこ',       type:'にじ',     rarity:'rare', char:'neko',
+  { id:'nyanko_niji',    name:'にじにゃんこ',       type:'にじ',     rarity:'gekirea', char:'neko',
     nt:`<path d="M16,4 Q32,-10 50,-12 Q68,-10 84,4" fill="none" stroke="#e53935" stroke-width="2.5" stroke-linecap="round" opacity=".9"/><path d="M20,8 Q36,-6 50,-8 Q64,-6 80,8" fill="none" stroke="#ff9800" stroke-width="2.5" stroke-linecap="round" opacity=".9"/><path d="M24,12 Q38,-2 50,-4 Q62,-2 76,12" fill="none" stroke="#fdd835" stroke-width="2" stroke-linecap="round" opacity=".8"/>` },
-  { id:'nyanko_hi',      name:'火にゃんこ',         type:'ひ',       rarity:'rare', char:'neko',
+  { id:'nyanko_hi',      name:'火にゃんこ',         type:'ひ',       rarity:'gekirea', char:'neko',
     nt:`<path d="M40,4 Q44,-10 46,2 Q50,-14 50,-4 Q54,-14 54,2 Q56,-10 60,4" fill="none" stroke="#ff5722" stroke-width="2.5" stroke-linecap="round"/>` },
-  { id:'nyanko_tsuki',   name:'つきにゃんこ',       type:'つき',     rarity:'rare', char:'neko',
+  { id:'nyanko_tsuki',   name:'つきにゃんこ',       type:'つき',     rarity:'gekirea', char:'neko',
     nt:`<path d="M36,4 Q40,-10 44,0 Q48,-14 50,-6 Q52,-14 56,0 Q60,-10 64,4" fill="#ffcc02" stroke="#ff6d00" stroke-width="1" stroke-linecap="round"/>` },
-  { id:'nyanko_hikari',  name:'ひかりにゃんこ',     type:'ひかり',   rarity:'rare', char:'neko',
+  { id:'nyanko_hikari',  name:'ひかりにゃんこ',     type:'ひかり',   rarity:'gekirea', char:'neko',
     nt:`<line x1="50" y1="-6" x2="50" y2="-20" stroke="#fff176" stroke-width="2.5"/><line x1="42" y1="-12" x2="58" y2="-12" stroke="#fff176" stroke-width="2.5"/><line x1="44" y1="-6" x2="56" y2="-18" stroke="#fff176" stroke-width="1.8" opacity=".8"/><line x1="56" y1="-6" x2="44" y2="-18" stroke="#fff176" stroke-width="1.8" opacity=".8"/>` },
-  { id:'nyanko_ki',      name:'木にゃんこ',         type:'き',       rarity:'rare', char:'neko',
+  { id:'nyanko_ki',      name:'木にゃんこ',         type:'き',       rarity:'gekirea', char:'neko',
     nt:`<line x1="46" y1="6" x2="44" y2="-12" stroke="#795548" stroke-width="3" stroke-linecap="round"/><line x1="50" y1="6" x2="50" y2="-14" stroke="#6d4c41" stroke-width="3.5" stroke-linecap="round"/><line x1="54" y1="6" x2="56" y2="-12" stroke="#795548" stroke-width="3" stroke-linecap="round"/><path d="M46,-4 Q50,-16 54,-4 Q50,-10 46,-4" fill="#ffd600" opacity=".9"/>` },
-  { id:'nyanko_tsubasa', name:'つばさにゃんこ',     type:'つばさ',   rarity:'rare', char:'neko',
+  { id:'nyanko_tsubasa', name:'つばさにゃんこ',     type:'つばさ',   rarity:'gekirea', char:'neko',
     nt:`<path d="M28,14 Q18,2 22,-10 Q28,0 26,12Z" fill="#42a5f5" opacity=".8"/><path d="M38,12 Q30,2 34,-8 Q38,0 38,10Z" fill="#64b5f6" opacity=".7"/><path d="M72,14 Q82,2 78,-10 Q72,0 74,12Z" fill="#42a5f5" opacity=".8"/><path d="M62,12 Q70,2 66,-8 Q62,0 62,10Z" fill="#64b5f6" opacity=".7"/>` },
-  { id:'nyanko_umi',     name:'うみにゃんこ',       type:'うみ',     rarity:'rare', char:'neko',
+  { id:'nyanko_umi',     name:'うみにゃんこ',       type:'うみ',     rarity:'gekirea', char:'neko',
     nt:`<path d="M10,6 Q22,-8 44,0 Q56,6 68,-2 Q80,-8 90,2" fill="none" stroke="#90caf9" stroke-width="3.5" stroke-linecap="round"/><path d="M8,12 Q20,0 34,6 Q46,12 58,2 Q70,-4 86,8" fill="none" stroke="#42a5f5" stroke-width="2" stroke-linecap="round" opacity=".6"/>` },
 
   // ─── SR 5種 ────────────────────────────────────
-  { id:'nyanko_ouji',    name:'おうじにゃんこ',     type:'おうじ',   rarity:'sr', char:'neko',
+  { id:'nyanko_ouji',    name:'おうじにゃんこ',     type:'おうじ',   rarity:'chougeki', char:'neko',
     nt:`<polygon points="50,-20 46,-10 36,-10 44,-4 41,6 50,0 59,6 56,-4 64,-10 54,-10" fill="#ffd700" stroke="#ffa000" stroke-width="1.5"/><circle cx="50" cy="-14" r="4.5" fill="#fff9c4" stroke="#ffd600" stroke-width="1.5"/>` },
-  { id:'nyanko_tenshi',  name:'てんしにゃんこ',     type:'てんし',   rarity:'sr', char:'neko',
+  { id:'nyanko_tenshi',  name:'てんしにゃんこ',     type:'てんし',   rarity:'chougeki', char:'neko',
     nt:`<ellipse cx="50" cy="-5" rx="20" ry="5" fill="none" stroke="#ffd600" stroke-width="3.5" opacity=".9"/><ellipse cx="18" cy="28" rx="12" ry="7" fill="white" opacity=".7" transform="rotate(-30,18,28)"/><ellipse cx="82" cy="28" rx="12" ry="7" fill="white" opacity=".7" transform="rotate(30,82,28)"/>` },
-  { id:'nyanko_oni',     name:'オニにゃんこ',       type:'おに',     rarity:'sr', char:'neko',
+  { id:'nyanko_oni',     name:'オニにゃんこ',       type:'おに',     rarity:'chougeki', char:'neko',
     nt:`<ellipse cx="34" cy="-3" rx="5" ry="12" fill="#ef9a9a" stroke="#c62828" stroke-width="1.5" transform="rotate(-14,34,-3)"/><ellipse cx="66" cy="-3" rx="5" ry="12" fill="#ef9a9a" stroke="#c62828" stroke-width="1.5" transform="rotate(14,66,-3)"/>` },
-  { id:'nyanko_majo',    name:'まじょにゃんこ',     type:'まじょ',   rarity:'sr', char:'neko',
+  { id:'nyanko_majo',    name:'まじょにゃんこ',     type:'まじょ',   rarity:'chougeki', char:'neko',
     nt:`<line x1="80" y1="8" x2="90" y2="-12" stroke="#7b1fa2" stroke-width="2.5" stroke-linecap="round"/><polygon points="90,-12 86,-20 94,-20" fill="#ffd600"/><circle cx="90" cy="-12" r="4" fill="#e040fb" opacity=".8"/>` },
-  { id:'nyanko_dragon',  name:'りゅうにゃんこ',     type:'りゅう',   rarity:'sr', char:'neko',
+  { id:'nyanko_dragon',  name:'りゅうにゃんこ',     type:'りゅう',   rarity:'chougeki', char:'neko',
     nt:`<path d="M28,10 Q20,-2 24,-14 Q30,-2 28,8Z" fill="#ffd700" opacity=".9"/><path d="M36,8 Q28,0 32,-10 Q36,0 36,6Z" fill="#ff9800" opacity=".8"/><path d="M72,10 Q80,-2 76,-14 Q70,-2 72,8Z" fill="#ffd700" opacity=".9"/><path d="M64,8 Q72,0 68,-10 Q64,0 64,6Z" fill="#ff9800" opacity=".8"/><path d="M40,4 Q50,-16 60,4 Q52,-8 50,-4 Q48,-8 40,4" fill="#ffd700"/>` },
 
   // ─── UR 2種 ────────────────────────────────────
-  { id:'nyanko_kami',    name:'かみさまにゃんこ',   type:'かみさま', rarity:'ur', char:'neko',
+  { id:'nyanko_kami',    name:'かみさまにゃんこ',   type:'かみさま', rarity:'densetsu', char:'neko',
     nt:`<ellipse cx="50" cy="-6" rx="24" ry="6" fill="none" stroke="#fff9c4" stroke-width="4"/><ellipse cx="50" cy="-6" rx="24" ry="6" fill="none" stroke="#ffd700" stroke-width="2"/><polygon points="50,-22 46,-12 36,-12 44,-6 41,4 50,-2 59,4 56,-6 64,-12 54,-12" fill="#ffd700" stroke="#ff8f00" stroke-width="1.5"/><circle cx="50" cy="-14" r="5" fill="#fff9c4" stroke="#ffd700" stroke-width="1.5"/>` },
-  { id:'nyanko_ginga',   name:'ぎんがにゃんこ',     type:'ぎんが',   rarity:'ur', char:'neko',
+  { id:'nyanko_ginga',   name:'ぎんがにゃんこ',     type:'ぎんが',   rarity:'densetsu', char:'neko',
     nt:`<path d="M34,-2 L36,-14 L44,-6 L50,-16 L56,-6 L64,-14 L66,-2Z" fill="#7b1fa2" stroke="#4a148c" stroke-width="1.5"/><circle cx="40" cy="-10" r="2.5" fill="#f44336"/><circle cx="50" cy="-12" r="3" fill="#ffd600"/><circle cx="60" cy="-10" r="2.5" fill="#4fc3f7"/><ellipse cx="34" cy="4" rx="6" ry="12" fill="#c62828" stroke="#7f0000" stroke-width="1.5" transform="rotate(-16,34,4)"/><ellipse cx="66" cy="4" rx="6" ry="12" fill="#c62828" stroke="#7f0000" stroke-width="1.5" transform="rotate(16,66,4)"/>` },
 ];
 KD.push(...MD);
 KD.push(...ND);
 
-const RARITY_LABELS = { common:'レア', rare:'げきレア ⭐', sr:'ちょうげきレア ⭐⭐', ur:'でんせつレア ⭐⭐⭐' };
+const RARITY_LABELS = { rare:'レア', gekirea:'激レア ⭐', chougeki:'超激レア ⭐⭐', densetsu:'伝説レア ⭐⭐⭐' };
 const GACHA_COST = 50;
 
 // ===== KANJI DATA =====
@@ -4671,7 +4671,7 @@ let collection     = JSON.parse(localStorage.getItem('kq_collection') || '{}');
 let kuucchiLevels  = JSON.parse(localStorage.getItem('kq_levels')     || '{}');
 let expStones      = parseInt(localStorage.getItem('kq_exps') || '0');
 // ガチャを引くと経験値がもらえる（キャラ育成・パワーアップ共通の通貨）
-const TW_GACHA_XP = { common:3, rare:8, sr:20, ur:50 };
+const TW_GACHA_XP = { rare:3, gekirea:8, chougeki:20, densetsu:50 };
 function twAwardSeeds(item, isNew){
   let n = TW_GACHA_XP[item.rarity] || 3;
   if(!isNew) n += Math.ceil(n*0.5);   // ダブりは少し多め
@@ -4914,7 +4914,7 @@ function claimMission(idx) {
   } else if (m.reward.type === 'ticket_r') {
     tickets.r += m.reward.amount; saveTickets(); updateTicketBar();
     const toast = document.getElementById('badge-toast');
-    toast.textContent = `🎫 げきレアチケット ×${m.reward.amount} もらったよ！`;
+    toast.textContent = `🎫 激レアチケット ×${m.reward.amount} もらったよ！`;
     toast.classList.add('show');
     clearTimeout(toast._hideTimer);
     toast._hideTimer = setTimeout(() => toast.classList.remove('show'), 2500);
@@ -5339,8 +5339,8 @@ const LOGIN_REWARDS = [
   { coins:50,  exp:0,  ticket:null, icon:'🪙',  lbl:'×50' },
   { coins:60,  exp:0,  ticket:null, icon:'🪙',  lbl:'×60' },
   { coins:100, exp:0,  ticket:null, icon:'🪙',  lbl:'×100' },
-  { coins:0,   exp:0,  ticket:'r',  icon:'🎫',  lbl:'げきレア' },
-  { coins:0,   exp:0,  ticket:'sr', icon:'🌟',  lbl:'ちょうげきレア' },
+  { coins:0,   exp:0,  ticket:'r',  icon:'🎫',  lbl:'激レア' },
+  { coins:0,   exp:0,  ticket:'sr', icon:'🌟',  lbl:'超激レア' },
 ];
 
 function _todayStr() { return new Date().toISOString().slice(0,10); }
@@ -5372,8 +5372,8 @@ function _buildLoginBonusUI() {
   const parts = [];
   if (r.coins)            parts.push(`🪙 ×${r.coins}`);
   if (r.exp)              parts.push(`XP ×${r.exp}`);
-  if (r.ticket === 'r')   parts.push('🎫 げきレアかくていチケット ×1');
-  if (r.ticket === 'sr')  parts.push('🌟 ちょうげきレアかくていチケット ×1');
+  if (r.ticket === 'r')   parts.push('🎫 激レアかくていチケット ×1');
+  if (r.ticket === 'sr')  parts.push('🌟 超激レアかくていチケット ×1');
   document.getElementById('lb-reward-box').innerHTML =
     `今日のボーナス<br><span class="lb-reward-val">${parts.join('　')}</span>`;
 }
@@ -6404,7 +6404,7 @@ function _startTenPull(items) {
   _tenBefore = beforeColl;
   _tenIdx = 0;
   // まずGIFイントロ1回だけ → 終わったら1体目のリビールへ
-  const hasSR = items.some(it => it.rarity==='sr' || it.rarity==='ur');
+  const hasSR = items.some(it => it.rarity==='chougeki' || it.rarity==='densetsu');
   playGifIntro(hasSR ? 'special' : 'normal', () => _playTenReveal(0));
 }
 
@@ -6422,7 +6422,7 @@ let _tenItems = [], _tenBefore = {}, _tenIdx = 0;
 function _playTenReveal(idx) {
   _tenIdx = idx;
   const item = _tenItems[idx];
-  const animType = (item.rarity==='sr'||item.rarity==='ur') ? 'special' : 'normal';
+  const animType = (item.rarity==='chougeki'||item.rarity==='densetsu') ? 'special' : 'normal';
   // GIFなし・リビール演出のみ
   playRevealOnly(animType, item, () => _showTenItemResult(idx));
 }
@@ -6438,7 +6438,7 @@ function _showTenItemResult(idx) {
 
   const box = document.getElementById('gacha-result-box');
   box.className = `gacha-result-box ${item.rarity}`;
-  document.getElementById('ur-shimmer').style.display = item.rarity==='ur' ? 'block' : 'none';
+  document.getElementById('ur-shimmer').style.display = item.rarity==='densetsu' ? 'block' : 'none';
   document.getElementById('gacha-result-kuucchi').innerHTML = kSVG(item);
 
   const badge = document.getElementById('gacha-rarity-badge');
@@ -6457,7 +6457,7 @@ function _showTenItemResult(idx) {
   document.getElementById('ten-seq-next-btn').textContent =
     idx < _tenItems.length - 1 ? 'つぎへ ▶' : 'いちらんを見る ▶';
 
-  if(item.rarity==='ur'||item.rarity==='sr') launchConfetti();
+  if(item.rarity==='densetsu'||item.rarity==='chougeki') launchConfetti();
 }
 
 function tenSeqNext() {
@@ -6509,7 +6509,7 @@ function showTenGrid(items, beforeColl) {
   document.getElementById('gacha-pull-state').style.display = 'none';
   document.getElementById('gacha-ten-result-state').style.display = 'block';
 
-  if(items.some(it => it.rarity==='ur'||it.rarity==='sr')) launchConfetti();
+  if(items.some(it => it.rarity==='densetsu'||it.rarity==='chougeki')) launchConfetti();
 }
 
 function doPull() {
@@ -6546,12 +6546,12 @@ function updateTicketGachaBtn(){
   if(btnR){
     const cnt = tickets.r || 0;
     btnR.style.display   = cnt > 0 ? '' : 'none';
-    btnR.textContent     = `🎫 げきレアかくていチケット（${cnt}まい）で ガチャ！`;
+    btnR.textContent     = `🎫 激レアかくていチケット（${cnt}まい）で ガチャ！`;
   }
   if(btnSR){
     const cnt = tickets.sr || 0;
     btnSR.style.display  = cnt > 0 ? '' : 'none';
-    btnSR.textContent    = `🌟 ちょうげきレアかくていチケット（${cnt}まい）で ガチャ！`;
+    btnSR.textContent    = `🌟 超激レアかくていチケット（${cnt}まい）で ガチャ！`;
   }
 }
 
@@ -6720,8 +6720,8 @@ function doRevealPhase(animType, item, onDone) {
   const cardBox  = document.getElementById('g-card-box');
   const cardLbl  = document.getElementById('g-card-label');
 
-  const isRare  = item.rarity==='rare'||item.rarity==='sr'||item.rarity==='ur';
-  const isUltra = item.rarity==='sr'||item.rarity==='ur';
+  const isRare  = item.rarity==='gekirea'||item.rarity==='chougeki'||item.rarity==='densetsu';
+  const isUltra = item.rarity==='chougeki'||item.rarity==='densetsu';
   const rCols   = rarityColors(item.rarity);
 
   // 暗転
@@ -6766,19 +6766,19 @@ function doRevealPhase(animType, item, onDone) {
 
 function rarityOrbGradient(rarity) {
   return {
-    common:'radial-gradient(circle,rgba(220,220,220,1),rgba(180,180,180,0))',
-    rare:  'radial-gradient(circle,rgba(120,180,255,1),rgba(40,100,220,0))',
-    sr:    'radial-gradient(circle,rgba(230,100,255,1),rgba(140,40,210,0))',
-    ur:    'radial-gradient(circle,rgba(255,220,0,1),rgba(255,140,0,0))',
+    rare:'radial-gradient(circle,rgba(220,220,220,1),rgba(180,180,180,0))',
+    gekirea:'radial-gradient(circle,rgba(120,180,255,1),rgba(40,100,220,0))',
+    chougeki:'radial-gradient(circle,rgba(230,100,255,1),rgba(140,40,210,0))',
+    densetsu:'radial-gradient(circle,rgba(255,220,0,1),rgba(255,140,0,0))',
   }[rarity]||'radial-gradient(circle,white,transparent)';
 }
 
 function rarityColors(rarity) {
   return {
-    common:['#cccccc','#ffffff','#aaaaaa'],
-    rare:  ['#4488ff','#88ccff','#0066ee','#ffffff'],
-    sr:    ['#cc44ff','#ff88ff','#8800cc','#ffffff','#ffccff'],
-    ur:    ['#ffd700','#ffbb00','#ffffff','#ff9900','#fff176','#ffee44'],
+    rare:['#cccccc','#ffffff','#aaaaaa'],
+    gekirea:['#4488ff','#88ccff','#0066ee','#ffffff'],
+    chougeki:['#cc44ff','#ff88ff','#8800cc','#ffffff','#ffccff'],
+    densetsu:['#ffd700','#ffbb00','#ffffff','#ff9900','#fff176','#ffee44'],
   }[rarity]||['#ffffff'];
 }
 
@@ -7073,19 +7073,19 @@ function rollGacha(forceMin) {
   const r=Math.random()*100;
   if(forceMin==='r') {
     // 激レア確定チケット → 激レアのみ
-    rarity = 'rare';
+    rarity = 'gekirea';
   } else if(forceMin==='sr') {
     // 超激レア確定チケット → 超激レア or 伝説レア（UR）のみ
     // URの出現率: UR/(UR+SR) = 0.3/5.3 ≈ 5.7%
-    rarity = r < (0.3/5.3*100) ? 'ur' : 'sr';
+    rarity = r < (0.15/3.15*100) ? 'densetsu' : 'chougeki';
   } else if(forceMin==='ur') {
-    rarity = 'ur';
+    rarity = 'densetsu';
   } else {
     // 通常ガチャ
-    if(r<0.15)      rarity='ur';
-    else if(r<3.15) rarity='sr';
-    else if(r<45)   rarity='rare';
-    else            rarity='common';
+    if(r<0.15)      rarity='densetsu';
+    else if(r<3.15) rarity='chougeki';
+    else if(r<45)   rarity='gekirea';
+    else            rarity='rare';
   }
   const pool=KD.filter(k=>k.rarity===rarity && allyVisible(k));
   if(!pool.length) return KD_FIRST_SPRITE;   // 念のためのフォールバック
@@ -7102,7 +7102,7 @@ function showGachaResult(item) {
   document.getElementById('ten-seq-nav').style.display='none';
   const box=document.getElementById('gacha-result-box');
   box.className=`gacha-result-box ${item.rarity}`;
-  document.getElementById('ur-shimmer').style.display=item.rarity==='ur'?'block':'none';
+  document.getElementById('ur-shimmer').style.display=item.rarity==='densetsu'?'block':'none';
   document.getElementById('gacha-result-kuucchi').innerHTML=kSVG(item);
   const badge=document.getElementById('gacha-rarity-badge');
   badge.className=`rarity-badge ${item.rarity}`; badge.textContent=RARITY_LABELS[item.rarity];
@@ -7112,7 +7112,7 @@ function showGachaResult(item) {
     :`<span class="dup-badge">×${collection[item.id]}かいめ</span>`)
     +`<div class="gacha-seed-reward">XP ＋${seeds}</div>`;
   document.getElementById('gacha-again-btn').disabled=coins<GACHA_COST;
-  if(item.rarity==='ur'||item.rarity==='sr') launchConfetti();
+  if(item.rarity==='densetsu'||item.rarity==='chougeki') launchConfetti();
 }
 
 // ===== COLLECTION =====
@@ -7120,7 +7120,7 @@ function showCollection() {
   const tot=KD.filter(allyVisible).length, got=KD.filter(k=>allyVisible(k) && (collection[k.id]||0)>0).length;
   document.getElementById('collection-stats').textContent=`${got} / ${tot} しゅるい あつめたよ！`;
   const body=document.getElementById('collection-body'); body.innerHTML='';
-  ['ur','sr','rare','common'].forEach(rarity=>{
+  ['densetsu','chougeki','gekirea','rare'].forEach(rarity=>{
     const items=KD.filter(i=>i.rarity===rarity && allyVisible(i));
     const sec=document.createElement('div'); sec.className='rarity-section';
     const lrow=document.createElement('div'); lrow.className='rarity-label-row';
@@ -7643,7 +7643,7 @@ KD.forEach(k => { if (KD_KANJI_MAP[k.id]) k.kanji = KD_KANJI_MAP[k.id]; });
 
 // ===== 必殺技データ（名前・威力倍率） =====
 // mul: 必殺技のATK倍率。レアリティが高いほど大きい
-// common: 2.4〜2.9 / rare: 3.0〜3.4 / sr: 3.5〜4.0 / ur: 4.5〜5.0
+// rare(レア): 2.4〜2.9 / gekirea(激): 3.0〜3.4 / chougeki(超激): 3.5〜4.0 / densetsu(伝説): 4.5〜5.0
 const KD_SPECIAL = {
   // ─── コモン ───────────────────────────
   normal:   { name:'ノーマルラッシュ',       mul:2.5 },
@@ -7978,17 +7978,17 @@ const MONSTERS = [
 
 // ===== ステータス・レベルシステム =====
 const RARITY_BASE = {
-  common:{hp:100,atk:12,def:8},
-  rare:  {hp:160,atk:20,def:14},
-  sr:    {hp:240,atk:32,def:22},
-  ur:    {hp:360,atk:50,def:36}
+  rare:{hp:100,atk:12,def:8},
+  gekirea:{hp:160,atk:20,def:14},
+  chougeki:{hp:240,atk:32,def:22},
+  densetsu:{hp:360,atk:50,def:36}
 };
 const MAX_LV = 30;
 
 function hashId(id){ return [...id].reduce((a,c)=>a+c.charCodeAt(0),0); }
 
 function getBaseStats(k){
-  const b = RARITY_BASE[k.rarity] || RARITY_BASE.common;
+  const b = RARITY_BASE[k.rarity] || RARITY_BASE.rare;
   const v = ((hashId(k.id)%21)-10)/100;
   return { hp:Math.round(b.hp*(1+v)), atk:Math.round(b.atk*(1+v*.8)), def:Math.round(b.def*(1+v*.6)) };
 }
@@ -8077,12 +8077,12 @@ let btCombo        = 0; // 連続正解コンボ数
 // ===== そだてる =====
 let sodaSelectedId = null;
 
-const RARITY_ORDER  = ['ur','sr','rare','common'];
+const RARITY_ORDER  = ['densetsu','chougeki','gekirea','rare'];
 const RARITY_INFO   = {
-  ur:     { label:'👑 でんせつレア',   cls:'ur' },
-  sr:     { label:'✨ ちょうげきレア',   cls:'sr' },
-  rare:   { label:'💎 げきレア',     cls:'rare' },
-  common: { label:'🌱 レア',       cls:'common' },
+  densetsu:{ label:'👑 伝説レア',   cls:'densetsu' },
+  chougeki:{ label:'✨ 超激レア',   cls:'chougeki' },
+  gekirea:{ label:'💎 激レア',     cls:'gekirea' },
+  rare:{ label:'🌱 レア',       cls:'rare' },
 };
 
 function makeSodaItem(k){
@@ -8497,12 +8497,12 @@ function getFloorReward(floor){
     2:  { coins:80,  exp:10,  ticket:null, label:'🪙+80まい XP+10こ' },
     3:  { coins:120, exp:20,  ticket:null, label:'🪙+120まい XP+20こ' },
     4:  { coins:150, exp:30,  ticket:null, label:'🪙+150まい XP+30こ' },
-    5:  { coins:0,   exp:0,   ticket:'r',  label:'🎫 げきレアかくていチケット×1' },
+    5:  { coins:0,   exp:0,   ticket:'r',  label:'🎫 激レアかくていチケット×1' },
     6:  { coins:200, exp:50,  ticket:null, label:'🪙+200まい XP+50こ' },
     7:  { coins:250, exp:70,  ticket:null, label:'🪙+250まい XP+70こ' },
-    8:  { coins:0,   exp:0,   ticket:'sr', label:'🌟 ちょうげきレアかくていチケット×1' },
+    8:  { coins:0,   exp:0,   ticket:'sr', label:'🌟 超激レアかくていチケット×1' },
     9:  { coins:300, exp:100, ticket:null, label:'🪙+300まい XP+100こ' },
-    10: { coins:0,   exp:0,   ticket:'sr', label:'🌟 ちょうげきレアかくていチケット×1' },
+    10: { coins:0,   exp:0,   ticket:'sr', label:'🌟 超激レアかくていチケット×1' },
   };
   return rewards[floor] || null;
 }
@@ -9046,10 +9046,10 @@ function battleLose(){
 
 // ===== くうっち侵略戦（タワーディフェンス） =====
 const TW_RARITY_STATS = {
-  common: { cost:60,  cooldown:2.0, speed:0.85, baseHp:16, baseAtk:4  },
-  rare:   { cost:120, cooldown:3.2, speed:0.7,  baseHp:26, baseAtk:6  },
-  sr:     { cost:220, cooldown:4.6, speed:0.6,  baseHp:40, baseAtk:9  },
-  ur:     { cost:380, cooldown:6.2, speed:0.5,  baseHp:60, baseAtk:13 },
+  rare:   { cost:60,  cooldown:2.0, speed:0.85, baseHp:16, baseAtk:4  },
+  gekirea:{ cost:120, cooldown:3.2, speed:0.7,  baseHp:26, baseAtk:6  },
+  chougeki:{ cost:220, cooldown:4.6, speed:0.6,  baseHp:40, baseAtk:9  },
+  densetsu:{ cost:380, cooldown:6.2, speed:0.5,  baseHp:60, baseAtk:13 },
 };
 const TW_ENEMY_TYPES = [
   { id:'wanko',       minStage:1, hp:18,  atk:4,  speed:0.55, scale:0.82, name:'わんこ', svg:'', spriteRef:'wanko' },
@@ -9354,213 +9354,213 @@ function preloadTwSprites(){
 // デッキIDからユニット定義を解決（常設キャラ or ガチャキャラ）
 function twUnitDef(id){
   if(id === TW_DEBUG_CAT_ID){
-    return { id, rarity:'common', name:'しろねこ', role:TW_ROLES.melee, svg:twPuppetCatSVG(), lv:1 };
+    return { id, rarity:'rare', name:'しろねこ', role:TW_ROLES.melee, svg:twPuppetCatSVG(), lv:1 };
   }
   if(id === TW_POTE_ID){
     // ロケットパンチのリーチを活かした専用の中距離役割
     const poteRole = { icon:'🥊', label:'パンチ', hpMul:1.6, atkMul:0.8, range:11, interval:1.4, area:false };
-    return { id, rarity:'common', name:'うでながぽてまよ', role:poteRole,
+    return { id, rarity:'rare', name:'うでながぽてまよ', role:poteRole,
              svg:`<img class="tw-icon-img" src="${TW_POTE_SPRITE.icon}">`,
              sprite:TW_POTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_POTE2_ID){
     // 近距離ですばやく連打するタイプ
     const rushRole = { icon:'👊', label:'れんだ', hpMul:1.3, atkMul:0.6, range:2, interval:0.55, area:false };
-    return { id, rarity:'common', name:'ぽてまよ', role:rushRole,
+    return { id, rarity:'rare', name:'ぽてまよ', role:rushRole,
              svg:`<img class="tw-icon-img" src="${TW_POTE2_SPRITE.icon}">`,
              sprite:TW_POTE2_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_METALPOTE_ID){
     // メタル属性：ダメージを激減して受ける超耐久の壁役。HP・攻撃は控えめ・低速
     const metalRole = { icon:'🛡️', label:'メタル', hpMul:0.7, atkMul:0.5, range:2, interval:1.3, area:false, speed:0.4, metal:true };
-    return { id, rarity:'sr', name:'メタルぽてまよ', role:metalRole,
+    return { id, rarity:'chougeki', name:'メタルぽてまよ', role:metalRole,
              svg:`<img class="tw-icon-img" src="${TW_METALPOTE_SPRITE.icon}">`,
              sprite:TW_METALPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_KUU_ID){
     // かみつき：バランス型のちょい強め近接
     const kuuRole = { icon:'🦷', label:'かみつき', hpMul:1.2, atkMul:1.2, range:3, interval:1.1, area:false };
-    return { id, rarity:'common', name:'くうっち', role:kuuRole,
+    return { id, rarity:'rare', name:'くうっち', role:kuuRole,
              svg:`<img class="tw-icon-img" src="${TW_KUU_SPRITE.icon}">`,
              sprite:TW_KUU_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_FKUU_ID){
     // ひをはく：射程内の敵をまとめて焼く範囲攻撃。超激レア級の高コスト
     const fireRole = { icon:'🔥', label:'ひをはく', hpMul:1.3, atkMul:1.0, range:13, interval:1.3, area:true };
-    return { id, rarity:'sr', name:'ほのおくうっち', role:fireRole,
+    return { id, rarity:'chougeki', name:'ほのおくうっち', role:fireRole,
              svg:`<img class="tw-icon-img" src="${TW_FKUU_SPRITE.icon}">`,
              sprite:TW_FKUU_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_BKUU_ID){
     // ひこう：空を飛んで移動がとても速い。打たれ弱め
     const batRole = { icon:'🦇', label:'ひこう', hpMul:0.8, atkMul:0.9, range:2, interval:0.9, area:false, speed:1.35, fly:true };
-    return { id, rarity:'rare', name:'コウモリくうっち', role:batRole,
+    return { id, rarity:'gekirea', name:'コウモリくうっち', role:batRole,
              svg:`<img class="tw-icon-img" src="${TW_BKUU_SPRITE.icon}">`,
              sprite:TW_BKUU_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_KIMO_ID){
     // あしなが：長い脚を伸ばして中距離から突く。背が高い
     const kimoRole = { icon:'🦵', label:'あしなが', hpMul:0.9, atkMul:1.0, range:12, interval:1.2, area:false };
-    return { id, rarity:'common', name:'キモマヨ', role:kimoRole, hScale:2.5,
+    return { id, rarity:'rare', name:'キモマヨ', role:kimoRole, hScale:2.5,
              svg:`<img class="tw-icon-img" src="${TW_KIMO_SPRITE.icon}">`,
              sprite:TW_KIMO_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_OBIG_ID){
     // 頭突き：超大型・低速・高コスト。高耐久＆高火力だが攻撃間隔は長い重量級
     const obigRole = { icon:'🦕', label:'あたま', hpMul:2.6, atkMul:1.6, range:4, interval:2.6, area:false, speed:0.22 };
-    return { id, rarity:'ur', name:'小さ大き首なが', role:obigRole, hScale:5.4,
+    return { id, rarity:'densetsu', name:'小さ大き首なが', role:obigRole, hScale:5.4,
              svg:`<img class="tw-icon-img" src="${TW_OBIG_SPRITE.icon}">`,
              sprite:TW_OBIG_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_TEGAKI_ID){
     // 連続噛み：すばやく何度も噛みつく近接アタッカー
     const tegakiRole = { icon:'🐾', label:'れんぞくがみ', hpMul:1.0, atkMul:0.8, range:3, interval:0.7, area:false };
-    return { id, rarity:'rare', name:'手書きにゃんこ', role:tegakiRole,
+    return { id, rarity:'gekirea', name:'手書きにゃんこ', role:tegakiRole,
              svg:`<img class="tw-icon-img" src="${TW_TEGAKI_SPRITE.icon}">`,
              sprite:TW_TEGAKI_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_KMP_ID){
     // キック：太い足で蹴り飛ばす近接パワー型。HP高め
     const kmpRole = { icon:'🦵', label:'キック', hpMul:1.6, atkMul:1.2, range:4, interval:1.3, area:false };
-    return { id, rarity:'rare', name:'キモ足ぽて', role:kmpRole,
+    return { id, rarity:'gekirea', name:'キモ足ぽて', role:kmpRole,
              svg:`<img class="tw-icon-img" src="${TW_KMP_SPRITE.icon}">`,
              sprite:TW_KMP_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_ZAKU_ID){
     // 電撃：遠くの敵をビリビリ撃つ遠距離アタッカー
     const zakuRole = { icon:'⚡', label:'でんげき', hpMul:0.9, atkMul:1.1, range:14, interval:1.5, area:false };
-    return { id, rarity:'rare', name:'ザクバキくん', role:zakuRole,
+    return { id, rarity:'gekirea', name:'ザクバキくん', role:zakuRole,
              svg:`<img class="tw-icon-img" src="${TW_ZAKU_SPRITE.icon}">`,
              sprite:TW_ZAKU_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_ZYAMI_ID){
     // 闇キック：やみのエネルギーで蹴る 強力な近接
     const role = { icon:'🦵', label:'やみキック', hpMul:1.3, atkMul:1.3, range:4, interval:1.1, area:false };
-    return { id, rarity:'sr', name:'闇ザクバキくん', role,
+    return { id, rarity:'chougeki', name:'闇ザクバキくん', role,
              svg:`<img class="tw-icon-img" src="${TW_ZYAMI_SPRITE.icon}">`,
              sprite:TW_ZYAMI_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_ZHONO_ID){
     // 炎キック：ほのおで まとめて蹴りとばす範囲攻撃
     const role = { icon:'🔥', label:'ほのおキック', hpMul:1.2, atkMul:1.0, range:6, interval:1.3, area:true };
-    return { id, rarity:'sr', name:'炎ザクバキくん', role,
+    return { id, rarity:'chougeki', name:'炎ザクバキくん', role,
              svg:`<img class="tw-icon-img" src="${TW_ZHONO_SPRITE.icon}">`,
              sprite:TW_ZHONO_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_ZDRAG_ID){
     // ドラゴンキック：超高火力・高耐久の切り札
     const role = { icon:'🐉', label:'ドラゴンキック', hpMul:1.9, atkMul:1.7, range:4, interval:1.3, area:false };
-    return { id, rarity:'ur', name:'ドラゴンザクバキくん', role,
+    return { id, rarity:'densetsu', name:'ドラゴンザクバキくん', role,
              svg:`<img class="tw-icon-img" src="${TW_ZDRAG_SPRITE.icon}">`,
              sprite:TW_ZDRAG_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_ZHIKA_ID){
     const role = { icon:'✨', label:'ひかりキック', hpMul:1.2, atkMul:1.3, range:5, interval:1.1, area:false };
-    return { id, rarity:'sr', name:'光ザクバキくん', role,
+    return { id, rarity:'chougeki', name:'光ザクバキくん', role,
              svg:`<img class="tw-icon-img" src="${TW_ZHIKA_SPRITE.icon}">`, sprite:TW_ZHIKA_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_ZKAMI_ID){
     const role = { icon:'😇', label:'かみキック', hpMul:2.0, atkMul:1.8, range:5, interval:1.2, area:true };
-    return { id, rarity:'ur', name:'神ザクバキくん', role,
+    return { id, rarity:'densetsu', name:'神ザクバキくん', role,
              svg:`<img class="tw-icon-img" src="${TW_ZKAMI_SPRITE.icon}">`, sprite:TW_ZKAMI_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_ZYUSHA_ID){
     const role = { icon:'🗡️', label:'ゆうしゃキック', hpMul:1.7, atkMul:1.6, range:4, interval:1.15, area:false };
-    return { id, rarity:'ur', name:'勇者ザクバキくん', role,
+    return { id, rarity:'densetsu', name:'勇者ザクバキくん', role,
              svg:`<img class="tw-icon-img" src="${TW_ZYUSHA_SPRITE.icon}">`, sprite:TW_ZYUSHA_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_ZKOORI_ID){
     const role = { icon:'❄️', label:'こおりキック', hpMul:1.3, atkMul:1.0, range:5, interval:1.3, area:true };
-    return { id, rarity:'sr', name:'氷ザクバキくん', role,
+    return { id, rarity:'chougeki', name:'氷ザクバキくん', role,
              svg:`<img class="tw-icon-img" src="${TW_ZKOORI_SPRITE.icon}">`, sprite:TW_ZKOORI_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_ZNINJA_ID){
     const role = { icon:'🥷', label:'にんじゃキック', hpMul:1.0, atkMul:1.2, range:4, interval:0.8, area:false };
-    return { id, rarity:'sr', name:'にんじゃザクバキくん', role,
+    return { id, rarity:'chougeki', name:'にんじゃザクバキくん', role,
              svg:`<img class="tw-icon-img" src="${TW_ZNINJA_SPRITE.icon}">`, sprite:TW_ZNINJA_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_HOPOTE_ID){
     // ほのおパンチ：ほのおのこぶしを とばして ばくはつさせる 遠距離・範囲攻撃
     const role = { icon:'🔥', label:'ほのおパンチ', hpMul:1.3, atkMul:1.2, range:7, interval:1.5, area:true };
-    return { id, rarity:'sr', name:'炎ぽてまよ', role,
+    return { id, rarity:'chougeki', name:'炎ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_HOPOTE_SPRITE.icon}">`, sprite:TW_HOPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_KAPOTE_ID){
     // かみなりパンチ：かみなりのこぶしを とばす 遠距離・高速・高火力の単体攻撃
     const role = { icon:'⚡', label:'かみなりパンチ', hpMul:1.1, atkMul:1.4, range:8, interval:1.0, area:false };
-    return { id, rarity:'sr', name:'雷ぽてまよ', role,
+    return { id, rarity:'chougeki', name:'雷ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_KAPOTE_SPRITE.icon}">`, sprite:TW_KAPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_KOPOTE_ID){
     // こおりパンチ：こおりのつぶてで まとめて こうげきする 遠距離・範囲・高耐久
     const role = { icon:'❄️', label:'こおりパンチ', hpMul:1.5, atkMul:0.9, range:6, interval:1.6, area:true };
-    return { id, rarity:'sr', name:'氷ぽてまよ', role,
+    return { id, rarity:'chougeki', name:'氷ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_KOPOTE_SPRITE.icon}">`, sprite:TW_KOPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_MZPOTE_ID){
     // みずパンチ：みずだまを とばして まとめて こうげきする 遠距離・範囲
     const role = { icon:'💧', label:'みずパンチ', hpMul:1.3, atkMul:1.1, range:7, interval:1.3, area:true };
-    return { id, rarity:'sr', name:'水ぽてまよ', role,
+    return { id, rarity:'chougeki', name:'水ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_MZPOTE_SPRITE.icon}">`, sprite:TW_MZPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_KSPOTE_ID){
     // くさパンチ：このはを とばして まとめて こうげきする 遠距離・範囲
     const role = { icon:'🌿', label:'くさパンチ', hpMul:1.4, atkMul:1.0, range:7, interval:1.4, area:true };
-    return { id, rarity:'sr', name:'草ぽてまよ', role,
+    return { id, rarity:'chougeki', name:'草ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_KSPOTE_SPRITE.icon}">`, sprite:TW_KSPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_IWPOTE_ID){
     // いわパンチ：いわを とばして まとめて こうげきする 遠距離・範囲・超高耐久
     const role = { icon:'🪨', label:'いわパンチ', hpMul:1.8, atkMul:1.1, range:5, interval:1.7, area:true };
-    return { id, rarity:'sr', name:'岩ぽてまよ', role,
+    return { id, rarity:'chougeki', name:'岩ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_IWPOTE_SPRITE.icon}">`, sprite:TW_IWPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_DKPOTE_ID){
     // どくパンチ：どくのしゃれこうべを とばして まとめて こうげきする 遠距離・範囲・高火力
     const role = { icon:'☠️', label:'どくパンチ', hpMul:1.2, atkMul:1.3, range:7, interval:1.3, area:true };
-    return { id, rarity:'sr', name:'毒ぽてまよ', role,
+    return { id, rarity:'chougeki', name:'毒ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_DKPOTE_SPRITE.icon}">`, sprite:TW_DKPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_HGPOTE_ID){
     // はがねパンチ：はがねのやを とばす 遠距離・単体・超高耐久のかべ役
     const role = { icon:'⚙️', label:'はがねパンチ', hpMul:1.9, atkMul:1.2, range:5, interval:1.5, area:false };
-    return { id, rarity:'sr', name:'鋼ぽてまよ', role,
+    return { id, rarity:'chougeki', name:'鋼ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_HGPOTE_SPRITE.icon}">`, sprite:TW_HGPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_AKPOTE_ID){
     // あくパンチ：あくのしゃれこうべを とばして まとめて こうげきする 遠距離・範囲・超高火力の切り札
     const role = { icon:'😈', label:'あくパンチ', hpMul:1.6, atkMul:1.7, range:7, interval:1.3, area:true };
-    return { id, rarity:'ur', name:'悪ぽてまよ', role,
+    return { id, rarity:'densetsu', name:'悪ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_AKPOTE_SPRITE.icon}">`, sprite:TW_AKPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_FTPOTE_ID){
     // かくとうパンチ：ほうたいのこぶしで すばやく なぐる 近距離・高速・単体アタッカー
     const role = { icon:'🥊', label:'かくとうパンチ', hpMul:1.3, atkMul:1.4, range:3, interval:0.7, area:false };
-    return { id, rarity:'sr', name:'格闘ぽてまよ', role,
+    return { id, rarity:'chougeki', name:'格闘ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_FTPOTE_SPRITE.icon}">`, sprite:TW_FTPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_DMPOTE_ID){
     // あくまパンチ：空を飛んで移動し、あくまのたまを とばす 遠距離・範囲・飛行
     const role = { icon:'👿', label:'あくまパンチ', hpMul:1.3, atkMul:1.5, range:6, interval:1.4, area:true, fly:true };
-    return { id, rarity:'ur', name:'悪魔ぽてまよ', role,
+    return { id, rarity:'densetsu', name:'悪魔ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_DMPOTE_SPRITE.icon}">`, sprite:TW_DMPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_ANPOTE_ID){
     // ひかりのたま：空を飛んで移動し、ひかりのたまを とばす 遠距離・範囲・飛行
     const role = { icon:'😇', label:'ひかりのたま', hpMul:1.5, atkMul:1.6, range:7, interval:1.4, area:true, fly:true };
-    return { id, rarity:'ur', name:'天使ぽてまよ', role,
+    return { id, rarity:'densetsu', name:'天使ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_ANPOTE_SPRITE.icon}">`, sprite:TW_ANPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_BTPOTE_ID){
     // コウモリのむれ：空を飛んで移動し、コウモリのむれを とばす 遠距離・範囲・飛行
     const role = { icon:'🦇', label:'コウモリのむれ', hpMul:1.2, atkMul:1.4, range:7, interval:1.3, area:true, fly:true };
-    return { id, rarity:'sr', name:'コウモリぽてまよ', role,
+    return { id, rarity:'chougeki', name:'コウモリぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_BTPOTE_SPRITE.icon}">`, sprite:TW_BTPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_YUPOTE_ID){
     // ゆうしゃぎり：せいなるつるぎで斬る 近～中距離・単体・高火力の切り札
     const role = { icon:'⚔️', label:'ゆうしゃぎり', hpMul:1.6, atkMul:1.6, range:4, interval:1.0, area:false };
-    return { id, rarity:'ur', name:'勇者ぽてまよ', role,
+    return { id, rarity:'densetsu', name:'勇者ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_YUPOTE_SPRITE.icon}">`, sprite:TW_YUPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   const k = KD.find(kk=>kk.id===id);
@@ -11082,10 +11082,10 @@ const MAZE_STAGES = [
   { coins:0,   exp:5,   ticket:null, label:'XP ×5' },
   { coins:50,  exp:0,   ticket:null, label:'🪙 ×50' },
   { coins:30,  exp:10,  ticket:null, label:'XP ×10　🪙 ×30' },
-  { coins:0,   exp:0,   ticket:'r',  label:'🎫 げきレアかくていチケット' },
+  { coins:0,   exp:0,   ticket:'r',  label:'🎫 激レアかくていチケット' },
   { coins:80,  exp:8,   ticket:null, label:'🪙 ×80　XP ×8' },
-  { coins:0,   exp:0,   ticket:'sr', label:'🌟 ちょうげきレアかくていチケット' },
-  { coins:0,   exp:0,   ticket:'sr', label:'🌟 ちょうげきレアかくていチケット' },
+  { coins:0,   exp:0,   ticket:'sr', label:'🌟 超激レアかくていチケット' },
+  { coins:0,   exp:0,   ticket:'sr', label:'🌟 超激レアかくていチケット' },
 ];
 
 let mazeStage     = 0;
