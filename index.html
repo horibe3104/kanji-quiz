@@ -9053,12 +9053,9 @@ const TW_ENEMY_TYPES = [
   // めえめえ：平凡がコンプレックスな羊（ごく標準的なバランス型）
   { id:'mee',         minStage:2, hp:38,  atk:8,  speed:0.52, name:'めえめえ', svg:'', spriteRef:'mee' },
   { id:'mee_tough',   minStage:6, hp:72,  atk:13, speed:0.48, name:'めえめえ', svg:'', spriteRef:'mee' },
-  // カンガルー：ボクサーのカンガルー（素早くジャブを連打する近接アタッカー）
-  { id:'kanga',       minStage:4, hp:56,  atk:12, speed:0.6,  name:'カンガルー', svg:'', spriteRef:'kanga' },
-  { id:'kanga_tough', minStage:8, hp:104, atk:19, speed:0.54, name:'カンガルー', svg:'', spriteRef:'kanga' },
 ];
-// 'kaoru'・'paon' はスプライト製ボス（TW_SPRITE_BOSSES）。それ以外はSVGボス
-const TW_BOSS_IDS = ['kaoru','paon','wolf','orc','skeleton','witch','troll'];
+// 'kaoru'・'paon'・'kanga' はスプライト製ボス（TW_SPRITE_BOSSES）。それ以外はSVGボス
+const TW_BOSS_IDS = ['kaoru','paon','kanga','wolf','orc','skeleton','witch','troll'];
 const TW_WALLET = [
   { cap:250,  rate:18, upCost:80   },
   { cap:400,  rate:24, upCost:150  },
@@ -9307,8 +9304,9 @@ const TW_KANGA_SPRITE = {
 const TW_PAON_SPRITE = _twMakeWankoSprite('paon');
 // スプライト製ボスの登録表（idごとに 表示名とスプライトを紐づけ。従来のSVGボスと併存）
 const TW_SPRITE_BOSSES = {
-  kaoru: { name:'カオル君', sprite: TW_KAORU_SPRITE },
-  paon:  { name:'パオン',   sprite: TW_PAON_SPRITE },
+  kaoru: { name:'カオル君',   sprite: TW_KAORU_SPRITE },
+  paon:  { name:'パオン',     sprite: TW_PAON_SPRITE },
+  kanga: { name:'カンガルー', sprite: TW_KANGA_SPRITE },
 };
 // 全スプライトを事前ロード（登場した瞬間の未読込ブランクで「キャラが消える」問題を防ぐ）
 let _twPreloadCache = [];
