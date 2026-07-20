@@ -9035,24 +9035,24 @@ const TW_RARITY_STATS = {
   ur:     { cost:380, cooldown:6.2, speed:0.5,  baseHp:60, baseAtk:13 },
 };
 const TW_ENEMY_TYPES = [
-  { id:'wanko',       minStage:1, hp:18,  atk:4,  speed:0.55, name:'わんこ', svg:'', spriteRef:'wanko' },
-  { id:'wanko_mid',   minStage:3, hp:34,  atk:7,  speed:0.5,  name:'わんこ', svg:'', spriteRef:'wanko' },
-  { id:'wanko_tough', minStage:6, hp:60,  atk:11, speed:0.44, name:'わんこ', svg:'', spriteRef:'wanko' },
-  // にょろ：素早く群れる軽量アタッカー（わんこより速く・脆い）
-  { id:'nyoro',       minStage:2, hp:13,  atk:5,  speed:0.78, name:'にょろ', svg:'', spriteRef:'nyoro' },
-  { id:'nyoro_tough', minStage:5, hp:32,  atk:9,  speed:0.66, name:'にょろ', svg:'', spriteRef:'nyoro' },
-  // はまちゃん：体力・パワー自慢のカバ（重量級・タフ）
-  { id:'hama',        minStage:3, hp:70,  atk:12, speed:0.42, name:'はまちゃん', svg:'', spriteRef:'hama' },
-  { id:'hama_tough',  minStage:7, hp:130, atk:19, speed:0.38, name:'はまちゃん', svg:'', spriteRef:'hama' },
-  // ペンちゃん：カンフー修行中のペンギン（素早い近接アタッカー）
-  { id:'pen',         minStage:4, hp:42,  atk:10, speed:0.66, name:'ペンちゃん', svg:'', spriteRef:'pen' },
-  { id:'pen_tough',   minStage:8, hp:78,  atk:16, speed:0.6,  name:'ペンちゃん', svg:'', spriteRef:'pen' },
-  // ゴリさん：動物園を追放された強面ゴリラ（超重量級・高火力・遅い）
-  { id:'gori',        minStage:5, hp:100, atk:16, speed:0.4,  name:'ゴリさん', svg:'', spriteRef:'gori' },
-  { id:'gori_tough',  minStage:9, hp:180, atk:24, speed:0.36, name:'ゴリさん', svg:'', spriteRef:'gori' },
-  // めえめえ：平凡がコンプレックスな羊（ごく標準的なバランス型）
-  { id:'mee',         minStage:2, hp:38,  atk:8,  speed:0.52, name:'めえめえ', svg:'', spriteRef:'mee' },
-  { id:'mee_tough',   minStage:6, hp:72,  atk:13, speed:0.48, name:'めえめえ', svg:'', spriteRef:'mee' },
+  { id:'wanko',       minStage:1, hp:18,  atk:4,  speed:0.55, scale:0.82, name:'わんこ', svg:'', spriteRef:'wanko' },
+  { id:'wanko_mid',   minStage:3, hp:34,  atk:7,  speed:0.5,  scale:0.95, name:'わんこ', svg:'', spriteRef:'wanko' },
+  { id:'wanko_tough', minStage:6, hp:60,  atk:11, speed:0.44, scale:1.1,  name:'わんこ', svg:'', spriteRef:'wanko' },
+  // にょろ：素早く群れる軽量アタッカー（わんこより速く・脆い）→ 小さい
+  { id:'nyoro',       minStage:2, hp:13,  atk:5,  speed:0.78, scale:0.7,  name:'にょろ', svg:'', spriteRef:'nyoro' },
+  { id:'nyoro_tough', minStage:5, hp:32,  atk:9,  speed:0.66, scale:0.85, name:'にょろ', svg:'', spriteRef:'nyoro' },
+  // はまちゃん：体力・パワー自慢のカバ（重量級・タフ）→ 大きい
+  { id:'hama',        minStage:3, hp:70,  atk:12, speed:0.42, scale:1.35, name:'はまちゃん', svg:'', spriteRef:'hama' },
+  { id:'hama_tough',  minStage:7, hp:130, atk:19, speed:0.38, scale:1.6,  name:'はまちゃん', svg:'', spriteRef:'hama' },
+  // ペンちゃん：カンフー修行中のペンギン（素早い近接アタッカー）→ 小柄
+  { id:'pen',         minStage:4, hp:42,  atk:10, speed:0.66, scale:0.9,  name:'ペンちゃん', svg:'', spriteRef:'pen' },
+  { id:'pen_tough',   minStage:8, hp:78,  atk:16, speed:0.6,  scale:1.05, name:'ペンちゃん', svg:'', spriteRef:'pen' },
+  // ゴリさん：動物園を追放された強面ゴリラ（超重量級・高火力・遅い）→ 特大
+  { id:'gori',        minStage:5, hp:100, atk:16, speed:0.4,  scale:1.5,  name:'ゴリさん', svg:'', spriteRef:'gori' },
+  { id:'gori_tough',  minStage:9, hp:180, atk:24, speed:0.36, scale:1.75, name:'ゴリさん', svg:'', spriteRef:'gori' },
+  // めえめえ：平凡がコンプレックスな羊（ごく標準的なバランス型）→ ふつう
+  { id:'mee',         minStage:2, hp:38,  atk:8,  speed:0.52, scale:1.0,  name:'めえめえ', svg:'', spriteRef:'mee' },
+  { id:'mee_tough',   minStage:6, hp:72,  atk:13, speed:0.48, scale:1.15, name:'めえめえ', svg:'', spriteRef:'mee' },
 ];
 // ボスは全てスプライト製（TW_SPRITE_BOSSES）。SVGボス（wolf等）は廃止
 const TW_BOSS_IDS = ['kaoru','paon','kanga','kuma'];
@@ -9306,10 +9306,10 @@ const TW_KANGA_SPRITE = {
 const TW_PAON_SPRITE = _twMakeWankoSprite('paon');
 // スプライト製ボスの登録表（idごとに 表示名とスプライトを紐づけ。従来のSVGボスと併存）
 const TW_SPRITE_BOSSES = {
-  kaoru: { name:'カオル君',   sprite: TW_KAORU_SPRITE },
-  paon:  { name:'パオン',     sprite: TW_PAON_SPRITE },
-  kanga: { name:'カンガルー', sprite: TW_KANGA_SPRITE },
-  kuma:  { name:'クマ先生',   sprite: TW_KUMA_SPRITE },
+  kaoru: { name:'カオル君',   sprite: TW_KAORU_SPRITE, scale:1.05 },
+  paon:  { name:'パオン',     sprite: TW_PAON_SPRITE,  scale:1.35 },
+  kanga: { name:'カンガルー', sprite: TW_KANGA_SPRITE, scale:1.2 },
+  kuma:  { name:'クマ先生',   sprite: TW_KUMA_SPRITE,  scale:1.3 },
 };
 // 全スプライトを事前ロード（登場した瞬間の未読込ブランクで「キャラが消える」問題を防ぐ）
 let _twPreloadCache = [];
@@ -10200,13 +10200,14 @@ function twSpawnEnemyUnit(){
   twEnemySpawnCount++;
   const pool  = TW_ENEMY_TYPES.filter(t=>t.minStage<=twStage);
   const base  = pool[Math.floor(Math.random()*pool.length)];
-  const scale = (1 + (twStage-1)*0.18) * (1 + Math.min(0.9, twEnemySpawnCount * 0.05));
-  const hp    = Math.round(base.hp*scale);
+  const diffMul = (1 + (twStage-1)*0.18) * (1 + Math.min(0.9, twEnemySpawnCount * 0.05));
+  const hp    = Math.round(base.hp*diffMul);
   twUnits.push({
     uid: ++twUnitSeq, side:'enemy', name:base.name,
     hp, maxHp: hp,
-    atk: Math.round(base.atk*scale), speed: base.speed,
+    atk: Math.round(base.atk*diffMul), speed: base.speed,
     range: 2, interval: 1.1, area: false, atkTimer: 0.3,
+    scale: base.scale || 1,   // 見た目の大きさ（種類ごとのメリハリ）
     kbThresholds: [hp*2/3, hp*1/3],
     pos: twCastleSpawnPos('enemy'), svg: base.svg,   // 敵城の中央・前から出撃
     sprite: base.spriteRef === 'wanko' ? TW_WANKO_SPRITE
@@ -10233,6 +10234,7 @@ function twSpawnBoss(){
     hp, maxHp: hp,
     atk: 10 + twStage*2, speed: 0.3,
     range: 6, interval: 1.6, area: true, atkTimer: 0.8,
+    scale: sb ? (sb.scale || 1) : 1,   // ボスごとの大きさのメリハリ（基準84px×scale）
     kbThresholds: [hp*3/4, hp*2/4, hp*1/4],
     pos: twCastleSpawnPos('enemy'),   // 敵城の中央・前から出撃
     svg: sb ? `<img class="tw-icon-img" src="${sb.sprite.icon}">` : m.svg,
@@ -10283,7 +10285,8 @@ function twMeasureBody(u){
   img.src = src;
 }
 // ユニット本体の見た目の高さ(px)
-function twUnitPxH(u){ return u.boss ? 84 : Math.round(50*(u.hScale||1)); }
+// ユニットの表示ピクセル高さ。敵は scale、味方は hScale で拡縮（見た目も当たり判定幅も比例）
+function twUnitPxH(u){ const base = u.boss ? 84 : 50; return Math.round(base * (u.scale || u.hScale || 1)); }
 // ユニットの中心から左右の端までの距離（レーン幅に対する%）
 function twHalfWPct(u, laneW){
   const wpx = twUnitPxH(u) * (u.bodyWRatio || 0.75);
@@ -10630,7 +10633,9 @@ function twRenderUnits(){
       el.id = 'tw-u-'+u.uid;
       el.className = 'tw-unit' + (u.boss ? ' boss' : '') + (u.fly ? ' fly' : '')
         + (u.side==='player' ? ' tw-spawn-p' : ' tw-spawn-e');   // 拠点の中央から出てくる出撃演出
-      if(u.hScale && u.hScale !== 1) el.style.height = Math.round(50*u.hScale) + 'px';
+      // 拡縮：スプライトは height:100% なので、箱の高さを変えると全体が比例拡縮する
+      const pxH = twUnitPxH(u);
+      if(pxH !== 50) el.style.height = pxH + 'px';
       if(u.sprite){
         // シートの向き（既定は右向き）と進行方向が違うときだけ反転
         const facing = u.sprite.facing || 'right';
