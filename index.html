@@ -9053,6 +9053,9 @@ const TW_ENEMY_TYPES = [
   // めえめえ：平凡がコンプレックスな羊（ごく標準的なバランス型）→ ふつう
   { id:'mee',         minStage:2, hp:38,  atk:8,  speed:0.52, scale:1.0,  name:'めえめえ', svg:'', spriteRef:'mee' },
   { id:'mee_tough',   minStage:6, hp:72,  atk:13, speed:0.48, scale:1.15, name:'めえめえ', svg:'', spriteRef:'mee' },
+  // アーガー：資格マニアの白ワニ（噛みつきタフ・横長）
+  { id:'arga',        minStage:3, hp:66,  atk:15, speed:0.46, scale:1.1,  name:'アーガー', svg:'', spriteRef:'arga' },
+  { id:'arga_tough',  minStage:7, hp:122, atk:22, speed:0.42, scale:1.3,  name:'アーガー', svg:'', spriteRef:'arga' },
 ];
 // ボスは全てスプライト製（TW_SPRITE_BOSSES）。SVGボス（wolf等）は廃止
 const TW_BOSS_IDS = ['kaoru','paon','kanga','kuma'];
@@ -9292,6 +9295,8 @@ const TW_GORI_SPRITE = {
 const TW_MEE_SPRITE = _twMakeWankoSprite('mee');
 // コマアニメ式：クマ先生（スプライト製ボス。緑バック動画から抽出した白いクマ。正面向き）
 const TW_KUMA_SPRITE = _twMakeWankoSprite('kuma');
+// コマアニメ式：アーガー（敵キャラ。緑バック動画から抽出した白いワニ。右向き）
+const TW_ARGA_SPRITE = _twMakeWankoSprite('arga');
 // コマアニメ式：カンガルー（敵キャラ。緑バック動画から抽出したボクサーカンガルー）
 // 元絵は左向きなので facing:'left'（敵＝右進行で反転され、顔とジャブが進行方向を向く）
 const TW_KANGA_SPRITE = {
@@ -9319,7 +9324,7 @@ function preloadTwSprites(){
   const sets = [TW_KUU_SPRITE, TW_FKUU_SPRITE, TW_BKUU_SPRITE, TW_KIMO_SPRITE,
     TW_POTE_SPRITE, TW_POTE2_SPRITE, TW_METALPOTE_SPRITE, TW_OBIG_SPRITE,
     TW_TEGAKI_SPRITE, TW_ZAKU_SPRITE, TW_KMP_SPRITE, TW_ZYAMI_SPRITE, TW_ZHONO_SPRITE, TW_ZDRAG_SPRITE,
-    TW_ZHIKA_SPRITE, TW_ZKAMI_SPRITE, TW_ZYUSHA_SPRITE, TW_ZKOORI_SPRITE, TW_ZNINJA_SPRITE, TW_HOPOTE_SPRITE, TW_KAPOTE_SPRITE, TW_KOPOTE_SPRITE, TW_MZPOTE_SPRITE, TW_KSPOTE_SPRITE, TW_IWPOTE_SPRITE, TW_DKPOTE_SPRITE, TW_HGPOTE_SPRITE, TW_AKPOTE_SPRITE, TW_FTPOTE_SPRITE, TW_DMPOTE_SPRITE, TW_ANPOTE_SPRITE, TW_BTPOTE_SPRITE, TW_YUPOTE_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE, TW_KAORU_SPRITE, TW_HAMA_SPRITE, TW_PEN_SPRITE, TW_GORI_SPRITE, TW_MEE_SPRITE, TW_PAON_SPRITE, TW_KANGA_SPRITE, TW_KUMA_SPRITE];
+    TW_ZHIKA_SPRITE, TW_ZKAMI_SPRITE, TW_ZYUSHA_SPRITE, TW_ZKOORI_SPRITE, TW_ZNINJA_SPRITE, TW_HOPOTE_SPRITE, TW_KAPOTE_SPRITE, TW_KOPOTE_SPRITE, TW_MZPOTE_SPRITE, TW_KSPOTE_SPRITE, TW_IWPOTE_SPRITE, TW_DKPOTE_SPRITE, TW_HGPOTE_SPRITE, TW_AKPOTE_SPRITE, TW_FTPOTE_SPRITE, TW_DMPOTE_SPRITE, TW_ANPOTE_SPRITE, TW_BTPOTE_SPRITE, TW_YUPOTE_SPRITE, TW_WANKO_SPRITE, TW_NYORO_SPRITE, TW_KAORU_SPRITE, TW_HAMA_SPRITE, TW_PEN_SPRITE, TW_GORI_SPRITE, TW_MEE_SPRITE, TW_PAON_SPRITE, TW_KANGA_SPRITE, TW_KUMA_SPRITE, TW_ARGA_SPRITE];
   const urls = new Set();
   sets.forEach(sp=>{ if(!sp) return;
     [sp.icon, sp.idle, sp.dmg].forEach(u=>u&&urls.add(u));
@@ -10218,7 +10223,8 @@ function twSpawnEnemyUnit(){
           : base.spriteRef === 'gori' ? TW_GORI_SPRITE
           : base.spriteRef === 'mee' ? TW_MEE_SPRITE
           : base.spriteRef === 'kanga' ? TW_KANGA_SPRITE
-          : base.spriteRef === 'kuma' ? TW_KUMA_SPRITE : null,
+          : base.spriteRef === 'kuma' ? TW_KUMA_SPRITE
+          : base.spriteRef === 'arga' ? TW_ARGA_SPRITE : null,
     bounty: Math.round(hp*0.8),
   });
   twRenderUnits();
