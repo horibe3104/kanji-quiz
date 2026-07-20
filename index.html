@@ -2519,7 +2519,7 @@
 <body>
 
 <button id="bgm-btn" class="off" onclick="toggleBGM()" aria-label="BGMのオン・オフ">🔇</button>
-<div id="coin-bar">🪙 <span id="coin-count">0</span> &nbsp; ✨ <span id="exp-stone-count">0</span><span style="display:none"> 🎫 <span id="ticket-r-count">0</span> 🌟 <span id="ticket-sr-count">0</span> 🗝️ <span id="maze-key-count">0</span></span></div>
+<div id="coin-bar">🪙 <span id="coin-count">0</span> &nbsp; XP <span id="exp-stone-count">0</span><span style="display:none"> 🎫 <span id="ticket-r-count">0</span> 🌟 <span id="ticket-sr-count">0</span> 🗝️ <span id="maze-key-count">0</span></span></div>
 
 <!-- パーフェクトオーバーレイ -->
 <div id="perfect-overlay">
@@ -2572,7 +2572,7 @@
       <!-- 中央：クイズ・レアガチャ -->
       <div class="nb-center-row" style="position:relative;z-index:2">
         <button class="nb-gacha-btn" onclick="switchHomeTab('quiz')">
-          <div class="g-ic">📚</div><div class="g-name">クイズ</div><div class="g-cost">けいけんち・コイン</div>
+          <div class="g-ic">📚</div><div class="g-name">クイズ</div><div class="g-cost">XP・コイン</div>
         </button>
         <button class="nb-gacha-btn rare" onclick="showGacha()" style="position:relative">
           <div class="gacha-badge" id="gacha-ticket-badge" style="display:none">0</div>
@@ -2841,7 +2841,7 @@
   <div class="card">
     <div class="soda-title">⬆️ くうっちを そだてよう！</div>
     <div class="soda-exp-header">
-      <span class="soda-exp-label">✨ けいけんち</span>
+      <span class="soda-exp-label">XP</span>
       <span class="soda-exp-num" id="soda-exp-display">0</span>
       <span class="soda-exp-unit">こ</span>
     </div>
@@ -2888,7 +2888,7 @@
   <div class="card">
     <div class="soda-title">⬆️ くうっちを そだてよう！</div>
     <div class="soda-exp-header">
-      <span class="soda-exp-label">✨ けいけんち</span>
+      <span class="soda-exp-label">XP</span>
       <span class="soda-exp-count-big" id="soda-exp-display">0</span>
       <span class="soda-exp-label">こ</span>
     </div>
@@ -3181,9 +3181,9 @@
 <div class="screen" id="screen-powerup">
   <div class="pu-topbar">
     <div class="pu-title">⚡ パワーアップ</div>
-    <div class="pu-coins">✨ <span id="powerup-coins">0</span></div>
+    <div class="pu-coins">XP <span id="powerup-coins">0</span></div>
   </div>
-  <div class="pu-hint">ガチャや バトルで もらえる ✨けいけんち で つよくしよう！</div>
+  <div class="pu-hint">ガチャや バトルで もらえる XP で つよくしよう！</div>
   <button class="pu-soda-btn" onclick="showSodateru()">
     🐾 キャラを そだてる（レベルアップ）　▶
   </button>
@@ -3333,7 +3333,7 @@
     <!-- ごほうびプレビュー -->
     <div class="maze-reward-preview">
       <span class="maze-reward-sub">🎁 このさきの ごほうび</span>
-      <span id="maze-reward-val" class="maze-reward-val">✨ ×5</span>
+      <span id="maze-reward-val" class="maze-reward-val">XP ×5</span>
     </div>
 
     <!-- 集めたご褒美 -->
@@ -5363,7 +5363,7 @@ function _buildLoginBonusUI() {
   const r = LOGIN_REWARDS[loginDay];
   const parts = [];
   if (r.coins)            parts.push(`🪙 ×${r.coins}`);
-  if (r.exp)              parts.push(`✨ ×${r.exp}`);
+  if (r.exp)              parts.push(`XP ×${r.exp}`);
   if (r.ticket === 'r')   parts.push('🎫 げきレアかくていチケット ×1');
   if (r.ticket === 'sr')  parts.push('🌟 ちょうげきレアかくていチケット ×1');
   document.getElementById('lb-reward-box').innerHTML =
@@ -7102,7 +7102,7 @@ function showGachaResult(item) {
   document.getElementById('gacha-new-or-dup').innerHTML=(isNew
     ?'<span class="new-badge">✨ NEW！</span>'
     :`<span class="dup-badge">×${collection[item.id]}かいめ</span>`)
-    +`<div class="gacha-seed-reward">✨ けいけんち ＋${seeds}</div>`;
+    +`<div class="gacha-seed-reward">XP ＋${seeds}</div>`;
   document.getElementById('gacha-again-btn').disabled=coins<GACHA_COST;
   if(item.rarity==='ur'||item.rarity==='sr') launchConfetti();
 }
@@ -8349,7 +8349,7 @@ function showNextMilestone(){
   document.getElementById('ms-title').textContent = ms.msg.replace('\n',' ');
   let rewardText = '';
   if(ms.reward.coins) rewardText += `🪙 コイン +${ms.reward.coins}まい　`;
-  if(ms.reward.exp)   rewardText += `✨ けいけんち +${ms.reward.exp}こ`;
+  if(ms.reward.exp)   rewardText += `XP +${ms.reward.exp}こ`;
   document.getElementById('ms-reward').textContent = rewardText;
   document.getElementById('ms-skill').textContent = unlockedSkill
     ? `${unlockedSkill.icon} スキルかいほう：「${unlockedSkill.name}」（${unlockedSkill.desc}）`
@@ -8486,14 +8486,14 @@ function updateBtSlots(){
 function getFloorReward(floor){
   const rewards = {
     1:  { coins:50,  exp:0,   ticket:null, label:'🪙+50まい' },
-    2:  { coins:80,  exp:10,  ticket:null, label:'🪙+80まい ✨+10こ' },
-    3:  { coins:120, exp:20,  ticket:null, label:'🪙+120まい ✨+20こ' },
-    4:  { coins:150, exp:30,  ticket:null, label:'🪙+150まい ✨+30こ' },
+    2:  { coins:80,  exp:10,  ticket:null, label:'🪙+80まい XP+10こ' },
+    3:  { coins:120, exp:20,  ticket:null, label:'🪙+120まい XP+20こ' },
+    4:  { coins:150, exp:30,  ticket:null, label:'🪙+150まい XP+30こ' },
     5:  { coins:0,   exp:0,   ticket:'r',  label:'🎫 げきレアかくていチケット×1' },
-    6:  { coins:200, exp:50,  ticket:null, label:'🪙+200まい ✨+50こ' },
-    7:  { coins:250, exp:70,  ticket:null, label:'🪙+250まい ✨+70こ' },
+    6:  { coins:200, exp:50,  ticket:null, label:'🪙+200まい XP+50こ' },
+    7:  { coins:250, exp:70,  ticket:null, label:'🪙+250まい XP+70こ' },
     8:  { coins:0,   exp:0,   ticket:'sr', label:'🌟 ちょうげきレアかくていチケット×1' },
-    9:  { coins:300, exp:100, ticket:null, label:'🪙+300まい ✨+100こ' },
+    9:  { coins:300, exp:100, ticket:null, label:'🪙+300まい XP+100こ' },
     10: { coins:0,   exp:0,   ticket:'sr', label:'🌟 ちょうげきレアかくていチケット×1' },
   };
   return rewards[floor] || null;
@@ -8963,7 +8963,7 @@ function battleWin(){
       <div class="bt-end-title">👑 ぜんかい クリア！</div>
       <div class="bt-end-sub">10かいを　すべて　クリアしたよ！</div>
       <div class="bt-end-reward">🪙 +${totalCoin}まい　ゲット！</div>
-      <div class="bt-end-sub" style="font-size:12px">✨ けいけんち +${totalExp}こ ゲット！</div>
+      <div class="bt-end-sub" style="font-size:12px">XP +${totalExp}こ ゲット！</div>
       ${firstClearHTML}
       <button class="bt-end-btn" onclick="this.closest('.bt-end-overlay').remove();goHome()">🏠 もどる</button>
     `;
@@ -8976,7 +8976,7 @@ function battleWin(){
     ov.innerHTML = `
       <div class="bt-end-title">🏆 ${clearedFloor}かい クリア！</div>
       <div class="bt-end-sub">${btEnemy.name}を　たおしたよ！</div>
-      <div class="bt-end-reward">🪙 +${coinReward}まい　&nbsp;✨ +${expReward}こ</div>
+      <div class="bt-end-reward">🪙 +${coinReward}まい　&nbsp;XP +${expReward}こ</div>
       <div class="bt-end-sub" style="font-size:12px;color:#43a047">💚 HPが50% かいふくした！</div>
       ${firstClearHTML}
       <div class="bt-end-sub" style="font-size:13px;margin-top:6px">つぎは　<b>${btFloor}かい</b>！</div>
@@ -9028,7 +9028,7 @@ function battleLose(){
   ov.innerHTML = `
     <div class="bt-end-title" style="color:white">やられた！</div>
     <div class="bt-end-sub">${btEnemy.name}に　${lostFloor}かいで　やられた！</div>
-    <div class="bt-end-sub" style="font-size:12px;color:#bbb">✨ けいけんち +3こ</div>
+    <div class="bt-end-sub" style="font-size:12px;color:#bbb">XP +3こ</div>
     <div class="bt-end-sub" style="font-size:12px;color:#ef9a9a">1かいから　やりなおし！</div>
     <button class="bt-end-btn" onclick="this.closest('.bt-end-overlay').remove();showBattleSelect()">🔄 もういちど！</button>
     <button class="bt-end-btn" style="background:#546e7a;margin-top:6px;font-size:14px" onclick="this.closest('.bt-end-overlay').remove();goHome()">🏠 もどる</button>
@@ -9638,7 +9638,7 @@ function showPowerup(){
         `<div class="pu-pips">${pips}</div>`+
         `<div class="pu-eff">${lv>0 ? u.effect(lv) : 'こうかなし'}${nextEff}</div>`+
       `</div>`+
-      `<button class="pu-btn${maxed?' maxed':''}" ${(maxed||!can)?'disabled':''}>${maxed?'MAX':('＋ ✨'+cost)}</button>`;
+      `<button class="pu-btn${maxed?' maxed':''}" ${(maxed||!can)?'disabled':''}>${maxed?'MAX':('XP+'+cost)}</button>`;
     if(!maxed) row.querySelector('.pu-btn').onclick = ()=>twBuyUpgrade(u.key);
     list.appendChild(row);
   });
@@ -9649,7 +9649,7 @@ function twBuyUpgrade(key){
   const u = TW_UPGRADES.find(x=>x.key===key); if(!u) return;
   const lv = twUpgLv(key); if(lv >= u.max) return;
   const cost = u.cost(lv);
-  if(expStones < cost){ showToast('けいけんちが たりないよ！ガチャや バトルで あつめよう'); return; }
+  if(expStones < cost){ showToast('XPが たりないよ！ガチャや バトルで あつめよう'); return; }
   expStones -= cost; saveExpStones(); updateExpBar();
   twUpg[key] = lv + 1;
   localStorage.setItem('kq_tw_upg', JSON.stringify(twUpg));
@@ -10807,7 +10807,7 @@ function twShowEndOverlay(won){
     ov.innerHTML = `
       <div class="bt-end-title">🏆 ステージ${clearedStage} クリア！</div>
       <div class="bt-end-sub">てきの おしろを こわしたよ！</div>
-      <div class="bt-end-reward">🪙 +${coinReward}まい　✨ +${expReward}こ</div>
+      <div class="bt-end-reward">🪙 +${coinReward}まい　XP +${expReward}こ</div>
       <button class="bt-end-btn" onclick="this.closest('.bt-end-overlay').remove();twResetOverlay();showTowerMap();">🗾 ちずへ もどる</button>
       <button class="bt-end-btn" style="background:#546e7a;margin-top:6px;font-size:14px" onclick="this.closest('.bt-end-overlay').remove();goHome()">🏠 ホームへ</button>
     `;
@@ -11071,11 +11071,11 @@ function playBGMLoop(){
 
 // ===== MAZE BONUS GAME =====
 const MAZE_STAGES = [
-  { coins:0,   exp:5,   ticket:null, label:'✨ ×5' },
+  { coins:0,   exp:5,   ticket:null, label:'XP ×5' },
   { coins:50,  exp:0,   ticket:null, label:'🪙 ×50' },
-  { coins:30,  exp:10,  ticket:null, label:'✨ ×10　🪙 ×30' },
+  { coins:30,  exp:10,  ticket:null, label:'XP ×10　🪙 ×30' },
   { coins:0,   exp:0,   ticket:'r',  label:'🎫 げきレアかくていチケット' },
-  { coins:80,  exp:8,   ticket:null, label:'🪙 ×80　✨ ×8' },
+  { coins:80,  exp:8,   ticket:null, label:'🪙 ×80　XP ×8' },
   { coins:0,   exp:0,   ticket:'sr', label:'🌟 ちょうげきレアかくていチケット' },
   { coins:0,   exp:0,   ticket:'sr', label:'🌟 ちょうげきレアかくていチケット' },
 ];
@@ -11296,7 +11296,7 @@ function mazeChoose(dir) {
 function _getMazeIcon(stage) {
   if (stage.ticket === 'sr') return '🌟';
   if (stage.ticket === 'r')  return '🎫';
-  if (stage.exp  > 0)        return '✨';
+  if (stage.exp  > 0)        return 'XP';
   return '🪙';
 }
 
