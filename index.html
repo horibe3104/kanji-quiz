@@ -6579,7 +6579,7 @@ function playGachaAnimation(animType, item, onFinishCb) {
   // GIF再生時間（ms）: GIF実長に合わせてフル再生
   // gacha_normal.gif  実長7480ms
   // gacha_special.gif 実長4940ms → ループ直前に非表示
-  const gifDuration = 2600;
+  const gifDuration = 5500;
 
   let done = false;
   let revealStarted = false;
@@ -6625,13 +6625,6 @@ function playGachaAnimation(animType, item, onFinishCb) {
   // special GIF のみ: gifDuration直前に非表示（ループ冒頭防止）
   // normal GIF(7480ms)はフル再生後ループ未到達なので不要
   // special GIF(4940ms)はフル再生直後にループするので早め非表示
-  // 新GIFはループするので、演出終わりの直前に非表示（通常・特別どちらも）
-  setTimeout(() => {
-    if (!revealStarted) {
-      const wrap = document.getElementById('g-video-wrap');
-      if (wrap) wrap.style.visibility = 'hidden';
-    }
-  }, gifDuration - 150);
   setTimeout(startReveal, gifDuration);
 }
 
@@ -6641,7 +6634,7 @@ function playGifIntro(animType, onDone) {
   const vid     = document.getElementById('g-video');
   const banner  = document.getElementById('g-special-banner');
   const isSpecial = animType === 'special';
-  const gifDuration = 2600;
+  const gifDuration = 5500;
 
   document.getElementById('g-dark').className      = '';
   document.getElementById('g-orb').className       = '';
@@ -6672,13 +6665,6 @@ function playGifIntro(animType, onDone) {
   if (isSpecial) {
     setTimeout(() => { if (!done) banner.classList.add('show'); }, 500);
   }
-  // 新GIFはループするので直前に非表示（通常・特別どちらも）
-  setTimeout(() => {
-    if (!done) {
-      const wrap = document.getElementById('g-video-wrap');
-      if (wrap) wrap.style.visibility = 'hidden';
-    }
-  }, gifDuration - 150);
 
   document.getElementById('g-skip-hint').onclick = finish;
   setTimeout(finish, gifDuration);
