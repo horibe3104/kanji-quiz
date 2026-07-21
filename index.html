@@ -3886,7 +3886,7 @@ const KD = [
 <text x="74" y="-8" font-size="7" fill="#ffe57f" text-anchor="middle">✦</text>`, bot:'' },
 
   // ===== ザクバキくん 20種 =====
-  { id:'zaku_normal',   name:'ザクバキくん', type:'でんき',   rarity:'gekirea',
+  { id:'zaku_normal',   name:'ザクバキくん', type:'でんき',   rarity:'rare',
     sprite:true, twdef:true, icon:'sprites/zaku_icon.png' },
   { id:'zaku_aka',      name:'あかザクバキくん',     type:'あか',       rarity:'rare',
     char:'zakubaki', zbg1:'#ffcdd2', zbg2:'#ef5350', zbg3:'#b71c1c', zlt:'#ffab40', zlimb:'#ef5350' },
@@ -3906,17 +3906,17 @@ const KD = [
     char:'zakubaki', zbg1:'#e0f7fa', zbg2:'#00acc1', zbg3:'#006064', zlt:'#84ffff', zlimb:'#4dd0e1' },
   { id:'zaku_pink',     name:'ピンクザクバキくん',   type:'ピンク',     rarity:'rare',
     char:'zakubaki', zbg1:'#fce4ec', zbg2:'#e91e63', zbg3:'#880e4f', zlt:'#ff80ab', zlimb:'#f48fb1' },
-  { id:'zaku_koori',    name:'氷ザクバキくん',       type:'こおり',     rarity:'chougeki',
+  { id:'zaku_koori',    name:'氷ザクバキくん',       type:'こおり',     rarity:'rare',
     sprite:true, twdef:true, icon:'sprites/zkoori_icon.png' },
-  { id:'zaku_hikari',   name:'光ザクバキくん',       type:'ひかり',     rarity:'chougeki',
+  { id:'zaku_hikari',   name:'光ザクバキくん',       type:'ひかり',     rarity:'rare',
     sprite:true, twdef:true, icon:'sprites/zhika_icon.png' },
-  { id:'zaku_yuusha',   name:'勇者ザクバキくん',     type:'ゆうしゃ',   rarity:'densetsu',
+  { id:'zaku_yuusha',   name:'勇者ザクバキくん',     type:'ゆうしゃ',   rarity:'chougeki',
     sprite:true, twdef:true, icon:'sprites/zyusha_icon.png' },
-  { id:'zaku_ninja',    name:'にんじゃザクバキくん', type:'にんじゃ',   rarity:'chougeki',
+  { id:'zaku_ninja',    name:'にんじゃザクバキくん', type:'にんじゃ',   rarity:'rare',
     sprite:true, twdef:true, icon:'sprites/zninja_icon.png' },
-  { id:'zaku_honoo',    name:'炎ザクバキくん',       type:'ほのお',     rarity:'chougeki',
+  { id:'zaku_honoo',    name:'炎ザクバキくん',       type:'ほのお',     rarity:'rare',
     sprite:true, twdef:true, icon:'sprites/zhono_icon.png' },
-  { id:'zaku_yami',     name:'闇ザクバキくん',       type:'やみ',       rarity:'chougeki',
+  { id:'zaku_yami',     name:'闇ザクバキくん',       type:'やみ',       rarity:'rare',
     sprite:true, twdef:true, icon:'sprites/zyami_icon.png' },
   { id:'zaku_hoshi',    name:'ほしザクバキくん',     type:'ほし',       rarity:'gekirea',
     char:'zakubaki', zbg1:'#1a237e', zbg2:'#283593', zbg3:'#0d1b5e', zlt:'#ffd600', zlimb:'#ffd600', zst:'#9fa8da',
@@ -3936,14 +3936,14 @@ const KD = [
 <circle cx="50" cy="-13" r="3" fill="#ff1744"/>
 <circle cx="42" cy="-7" r="2" fill="#2196f3"/>
 <circle cx="58" cy="-7" r="2" fill="#4caf50"/>` },
-  { id:'zaku_ryuu',     name:'ドラゴンザクバキくん', type:'りゅう',     rarity:'densetsu',
+  { id:'zaku_ryuu',     name:'ドラゴンザクバキくん', type:'りゅう',     rarity:'chougeki',
     sprite:true, twdef:true, icon:'sprites/zdrag_icon.png' },
   { id:'zaku_densetsu', name:'でんせつザクバキくん', type:'でんせつ',   rarity:'chougeki',
     char:'zakubaki', zbg1:'#fff9c4', zbg2:'#ffca28', zbg3:'#ff6f00', zlt:'#ffffff', zlimb:'#ffffff', zst:'#4a148c',
     zdeco:`<polygon points="50,-21 46,-13 38,-13 44,-7 42,1 50,-4 58,1 56,-7 62,-13 54,-13" fill="#fff176" stroke="#ffd600" stroke-width="1.2"/>
 <text x="21" y="-5" font-size="9" text-anchor="middle" fill="#ffd600">⚡</text>
 <text x="79" y="-5" font-size="9" text-anchor="middle" fill="#ffd600">⚡</text>` },
-  { id:'zaku_kami',     name:'神ザクバキくん',       type:'かみ',       rarity:'densetsu',
+  { id:'zaku_kami',     name:'神ザクバキくん',       type:'かみ',       rarity:'chougeki',
     sprite:true, twdef:true, icon:'sprites/zkami_icon.png' },
   // ─── うみちゃん (common 6種) ───────────────────────────────────────
   { id:'umi_normal',   name:'ノーマルうみちゃん',  type:'ノーマル', rarity:'rare', char:'umi' },
@@ -4007,10 +4007,10 @@ const KD = [
   { id:'dino_kami',     name:'かみ小さ大きくびなが',        type:'かみ',     rarity:'densetsu',     char:'dino', dhue:-45, dsat:'1.6', dbri:'1.1',
     ddeco:`<polygon points="50,5 46,12 38,12 44,17 42,24 50,20 58,24 56,17 62,12 54,12" fill="#ffd600" stroke="#ff8f00" stroke-width="1.5"/><circle cx="50" cy="11" r="2.5" fill="#ff1744"/>` },
   // ===== 手書きにゃんこ（一頭身ねこ・足だけ／貼付画像のデザインをそのまま使用・連続噛み） =====
-  { id:'tegaki_nyanko', name:'手書きにゃんこ', type:'てがき', rarity:'gekirea',
+  { id:'tegaki_nyanko', name:'手書きにゃんこ', type:'てがき', rarity:'rare',
     sprite:true, twdef:true, icon:'sprites/tegaki_icon.png' },
   // ===== キモ足ぽて（マッチョぽてまよ・足だけ／貼付画像から・キック） =====
-  { id:'kimoashi_pote', name:'キモ足ぽて', type:'マッチョ', rarity:'gekirea',
+  { id:'kimoashi_pote', name:'キモ足ぽて', type:'マッチョ', rarity:'rare',
     sprite:true, twdef:true, icon:'sprites/kmp_icon.png' },
 
   // ===== くうっち侵略戦の常設キャラ（ガチャ＆育成対応・スプライト表示） =====
@@ -4018,23 +4018,23 @@ const KD = [
   { id:'tw_pote_basic',    name:'うでながぽてまよ',    type:'うでなが',       rarity:'rare', sprite:true, twdef:true, icon:'sprites/pote_icon.png' },
   { id:'tw_pote_rush',     name:'ぽてまよ',            type:'ぽてまよ',       rarity:'rare', sprite:true, twdef:true, icon:'sprites/pote2_icon.png'},
   { id:'tw_kimomayo',      name:'キモマヨ',            type:'キモマヨ',       rarity:'rare', sprite:true, twdef:true, icon:'sprites/kimo_icon.png' },
-  { id:'tw_kuucchi_bat',   name:'コウモリくうっち',    type:'コウモリ',       rarity:'gekirea',   sprite:true, twdef:true, icon:'sprites/bkuu_icon.png' },
-  { id:'tw_kuucchi_fire',  name:'ほのおくうっち',          type:'ほのお',             rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/fkuu_icon.png' },
-  { id:'tw_obigkubinaga',  name:'小さ大き首なが',      type:'首なが',         rarity:'densetsu',     sprite:true, twdef:true, icon:'sprites/obig_icon.png' },
+  { id:'tw_kuucchi_bat',   name:'コウモリくうっち',    type:'コウモリ',       rarity:'rare',   sprite:true, twdef:true, icon:'sprites/bkuu_icon.png' },
+  { id:'tw_kuucchi_fire',  name:'ほのおくうっち',          type:'ほのお',             rarity:'rare',     sprite:true, twdef:true, icon:'sprites/fkuu_icon.png' },
+  { id:'tw_obigkubinaga',  name:'小さ大き首なが',      type:'首なが',         rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/obig_icon.png' },
   { id:'tw_metal_potemayo',name:'メタルぽてまよ',      type:'メタル',         rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/metalpote_icon.png' },
-  { id:'tw_pote_honoo',    name:'炎ぽてまよ',          type:'ほのお',         rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/hopote_icon.png' },
-  { id:'tw_pote_kaminari', name:'雷ぽてまよ',          type:'かみなり',       rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/kapote_icon.png' },
-  { id:'tw_pote_koori',    name:'氷ぽてまよ',          type:'こおり',         rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/kopote_icon.png' },
-  { id:'tw_pote_mizu',     name:'水ぽてまよ',          type:'みず',           rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/mzpote_icon.png' },
-  { id:'tw_pote_kusa',     name:'草ぽてまよ',          type:'くさ',           rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/kspote_icon.png' },
-  { id:'tw_pote_iwa',      name:'岩ぽてまよ',          type:'いわ',           rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/iwpote_icon.png' },
-  { id:'tw_pote_doku',     name:'毒ぽてまよ',          type:'どく',           rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/dkpote_icon.png' },
-  { id:'tw_pote_hagane',   name:'鋼ぽてまよ',          type:'はがね',         rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/hgpote_icon.png' },
-  { id:'tw_pote_aku',      name:'悪ぽてまよ',          type:'あく',           rarity:'densetsu',     sprite:true, twdef:true, icon:'sprites/akpote_icon.png' },
-  { id:'tw_pote_kakutou',  name:'格闘ぽてまよ',        type:'かくとう',       rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/ftpote_icon.png' },
+  { id:'tw_pote_honoo',    name:'炎ぽてまよ',          type:'ほのお',         rarity:'gekirea',     sprite:true, twdef:true, icon:'sprites/hopote_icon.png' },
+  { id:'tw_pote_kaminari', name:'雷ぽてまよ',          type:'かみなり',       rarity:'gekirea',     sprite:true, twdef:true, icon:'sprites/kapote_icon.png' },
+  { id:'tw_pote_koori',    name:'氷ぽてまよ',          type:'こおり',         rarity:'gekirea',     sprite:true, twdef:true, icon:'sprites/kopote_icon.png' },
+  { id:'tw_pote_mizu',     name:'水ぽてまよ',          type:'みず',           rarity:'gekirea',     sprite:true, twdef:true, icon:'sprites/mzpote_icon.png' },
+  { id:'tw_pote_kusa',     name:'草ぽてまよ',          type:'くさ',           rarity:'gekirea',     sprite:true, twdef:true, icon:'sprites/kspote_icon.png' },
+  { id:'tw_pote_iwa',      name:'岩ぽてまよ',          type:'いわ',           rarity:'gekirea',     sprite:true, twdef:true, icon:'sprites/iwpote_icon.png' },
+  { id:'tw_pote_doku',     name:'毒ぽてまよ',          type:'どく',           rarity:'gekirea',     sprite:true, twdef:true, icon:'sprites/dkpote_icon.png' },
+  { id:'tw_pote_hagane',   name:'鋼ぽてまよ',          type:'はがね',         rarity:'gekirea',     sprite:true, twdef:true, icon:'sprites/hgpote_icon.png' },
+  { id:'tw_pote_aku',      name:'悪ぽてまよ',          type:'あく',           rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/akpote_icon.png' },
+  { id:'tw_pote_kakutou',  name:'格闘ぽてまよ',        type:'かくとう',       rarity:'gekirea',     sprite:true, twdef:true, icon:'sprites/ftpote_icon.png' },
   { id:'tw_pote_akuma',    name:'悪魔ぽてまよ',        type:'あくま',         rarity:'densetsu',     sprite:true, twdef:true, icon:'sprites/dmpote_icon.png' },
   { id:'tw_pote_tenshi',   name:'天使ぽてまよ',        type:'てんし',         rarity:'densetsu',     sprite:true, twdef:true, icon:'sprites/anpote_icon.png' },
-  { id:'tw_pote_koumori',  name:'コウモリぽてまよ',    type:'コウモリ',       rarity:'chougeki',     sprite:true, twdef:true, icon:'sprites/btpote_icon.png' },
+  { id:'tw_pote_koumori',  name:'コウモリぽてまよ',    type:'コウモリ',       rarity:'gekirea',     sprite:true, twdef:true, icon:'sprites/btpote_icon.png' },
   { id:'tw_pote_yuusha',   name:'勇者ぽてまよ',        type:'ゆうしゃ',       rarity:'densetsu',     sprite:true, twdef:true, icon:'sprites/yupote_icon.png' },
 ];
 
@@ -9387,14 +9387,14 @@ function twUnitDef(id){
   if(id === TW_FKUU_ID){
     // ひをはく：射程内の敵をまとめて焼く範囲攻撃。超激レア級の高コスト
     const fireRole = { icon:'🔥', label:'ひをはく', hpMul:1.3, atkMul:1.0, range:13, interval:1.3, area:true };
-    return { id, rarity:'chougeki', name:'ほのおくうっち', role:fireRole,
+    return { id, rarity:'rare', name:'ほのおくうっち', role:fireRole,
              svg:`<img class="tw-icon-img" src="${TW_FKUU_SPRITE.icon}">`,
              sprite:TW_FKUU_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_BKUU_ID){
     // ひこう：空を飛んで移動がとても速い。打たれ弱め
     const batRole = { icon:'🦇', label:'ひこう', hpMul:0.8, atkMul:0.9, range:2, interval:0.9, area:false, speed:1.35, fly:true };
-    return { id, rarity:'gekirea', name:'コウモリくうっち', role:batRole,
+    return { id, rarity:'rare', name:'コウモリくうっち', role:batRole,
              svg:`<img class="tw-icon-img" src="${TW_BKUU_SPRITE.icon}">`,
              sprite:TW_BKUU_SPRITE, lv: kuucchiLvData(id).lv };
   }
@@ -9408,135 +9408,135 @@ function twUnitDef(id){
   if(id === TW_OBIG_ID){
     // 頭突き：超大型・低速・高コスト。高耐久＆高火力だが攻撃間隔は長い重量級
     const obigRole = { icon:'🦕', label:'あたま', hpMul:2.6, atkMul:1.6, range:4, interval:2.6, area:false, speed:0.22 };
-    return { id, rarity:'densetsu', name:'小さ大き首なが', role:obigRole, hScale:5.4,
+    return { id, rarity:'chougeki', name:'小さ大き首なが', role:obigRole, hScale:5.4,
              svg:`<img class="tw-icon-img" src="${TW_OBIG_SPRITE.icon}">`,
              sprite:TW_OBIG_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_TEGAKI_ID){
     // 連続噛み：すばやく何度も噛みつく近接アタッカー
     const tegakiRole = { icon:'🐾', label:'れんぞくがみ', hpMul:1.0, atkMul:0.8, range:3, interval:0.7, area:false };
-    return { id, rarity:'gekirea', name:'手書きにゃんこ', role:tegakiRole,
+    return { id, rarity:'rare', name:'手書きにゃんこ', role:tegakiRole,
              svg:`<img class="tw-icon-img" src="${TW_TEGAKI_SPRITE.icon}">`,
              sprite:TW_TEGAKI_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_KMP_ID){
     // キック：太い足で蹴り飛ばす近接パワー型。HP高め
     const kmpRole = { icon:'🦵', label:'キック', hpMul:1.6, atkMul:1.2, range:4, interval:1.3, area:false };
-    return { id, rarity:'gekirea', name:'キモ足ぽて', role:kmpRole,
+    return { id, rarity:'rare', name:'キモ足ぽて', role:kmpRole,
              svg:`<img class="tw-icon-img" src="${TW_KMP_SPRITE.icon}">`,
              sprite:TW_KMP_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_ZAKU_ID){
     // 電撃：遠くの敵をビリビリ撃つ遠距離アタッカー
     const zakuRole = { icon:'⚡', label:'でんげき', hpMul:0.9, atkMul:1.1, range:14, interval:1.5, area:false };
-    return { id, rarity:'gekirea', name:'ザクバキくん', role:zakuRole,
+    return { id, rarity:'rare', name:'ザクバキくん', role:zakuRole,
              svg:`<img class="tw-icon-img" src="${TW_ZAKU_SPRITE.icon}">`,
              sprite:TW_ZAKU_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_ZYAMI_ID){
     // 闇キック：やみのエネルギーで蹴る 強力な近接
     const role = { icon:'🦵', label:'やみキック', hpMul:1.3, atkMul:1.3, range:4, interval:1.1, area:false };
-    return { id, rarity:'chougeki', name:'闇ザクバキくん', role,
+    return { id, rarity:'rare', name:'闇ザクバキくん', role,
              svg:`<img class="tw-icon-img" src="${TW_ZYAMI_SPRITE.icon}">`,
              sprite:TW_ZYAMI_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_ZHONO_ID){
     // 炎キック：ほのおで まとめて蹴りとばす範囲攻撃
     const role = { icon:'🔥', label:'ほのおキック', hpMul:1.2, atkMul:1.0, range:6, interval:1.3, area:true };
-    return { id, rarity:'chougeki', name:'炎ザクバキくん', role,
+    return { id, rarity:'rare', name:'炎ザクバキくん', role,
              svg:`<img class="tw-icon-img" src="${TW_ZHONO_SPRITE.icon}">`,
              sprite:TW_ZHONO_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_ZDRAG_ID){
     // ドラゴンキック：超高火力・高耐久の切り札
     const role = { icon:'🐉', label:'ドラゴンキック', hpMul:1.9, atkMul:1.7, range:4, interval:1.3, area:false };
-    return { id, rarity:'densetsu', name:'ドラゴンザクバキくん', role,
+    return { id, rarity:'chougeki', name:'ドラゴンザクバキくん', role,
              svg:`<img class="tw-icon-img" src="${TW_ZDRAG_SPRITE.icon}">`,
              sprite:TW_ZDRAG_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_ZHIKA_ID){
     const role = { icon:'✨', label:'ひかりキック', hpMul:1.2, atkMul:1.3, range:5, interval:1.1, area:false };
-    return { id, rarity:'chougeki', name:'光ザクバキくん', role,
+    return { id, rarity:'rare', name:'光ザクバキくん', role,
              svg:`<img class="tw-icon-img" src="${TW_ZHIKA_SPRITE.icon}">`, sprite:TW_ZHIKA_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_ZKAMI_ID){
     const role = { icon:'😇', label:'かみキック', hpMul:2.0, atkMul:1.8, range:5, interval:1.2, area:true };
-    return { id, rarity:'densetsu', name:'神ザクバキくん', role,
+    return { id, rarity:'chougeki', name:'神ザクバキくん', role,
              svg:`<img class="tw-icon-img" src="${TW_ZKAMI_SPRITE.icon}">`, sprite:TW_ZKAMI_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_ZYUSHA_ID){
     const role = { icon:'🗡️', label:'ゆうしゃキック', hpMul:1.7, atkMul:1.6, range:4, interval:1.15, area:false };
-    return { id, rarity:'densetsu', name:'勇者ザクバキくん', role,
+    return { id, rarity:'chougeki', name:'勇者ザクバキくん', role,
              svg:`<img class="tw-icon-img" src="${TW_ZYUSHA_SPRITE.icon}">`, sprite:TW_ZYUSHA_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_ZKOORI_ID){
     const role = { icon:'❄️', label:'こおりキック', hpMul:1.3, atkMul:1.0, range:5, interval:1.3, area:true };
-    return { id, rarity:'chougeki', name:'氷ザクバキくん', role,
+    return { id, rarity:'rare', name:'氷ザクバキくん', role,
              svg:`<img class="tw-icon-img" src="${TW_ZKOORI_SPRITE.icon}">`, sprite:TW_ZKOORI_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_ZNINJA_ID){
     const role = { icon:'🥷', label:'にんじゃキック', hpMul:1.0, atkMul:1.2, range:4, interval:0.8, area:false };
-    return { id, rarity:'chougeki', name:'にんじゃザクバキくん', role,
+    return { id, rarity:'rare', name:'にんじゃザクバキくん', role,
              svg:`<img class="tw-icon-img" src="${TW_ZNINJA_SPRITE.icon}">`, sprite:TW_ZNINJA_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_HOPOTE_ID){
     // ほのおパンチ：ほのおのこぶしを とばして ばくはつさせる 遠距離・範囲攻撃
     const role = { icon:'🔥', label:'ほのおパンチ', hpMul:1.3, atkMul:1.2, range:7, interval:1.5, area:true };
-    return { id, rarity:'chougeki', name:'炎ぽてまよ', role,
+    return { id, rarity:'gekirea', name:'炎ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_HOPOTE_SPRITE.icon}">`, sprite:TW_HOPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_KAPOTE_ID){
     // かみなりパンチ：かみなりのこぶしを とばす 遠距離・高速・高火力の単体攻撃
     const role = { icon:'⚡', label:'かみなりパンチ', hpMul:1.1, atkMul:1.4, range:8, interval:1.0, area:false };
-    return { id, rarity:'chougeki', name:'雷ぽてまよ', role,
+    return { id, rarity:'gekirea', name:'雷ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_KAPOTE_SPRITE.icon}">`, sprite:TW_KAPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_KOPOTE_ID){
     // こおりパンチ：こおりのつぶてで まとめて こうげきする 遠距離・範囲・高耐久
     const role = { icon:'❄️', label:'こおりパンチ', hpMul:1.5, atkMul:0.9, range:6, interval:1.6, area:true };
-    return { id, rarity:'chougeki', name:'氷ぽてまよ', role,
+    return { id, rarity:'gekirea', name:'氷ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_KOPOTE_SPRITE.icon}">`, sprite:TW_KOPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_MZPOTE_ID){
     // みずパンチ：みずだまを とばして まとめて こうげきする 遠距離・範囲
     const role = { icon:'💧', label:'みずパンチ', hpMul:1.3, atkMul:1.1, range:7, interval:1.3, area:true };
-    return { id, rarity:'chougeki', name:'水ぽてまよ', role,
+    return { id, rarity:'gekirea', name:'水ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_MZPOTE_SPRITE.icon}">`, sprite:TW_MZPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_KSPOTE_ID){
     // くさパンチ：このはを とばして まとめて こうげきする 遠距離・範囲
     const role = { icon:'🌿', label:'くさパンチ', hpMul:1.4, atkMul:1.0, range:7, interval:1.4, area:true };
-    return { id, rarity:'chougeki', name:'草ぽてまよ', role,
+    return { id, rarity:'gekirea', name:'草ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_KSPOTE_SPRITE.icon}">`, sprite:TW_KSPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_IWPOTE_ID){
     // いわパンチ：いわを とばして まとめて こうげきする 遠距離・範囲・超高耐久
     const role = { icon:'🪨', label:'いわパンチ', hpMul:1.8, atkMul:1.1, range:5, interval:1.7, area:true };
-    return { id, rarity:'chougeki', name:'岩ぽてまよ', role,
+    return { id, rarity:'gekirea', name:'岩ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_IWPOTE_SPRITE.icon}">`, sprite:TW_IWPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_DKPOTE_ID){
     // どくパンチ：どくのしゃれこうべを とばして まとめて こうげきする 遠距離・範囲・高火力
     const role = { icon:'☠️', label:'どくパンチ', hpMul:1.2, atkMul:1.3, range:7, interval:1.3, area:true };
-    return { id, rarity:'chougeki', name:'毒ぽてまよ', role,
+    return { id, rarity:'gekirea', name:'毒ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_DKPOTE_SPRITE.icon}">`, sprite:TW_DKPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_HGPOTE_ID){
     // はがねパンチ：はがねのやを とばす 遠距離・単体・超高耐久のかべ役
     const role = { icon:'⚙️', label:'はがねパンチ', hpMul:1.9, atkMul:1.2, range:5, interval:1.5, area:false };
-    return { id, rarity:'chougeki', name:'鋼ぽてまよ', role,
+    return { id, rarity:'gekirea', name:'鋼ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_HGPOTE_SPRITE.icon}">`, sprite:TW_HGPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_AKPOTE_ID){
     // あくパンチ：あくのしゃれこうべを とばして まとめて こうげきする 遠距離・範囲・超高火力の切り札
     const role = { icon:'😈', label:'あくパンチ', hpMul:1.6, atkMul:1.7, range:7, interval:1.3, area:true };
-    return { id, rarity:'densetsu', name:'悪ぽてまよ', role,
+    return { id, rarity:'chougeki', name:'悪ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_AKPOTE_SPRITE.icon}">`, sprite:TW_AKPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_FTPOTE_ID){
     // かくとうパンチ：ほうたいのこぶしで すばやく なぐる 近距離・高速・単体アタッカー
     const role = { icon:'🥊', label:'かくとうパンチ', hpMul:1.3, atkMul:1.4, range:3, interval:0.7, area:false };
-    return { id, rarity:'chougeki', name:'格闘ぽてまよ', role,
+    return { id, rarity:'gekirea', name:'格闘ぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_FTPOTE_SPRITE.icon}">`, sprite:TW_FTPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_DMPOTE_ID){
@@ -9554,7 +9554,7 @@ function twUnitDef(id){
   if(id === TW_BTPOTE_ID){
     // コウモリのむれ：空を飛んで移動し、コウモリのむれを とばす 遠距離・範囲・飛行
     const role = { icon:'🦇', label:'コウモリのむれ', hpMul:1.2, atkMul:1.4, range:7, interval:1.3, area:true, fly:true };
-    return { id, rarity:'chougeki', name:'コウモリぽてまよ', role,
+    return { id, rarity:'gekirea', name:'コウモリぽてまよ', role,
              svg:`<img class="tw-icon-img" src="${TW_BTPOTE_SPRITE.icon}">`, sprite:TW_BTPOTE_SPRITE, lv: kuucchiLvData(id).lv };
   }
   if(id === TW_YUPOTE_ID){
