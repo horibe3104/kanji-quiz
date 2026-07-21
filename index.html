@@ -4687,12 +4687,17 @@ function saveMilestoneClaimed(){ localStorage.setItem('kq_milestone_claimed', JS
 
 // ===== マイルストーン定義 =====
 const MILESTONES = {
-  5:  { msg:'Lv.5 たっせい！🎉',   reward:{ coins:30,  exp:0   } },
-  10: { msg:'Lv.10 たっせい！🌟',  reward:{ coins:50,  exp:10  } },
-  15: { msg:'Lv.15 たっせい！💫',  reward:{ coins:80,  exp:20  } },
-  20: { msg:'Lv.20 たっせい！🔥',  reward:{ coins:100, exp:30  } },
-  25: { msg:'Lv.25 たっせい！⚡',  reward:{ coins:150, exp:50  } },
-  30: { msg:'🏆 MAX レベル！\nしんかできるようになった！', reward:{ coins:200, exp:100 } },
+  5:   { msg:'Lv.5 たっせい！🎉',   reward:{ coins:30,   exp:0   } },
+  10:  { msg:'Lv.10 たっせい！🌟',  reward:{ coins:50,   exp:10  } },
+  20:  { msg:'Lv.20 たっせい！🔥',  reward:{ coins:100,  exp:30  } },
+  30:  { msg:'Lv.30 たっせい！⚡',  reward:{ coins:180,  exp:60  } },
+  40:  { msg:'Lv.40 たっせい！💠',  reward:{ coins:280,  exp:100 } },
+  50:  { msg:'Lv.50 たっせい！👑',  reward:{ coins:450,  exp:160 } },
+  60:  { msg:'Lv.60 たっせい！🌈',  reward:{ coins:650,  exp:0   } },
+  70:  { msg:'Lv.70 たっせい！🚀',  reward:{ coins:900,  exp:0   } },
+  80:  { msg:'Lv.80 たっせい！🔱',  reward:{ coins:1200, exp:0   } },
+  90:  { msg:'Lv.90 たっせい！🏵',  reward:{ coins:1600, exp:0   } },
+  100: { msg:'🏆 MAX レベル！\nしんかできるようになった！', reward:{ coins:3000, exp:300 } },
 };
 
 // ===== スキル定義 =====
@@ -7983,7 +7988,9 @@ const RARITY_BASE = {
   chougeki:{hp:240,atk:32,def:22},
   densetsu:{hp:360,atk:50,def:36}
 };
-const MAX_LV = 30;
+const MAX_LV = 100;
+// レベルによるステータス倍率（バランス調整：Lv1=1.0倍 → Lv100=約3.0倍・線形＋上限3.0）
+function twLvMul(lv){ return Math.min(3.0, 1 + (lv-1)*0.0202); }
 
 function hashId(id){ return [...id].reduce((a,c)=>a+c.charCodeAt(0),0); }
 
@@ -7998,7 +8005,8 @@ function kuucchiLvData(id){
   return kuucchiLevels[id];
 }
 
-function expForLv(lv){ return lv*20; }
+// 次のレベルに必要なXP（ゆるやかな増加：序盤は速く、Lv100までは長い道のり）
+function expForLv(lv){ return 4 + lv*2; }
 
 function addExp(id, amount){
   const ld = kuucchiLvData(id);
@@ -8023,7 +8031,7 @@ function getStats(k){
   const lv = ld.lv;
   // 進化による基底倍率
   const evolvedMul = evolvedKuucchi[k.id] ? 1.5 : 1.0;
-  const m = (1+(lv-1)*0.07) * evolvedMul;
+  const m = twLvMul(lv) * evolvedMul;
 
   let hp  = b.hp  * m;
   let atk = b.atk * m;
@@ -9572,9 +9580,9 @@ function twUnitDef(id){
 function twTDStats(id){
   const def = twUnitDef(id);
   if(!def) return null;
-  const rs   = TW_RARITY_STATS[def.rarity] || TW_RARITY_STATS.common;
+  const rs   = TW_RARITY_STATS[def.rarity] || TW_RARITY_STATS.rare;
   const role = def.role;
-  const lvMul = Math.min(2.0, 1 + (def.lv-1)*0.02);
+  const lvMul = twLvMul(def.lv);
   return {
     hp:   Math.round(rs.baseHp  * lvMul * role.hpMul),
     atk:  Math.round(rs.baseAtk * lvMul * role.atkMul),
@@ -9615,7 +9623,7 @@ const TW_UPGRADES = [
   { key:'cannon_pow',  icon:'🎯', name:'くうっちほうパワー',   max:10, cost:l=>4+l*3, effect:l=>`いりょく +${l*15}%` },
   { key:'cannon_chg',  icon:'⚡', name:'くうっちほうチャージ', max:10, cost:l=>4+l*3, effect:l=>`チャージ -${l}びょう` },
   { key:'start_money', icon:'💰', name:'はじめの おかね',     max:10, cost:l=>3+l*2, effect:l=>`+${l*20}円`   },
-  { key:'base_hp',     icon:'🏯', name:'きょてん たいりょく', max:10, cost:l=>4+l*3, effect:l=>`+${l*60}`    },
+  { key:'base_hp',     icon:'🏯', name:'きょてん レベル',     max:99, cost:l=>15+l*6, effect:l=>`+${l*40}`    },
   { key:'money_rate',  icon:'📈', name:'おかね アップ',       max:10, cost:l=>3+l*3, effect:l=>`しゅうにゅう +${l*8}%` },
   { key:'cooldown',    icon:'⏱️', name:'さいせいさん たんしゅく', max:8, cost:l=>5+l*4, effect:l=>`さいせい -${l*5}%` },
 ];
@@ -9623,7 +9631,7 @@ const TW_UPGRADES = [
 function twCannonPowMul(){ return 1 + twUpgLv('cannon_pow')*0.15; }
 function twCannonChargeSec(){ return Math.max(10, TW_CANNON_CHARGE_SEC - twUpgLv('cannon_chg')); }
 function twStartMoney(){ return 80 + twUpgLv('start_money')*20; }
-function twBaseHP(){ return TW_PLAYER_CASTLE_HP + twUpgLv('base_hp')*60; }
+function twBaseHP(){ return TW_PLAYER_CASTLE_HP + twUpgLv('base_hp')*40; }
 function twMoneyRateMul(){ return 1 + twUpgLv('money_rate')*0.08; }
 function twCooldownMul(){ return Math.max(0.4, 1 - twUpgLv('cooldown')*0.05); }
 function showPowerup(){
@@ -10171,7 +10179,7 @@ function twDeployUnit(id){
   if(!twActive) return;
   const def = twUnitDef(id);
   if(!def) return;
-  const rs = TW_RARITY_STATS[def.rarity] || TW_RARITY_STATS.common;
+  const rs = TW_RARITY_STATS[def.rarity] || TW_RARITY_STATS.rare;
   if((twDeckCooldowns[id]||0) > 0) return;
   if(twMoney < rs.cost) return;
   twMoney -= rs.cost;
@@ -10179,7 +10187,7 @@ function twDeployUnit(id){
   playSound('deploy');
   updateTwMoneyUI();
 
-  const lvMul = Math.min(2.0, 1 + (def.lv-1)*0.02);
+  const lvMul = twLvMul(def.lv);
   const role  = def.role;
   const hp    = Math.round(rs.baseHp*lvMul*role.hpMul);
   twUnits.push({
@@ -10759,7 +10767,7 @@ function updateTwDeployButtons(){
     const id  = btn.dataset.id;
     const def = twUnitDef(id);
     if(!def) return;
-    const rs = TW_RARITY_STATS[def.rarity] || TW_RARITY_STATS.common;
+    const rs = TW_RARITY_STATS[def.rarity] || TW_RARITY_STATS.rare;
     const cd = twDeckCooldowns[id] || 0;
     const onCd = cd > 0;
     const costEl  = btn.querySelector('.tw-deploy-cost');
