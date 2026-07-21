@@ -6579,7 +6579,7 @@ function playGachaAnimation(animType, item, onFinishCb) {
   // GIF再生時間（ms）: GIF実長に合わせてフル再生
   // gacha_normal.gif  実長7480ms
   // gacha_special.gif 実長4940ms → ループ直前に非表示
-  const gifDuration = isSpecial ? 4940 : 7480;
+  const gifDuration = 2600;
 
   let done = false;
   let revealStarted = false;
@@ -6611,7 +6611,7 @@ function playGachaAnimation(animType, item, onFinishCb) {
 
   // GIFが見つからない場合はリビールへスキップ（src設定前に登録）
   vid.onerror = () => { vid.onerror = null; startReveal(); };
-  vid.src = isSpecial ? 'gacha_special.gif' : 'gacha_normal.gif';
+  vid.src = 'gacha_show.gif';
 
   overlay.classList.add('active');
   overlay.classList.add(isSpecial ? 'glow-special' : 'glow-normal');
@@ -6625,14 +6625,13 @@ function playGachaAnimation(animType, item, onFinishCb) {
   // special GIF のみ: gifDuration直前に非表示（ループ冒頭防止）
   // normal GIF(7480ms)はフル再生後ループ未到達なので不要
   // special GIF(4940ms)はフル再生直後にループするので早め非表示
-  if (isSpecial) {
-    setTimeout(() => {
-      if (!revealStarted) {
-        const wrap = document.getElementById('g-video-wrap');
-        if (wrap) wrap.style.visibility = 'hidden';
-      }
-    }, gifDuration - 150);
-  }
+  // 新GIFはループするので、演出終わりの直前に非表示（通常・特別どちらも）
+  setTimeout(() => {
+    if (!revealStarted) {
+      const wrap = document.getElementById('g-video-wrap');
+      if (wrap) wrap.style.visibility = 'hidden';
+    }
+  }, gifDuration - 150);
   setTimeout(startReveal, gifDuration);
 }
 
@@ -6642,7 +6641,7 @@ function playGifIntro(animType, onDone) {
   const vid     = document.getElementById('g-video');
   const banner  = document.getElementById('g-special-banner');
   const isSpecial = animType === 'special';
-  const gifDuration = isSpecial ? 4940 : 7480;
+  const gifDuration = 2600;
 
   document.getElementById('g-dark').className      = '';
   document.getElementById('g-orb').className       = '';
@@ -6666,19 +6665,20 @@ function playGifIntro(animType, onDone) {
   }
 
   vid.onerror = () => { vid.onerror = null; finish(); };
-  vid.src = isSpecial ? 'gacha_special.gif' : 'gacha_normal.gif';
+  vid.src = 'gacha_show.gif';
   overlay.classList.add('active');
   overlay.classList.add(isSpecial ? 'glow-special' : 'glow-normal');
 
   if (isSpecial) {
     setTimeout(() => { if (!done) banner.classList.add('show'); }, 500);
-    setTimeout(() => {
-      if (!done) {
-        const wrap = document.getElementById('g-video-wrap');
-        if (wrap) wrap.style.visibility = 'hidden';
-      }
-    }, gifDuration - 150);
   }
+  // 新GIFはループするので直前に非表示（通常・特別どちらも）
+  setTimeout(() => {
+    if (!done) {
+      const wrap = document.getElementById('g-video-wrap');
+      if (wrap) wrap.style.visibility = 'hidden';
+    }
+  }, gifDuration - 150);
 
   document.getElementById('g-skip-hint').onclick = finish;
   setTimeout(finish, gifDuration);
