@@ -6725,10 +6725,7 @@ function doRevealPhase(animType, item, onDone) {
     spawnParticles(parts, 22, rCols, false);
   }, 350);
 
-  // 虹レインボー（激レア以上）
-  if(isRare) {
-    setTimeout(()=> rainbow.classList.add('active'), isUltra ? 600 : 800);
-  }
+  // （虹レインボー演出は本家にないため廃止）
 
   // タメ → フラッシュ → カード出現
   const flashDelay = isUltra ? 1500 : isRare ? 1300 : 1000;
